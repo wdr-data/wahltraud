@@ -3,7 +3,7 @@
 
 import os
 
-os.environ["DJANGO_SETTINGS_MODULE"] = "infosbot_backend.settings"
+os.environ["DJANGO_SETTINGS_MODULE"] = "wahltraud.settings"
 
 import cherrypy
 import django
