@@ -8,7 +8,7 @@ import requests
 #from django.utils.timezone import localtime, now
 from django.utils import timezone
 
-from backend.models import Info, FacebookUser
+from backend.models import Entry
 
 # TODO: The idea is simple. When you send "subscribe" to the bot, the bot server would add a record according to the sender_id to their
 # database or memory , then the bot server could set a timer to distribute the news messages to those sender_id who have subscribed for the news.
@@ -18,10 +18,10 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.DEBUG)
 
-logger.info('FB Infos Bot Logging')
+logger.info('FB Wahltraud Bot Logging')
 
-PAGE_TOKEN = os.environ['INFOSBOT_PAGE_TOKEN']
-HUB_VERIFY_TOKEN = os.environ['INFOSBOT_HUB_VERIFY_TOKEN']
+PAGE_TOKEN = os.environ.get('WAHLTRAUD_PAGE_TOKEN', 'not set')
+HUB_VERIFY_TOKEN = os.environ.get('WAHLTRAUD_HUB_VERIFY_TOKEN', 'not set')
 
 app = Flask(__name__)
 
