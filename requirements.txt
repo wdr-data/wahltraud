@@ -1,0 +1,9 @@
+flask
+django
+cherrypy
+requests
+requests-toolbelt
+beautifulsoup4
+lxml
+mutagen
+paste
