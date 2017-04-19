@@ -20,4 +20,4 @@ class Entry(models.Model):
     pub_date = models.DateTimeField('Veröffentlicht am', default=timezone.now)
 
     def __str__(self):
-        return '%s - %s' % (self.pub_date.strftime('%d.%m.%Y'), self.title)
+        return '%s (%s)' % (self.title, self.pub_date.strftime('%d.%m.%Y'))
