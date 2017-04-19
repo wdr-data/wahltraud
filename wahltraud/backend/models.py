@@ -10,9 +10,12 @@ class Entry(models.Model):
 
     title = models.CharField('Titel', max_length=200, null=False)
     text = models.CharField('Text', max_length=640, null=False)
-    link_one = models.ForeignKey('self', related_name='+', null=True, blank=True)
-    link_two = models.ForeignKey('self', related_name='+', null=True, blank=True)
-    link_three = models.ForeignKey('self', related_name='+', null=True, blank=True)
+    link_one = models.ForeignKey(
+        'self', verbose_name='Link 1', related_name='+', null=True, blank=True)
+    link_two = models.ForeignKey(
+        'self', verbose_name='Link 2', related_name='+', null=True, blank=True)
+    link_three = models.ForeignKey(
+        'self', verbose_name='Link 3', related_name='+', null=True, blank=True)
     media = models.FileField('Medien-Anhang', null=True, blank=True)
     pub_date = models.DateTimeField('Veröffentlicht am', default=timezone.now)
 
