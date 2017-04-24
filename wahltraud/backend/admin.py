@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django import forms
-from .models import Entry
+from .models import Entry, FacebookUser
 
 
 class EntryModelForm(forms.ModelForm):
@@ -17,3 +17,4 @@ class EntryAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Entry, EntryAdmin)
+admin.site.register(FacebookUser)
