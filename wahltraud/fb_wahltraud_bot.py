@@ -7,6 +7,7 @@ from flask import Flask, request
 import requests
 import random
 import schedule
+import time
 from django.utils import timezone
 
 from backend.models import Entry, FacebookUser
@@ -117,7 +118,7 @@ def unsubscribe_user(user_id):
     if FacebookUser.objects.filter(uid = user_id).exists():
         logger.debug('User with ID ' + str(FacebookUser.objects.get(uid = user_id)) + ' unsubscribed.')
         FacebookUser.objects.get(uid = user_id).delete()
-        reply = "Schade, dass du uns verlassen möchtest. KOmme gerne wieder, wenn ich dir fehle. " \
+        reply = "Schade, dass du uns verlassen möchtest. Komm gerne wieder, wenn ich dir fehle. \n" \
         "Du wurdest aus der Empfängerliste für Push Benachrichtigungen gestrichen."
         send_text(user_id, reply)
     else:
@@ -130,8 +131,12 @@ def push_notification():
     for user in user_list:
         logger.debug("Send Push to: " + user)
         reply = "Heute haben wir folgendes Thema für dich:"
-        send_text(sender_id, reply)
-        #send_list_template(data, user)
+        send_text(user, reply)
+        send_text(user, data.title)
+        if data.media != "":
+            image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
+            send_image(user, image)
+        send_text_with_button(user, data, 'info')
 
 def send_text(recipient_id, text):
     """send a text message to a recipient"""
@@ -389,6 +394,10 @@ def send(payload):
                   data=json.dumps(payload),
                   headers=headers)
 
+# schedule.every().day.at("10:00").do(push_notification)
+# while True:
+#     schedule.run_pending()
+#     time.sleep(1)
 
 if __name__ == '__main__':
     app.debug = False
