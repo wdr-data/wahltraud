@@ -6,6 +6,7 @@ import csv
 from flask import Flask, request
 import requests
 import random
+import schedule
 from django.utils import timezone
 
 from backend.models import Entry, FacebookUser
@@ -54,6 +55,9 @@ def handle_messages(data):
             if text == '/wahltraud':
                 random_info = get_data()
                 send_text(sender_id, random_info.title)
+                if info.media != "":
+                    image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
+                    send_image(sender_id, image)
                 send_text_with_button(sender_id, random_info, 'info')
             elif text == '/config':
                 reply = "Hier kannst du deine facebook Messenger-ID hinterlegen um automatisch " \
@@ -63,22 +67,13 @@ def handle_messages(data):
             else:
                 reply = "echo: " + text
                 send_text(sender_id, reply)
-        # elif "postback" in event and event['postback'].get("payload", "") == "start":
-        #     reply = "Herzlich willkommen im WahltraudMessenger. \n\n" \
-        #             "Dies ist der Bot zur NRW Landtagswahl 2017. " \
-        #             "Ich liefere dir jeden Tag Infos zu den wichtigsten Begriffen rund um die Wahl." \
-        #             "\n\nWas Du dafür tun musst: Fast nichts. Tippe \"/wahltraud\" für dein Update."
-        #     send_text(sender_id, reply)
-        # elif "postback" in event and event['postback'].get("payload", "").split("#")[0] == "info":
-        #     requested_info_id = event['postback'].get("payload", "").split("#")[1]
-        #     info = Info.objects.get(id=int(requested_info_id))
-        #     status = "intro"
-        #     send_text(sender_id, info.headline)
-        #     if info.media != "":
-        #         image = "https://infos.data.wdr.de/backend/static/media/" + str(info.media)
-        #         send_image(sender_id, image)
-        #     logger.debug("status in postback: " + status)
-        #     send_text_with_button(sender_id, info, status)
+        elif "postback" in event and event['postback'].get("payload", "") == "start":
+            reply = "Herzlich willkommen im WahltraudMessenger. \n\n" \
+                    "Hallo, ich bin Wahltraud! Ich bin dein persönlicher Infobot zur Landtagswahl in NRW 2017! " \
+                    "Am 14. Mai sind Landtagswahlen! Darum bin ich für die nächsten Tage dein Guide durch den Wahl-Dschungel. " \
+                    "Einmal täglich füttere ich dich mit einem wichtigen Begriff zur Landtagswahl in NRW und erkläre, "\
+                    "was es damit auf sich hat. \nWenn du genug weißt, kannst du mich auch einfach wieder abbestellen. \n\nBis dann!"
+            send_text(sender_id, reply)
         elif "postback" in event and event['postback'].get("payload", "").split("#")[0] == "next":
             next_info_title = event['postback'].get("payload", "").split("#")[1]
             next_info = Entry.objects.get(short_title=next_info_title)
@@ -86,8 +81,6 @@ def handle_messages(data):
             send_text_with_button(sender_id, next_info, 'info')
         elif "postback" in event and event['postback'].get("payload", "").split("#")[0] == "subscribe":
             subscribe_user(sender_id)
-            reply = "Danke für deine Anmeldung!\nDu erhältst nun ein tägliches Update jeweils um 8:00 Uhr wochentags."
-            send_text(sender_id, reply)
         elif "postback" in event and event['postback'].get("payload", "") == "nope":
             reply = "Schade. Vielleicht beim nächsten mal..."
             send_text(sender_id, reply)
@@ -100,9 +93,23 @@ def get_data():
     return random_info #Info.objects.filter(pub_date__date=today)[:4]
 
 def subscribe_user(user_id):
-    if FacebookUser.objects.filter(uid = user_id).count() == 0:
+    if FacebookUser.objects.filter(uid = user_id).exists():
+        reply = "Du bist bereits für Push Nachrichten angemeldet."
+        send_text(user_id, reply)
+    else:
         FacebookUser.objects.create(uid = user_id)
         logger.debug('User with ID ' + str(FacebookUser.objects.latest('add_date')) + ' subscribed.')
+        reply = "Danke für deine Anmeldung!\nDu erhältst nun ein tägliches Update jeweils um 8:00 Uhr wochentags."
+        send_text(user_id, reply)
+
+def push_notification():
+    data = get_data()
+    user_list = FacebookUser.objects.values_list('uid', flat=True)
+    for user in user_list:
+        logger.debug("Send Push to: " + user)
+        reply = "Heute haben wir folgendes Thema für dich:"
+        send_text(sender_id, reply)
+        #send_list_template(data, user)
 
 def send_text(recipient_id, text):
     """send a text message to a recipient"""
