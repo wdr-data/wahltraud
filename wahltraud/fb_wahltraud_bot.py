@@ -51,24 +51,24 @@ def handle_messages(data):
         if "message" in event and event['message'].get("text", "") != "":
             logger.debug('received message')
             text = event['message']['text']
-            if text == '/info':
-                reply = "Heute haben wir folgende Themen für dich:"
+            if text == '/wahltraud':
+                reply = "Hier kannst du richtig was lernen..."
                 send_text(sender_id, reply)
-                data = get_data()
-                send_list_template(data, sender_id)
+                #data = get_data()
+                #send_list_template(data, sender_id)
             elif text == '/config':
-                reply = "Hier kannst du deine facebook Messenger-ID hinterlegen um automatisch ein tägliches Update von uns zu erhalten.\n" \
-                        "Wenn du dich registiren möchtest klicke \"OK\". Du kannst deine Entscheidung jederzet wieder ändern."
+                reply = "Hier kannst du deine facebook Messenger-ID hinterlegen um automatisch " \
+                        "Infos zu den wichtigsten Begriffen rund um die Wahl von uns zu erhalten.\n" \
+                        "Wenn du dich registrieren möchtest klicke \"OK\". Du kannst deine Entscheidung jederzet wieder ändern."
                 send_text_with_button(sender_id, reply)
             else:
                 reply = "echo: " + text
                 send_text(sender_id, reply)
         elif "postback" in event and event['postback'].get("payload", "") == "start":
-            reply = "Herzlich willkommen zum 1LIVE InfoMessenger. \n\n" \
-                    "Hier bekommst Du alle Infos geliefert, die Du wissen musst, um mitreden zu " \
-                    "können, selbst die, von denen Du nicht weißt, dass Du sie wissen wolltest" \
-                    " :) \n\nWas Du dafür tun musst: Fast nichts. Tippe \"/info\" um dein " \
-                    "Update zu bekommen."
+            reply = "Herzlich willkommen im WahltraudMessenger. \n\n" \
+                    "Dies ist der Bot zur NRW Landtagswahl 2017. " \
+                    "Ich liefere dir jeden Tag Infos zu den wichtigsten Begriffen rund um die Wahl." \
+                    "\n\nWas Du dafür tun musst: Fast nichts. Tippe \"/wahltraud\" für dein Update."
             send_text(sender_id, reply)
         elif "postback" in event and event['postback'].get("payload", "").split("#")[0] == "info":
             requested_info_id = event['postback'].get("payload", "").split("#")[1]
