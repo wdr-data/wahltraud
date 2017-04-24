@@ -69,7 +69,7 @@ def handle_messages(data):
         elif "postback" in event and event['postback'].get("payload", "") == "info":
             random_info = get_data()
             send_text(sender_id, random_info.title)
-            if info.media != "":
+            if random_info.media != "":
                 image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
                 send_image(sender_id, image)
             send_text_with_button(sender_id, random_info, 'info')
