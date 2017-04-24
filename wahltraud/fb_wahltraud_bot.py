@@ -52,10 +52,9 @@ def handle_messages(data):
             logger.debug('received message')
             text = event['message']['text']
             if text == '/wahltraud':
-                reply = "Hier kannst du richtig was lernen..."
-                send_text(sender_id, reply)
                 random_info = get_data()
-                send_text_with_button(sender_id, random_info.title)
+                send_text(sender_id, random_info.title)
+                send_text_with_button(sender_id, random_info, 'info')
             elif text == '/config':
                 reply = "Hier kannst du deine facebook Messenger-ID hinterlegen um automatisch " \
                         "Infos zu den wichtigsten Begriffen rund um die Wahl von uns zu erhalten.\n" \
@@ -80,24 +79,18 @@ def handle_messages(data):
         #         send_image(sender_id, image)
         #     logger.debug("status in postback: " + status)
         #     send_text_with_button(sender_id, info, status)
-        # elif "postback" in event and event['postback'].get("payload", "").split("#")[0] == "more":
-        #     requested_info_id = event['postback'].get("payload", "").split("#")[2]
-        #     info = Info.objects.get(id=int(requested_info_id))
-        #     logger.debug(event['postback'].get("payload", "").split("#")[1])
-        #     if event['postback'].get("payload", "").split("#")[1] == "0":
-        #         status = "one"
-        #     elif event['postback'].get("payload", "").split("#")[1] == "1":
-        #         status = "two"
-        #     send_text_with_button(sender_id, info, status)
+        elif "postback" in event and event['postback'].get("payload", "").split("#")[0] == "next":
+            next_info_title = event['postback'].get("payload", "").split("#")[1]
+            next_info = Entry.objects.get(short_title=next_info_title)
+            send_text(sender_id, next_info.title)
+            send_text_with_button(sender_id, next_info, 'info')
         elif "postback" in event and event['postback'].get("payload", "").split("#")[0] == "subscribe":
             subscribe_user(sender_id)
             reply = "Danke für deine Anmeldung!\nDu erhältst nun ein tägliches Update jeweils um 8:00 Uhr wochentags."
             send_text(sender_id, reply)
-        elif "postback" in event and event['postback'].get("payload", "") == "back":
-            reply = "Zurück..."
+        elif "postback" in event and event['postback'].get("payload", "") == "nope":
+            reply = "Schade. Vielleicht beim nächsten mal..."
             send_text(sender_id, reply)
-            # data = get_data()
-            # send_list_template(data, sender_id)
 
 def get_data():
     today = timezone.localtime(timezone.now()).date()
@@ -107,8 +100,9 @@ def get_data():
     return random_info #Info.objects.filter(pub_date__date=today)[:4]
 
 def subscribe_user(user_id):
-    FacebookUser.objects.create(uid = user_id)
-    logger.debug('User with ID ' + FacebookUser.objects.latest('add_date') + ' subscribed.')
+    if FacebookUser.objects.filter(uid = user_id).count() == 0:
+        FacebookUser.objects.create(uid = user_id)
+        logger.debug('User with ID ' + str(FacebookUser.objects.latest('add_date')) + ' subscribed.')
 
 def send_text(recipient_id, text):
     """send a text message to a recipient"""
@@ -236,45 +230,50 @@ def send_generic_template(recipient_id, gifts):
 
 def send_text_with_button(recipient_id, info, status="other"):
     """send a message with a button (1-3 buttons possible)"""
-    if status == "intro":
-        status_id = 0
-        text = info.intro_text
-        button_title = info.first_question
-    elif status == "one":
-        status_id = 1
-        text = info.first_text
-        button_title = info.second_question
-    elif status == "two":
-        status_id = 2
-        text = info.second_text
-        button_title = "None"
-    elif status == "other":
-        status_id = 3
-        text = info
-        button_title = "OK"
-
-    if status_id == 3:
-        task = 'subscribe#' + recipient_id
-    else:
-        task = 'more#' + str(status_id) + '#' + str(info.id)
-
-    more_button = {
-        'type': 'postback',
-        'title': button_title,
-        'payload': task
-    }
-
-    back_button = {
-        'type': 'postback',
-        'title': 'Zurück',
-        'payload': 'back'
-    }
     buttons = []
-    if status_id == 2:
-        buttons.append(back_button)
-    else:
-        buttons.append(more_button)
-        buttons.append(back_button)
+    if status == "info":
+        text = info.text
+        first_button = {
+            'type': 'postback',
+            'title': info.link_one.short_title,
+            'payload': 'next#' + str(info.link_one.short_title)
+        }
+        buttons.append(first_button)
+        if info.link_three == None and info.link_two != None:
+            second_button = {
+                'type': 'postback',
+                'title': info.link_two.short_title,
+                'payload': 'next#' + str(info.link_two.short_title)
+            }
+            buttons.append(second_button)
+        elif info.link_three != None and info.link_two != None:
+            second_button = {
+                'type': 'postback',
+                'title': info.link_two.short_title,
+                'payload': 'next#' + str(info.link_two.short_title)
+            }
+            third_button = {
+                'type': 'postback',
+                'title': info.link_three.short_title,
+                'payload': 'next#' + str(info.link_three.short_title)
+            }
+            buttons.append(second_button)
+            buttons.append(third_button)
+
+    elif status == "other":
+        text = info
+        ok_button = {
+            'type': 'postback',
+            'title': 'OK',
+            'payload': 'subscribe#' + recipient_id
+        }
+        no_button = {
+            'type': 'postback',
+            'title': 'Nein, danke.',
+            'payload': 'nope'
+        }
+        buttons.append(ok_button)
+        buttons.append(no_button)
 
     load = {
             'template_type': 'button',
