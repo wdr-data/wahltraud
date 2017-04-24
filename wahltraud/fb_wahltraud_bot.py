@@ -52,14 +52,7 @@ def handle_messages(data):
         if "message" in event and event['message'].get("text", "") != "":
             logger.debug('received message')
             text = event['message']['text']
-            if text == '/wahltraud':
-                random_info = get_data()
-                send_text(sender_id, random_info.title)
-                if info.media != "":
-                    image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
-                    send_image(sender_id, image)
-                send_text_with_button(sender_id, random_info, 'info')
-            elif text == '/config':
+            if text == '/config':
                 reply = "Hier kannst du deine facebook Messenger-ID hinterlegen um automatisch " \
                         "Infos zu den wichtigsten Begriffen rund um die Wahl von uns zu erhalten.\n" \
                         "Wenn du dich registrieren möchtest klicke \"OK\". Du kannst deine Entscheidung jederzet wieder ändern."
@@ -68,19 +61,37 @@ def handle_messages(data):
                 reply = "echo: " + text
                 send_text(sender_id, reply)
         elif "postback" in event and event['postback'].get("payload", "") == "start":
-            reply = "Herzlich willkommen im WahltraudMessenger. \n\n" \
-                    "Hallo, ich bin Wahltraud! Ich bin dein persönlicher Infobot zur Landtagswahl in NRW 2017! " \
+            reply = "Hallo, ich bin Wahltraud! Ich bin dein persönlicher Infobot zur Landtagswahl in NRW 2017!\n" \
                     "Am 14. Mai sind Landtagswahlen! Darum bin ich für die nächsten Tage dein Guide durch den Wahl-Dschungel. " \
                     "Einmal täglich füttere ich dich mit einem wichtigen Begriff zur Landtagswahl in NRW und erkläre, "\
                     "was es damit auf sich hat. \nWenn du genug weißt, kannst du mich auch einfach wieder abbestellen. \n\nBis dann!"
             send_text(sender_id, reply)
+        elif "postback" in event and event['postback'].get("payload", "") == "info":
+            random_info = get_data()
+            send_text(sender_id, random_info.title)
+            if info.media != "":
+                image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
+                send_image(sender_id, image)
+            send_text_with_button(sender_id, random_info, 'info')
         elif "postback" in event and event['postback'].get("payload", "").split("#")[0] == "next":
             next_info_title = event['postback'].get("payload", "").split("#")[1]
             next_info = Entry.objects.get(short_title=next_info_title)
             send_text(sender_id, next_info.title)
             send_text_with_button(sender_id, next_info, 'info')
-        elif "postback" in event and event['postback'].get("payload", "").split("#")[0] == "subscribe":
+        elif "postback" in event and event['postback'].get("payload", "") == "subscribe":
+            reply = "Hier kannst du deine facebook Messenger-ID hinterlegen um automatisch " \
+                    "Infos zu den wichtigsten Begriffen rund um die Wahl von uns zu erhalten.\n" \
+                    "Wenn du dich registrieren möchtest klicke \"OK\". Du kannst deine Entscheidung jederzet wieder ändern."
+            send_text_with_button(sender_id, reply)
+        elif "postback" in event and event['postback'].get("payload", "") == "subscribe_user":
             subscribe_user(sender_id)
+        elif "postback" in event and event['postback'].get("payload", "") == "unsubscribe":
+            unsubscribe_user(sender_id)
+        elif "postback" in event and event['postback'].get("payload", "") == "impressum":
+            reply = "Dies ist ein Produkt des Westdeutschen Rundfunks. Wir befinden uns noch in der Testphase und "\
+            "freuen uns über jedes Feedback um uns weiterentwickeln zu können. Danke für Eure Mithilfe! \n"\
+            "Redaktion: Miriam Hochhard - Technische Unterstützung: Lisa Achenbach, Patricia Ennenbach, Jannes Hoeke"
+            send_text(sender_id, reply)
         elif "postback" in event and event['postback'].get("payload", "") == "nope":
             reply = "Schade. Vielleicht beim nächsten mal..."
             send_text(sender_id, reply)
@@ -99,7 +110,18 @@ def subscribe_user(user_id):
     else:
         FacebookUser.objects.create(uid = user_id)
         logger.debug('User with ID ' + str(FacebookUser.objects.latest('add_date')) + ' subscribed.')
-        reply = "Danke für deine Anmeldung!\nDu erhältst nun ein tägliches Update jeweils um 8:00 Uhr wochentags."
+        reply = "Danke für deine Anmeldung!\nDu erhältst nun ein tägliches Update jeweils um 8:00 Uhr."
+        send_text(user_id, reply)
+
+def unsubscribe_user(user_id):
+    if FacebookUser.objects.filter(uid = user_id).exists():
+        logger.debug('User with ID ' + str(FacebookUser.objects.get(uid = user_id)) + ' unsubscribed.')
+        FacebookUser.objects.get(uid = user_id).delete()
+        reply = "Schade, dass du uns verlassen möchtest. KOmme gerne wieder, wenn ich dir fehle. " \
+        "Du wurdest aus der Empfängerliste für Push Benachrichtigungen gestrichen."
+        send_text(user_id, reply)
+    else:
+        reply = "Du bist noch kein Nutzer der Push Nachrichten. Wenn du dich anmelden möchtest wähle \'Anmelden\' im Menü."
         send_text(user_id, reply)
 
 def push_notification():
@@ -272,7 +294,7 @@ def send_text_with_button(recipient_id, info, status="other"):
         ok_button = {
             'type': 'postback',
             'title': 'OK',
-            'payload': 'subscribe#' + recipient_id
+            'payload': 'subscribe_user'
         }
         no_button = {
             'type': 'postback',
