@@ -14,6 +14,8 @@ class EntryModelForm(forms.ModelForm):
 
 class EntryAdmin(admin.ModelAdmin):
     form = EntryModelForm
+    date_hierarchy = 'pub_date'
+    list_display = ('title', 'short_title', 'pub_date')
 
 
 admin.site.register(Entry, EntryAdmin)
