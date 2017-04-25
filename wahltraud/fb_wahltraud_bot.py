@@ -2,6 +2,7 @@ import json
 import logging
 import os
 import csv
+from threading import Thread
 
 from flask import Flask, request
 import requests
@@ -68,7 +69,7 @@ def handle_messages(data):
                 random_info = get_data()
                 send_text(sender_id, random_info.title)
                 if random_info.media != "":
-                    image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
+                    image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(random_info.media)
                     send_image(sender_id, image)
                 send_text_with_button(sender_id, random_info, 'info')
             else:
@@ -84,7 +85,7 @@ def handle_messages(data):
             random_info = get_data()
             send_text(sender_id, random_info.title)
             if random_info.media != "":
-                image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
+                image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(random_info.media)
                 send_image(sender_id, image)
             send_text_with_button(sender_id, random_info, 'info')
         elif "postback" in event and event['postback'].get("payload", "").split("#")[0] == "next":
@@ -148,7 +149,7 @@ def push_notification():
         send_text(user, reply)
         send_text(user, data.title)
         if data.media != "":
-            image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
+            image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(data.media)
             send_image(user, image)
         send_text_with_button(user, data, 'info')
 
@@ -436,10 +437,17 @@ def send(payload):
                   data=json.dumps(payload),
                   headers=headers)
 
-# schedule.every().day.at("10:00").do(push_notification)
-# while True:
-#     schedule.run_pending()
-#     time.sleep(1)
+
+schedule.every().day.at("10:00").do(push_notification)
+
+
+def schedule_loop():
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
+schedule_loop_thread = Thread(target=schedule_loop, daemon=True)
+schedule_loop_thread.start()
 
 if __name__ == '__main__':
     app.debug = False
