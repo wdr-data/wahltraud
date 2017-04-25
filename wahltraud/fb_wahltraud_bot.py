@@ -49,20 +49,15 @@ def handle_messages(data):
     logger.debug(messaging_events)
     for event in messaging_events:
         sender_id = event['sender']['id']
-
+        info_list = list(Entry.objects.all())
         # check if we actually have some input
         if "message" in event and event['message'].get("text", "") != "":
             text = event['message']['text']
             quick_reply = event['message']['quick_reply']['payload']
-            if text == '/config':
-                reply = "Hier kannst du deine facebook Messenger-ID hinterlegen um automatisch " \
-                        "Infos zu den wichtigsten Begriffen rund um die Wahl von uns zu erhalten.\n" \
-                        "Wenn du dich registrieren möchtest klicke \"OK\". Du kannst deine Entscheidung jederzet wieder ändern."
-                send_text_with_button(sender_id, reply)
             if quick_reply == "subscribe_menue":
                 reply = "Hier kannst du deine facebook Messenger-ID hinterlegen um automatisch " \
                         "Infos zu den wichtigsten Begriffen rund um die Wahl von uns zu erhalten.\n" \
-                        "Wenn du dich registrieren möchtest klicke \"OK\". Du kannst deine Entscheidung jederzet wieder ändern."
+                        "Wenn du dich registrieren möchtest klicke \"OK\". Du kannst deine Entscheidung jederzeit wieder ändern."
                 send_text_with_button(sender_id, reply)
             elif quick_reply == "info":
                 random_info = get_data()
@@ -71,27 +66,27 @@ def handle_messages(data):
                     image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(random_info.media)
                     send_image(sender_id, image)
                 send_text_with_button(sender_id, random_info, 'info')
+            elif Entry.objects.filter(short_title=text).exists():
+                next_info = Entry.objects.get(short_title=text)
+                send_text(sender_id, next_info.title)
+                send_info(sender_id, next_info)
             else:
                 reply = "echo: " + text
                 send_text(sender_id, reply)
         elif "postback" in event and event['postback'].get("payload", "") == "start":
-            reply = "Hallo, ich bin Wahltraud! Ich bin dein persönlicher Infobot zur Landtagswahl in NRW 2017!\n" \
-                    "Am 14. Mai sind Landtagswahlen! Darum bin ich für die nächsten Tage dein Guide durch den Wahl-Dschungel. " \
-                    "Einmal täglich füttere ich dich mit einem wichtigen Begriff zur Landtagswahl in NRW und erkläre, "\
-                    "was es damit auf sich hat. \nWenn du genug weißt, kannst du mich auch einfach wieder abbestellen. \n\nBis dann!"
-            send_text_and_quickreplies(sender_id, reply)
+            send_greeting(sender_id)
         elif "postback" in event and event['postback'].get("payload", "") == "info":
             random_info = get_data()
             send_text(sender_id, random_info.title)
             if random_info.media != "":
                 image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(random_info.media)
                 send_image(sender_id, image)
-            send_text_with_button(sender_id, random_info, 'info')
+            send_info(sender_id, random_info)
         elif "postback" in event and event['postback'].get("payload", "").split("#")[0] == "next":
             next_info_title = event['postback'].get("payload", "").split("#")[1]
             next_info = Entry.objects.get(short_title=next_info_title)
             send_text(sender_id, next_info.title)
-            send_text_with_button(sender_id, next_info, 'info')
+            send_info(sender_id, next_info)
         elif "postback" in event and event['postback'].get("payload", "") == "subscribe_menue" :
             reply = "Hier kannst du deine facebook Messenger-ID hinterlegen um automatisch " \
                     "Infos zu den wichtigsten Begriffen rund um die Wahl von uns zu erhalten.\n" \
@@ -150,6 +145,61 @@ def push_notification():
             image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(data.media)
             send_image(user, image)
         send_text_with_button(user, data, 'info')
+
+def send_greeting(recipient_id):
+    text = "Hallo, ich bin Wahltraud! Ich bin dein persönlicher Infobot zur Landtagswahl in NRW 2017!\n" \
+            "Am 14. Mai sind Landtagswahlen! Darum bin ich für die nächsten Tage dein Guide durch den Wahl-Dschungel. " \
+            "Einmal täglich füttere ich dich mit einem wichtigen Begriff zur Landtagswahl in NRW und erkläre, "\
+            "was es damit auf sich hat. \nWenn du genug weißt, kannst du mich auch einfach wieder abbestellen. \n\nBis dann!"
+
+    quickreplies = []
+    reply_one = {
+        'content_type' : 'text',
+        'title' : 'Anmelden',
+        'payload' : 'subscribe_menue'
+    }
+    reply_two = {
+        'content_type' : 'text',
+        'title' : 'Info anzeigen',
+        'payload' : 'info'
+    }
+    quickreplies.append(reply_one)
+    quickreplies.append(reply_two)
+
+    send_text_and_quickreplies(text, quickreplies, recipient_id)
+
+def send_info(recipient_id, info):
+    text = info.text
+
+    quickreplies = []
+    first = {
+        'content_type' : 'text',
+        'title': info.link_one.short_title,
+        'payload': str(info.link_one.short_title)
+    }
+    quickreplies.append(first)
+    if info.link_three == None and info.link_two != None:
+        second = {
+            'content_type' : 'text',
+            'title': info.link_two.short_title,
+            'payload': str(info.link_two.short_title)
+        }
+        quickreplies.append(second)
+    elif info.link_three != None and info.link_two != None:
+        second = {
+            'content_type' : 'text',
+            'title': info.link_two.short_title,
+            'payload': str(info.link_two.short_title)
+        }
+        third = {
+            'content_type' : 'text',
+            'title': info.link_three.short_title,
+            'payload': str(info.link_three.short_title)
+        }
+        quickreplies.append(second)
+        quickreplies.append(third)
+
+    send_text_and_quickreplies(text, quickreplies, recipient_id)
 
 def send_text(recipient_id, text):
     """send a text message to a recipient"""
@@ -275,20 +325,20 @@ def send_generic_template(recipient_id, gifts):
     }
     send(payload)
 
-def send_text_and_quickreplies(recipient_id, reply):
-    quickreplies = []
-    reply_one = {
-        'content_type' : 'text',
-        'title' : 'Anmelden',
-        'payload' : 'subscribe_menue'
-    }
-    reply_two = {
-        'content_type' : 'text',
-        'title' : 'Info anzeigen',
-        'payload' : 'info'
-    }
-    quickreplies.append(reply_one)
-    quickreplies.append(reply_two)
+def send_text_and_quickreplies(reply, quickreplies, recipient_id):
+    # quickreplies = []
+    # reply_one = {
+    #     'content_type' : 'text',
+    #     'title' : 'Anmelden',
+    #     'payload' : 'subscribe_menue'
+    # }
+    # reply_two = {
+    #     'content_type' : 'text',
+    #     'title' : 'Info anzeigen',
+    #     'payload' : 'info'
+    # }
+    # quickreplies.append(reply_one)
+    # quickreplies.append(reply_two)
 
     message = {
         'text' : reply,
@@ -436,8 +486,7 @@ def send(payload):
                   headers=headers)
 
 
-schedule.every().day.at("12:30").do(push_notification)
-
+schedule.every().day.at("10:00").do(push_notification)
 
 def schedule_loop():
     while True:
