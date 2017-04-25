@@ -51,13 +51,26 @@ def handle_messages(data):
 
         # check if we actually have some input
         if "message" in event and event['message'].get("text", "") != "":
-            logger.debug('received message')
             text = event['message']['text']
+            quick_reply = event['message']['quick_reply']['payload']
+            logger.debug('received message: ' + text + " " + quick_reply)
             if text == '/config':
                 reply = "Hier kannst du deine facebook Messenger-ID hinterlegen um automatisch " \
                         "Infos zu den wichtigsten Begriffen rund um die Wahl von uns zu erhalten.\n" \
                         "Wenn du dich registrieren möchtest klicke \"OK\". Du kannst deine Entscheidung jederzet wieder ändern."
                 send_text_with_button(sender_id, reply)
+            if quick_reply == "subscribe_menue":
+                reply = "Hier kannst du deine facebook Messenger-ID hinterlegen um automatisch " \
+                        "Infos zu den wichtigsten Begriffen rund um die Wahl von uns zu erhalten.\n" \
+                        "Wenn du dich registrieren möchtest klicke \"OK\". Du kannst deine Entscheidung jederzet wieder ändern."
+                send_text_with_button(sender_id, reply)
+            elif quick_reply == "info":
+                random_info = get_data()
+                send_text(sender_id, random_info.title)
+                if random_info.media != "":
+                    image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
+                    send_image(sender_id, image)
+                send_text_with_button(sender_id, random_info, 'info')
             else:
                 reply = "echo: " + text
                 send_text(sender_id, reply)
@@ -79,7 +92,8 @@ def handle_messages(data):
             next_info = Entry.objects.get(short_title=next_info_title)
             send_text(sender_id, next_info.title)
             send_text_with_button(sender_id, next_info, 'info')
-        elif "postback" in event and event['postback'].get("payload", "") == "subscribe_menue":
+        elif "postback" in event and event['postback'].get("payload", "") == "subscribe_menue" :
+        #or "message" in event and event['message'].get("quick_reply", "").get("payload", "") == "subscribe_menue":
             reply = "Hier kannst du deine facebook Messenger-ID hinterlegen um automatisch " \
                     "Infos zu den wichtigsten Begriffen rund um die Wahl von uns zu erhalten.\n" \
                     "Wenn du dich registrieren möchtest klicke \"OK\". Du kannst deine Entscheidung jederzet wieder ändern."
