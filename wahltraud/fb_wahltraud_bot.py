@@ -262,7 +262,7 @@ def send_generic_template(recipient_id, gifts):
     }
     send(payload)
 
-def send_text_and_quickreplies(sender_id, reply):
+def send_text_and_quickreplies(recipient_id, reply):
     quickreplies = []
     reply_one = {
         'content_type' : 'text',
