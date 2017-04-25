@@ -66,7 +66,7 @@ def handle_messages(data):
                     "Am 14. Mai sind Landtagswahlen! Darum bin ich für die nächsten Tage dein Guide durch den Wahl-Dschungel. " \
                     "Einmal täglich füttere ich dich mit einem wichtigen Begriff zur Landtagswahl in NRW und erkläre, "\
                     "was es damit auf sich hat. \nWenn du genug weißt, kannst du mich auch einfach wieder abbestellen. \n\nBis dann!"
-            send_text(sender_id, reply)
+            send_text_and_quickreplies(sender_id, reply)
         elif "postback" in event and event['postback'].get("payload", "") == "info":
             random_info = get_data()
             send_text(sender_id, random_info.title)
@@ -79,7 +79,7 @@ def handle_messages(data):
             next_info = Entry.objects.get(short_title=next_info_title)
             send_text(sender_id, next_info.title)
             send_text_with_button(sender_id, next_info, 'info')
-        elif "postback" in event and event['postback'].get("payload", "") == "subscribe":
+        elif "postback" in event and event['postback'].get("payload", "") == "subscribe_menue":
             reply = "Hier kannst du deine facebook Messenger-ID hinterlegen um automatisch " \
                     "Infos zu den wichtigsten Begriffen rund um die Wahl von uns zu erhalten.\n" \
                     "Wenn du dich registrieren möchtest klicke \"OK\". Du kannst deine Entscheidung jederzet wieder ändern."
@@ -253,6 +253,34 @@ def send_generic_template(recipient_id, gifts):
     }
 
     message = {'attachment': attachment}
+
+    recipient = {'id': recipient_id}
+
+    payload = {
+        'recipient': recipient,
+        'message': message
+    }
+    send(payload)
+
+def send_text_and_quickreplies(sender_id, reply):
+    quickreplies = []
+    reply_one = {
+        'content_type' : 'text',
+        'title' : 'Anmelden',
+        'payload' : 'subscribe_menue'
+    }
+    reply_two = {
+        'content_type' : 'text',
+        'title' : 'Info anzeigen',
+        'payload' : 'info'
+    }
+    quickreplies.append(reply_one)
+    quickreplies.append(reply_two)
+
+    message = {
+        'text' : reply,
+        'quick_replies' : quickreplies
+    }
 
     recipient = {'id': recipient_id}
 
