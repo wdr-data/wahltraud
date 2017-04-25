@@ -13,9 +13,6 @@ from django.utils import timezone
 
 from backend.models import Entry, FacebookUser
 
-# TODO: The idea is simple. When you send "subscribe" to the bot, the bot server would add a record according to the sender_id to their
-# database or memory , then the bot server could set a timer to distribute the news messages to those sender_id who have subscribed for the news.
-
 # Enable logging
 logger = logging.getLogger(__name__)
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -54,22 +51,29 @@ def handle_messages(data):
         if "message" in event and event['message'].get("text", "") != "":
             text = event['message']['text']
             quick_reply = event['message']['quick_reply']['payload']
-            if quick_reply == "subscribe_menue":
-                reply = "Hier kannst du deine facebook Messenger-ID hinterlegen um automatisch " \
-                        "Infos zu den wichtigsten Begriffen rund um die Wahl von uns zu erhalten.\n" \
-                        "Wenn du dich registrieren möchtest klicke \"OK\". Du kannst deine Entscheidung jederzeit wieder ändern."
-                send_text_with_button(sender_id, reply)
+            if Entry.objects.filter(short_title=text).exists():
+                next_info = Entry.objects.get(short_title=text)
+                send_text(sender_id, next_info.title)
+                if next_info.media != "":
+                    image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(next_info.media)
+                    send_image(sender_id, image)
+                send_info(sender_id, next_info)
             elif quick_reply == "info":
                 random_info = get_data()
                 send_text(sender_id, random_info.title)
                 if random_info.media != "":
                     image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(random_info.media)
                     send_image(sender_id, image)
-                send_text_with_button(sender_id, random_info, 'info')
-            elif Entry.objects.filter(short_title=text).exists():
-                next_info = Entry.objects.get(short_title=text)
-                send_text(sender_id, next_info.title)
-                send_info(sender_id, next_info)
+                send_info(sender_id, random_info)
+            elif quick_reply == "subscribe_menue":
+                subscribe_process(sender_id)
+            elif quick_reply == "subscribe":
+                subscribe_user(sender_id)
+            elif quick_reply == "unsubscribe":
+                unsubscribe_user(sender_id)
+            elif quick_reply == "nope":
+                reply = "Schade. Vielleicht beim nächsten mal..."
+                send_text(sender_id, reply)
             else:
                 reply = "echo: " + text
                 send_text(sender_id, reply)
@@ -82,27 +86,12 @@ def handle_messages(data):
                 image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(random_info.media)
                 send_image(sender_id, image)
             send_info(sender_id, random_info)
-        elif "postback" in event and event['postback'].get("payload", "").split("#")[0] == "next":
-            next_info_title = event['postback'].get("payload", "").split("#")[1]
-            next_info = Entry.objects.get(short_title=next_info_title)
-            send_text(sender_id, next_info.title)
-            send_info(sender_id, next_info)
         elif "postback" in event and event['postback'].get("payload", "") == "subscribe_menue" :
-            reply = "Hier kannst du deine facebook Messenger-ID hinterlegen um automatisch " \
-                    "Infos zu den wichtigsten Begriffen rund um die Wahl von uns zu erhalten.\n" \
-                    "Wenn du dich registrieren möchtest klicke \"OK\". Du kannst deine Entscheidung jederzet wieder ändern."
-            send_text_with_button(sender_id, reply)
-        elif "postback" in event and event['postback'].get("payload", "") == "subscribe_user":
-            subscribe_user(sender_id)
-        elif "postback" in event and event['postback'].get("payload", "") == "unsubscribe":
-            unsubscribe_user(sender_id)
+            subscribe_process(sender_id)
         elif "postback" in event and event['postback'].get("payload", "") == "impressum":
             reply = "Dies ist ein Produkt des Westdeutschen Rundfunks. Wir befinden uns noch in der Testphase und "\
             "freuen uns über jedes Feedback um uns weiterentwickeln zu können. Danke für Eure Mithilfe! \n"\
             "Redaktion: Miriam Hochhard - Technische Unterstützung: Lisa Achenbach, Patricia Ennenbach, Jannes Hoeke"
-            send_text(sender_id, reply)
-        elif "postback" in event and event['postback'].get("payload", "") == "nope":
-            reply = "Schade. Vielleicht beim nächsten mal..."
             send_text(sender_id, reply)
 
 def get_data():
@@ -112,26 +101,67 @@ def get_data():
     logger.debug('Random Info Title: ' + random_info.title)
     return random_info #Info.objects.filter(pub_date__date=today)[:4]
 
+def subscribe_process(recipient_id):
+    text = "Du kannst deine facebook Messenger-ID hinterlegen um automatisch " \
+            "Infos zu den wichtigsten Begriffen rund um die Wahl von uns zu erhalten.\n" \
+            "Wenn du dich registrieren möchtest klicke \"Anmelden\". \n\n" \
+            "Du kannst diese Entscheidung jederzet wieder ändern oder jetzt erstmal auf später verschieben. " \
+            "Wenn du keine automatischen Nachrichten mehr von uns erhalten möchtest klicke \"Abmelden\". \n\n" \
+            "Du findest diese Optionen im Menü unter \"An-/Abmelden\""
+    quickreplies = []
+    reply_one = {
+        'content_type' : 'text',
+        'title' : 'Anmelden',
+        'payload' : 'subscribe'
+    }
+    reply_two = {
+        'content_type' : 'text',
+        'title' : 'Abmelden',
+        'payload' : 'unsubscribe'
+    }
+    reply_three = {
+        'content_type' : 'text',
+        'title' : 'Später vielleicht.',
+        'payload' : 'nope'
+    }
+    quickreplies.append(reply_one)
+    quickreplies.append(reply_two)
+    quickreplies.append(reply_three)
+
+    send_text_and_quickreplies(text, quickreplies, recipient_id)
+
 def subscribe_user(user_id):
     if FacebookUser.objects.filter(uid = user_id).exists():
-        reply = "Du bist bereits für Push Nachrichten angemeldet."
+        reply = "Du bist bereits für die automatischen Nachrichten angemeldet."
         send_text(user_id, reply)
     else:
         FacebookUser.objects.create(uid = user_id)
         logger.debug('User with ID ' + str(FacebookUser.objects.latest('add_date')) + ' subscribed.')
-        reply = "Danke für deine Anmeldung!\nDu erhältst nun ein tägliches Update jeweils um 8:00 Uhr."
+        reply = "Danke für deine Anmeldung! 😃\nDu erhältst nun ein tägliches Update jeweils um 10:00 Uhr. \n" \
+                "Hier ist schonmal deine erst Info..."
         send_text(user_id, reply)
+        random_info = get_data()
+        send_text(user_id, random_info.title)
+        send_info(user_id, random_info)
 
 def unsubscribe_user(user_id):
     if FacebookUser.objects.filter(uid = user_id).exists():
         logger.debug('User with ID ' + str(FacebookUser.objects.get(uid = user_id)) + ' unsubscribed.')
         FacebookUser.objects.get(uid = user_id).delete()
-        reply = "Schade, dass du uns verlassen möchtest. Komm gerne wieder, wenn ich dir fehle. \n" \
-        "Du wurdest aus der Empfängerliste für Push Benachrichtigungen gestrichen."
+        reply = "Schade, dass du uns verlassen möchtest. Komm gerne wieder, wenn ich dir fehle. 👋\n" \
+                "Du wurdest aus der Empfängerliste für automatische Nachrichten gestrichen."
         send_text(user_id, reply)
     else:
-        reply = "Du bist noch kein Nutzer der Push Nachrichten. Wenn du dich anmelden möchtest wähle \'Anmelden\' im Menü."
-        send_text(user_id, reply)
+        reply = "Du bist noch kein Nutzer der Push Nachrichten. Wenn du dich anmelden möchtest wähle \'Anmelden\' im Menü " \
+                "oder klicke jetzt auf \"Anmelden\"."
+        quickreplies = []
+        reply_one = {
+            'content_type' : 'text',
+            'title' : 'Anmelden',
+            'payload' : 'subscribe'
+        }
+        quickreplies.append(reply_one)
+        send_text_and_quickreplies(reply, quickreplies, user_id)
 
 def push_notification():
     data = get_data()
@@ -144,10 +174,10 @@ def push_notification():
         if data.media != "":
             image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(data.media)
             send_image(user, image)
-        send_text_with_button(user, data, 'info')
+        send_info(user, data)
 
 def send_greeting(recipient_id):
-    text = "Hallo, ich bin Wahltraud! Ich bin dein persönlicher Infobot zur Landtagswahl in NRW 2017!\n" \
+    text = "Hallo, ich bin Wahltraud! 🤖 Ich bin dein persönlicher Infobot zur Landtagswahl in NRW 2017!\n" \
             "Am 14. Mai sind Landtagswahlen! Darum bin ich für die nächsten Tage dein Guide durch den Wahl-Dschungel. " \
             "Einmal täglich füttere ich dich mit einem wichtigen Begriff zur Landtagswahl in NRW und erkläre, "\
             "was es damit auf sich hat. \nWenn du genug weißt, kannst du mich auch einfach wieder abbestellen. \n\nBis dann!"
@@ -235,111 +265,97 @@ def send_image(recipient_id, image_url):
     }
     send(payload)
 
-def send_audio(recipient_id, audio_file):
-    """send an audio to a recipient"""
-    audio_file = "https://mediandr-a.akamaihd.net/progressive/2017/0302/AU-20170302-0656-0300.mp3"
+# def send_audio(recipient_id, audio_file):
+#     """send an audio to a recipient"""
+#     audio_file = "https://mediandr-a.akamaihd.net/progressive/2017/0302/AU-20170302-0656-0300.mp3"
+#
+#     recipient = {"id": recipient_id}
+#     audio = {'url': audio_file}
+#     filedata = '@' + audio_file + ';type=audio/mp3'
+#
+#     attachment = {
+#         'type': 'audio',
+#         'payload': audio
+#     }
+#
+#     message = {'attachment': attachment}
+#
+#     payload = {
+#         'recipient': recipient,
+#         'message': message,
+#         'filedata': filedata
+#     }
+#     send(payload)
 
-    recipient = {"id": recipient_id}
-    audio = {'url': audio_file}
-    filedata = '@' + audio_file + ';type=audio/mp3'
-
-    attachment = {
-        'type': 'audio',
-        'payload': audio
-    }
-
-    message = {'attachment': attachment}
-
-    payload = {
-        'recipient': recipient,
-        'message': message,
-        'filedata': filedata
-    }
-    send(payload)
-
-def send_generic_template(recipient_id, gifts):
-    """send a generic message with title, text, image and buttons"""
-    selection = []
-
-    for key in gifts:
-        logger.debug(key)
-        gift = key
-
-        title = gifts[gift]['title']
-        logger.debug(title)
-        item_url = gifts[gift]['link']
-        image_url = 'http://www1.wdr.de/mediathek/audio/sendereihen-bilder/wdr_sendereihenbild100~_v-Podcast.jpg'
-        subtitle = gifts[gift]['teaser']
-
-        listen_Button = {
-            'type': 'postback',
-            'title': 'ZeitZeichen anhören',
-            'payload': 'listen_audio#' + item_url
-        }
-        download_Button = {
-            'type': 'web_url',
-            'title': 'ZeitZeichen herunterladen',
-            'url': item_url
-        }
-        visit_Button = {
-            'type': 'web_url',
-            'url': 'http://www1.wdr.de/radio/wdr5/sendungen/zeitzeichen/index.html',
-            'title': 'Zum WDR ZeitZeichen'
-        }
-        share_Button = {
-            'type': 'element_share'
-        }
-        ### Buttons sind auf max 3 begrenzt! ###
-        buttons = []
-        buttons.append(listen_Button)
-        buttons.append(download_Button)
-        buttons.append(share_Button)
-
-        elements = {
-            'title': title,
-            'item_url': item_url,
-            'image_url': image_url,
-            'subtitle': subtitle,
-            'buttons': buttons
-        }
-
-        selection.append(elements)
-
-    load = {
-            'template_type': 'generic',
-            'elements': selection
-        }
-
-    attachment = {
-        'type': 'template',
-        'payload': load
-    }
-
-    message = {'attachment': attachment}
-
-    recipient = {'id': recipient_id}
-
-    payload = {
-        'recipient': recipient,
-        'message': message
-    }
-    send(payload)
+# def send_generic_template(recipient_id, gifts):
+#     """send a generic message with title, text, image and buttons"""
+#     selection = []
+#
+#     for key in gifts:
+#         logger.debug(key)
+#         gift = key
+#
+#         title = gifts[gift]['title']
+#         logger.debug(title)
+#         item_url = gifts[gift]['link']
+#         image_url = 'http://www1.wdr.de/mediathek/audio/sendereihen-bilder/wdr_sendereihenbild100~_v-Podcast.jpg'
+#         subtitle = gifts[gift]['teaser']
+#
+#         listen_Button = {
+#             'type': 'postback',
+#             'title': 'ZeitZeichen anhören',
+#             'payload': 'listen_audio#' + item_url
+#         }
+#         download_Button = {
+#             'type': 'web_url',
+#             'title': 'ZeitZeichen herunterladen',
+#             'url': item_url
+#         }
+#         visit_Button = {
+#             'type': 'web_url',
+#             'url': 'http://www1.wdr.de/radio/wdr5/sendungen/zeitzeichen/index.html',
+#             'title': 'Zum WDR ZeitZeichen'
+#         }
+#         share_Button = {
+#             'type': 'element_share'
+#         }
+#         ### Buttons sind auf max 3 begrenzt! ###
+#         buttons = []
+#         buttons.append(listen_Button)
+#         buttons.append(download_Button)
+#         buttons.append(share_Button)
+#
+#         elements = {
+#             'title': title,
+#             'item_url': item_url,
+#             'image_url': image_url,
+#             'subtitle': subtitle,
+#             'buttons': buttons
+#         }
+#
+#         selection.append(elements)
+#
+#     load = {
+#             'template_type': 'generic',
+#             'elements': selection
+#         }
+#
+#     attachment = {
+#         'type': 'template',
+#         'payload': load
+#     }
+#
+#     message = {'attachment': attachment}
+#
+#     recipient = {'id': recipient_id}
+#
+#     payload = {
+#         'recipient': recipient,
+#         'message': message
+#     }
+#     send(payload)
 
 def send_text_and_quickreplies(reply, quickreplies, recipient_id):
-    # quickreplies = []
-    # reply_one = {
-    #     'content_type' : 'text',
-    #     'title' : 'Anmelden',
-    #     'payload' : 'subscribe_menue'
-    # }
-    # reply_two = {
-    #     'content_type' : 'text',
-    #     'title' : 'Info anzeigen',
-    #     'payload' : 'info'
-    # }
-    # quickreplies.append(reply_one)
-    # quickreplies.append(reply_two)
-
     message = {
         'text' : reply,
         'quick_replies' : quickreplies
@@ -353,128 +369,127 @@ def send_text_and_quickreplies(reply, quickreplies, recipient_id):
     }
     send(payload)
 
-def send_text_with_button(recipient_id, info, status="other"):
-    """send a message with a button (1-3 buttons possible)"""
-    buttons = []
-    if status == "info":
-        text = info.text
-        first_button = {
-            'type': 'postback',
-            'title': info.link_one.short_title,
-            'payload': 'next#' + str(info.link_one.short_title)
-        }
-        buttons.append(first_button)
-        if info.link_three == None and info.link_two != None:
-            second_button = {
-                'type': 'postback',
-                'title': info.link_two.short_title,
-                'payload': 'next#' + str(info.link_two.short_title)
-            }
-            buttons.append(second_button)
-        elif info.link_three != None and info.link_two != None:
-            second_button = {
-                'type': 'postback',
-                'title': info.link_two.short_title,
-                'payload': 'next#' + str(info.link_two.short_title)
-            }
-            third_button = {
-                'type': 'postback',
-                'title': info.link_three.short_title,
-                'payload': 'next#' + str(info.link_three.short_title)
-            }
-            buttons.append(second_button)
-            buttons.append(third_button)
+# def send_text_with_button(recipient_id, info, status="other"):
+#     """send a message with a button (1-3 buttons possible)"""
+#     buttons = []
+#     if status == "info":
+#         text = info.text
+#         first_button = {
+#             'type': 'postback',
+#             'title': info.link_one.short_title,
+#             'payload': 'next#' + str(info.link_one.short_title)
+#         }
+#         buttons.append(first_button)
+#         if info.link_three == None and info.link_two != None:
+#             second_button = {
+#                 'type': 'postback',
+#                 'title': info.link_two.short_title,
+#                 'payload': 'next#' + str(info.link_two.short_title)
+#             }
+#             buttons.append(second_button)
+#         elif info.link_three != None and info.link_two != None:
+#             second_button = {
+#                 'type': 'postback',
+#                 'title': info.link_two.short_title,
+#                 'payload': 'next#' + str(info.link_two.short_title)
+#             }
+#             third_button = {
+#                 'type': 'postback',
+#                 'title': info.link_three.short_title,
+#                 'payload': 'next#' + str(info.link_three.short_title)
+#             }
+#             buttons.append(second_button)
+#             buttons.append(third_button)
+#
+#     elif status == "other":
+#         text = info
+#         ok_button = {
+#             'type': 'postback',
+#             'title': 'OK',
+#             'payload': 'subscribe_user'
+#         }
+#         no_button = {
+#             'type': 'postback',
+#             'title': 'Nein, danke.',
+#             'payload': 'nope'
+#         }
+#         buttons.append(ok_button)
+#         buttons.append(no_button)
+#
+#     load = {
+#             'template_type': 'button',
+#             'text': text,
+#             'buttons': buttons
+#         }
+#
+#     attachment = {
+#         'type': 'template',
+#         'payload': load
+#     }
+#
+#     message = {'attachment': attachment}
+#
+#     recipient = {'id': recipient_id}
+#
+#     payload = {
+#         'recipient': recipient,
+#         'message': message
+#     }
+#     send(payload)
 
-    elif status == "other":
-        text = info
-        ok_button = {
-            'type': 'postback',
-            'title': 'OK',
-            'payload': 'subscribe_user'
-        }
-        no_button = {
-            'type': 'postback',
-            'title': 'Nein, danke.',
-            'payload': 'nope'
-        }
-        buttons.append(ok_button)
-        buttons.append(no_button)
-
-    load = {
-            'template_type': 'button',
-            'text': text,
-            'buttons': buttons
-        }
-
-    attachment = {
-        'type': 'template',
-        'payload': load
-    }
-
-    message = {'attachment': attachment}
-
-    recipient = {'id': recipient_id}
-
-    payload = {
-        'recipient': recipient,
-        'message': message
-    }
-    logger.debug("Payload from send_text_with_button: " + str(payload))
-    send(payload)
-
-def send_list_template(infos, recipient_id):
-    """send a generic message with a list of choosable informations"""
-    selection = []
-    count = 0
-
-    for info in infos:
-        count += 1
-        title = info.headline
-        logger.debug(title)
-
-        button = {
-            'type': 'postback',
-            'title': 'Mehr dazu',
-            'payload': 'info#' + str(info.id) + '#' + str(count)
-        }
-        buttons = []
-        buttons.append(button)
-
-        if info.media != "":
-            image = "https://infos.data.wdr.de/backend/static/media/" + str(info.media)
-            elements = {
-                'title': title,
-                'image_url': image,
-                'buttons': buttons
-            }
-        else:
-            elements = {
-                'title': title,
-                'buttons': buttons
-            }
-
-        selection.append(elements)
-
-    load = {
-            'template_type': 'list',
-            'top_element_style': 'compact',
-            'elements': selection
-        }
-
-    attachment = {
-        'type': 'template',
-        'payload': load
-    }
-
-    message = {'attachment': attachment}
-
-    recipient = {'id': recipient_id}
-
-    payload = {
-        'recipient': recipient,
-        'message': message
-    }
-    send(payload)
+# def send_list_template(infos, recipient_id):
+#     """send a generic message with a list of choosable informations"""
+#     selection = []
+#     count = 0
+#
+#     for info in infos:
+#         count += 1
+#         title = info.headline
+#         logger.debug(title)
+#
+#         button = {
+#             'type': 'postback',
+#             'title': 'Mehr dazu',
+#             'payload': 'info#' + str(info.id) + '#' + str(count)
+#         }
+#         buttons = []
+#         buttons.append(button)
+#
+#         if info.media != "":
+#             image = "https://infos.data.wdr.de/backend/static/media/" + str(info.media)
+#             elements = {
+#                 'title': title,
+#                 'image_url': image,
+#                 'buttons': buttons
+#             }
+#         else:
+#             elements = {
+#                 'title': title,
+#                 'buttons': buttons
+#             }
+#
+#         selection.append(elements)
+#
+#     load = {
+#             'template_type': 'list',
+#             'top_element_style': 'compact',
+#             'elements': selection
+#         }
+#
+#     attachment = {
+#         'type': 'template',
+#         'payload': load
+#     }
+#
+#     message = {'attachment': attachment}
+#
+#     recipient = {'id': recipient_id}
+#
+#     payload = {
+#         'recipient': recipient,
+#         'message': message
+#     }
+#     send(payload)
 
 
 def send(payload):
