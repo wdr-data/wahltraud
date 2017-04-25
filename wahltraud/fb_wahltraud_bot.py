@@ -54,7 +54,6 @@ def handle_messages(data):
         if "message" in event and event['message'].get("text", "") != "":
             text = event['message']['text']
             quick_reply = event['message']['quick_reply']['payload']
-            logger.debug('received message: ' + text + " " + quick_reply)
             if text == '/config':
                 reply = "Hier kannst du deine facebook Messenger-ID hinterlegen um automatisch " \
                         "Infos zu den wichtigsten Begriffen rund um die Wahl von uns zu erhalten.\n" \
@@ -94,7 +93,6 @@ def handle_messages(data):
             send_text(sender_id, next_info.title)
             send_text_with_button(sender_id, next_info, 'info')
         elif "postback" in event and event['postback'].get("payload", "") == "subscribe_menue" :
-        #or "message" in event and event['message'].get("quick_reply", "").get("payload", "") == "subscribe_menue":
             reply = "Hier kannst du deine facebook Messenger-ID hinterlegen um automatisch " \
                     "Infos zu den wichtigsten Begriffen rund um die Wahl von uns zu erhalten.\n" \
                     "Wenn du dich registrieren möchtest klicke \"OK\". Du kannst deine Entscheidung jederzet wieder ändern."
@@ -438,7 +436,7 @@ def send(payload):
                   headers=headers)
 
 
-schedule.every().day.at("10:00").do(push_notification)
+schedule.every().day.at("12:30").do(push_notification)
 
 
 def schedule_loop():
