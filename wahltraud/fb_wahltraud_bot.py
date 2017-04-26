@@ -88,6 +88,8 @@ def handle_messages(data):
             send_info(sender_id, random_info)
         elif "postback" in event and event['postback'].get("payload", "") == "subscribe_menue" :
             subscribe_process(sender_id)
+        elif "postback" in event and event['postback'].get("payload", "") == "share_bot":
+            share(sender_id)
         elif "postback" in event and event['postback'].get("payload", "") == "impressum":
             reply = "Dies ist ein Produkt des Westdeutschen Rundfunks. Wir befinden uns noch in der Testphase und "\
             "freuen uns über jedes Feedback um uns weiterentwickeln zu können. Danke für Eure Mithilfe! \n"\
@@ -287,73 +289,74 @@ def send_image(recipient_id, image_url):
 #     }
 #     send(payload)
 
-# def send_generic_template(recipient_id, gifts):
-#     """send a generic message with title, text, image and buttons"""
-#     selection = []
-#
-#     for key in gifts:
-#         logger.debug(key)
-#         gift = key
-#
-#         title = gifts[gift]['title']
-#         logger.debug(title)
-#         item_url = gifts[gift]['link']
-#         image_url = 'http://www1.wdr.de/mediathek/audio/sendereihen-bilder/wdr_sendereihenbild100~_v-Podcast.jpg'
-#         subtitle = gifts[gift]['teaser']
-#
-#         listen_Button = {
-#             'type': 'postback',
-#             'title': 'ZeitZeichen anhören',
-#             'payload': 'listen_audio#' + item_url
-#         }
-#         download_Button = {
-#             'type': 'web_url',
-#             'title': 'ZeitZeichen herunterladen',
-#             'url': item_url
-#         }
-#         visit_Button = {
-#             'type': 'web_url',
-#             'url': 'http://www1.wdr.de/radio/wdr5/sendungen/zeitzeichen/index.html',
-#             'title': 'Zum WDR ZeitZeichen'
-#         }
-#         share_Button = {
-#             'type': 'element_share'
-#         }
-#         ### Buttons sind auf max 3 begrenzt! ###
-#         buttons = []
-#         buttons.append(listen_Button)
-#         buttons.append(download_Button)
-#         buttons.append(share_Button)
-#
-#         elements = {
-#             'title': title,
-#             'item_url': item_url,
-#             'image_url': image_url,
-#             'subtitle': subtitle,
-#             'buttons': buttons
-#         }
-#
-#         selection.append(elements)
-#
-#     load = {
-#             'template_type': 'generic',
-#             'elements': selection
-#         }
-#
-#     attachment = {
-#         'type': 'template',
-#         'payload': load
-#     }
-#
-#     message = {'attachment': attachment}
-#
-#     recipient = {'id': recipient_id}
-#
-#     payload = {
-#         'recipient': recipient,
-#         'message': message
-#     }
-#     send(payload)
+def share(recipient_id):
+    """send a generic message with title, text, image and buttons"""
+    shared_title = 'Hallo, ich bin Wahltraud! 🤖 Ich bin dein Infobot zur Landtagswahl in NRW 2017!'
+    shared_subtitle = 'Am 14. Mai sind Landtagswahlen und ich bin dein Guide durch den Wahl-Dschungel.'
+    shared_button = {
+        'type': 'web_url',
+        'url': 'https://m.me/wahltraud',
+        'title': 'Try Wahltraud'
+    }
+    shared_buttons = []
+    shared_buttons.append(shared_button)
+
+    shared_elements = {
+        'title': shared_title,
+        'subtitle': shared_subtitle,
+        'buttons': shared_buttons
+    }
+    shared_selection = []
+    shared_selection.append(shared_elements)
+
+    shared_load = {
+        'template_type': 'generic',
+        'elements': shared_selection
+    }
+    shared_attachment = {
+        'type': 'template',
+        'payload': shared_load
+    }
+    shared_message = {'attachment': shared_attachment}
+
+    title = 'Teile mich mit deinen Freunden!'
+    subtitle = 'Wahltraud freut sich über jeden neuen Besucher... Klicke auf \"Teilen\".'
+
+    share_Button = {
+        'type': 'element_share',
+        'share_contents': shared_message
+    }
+    ### Buttons sind auf max 3 begrenzt! ###
+    buttons = []
+    buttons.append(share_Button)
+
+    elements = {
+        'title': title,
+        'subtitle': subtitle,
+        'buttons': buttons
+    }
+    selection = []
+    selection.append(elements)
+
+    load = {
+        'template_type': 'generic',
+        'elements': selection
+    }
+    attachment = {
+        'type': 'template',
+        'payload': load
+    }
+
+    message = {'attachment': attachment}
+
+    recipient = {'id': recipient_id}
+
+    payload = {
+        'recipient': recipient,
+        'message': message
+    }
+    logger.debug(payload)
+    send(payload)
 
 def send_text_and_quickreplies(reply, quickreplies, recipient_id):
     message = {
