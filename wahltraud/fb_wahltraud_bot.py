@@ -75,7 +75,8 @@ def handle_messages(data):
                 reply = "Schade. Vielleicht beim nächsten mal..."
                 send_text(sender_id, reply)
             else:
-                reply = "echo: " + text
+                reply = "Ich bin nur ein einfaches Geschöpf und ich habe deine Nachricht nicht verstanden. " \
+                        "Nutze bitte die Buttons bzw. das Menü um mit mir zu kommunizieren."
                 send_text(sender_id, reply)
         elif "postback" in event and event['postback'].get("payload", "") == "start":
             send_greeting(sender_id)
@@ -88,12 +89,13 @@ def handle_messages(data):
             send_info(sender_id, random_info)
         elif "postback" in event and event['postback'].get("payload", "") == "subscribe_menue" :
             subscribe_process(sender_id)
-        elif "postback" in event and event['postback'].get("payload", "") == "share_bot":
+        elif "postback" in event and event['postback'].get("payload", "") == "share_bot
             share(sender_id)
         elif "postback" in event and event['postback'].get("payload", "") == "impressum":
             reply = "Dies ist ein Produkt des Westdeutschen Rundfunks. Wir befinden uns noch in der Testphase und "\
-            "freuen uns über jedes Feedback um uns weiterentwickeln zu können. Danke für Eure Mithilfe! \n"\
-            "Redaktion: Miriam Hochhard - Technische Unterstützung: Lisa Achenbach, Patricia Ennenbach, Jannes Hoeke"
+            "freuen uns über jedes Feedback um uns weiterentwickeln zu können. \n"\
+            "Sende uns Feedback über die Messener Option \"Feedback senden\". Danke für Deine Mithilfe!"
+            "Redaktion: Miriam Hochhard - Technische Umsetzung: Lisa Achenbach, Patricia Ennenbach, Jannes Hoeke"
             send_text(sender_id, reply)
 
 def get_data():
