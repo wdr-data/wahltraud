@@ -48,11 +48,10 @@ def handle_messages(data):
         sender_id = event['sender']['id']
         info_list = list(Entry.objects.all())
         # check if we actually have some input
-        if "message" in event and event['message'].get("text", "") != "":
-            text = event['message']['text']
+        if "message" in event and event['message'].get("quick_reply", "") != "":
             quick_reply = event['message']['quick_reply']['payload']
-            if Entry.objects.filter(short_title=text).exists():
-                next_info = Entry.objects.get(short_title=text)
+            if Entry.objects.filter(short_title=quick_reply).exists():
+                next_info = Entry.objects.get(short_title=quick_reply)
                 send_text(sender_id, next_info.title)
                 if next_info.media != "":
                     image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(next_info.media)
@@ -74,10 +73,6 @@ def handle_messages(data):
             elif quick_reply == "nope":
                 reply = "Schade. Vielleicht beim nächsten mal..."
                 send_text(sender_id, reply)
-            else:
-                reply = "Ich bin nur ein einfaches Geschöpf und ich habe deine Nachricht nicht verstanden. " \
-                        "Nutze bitte die Buttons bzw. das Menü um mit mir zu kommunizieren."
-                send_text(sender_id, reply)
         elif "postback" in event and event['postback'].get("payload", "") == "start":
             send_greeting(sender_id)
         elif "postback" in event and event['postback'].get("payload", "") == "info":
@@ -97,6 +92,8 @@ def handle_messages(data):
             "Sende uns Feedback über die Messener Option \"Feedback senden\". Danke für Deine Mithilfe!"\
             "Redaktion: Miriam Hochhard - Technische Umsetzung: Lisa Achenbach, Patricia Ennenbach, Jannes Hoeke"
             send_text(sender_id, reply)
+        else:
+            text_reply(sender_id)
 
 def get_data():
     today = timezone.localtime(timezone.now()).date()
@@ -199,6 +196,21 @@ def send_greeting(recipient_id):
     }
     quickreplies.append(reply_one)
     quickreplies.append(reply_two)
+
+    send_text_and_quickreplies(text, quickreplies, recipient_id)
+
+def text_reply(recipient_id):
+    text = "Ich bin nur ein einfaches Geschöpf und ich habe deine Nachricht nicht verstanden. " \
+            "Nutze bitte die Buttons bzw. das Menü um mit mir zu kommunizieren.\n\n" \
+            "Möchtest du eine Wahlinfo von mir bekommen?"
+
+    quickreplies = []
+    reply = {
+        'content_type' : 'text',
+        'title' : 'Info anzeigen',
+        'payload' : 'info'
+    }
+    quickreplies.append(reply)
 
     send_text_and_quickreplies(text, quickreplies, recipient_id)
 
