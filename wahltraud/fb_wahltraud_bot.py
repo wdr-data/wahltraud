@@ -94,7 +94,7 @@ def handle_messages(data):
         elif "postback" in event and event['postback'].get("payload", "") == "impressum":
             reply = "Dies ist ein Produkt des Westdeutschen Rundfunks. Wir befinden uns noch in der Testphase und "\
             "freuen uns über jedes Feedback um uns weiterentwickeln zu können. \n"\
-            "Sende uns Feedback über die Messener Option \"Feedback senden\". Danke für Deine Mithilfe!"
+            "Sende uns Feedback über die Messener Option \"Feedback senden\". Danke für Deine Mithilfe!"\
             "Redaktion: Miriam Hochhard - Technische Umsetzung: Lisa Achenbach, Patricia Ennenbach, Jannes Hoeke"
             send_text(sender_id, reply)
 
