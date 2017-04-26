@@ -16,7 +16,7 @@ from backend.models import Entry, FacebookUser
 # Enable logging
 logger = logging.getLogger(__name__)
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.DEBUG)
+                    level=logging.INFO, filename='wahltraud.log', filemode='a')
 
 logger.info('FB Wahltraud Bot Logging')
 
@@ -43,7 +43,7 @@ def receive_message():
 def handle_messages(data):
     """handle all incoming messages"""
     messaging_events = data['entry'][0]['messaging']
-    logger.debug(messaging_events)
+    #logger.debug(messaging_events)
     for event in messaging_events:
         sender_id = event['sender']['id']
         info_list = list(Entry.objects.all())
@@ -99,7 +99,6 @@ def get_data():
     today = timezone.localtime(timezone.now()).date()
     info_list = list(Entry.objects.all())
     random_info = random.choice(info_list)
-    logger.debug('Random Info Title: ' + random_info.title)
     return random_info #Info.objects.filter(pub_date__date=today)[:4]
 
 def subscribe_process(recipient_id):
@@ -137,8 +136,8 @@ def subscribe_user(user_id):
         send_text(user_id, reply)
     else:
         FacebookUser.objects.create(uid = user_id)
-        logger.debug('User with ID ' + str(FacebookUser.objects.latest('add_date')) + ' subscribed.')
-        reply = "Danke für deine Anmeldung! 😃\nDu erhältst nun ein tägliches Update jeweils um 10:00 Uhr. \n" \
+        logger.info('added user with ID: ' + str(FacebookUser.objects.latest('add_date')))
+        reply = "Danke für deine Anmeldung! 😃\nDu erhältst nun ein tägliches Update jeweils um 20:00 Uhr. \n" \
                 "Hier ist schonmal deine erst Info..."
         send_text(user_id, reply)
         random_info = get_data()
@@ -147,7 +146,7 @@ def subscribe_user(user_id):
 
 def unsubscribe_user(user_id):
     if FacebookUser.objects.filter(uid = user_id).exists():
-        logger.debug('User with ID ' + str(FacebookUser.objects.get(uid = user_id)) + ' unsubscribed.')
+        logger.debug('deleted user with ID: ' + str(FacebookUser.objects.get(uid = user_id)))
         FacebookUser.objects.get(uid = user_id).delete()
         reply = "Schade, dass du uns verlassen möchtest. Komm gerne wieder, wenn ich dir fehle. 👋\n" \
                 "Du wurdest aus der Empfängerliste für automatische Nachrichten gestrichen."
@@ -165,10 +164,10 @@ def unsubscribe_user(user_id):
         send_text_and_quickreplies(reply, quickreplies, user_id)
 
 def push_notification():
-    data = get_data()
     user_list = FacebookUser.objects.values_list('uid', flat=True)
     for user in user_list:
-        logger.debug("Send Push to: " + user)
+        data = get_data()
+        logger.info("user " + user + " received push with title " + date.title)
         reply = "Heute haben wir folgendes Thema für dich:"
         send_text(user, reply)
         send_text(user, data.title)
@@ -176,6 +175,7 @@ def push_notification():
             image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(data.media)
             send_image(user, image)
         send_info(user, data)
+    logger.info("pushed messages to " + len(user_list) + " users")
 
 def send_greeting(recipient_id):
     text = "Hallo, ich bin Wahltraud! 🤖 Ich bin dein persönlicher Infobot zur Landtagswahl in NRW 2017!\n" \
@@ -304,6 +304,7 @@ def send_image(recipient_id, image_url):
 #     send(payload)
 
 def share(recipient_id):
+    logger.info("shared button requeted")
     """send a generic message with title, text, image and buttons"""
     shared_title = 'Hallo, ich bin Wahltraud! 🤖 Ich bin dein Infobot zur Landtagswahl in NRW 2017!'
     shared_subtitle = 'Am 14. Mai sind Landtagswahlen und ich bin dein Guide durch den Wahl-Dschungel.'
@@ -369,7 +370,6 @@ def share(recipient_id):
         'recipient': recipient,
         'message': message
     }
-    logger.debug(payload)
     send(payload)
 
 def send_text_and_quickreplies(reply, quickreplies, recipient_id):
@@ -511,14 +511,14 @@ def send_text_and_quickreplies(reply, quickreplies, recipient_id):
 
 def send(payload):
     """send a payload via the graph API"""
-    logger.debug("JSON Payload: " + json.dumps(payload))
+    #logger.debug("JSON Payload: " + json.dumps(payload))
     headers = {'Content-Type': 'application/json'}
     requests.post("https://graph.facebook.com/v2.6/me/messages?access_token=" + PAGE_TOKEN,
                   data=json.dumps(payload),
                   headers=headers)
 
 
-schedule.every().day.at("10:00").do(push_notification)
+schedule.every().day.at("20:00").do(push_notification)
 
 def schedule_loop():
     while True:
