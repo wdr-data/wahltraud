@@ -89,7 +89,7 @@ def handle_messages(data):
             send_info(sender_id, random_info)
         elif "postback" in event and event['postback'].get("payload", "") == "subscribe_menue" :
             subscribe_process(sender_id)
-        elif "postback" in event and event['postback'].get("payload", "") == "share_bot
+        elif "postback" in event and event['postback'].get("payload", "") == "share_bot"
             share(sender_id)
         elif "postback" in event and event['postback'].get("payload", "") == "impressum":
             reply = "Dies ist ein Produkt des Westdeutschen Rundfunks. Wir befinden uns noch in der Testphase und "\
