@@ -93,6 +93,9 @@ def handle_messages(data):
                 "Sende uns Feedback über die Messener Option \"Feedback senden\". Danke für Deine Mithilfe! \n"\
                 "Redaktion: Miriam Hochhard - Technische Umsetzung: Lisa Achenbach, Patricia Ennenbach, Jannes Hoeke"
                 send_text(sender_id, reply)
+            elif text == "Hallo".lower() or text == "Hey".lower() or text == "Hi".lower():
+                reply = "Hallo!"
+                send_text(sender_id, reply)
         elif "postback" in event and event['postback'].get("payload", "") != "":
             payload = event['postback']['payload']
             if payload == "start":
