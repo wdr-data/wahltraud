@@ -16,7 +16,7 @@ from backend.models import Entry, FacebookUser
 # Enable logging
 logger = logging.getLogger(__name__)
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO, filename='wahltraud.log', filemode='a')
+                    level=logging.INFO)
 
 logger.info('FB Wahltraud Bot Logging')
 
@@ -43,7 +43,7 @@ def receive_message():
 def handle_messages(data):
     """handle all incoming messages"""
     messaging_events = data['entry'][0]['messaging']
-    #logger.debug(messaging_events)
+    logger.debug(messaging_events)
     for event in messaging_events:
         sender_id = event['sender']['id']
         info_list = list(Entry.objects.all())
@@ -52,6 +52,7 @@ def handle_messages(data):
             quick_reply = event['message']['quick_reply']['payload']
             if Entry.objects.filter(short_title=quick_reply).exists():
                 next_info = Entry.objects.get(short_title=quick_reply)
+                logger.info('weitere Info angefragt: ' + next_info.title)
                 send_text(sender_id, next_info.title)
                 if next_info.media != "":
                     image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(next_info.media)
@@ -146,7 +147,7 @@ def subscribe_user(user_id):
 
 def unsubscribe_user(user_id):
     if FacebookUser.objects.filter(uid = user_id).exists():
-        logger.debug('deleted user with ID: ' + str(FacebookUser.objects.get(uid = user_id)))
+        logger.info('deleted user with ID: ' + str(FacebookUser.objects.get(uid = user_id)))
         FacebookUser.objects.get(uid = user_id).delete()
         reply = "Schade, dass du uns verlassen möchtest. Komm gerne wieder, wenn ich dir fehle. 👋\n" \
                 "Du wurdest aus der Empfängerliste für automatische Nachrichten gestrichen."
