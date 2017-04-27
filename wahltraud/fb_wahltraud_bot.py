@@ -188,10 +188,9 @@ def unsubscribe_user(user_id):
         send_text_and_quickreplies(reply, quickreplies, user_id)
 
 def push_notification():
+    data = get_data()
     user_list = FacebookUser.objects.values_list('uid', flat=True)
     for user in user_list:
-        data = get_data()
-        logger.info("user " + user + " received push with title " + date.title)
         reply = "Heute haben wir folgendes Thema für dich:"
         send_text(user, reply)
         send_text(user, data.title)
