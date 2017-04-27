@@ -96,6 +96,8 @@ def handle_messages(data):
             elif text == "Hallo".lower() or text == "Hey".lower() or text == "Hi".lower():
                 reply = "Hallo!"
                 send_text(sender_id, reply)
+            else:
+                text_reply(sender_id)
         elif "postback" in event and event['postback'].get("payload", "") != "":
             payload = event['postback']['payload']
             if payload == "start":
