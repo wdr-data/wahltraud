@@ -72,7 +72,7 @@ def handle_messages(data):
             elif quick_reply == "unsubscribe":
                 unsubscribe_user(sender_id)
             elif quick_reply == "nope":
-                reply = "Schade. Vielleicht beim nächsten mal..."
+                reply = "Schade. Vielleicht beim nächsten Mal..."
                 send_text(sender_id, reply)
         elif "message" in event and event['message'].get("quick_reply", "") == "" :
             text = event['message']['text'].lower()
@@ -90,7 +90,7 @@ def handle_messages(data):
             elif text == "Impressum".lower():
                 reply = "Dies ist ein Produkt des Westdeutschen Rundfunks. Wir befinden uns noch in der Testphase und "\
                 "freuen uns über jedes Feedback um uns weiterentwickeln zu können. \n"\
-                "Sende uns Feedback über die Messener Option \"Feedback senden\". Danke für Deine Mithilfe!"\
+                "Sende uns Feedback über die Messener Option \"Feedback senden\". Danke für Deine Mithilfe! \n"\
                 "Redaktion: Miriam Hochhard - Technische Umsetzung: Lisa Achenbach, Patricia Ennenbach, Jannes Hoeke"
                 send_text(sender_id, reply)
         elif "postback" in event and event['postback'].get("payload", "") != "":
@@ -109,10 +109,10 @@ def handle_messages(data):
             elif payload == "share_bot":
                 share(sender_id)
             elif payload == "impressum":
-                reply = "Dies ist ein Produkt des Westdeutschen Rundfunks. Wir befinden uns noch in der Testphase und "\
-                "freuen uns über jedes Feedback um uns weiterentwickeln zu können. \n"\
-                "Sende uns Feedback über die Messener Option \"Feedback senden\". Danke für Deine Mithilfe!"\
-                "Redaktion: Miriam Hochhard - Technische Umsetzung: Lisa Achenbach, Patricia Ennenbach, Jannes Hoeke"
+                reply = "Dies ist ein Produkt des Westdeutschen Rundfunks. http://www1.wdr.de/impressum/index.html \n\n" \
+                "Wir befinden uns noch in der Testphase und freuen uns über jedes Feedback, um uns weiterentwickeln zu können. \n"\
+                "Sende uns Feedback über die Messener Option \"Feedback senden\". Danke für Deine Mithilfe! \n\n"\
+                "Redaktion: Miriam Hochhard \nTechnische Umsetzung: Lisa Achenbach, Patricia Ennenbach, Jannes Höke"
                 send_text(sender_id, reply)
         else:
             text_reply(sender_id)
@@ -124,8 +124,7 @@ def get_data():
     return random_info #Info.objects.filter(pub_date__date=today)[:4]
 
 def subscribe_process(recipient_id):
-    text = "Du kannst deine facebook Messenger-ID hinterlegen um automatisch " \
-            "Infos zu den wichtigsten Begriffen rund um die Wahl von uns zu erhalten.\n" \
+    text = "Melde dich an, um automatisch Infos zu den wichtigsten Begriffen rund um die Wahl von mir zu erhalten. " \
             "Wenn du dich registrieren möchtest klicke \"Anmelden\". \n\n" \
             "Du kannst diese Entscheidung jederzet wieder ändern oder jetzt erstmal auf später verschieben. " \
             "Wenn du keine automatischen Nachrichten mehr von uns erhalten möchtest klicke \"Abmelden\". \n\n" \
@@ -143,7 +142,7 @@ def subscribe_process(recipient_id):
     }
     reply_three = {
         'content_type' : 'text',
-        'title' : 'Später vielleicht.',
+        'title' : 'Jetzt nicht',
         'payload' : 'nope'
     }
     quickreplies.append(reply_one)
@@ -174,7 +173,7 @@ def unsubscribe_user(user_id):
                 "Du wurdest aus der Empfängerliste für automatische Nachrichten gestrichen."
         send_text(user_id, reply)
     else:
-        reply = "Du bist noch kein Nutzer der Push Nachrichten. Wenn du dich anmelden möchtest wähle \'Anmelden\' im Menü " \
+        reply = "Du bist noch kein Nutzer der Push-Nachrichten. Wenn du dich anmelden möchtest wähle \"Anmelden\" im Menü " \
                 "oder klicke jetzt auf \"Anmelden\"."
         quickreplies = []
         reply_one = {
@@ -203,7 +202,7 @@ def send_greeting(recipient_id):
     text = "Hallo, ich bin Wahltraud! 🤖 Ich bin dein persönlicher Infobot zur Landtagswahl in NRW 2017!\n" \
             "Am 14. Mai sind Landtagswahlen! Darum bin ich für die nächsten Tage dein Guide durch den Wahl-Dschungel. " \
             "Einmal täglich füttere ich dich mit einem wichtigen Begriff zur Landtagswahl in NRW und erkläre, "\
-            "was es damit auf sich hat. \nWenn du genug weißt, kannst du mich auch einfach wieder abbestellen. \n\nBis dann!"
+            "was es damit auf sich hat. \nWenn du genug weißt, kannst du mich auch einfach wieder abbestellen."
 
     quickreplies = []
     reply_one = {
@@ -213,7 +212,7 @@ def send_greeting(recipient_id):
     }
     reply_two = {
         'content_type' : 'text',
-        'title' : 'Info anzeigen',
+        'title' : 'Begriff anzeigen',
         'payload' : 'info'
     }
     quickreplies.append(reply_one)
@@ -224,12 +223,12 @@ def send_greeting(recipient_id):
 def text_reply(recipient_id):
     text = "Ich bin nur ein einfaches Geschöpf und ich habe deine Nachricht nicht verstanden. " \
             "Nutze bitte die Buttons bzw. das Menü um mit mir zu kommunizieren.\n\n" \
-            "Möchtest du eine Wahlinfo von mir bekommen?"
+            "Möchtest du eine Begriffserklärung zur Wahl von mir bekommen?"
 
     quickreplies = []
     reply = {
         'content_type' : 'text',
-        'title' : 'Info anzeigen',
+        'title' : 'Begriff anzeigen',
         'payload' : 'info'
     }
     quickreplies.append(reply)
@@ -303,28 +302,6 @@ def send_image(recipient_id, image_url):
     }
     send(payload)
 
-# def send_audio(recipient_id, audio_file):
-#     """send an audio to a recipient"""
-#     audio_file = "https://mediandr-a.akamaihd.net/progressive/2017/0302/AU-20170302-0656-0300.mp3"
-#
-#     recipient = {"id": recipient_id}
-#     audio = {'url': audio_file}
-#     filedata = '@' + audio_file + ';type=audio/mp3'
-#
-#     attachment = {
-#         'type': 'audio',
-#         'payload': audio
-#     }
-#
-#     message = {'attachment': attachment}
-#
-#     payload = {
-#         'recipient': recipient,
-#         'message': message,
-#         'filedata': filedata
-#     }
-#     send(payload)
-
 def share(recipient_id):
     logger.info("shared button requeted")
     """send a generic message with title, text, image and buttons"""
@@ -357,7 +334,7 @@ def share(recipient_id):
     shared_message = {'attachment': shared_attachment}
 
     title = 'Teile mich mit deinen Freunden!'
-    subtitle = 'Wahltraud freut sich über jeden neuen Besucher... Klicke auf \"Teilen\".'
+    subtitle = 'Wahltraud freut sich über jeden neuen User... Klicke auf \"Teilen\".'
 
     share_Button = {
         'type': 'element_share',
@@ -407,128 +384,6 @@ def send_text_and_quickreplies(reply, quickreplies, recipient_id):
         'message': message
     }
     send(payload)
-
-# def send_text_with_button(recipient_id, info, status="other"):
-#     """send a message with a button (1-3 buttons possible)"""
-#     buttons = []
-#     if status == "info":
-#         text = info.text
-#         first_button = {
-#             'type': 'postback',
-#             'title': info.link_one.short_title,
-#             'payload': 'next#' + str(info.link_one.short_title)
-#         }
-#         buttons.append(first_button)
-#         if info.link_three == None and info.link_two != None:
-#             second_button = {
-#                 'type': 'postback',
-#                 'title': info.link_two.short_title,
-#                 'payload': 'next#' + str(info.link_two.short_title)
-#             }
-#             buttons.append(second_button)
-#         elif info.link_three != None and info.link_two != None:
-#             second_button = {
-#                 'type': 'postback',
-#                 'title': info.link_two.short_title,
-#                 'payload': 'next#' + str(info.link_two.short_title)
-#             }
-#             third_button = {
-#                 'type': 'postback',
-#                 'title': info.link_three.short_title,
-#                 'payload': 'next#' + str(info.link_three.short_title)
-#             }
-#             buttons.append(second_button)
-#             buttons.append(third_button)
-#
-#     elif status == "other":
-#         text = info
-#         ok_button = {
-#             'type': 'postback',
-#             'title': 'OK',
-#             'payload': 'subscribe_user'
-#         }
-#         no_button = {
-#             'type': 'postback',
-#             'title': 'Nein, danke.',
-#             'payload': 'nope'
-#         }
-#         buttons.append(ok_button)
-#         buttons.append(no_button)
-#
-#     load = {
-#             'template_type': 'button',
-#             'text': text,
-#             'buttons': buttons
-#         }
-#
-#     attachment = {
-#         'type': 'template',
-#         'payload': load
-#     }
-#
-#     message = {'attachment': attachment}
-#
-#     recipient = {'id': recipient_id}
-#
-#     payload = {
-#         'recipient': recipient,
-#         'message': message
-#     }
-#     send(payload)
-
-# def send_list_template(infos, recipient_id):
-#     """send a generic message with a list of choosable informations"""
-#     selection = []
-#     count = 0
-#
-#     for info in infos:
-#         count += 1
-#         title = info.headline
-#         logger.debug(title)
-#
-#         button = {
-#             'type': 'postback',
-#             'title': 'Mehr dazu',
-#             'payload': 'info#' + str(info.id) + '#' + str(count)
-#         }
-#         buttons = []
-#         buttons.append(button)
-#
-#         if info.media != "":
-#             image = "https://infos.data.wdr.de/backend/static/media/" + str(info.media)
-#             elements = {
-#                 'title': title,
-#                 'image_url': image,
-#                 'buttons': buttons
-#             }
-#         else:
-#             elements = {
-#                 'title': title,
-#                 'buttons': buttons
-#             }
-#
-#         selection.append(elements)
-#
-#     load = {
-#             'template_type': 'list',
-#             'top_element_style': 'compact',
-#             'elements': selection
-#         }
-#
-#     attachment = {
-#         'type': 'template',
-#         'payload': load
-#     }
-#
-#     message = {'attachment': attachment}
-#
-#     recipient = {'id': recipient_id}
-#
-#     payload = {
-#         'recipient': recipient,
-#         'message': message
-#     }
-#     send(payload)
 
 
 def send(payload):
