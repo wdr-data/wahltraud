@@ -16,7 +16,7 @@ from backend.models import Entry, FacebookUser
 # Enable logging
 logger = logging.getLogger(__name__)
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO)
+                    level=logging.DEBUG)
 
 logger.info('FB Wahltraud Bot Logging')
 
@@ -59,12 +59,12 @@ def handle_messages(data):
                     send_image(sender_id, image)
                 send_info(sender_id, next_info)
             elif quick_reply == "info":
-                random_info = get_data()
-                send_text(sender_id, random_info.title)
-                if random_info.media != "":
-                    image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(random_info.media)
+                info = get_data()
+                send_text(sender_id, info.title)
+                if info.media != "":
+                    image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
                     send_image(sender_id, image)
-                send_info(sender_id, random_info)
+                send_info(sender_id, info)
             elif quick_reply == "subscribe_menue":
                 subscribe_process(sender_id)
             elif quick_reply == "subscribe":
@@ -74,25 +74,46 @@ def handle_messages(data):
             elif quick_reply == "nope":
                 reply = "Schade. Vielleicht beim nächsten mal..."
                 send_text(sender_id, reply)
-        elif "postback" in event and event['postback'].get("payload", "") == "start":
-            send_greeting(sender_id)
-        elif "postback" in event and event['postback'].get("payload", "") == "info":
-            random_info = get_data()
-            send_text(sender_id, random_info.title)
-            if random_info.media != "":
-                image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(random_info.media)
-                send_image(sender_id, image)
-            send_info(sender_id, random_info)
-        elif "postback" in event and event['postback'].get("payload", "") == "subscribe_menue" :
-            subscribe_process(sender_id)
-        elif "postback" in event and event['postback'].get("payload", "") == "share_bot":
-            share(sender_id)
-        elif "postback" in event and event['postback'].get("payload", "") == "impressum":
-            reply = "Dies ist ein Produkt des Westdeutschen Rundfunks. Wir befinden uns noch in der Testphase und "\
-            "freuen uns über jedes Feedback um uns weiterentwickeln zu können. \n"\
-            "Sende uns Feedback über die Messener Option \"Feedback senden\". Danke für Deine Mithilfe!"\
-            "Redaktion: Miriam Hochhard - Technische Umsetzung: Lisa Achenbach, Patricia Ennenbach, Jannes Hoeke"
-            send_text(sender_id, reply)
+        elif "message" in event and event['message'].get("quick_reply", "") == "" :
+            text = event['message']['text'].lower()
+            if text == "Schick mir eine Info zur Wahl!".lower():
+                info = get_data()
+                send_text(sender_id, info.title)
+                if info.media != "":
+                    image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
+                    send_image(sender_id, image)
+                send_info(sender_id, info)
+            elif text == "Anmelden".lower() or text == "Abmelden".lower():
+                subscribe_process(sender_id)
+            elif text == "Teilen".lower():
+                share(sender_id)
+            elif text == "Impressum".lower():
+                reply = "Dies ist ein Produkt des Westdeutschen Rundfunks. Wir befinden uns noch in der Testphase und "\
+                "freuen uns über jedes Feedback um uns weiterentwickeln zu können. \n"\
+                "Sende uns Feedback über die Messener Option \"Feedback senden\". Danke für Deine Mithilfe!"\
+                "Redaktion: Miriam Hochhard - Technische Umsetzung: Lisa Achenbach, Patricia Ennenbach, Jannes Hoeke"
+                send_text(sender_id, reply)
+        elif "postback" in event and event['postback'].get("payload", "") != "":
+            payload = event['postback']['payload']
+            if payload == "start":
+                send_greeting(sender_id)
+            elif payload == "info":
+                random_info = get_data()
+                send_text(sender_id, random_info.title)
+                if random_info.media != "":
+                    image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(random_info.media)
+                    send_image(sender_id, image)
+                send_info(sender_id, random_info)
+            elif payload == "subscribe_menue" :
+                subscribe_process(sender_id)
+            elif payload == "share_bot":
+                share(sender_id)
+            elif payload == "impressum":
+                reply = "Dies ist ein Produkt des Westdeutschen Rundfunks. Wir befinden uns noch in der Testphase und "\
+                "freuen uns über jedes Feedback um uns weiterentwickeln zu können. \n"\
+                "Sende uns Feedback über die Messener Option \"Feedback senden\". Danke für Deine Mithilfe!"\
+                "Redaktion: Miriam Hochhard - Technische Umsetzung: Lisa Achenbach, Patricia Ennenbach, Jannes Hoeke"
+                send_text(sender_id, reply)
         else:
             text_reply(sender_id)
 
