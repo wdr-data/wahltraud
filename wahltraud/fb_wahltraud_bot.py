@@ -9,7 +9,7 @@ import requests
 import random
 import schedule
 import time
-from django.utils import timezone
+import datetime
 
 from backend.models import Entry, FacebookUser
 
@@ -118,10 +118,13 @@ def handle_messages(data):
             text_reply(sender_id)
 
 def get_data():
-    today = timezone.localtime(timezone.now()).date()
-    info_list = list(Entry.objects.all())
-    random_info = random.choice(info_list)
-    return random_info #Info.objects.filter(pub_date__date=today)[:4]
+    today = datetime.datetime.now().date()
+    info = Entry.objects.filter(pub_date__date=today)
+    if info.count() == 0:
+        info = Entry.objects.get(short_title="Zeitplan")
+    elif info.count() > 1:
+        info = random.choice(info)
+    return info
 
 def subscribe_process(recipient_id):
     text = "Melde dich an, um automatisch Infos zu den wichtigsten Begriffen rund um die Wahl von mir zu erhalten. " \
