@@ -166,12 +166,16 @@ def subscribe_user(user_id):
     else:
         FacebookUser.objects.create(uid = user_id)
         logger.info('added user with ID: ' + str(FacebookUser.objects.latest('add_date')))
-        reply = "Danke für deine Anmeldung! 😃\nDu erhältst nun ein tägliches Update jeweils um 20:00 Uhr. \n" \
-                "Hier ist schonmal deine erst Info..."
-        send_text(user_id, reply)
-        random_info = get_data()
-        send_text(user_id, random_info.title)
-        send_info(user_id, random_info)
+        if datetime.datetime.now().time() >= time(20,00):
+            reply = "Danke für deine Anmeldung! 😃 Du erhältst nun ein tägliches Update jeweils um 20:00 Uhr. \n"\
+                    "Hier ist die heutige Info..."
+            send_text(user_id, reply)
+            info = get_data()
+            send_text(user_id, info.title)
+            send_info(user_id, info)
+        else:
+            reply = "Danke für deine Anmeldung! 😃 Du erhältst nun ein tägliches Update jeweils um 20:00 Uhr.\nBis später"
+            send_text(user_id, reply)
 
 def unsubscribe_user(user_id):
     if FacebookUser.objects.filter(uid = user_id).exists():
