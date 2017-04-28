@@ -246,34 +246,37 @@ def send_info(recipient_id, info):
     text = info.text
 
     quickreplies = []
-    first = {
-        'content_type' : 'text',
-        'title': info.link_one.short_title,
-        'payload': str(info.link_one.short_title)
-    }
-    quickreplies.append(first)
-    if info.link_three == None and info.link_two != None:
-        second = {
+    if info.link_one != None:
+        first = {
             'content_type' : 'text',
-            'title': info.link_two.short_title,
-            'payload': str(info.link_two.short_title)
+            'title': info.link_one.short_title,
+            'payload': str(info.link_one.short_title)
         }
-        quickreplies.append(second)
-    elif info.link_three != None and info.link_two != None:
-        second = {
-            'content_type' : 'text',
-            'title': info.link_two.short_title,
-            'payload': str(info.link_two.short_title)
-        }
-        third = {
-            'content_type' : 'text',
-            'title': info.link_three.short_title,
-            'payload': str(info.link_three.short_title)
-        }
-        quickreplies.append(second)
-        quickreplies.append(third)
-
-    send_text_and_quickreplies(text, quickreplies, recipient_id)
+        quickreplies.append(first)
+        if info.link_three == None and info.link_two != None:
+            second = {
+                'content_type' : 'text',
+                'title': info.link_two.short_title,
+                'payload': str(info.link_two.short_title)
+            }
+            quickreplies.append(second)
+        elif info.link_three != None and info.link_two != None:
+            second = {
+                'content_type' : 'text',
+                'title': info.link_two.short_title,
+                'payload': str(info.link_two.short_title)
+            }
+            third = {
+                'content_type' : 'text',
+                'title': info.link_three.short_title,
+                'payload': str(info.link_three.short_title)
+            }
+            quickreplies.append(second)
+            quickreplies.append(third)
+    if quickreplies.count() != 0:
+        send_text_and_quickreplies(text, quickreplies, recipient_id)
+    else:
+        send_text(recipient_id, text)
 
 def send_text(recipient_id, text):
     """send a text message to a recipient"""
