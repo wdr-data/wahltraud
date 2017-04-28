@@ -9,7 +9,7 @@ import requests
 import random
 import schedule
 import time
-import datetime
+from datetime import datetime, time
 
 from backend.models import Entry, FacebookUser
 
