@@ -166,7 +166,8 @@ def subscribe_user(user_id):
     else:
         FacebookUser.objects.create(uid = user_id)
         logger.info('added user with ID: ' + str(FacebookUser.objects.latest('add_date')))
-        if datetime.datetime.now().time() >= time(20,00):
+        now_time = datetime.datetime.now().time()
+        if now_time >= time(20,00):
             reply = "Danke für deine Anmeldung! 😃 Du erhältst nun ein tägliches Update jeweils um 20:00 Uhr. \n"\
                     "Hier ist die heutige Info..."
             send_text(user_id, reply)
