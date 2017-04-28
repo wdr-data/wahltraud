@@ -74,7 +74,7 @@ def handle_messages(data):
             elif quick_reply == "nope":
                 reply = "Schade. Vielleicht beim nächsten Mal..."
                 send_text(sender_id, reply)
-        elif "message" in event and event['message'].get("quick_reply", "") == "" :
+        elif "message" in event and event['message'].get("text", "") != "" and event['message'].get('quick_reply') == None:
             text = event['message']['text'].lower()
             if text == "Schick mir eine Info zur Wahl!".lower():
                 info = get_data()
