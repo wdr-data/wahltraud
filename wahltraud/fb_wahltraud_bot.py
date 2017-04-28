@@ -123,7 +123,7 @@ def handle_messages(data):
             text_reply(sender_id)
 
 def get_data():
-    today = datetime.datetime.now().date()
+    today = datetime.now().date()
     info = Entry.objects.filter(pub_date__date=today)
     if info.count() == 0:
         info = Entry.objects.get(short_title="Zeitplan")
@@ -166,7 +166,7 @@ def subscribe_user(user_id):
     else:
         FacebookUser.objects.create(uid = user_id)
         logger.info('added user with ID: ' + str(FacebookUser.objects.latest('add_date')))
-        now_time = datetime.datetime.now().time()
+        now_time = datetime.now().time()
         if now_time >= time(20,00):
             reply = "Danke für deine Anmeldung! 😃 Du erhältst nun ein tägliches Update jeweils um 20:00 Uhr. \n"\
                     "Hier ist die heutige Info..."
