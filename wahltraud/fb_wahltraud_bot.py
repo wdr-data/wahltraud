@@ -203,7 +203,7 @@ def push_notification():
             image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(data.media)
             send_image(user, image)
         send_info(user, data)
-    logger.info("pushed messages to " + len(user_list) + " users")
+    logger.info("pushed messages to " + str(len(user_list)) + " users")
 
 def send_greeting(recipient_id):
     text = "Hallo, ich bin Wahltraud! 🤖 Ich bin dein persönlicher Infobot zur Landtagswahl in NRW 2017!\n" \
