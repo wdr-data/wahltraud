@@ -16,7 +16,7 @@ class Entry(models.Model):
         null=False)
     text = models.CharField('Text', max_length=640, null=False)
     link_one = models.ForeignKey(
-        'self', verbose_name='Link 1', related_name='+', null=False, blank=False)
+        'self', verbose_name='Link 1', related_name='+', null=True, blank=True)
     link_two = models.ForeignKey(
         'self', verbose_name='Link 2', related_name='+', null=True, blank=True)
     link_three = models.ForeignKey(
