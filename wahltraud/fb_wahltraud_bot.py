@@ -127,7 +127,7 @@ def get_data():
     info = Entry.objects.filter(pub_date__date=today)
     if info.count() == 0:
         info = Entry.objects.get(short_title="Zeitplan")
-    elif info.count() > 1:
+    elif info.count() >= 1:
         info = random.choice(info)
     return info
 
