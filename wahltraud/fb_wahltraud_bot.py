@@ -74,6 +74,16 @@ def handle_messages(data):
             elif quick_reply == "nope":
                 reply = "Schade. Vielleicht beim nächsten Mal..."
                 send_text(sender_id, reply)
+            elif quick_reply == "info_now":
+                info = get_data()
+                send_text(sender_id, info.title)
+                if info.media != "":
+                    image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
+                    send_image(sender_id, image)
+                send_info(sender_id, info)
+            elif quick_reply == "info_later":
+                reply = "Okay, ich melde mich später mit deinem Update."
+                send_text(sender_id, reply)
         elif "message" in event and event['message'].get("text", "") != "" and event['message'].get('quick_reply') == None:
             text = event['message']['text'].lower()
             if text == "Schick mir eine Info zur Wahl!".lower():
@@ -103,12 +113,15 @@ def handle_messages(data):
             if payload == "start":
                 send_greeting(sender_id)
             elif payload == "info":
-                random_info = get_data()
-                send_text(sender_id, random_info.title)
-                if random_info.media != "":
-                    image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(random_info.media)
-                    send_image(sender_id, image)
-                send_info(sender_id, random_info)
+                if datetime.now().time() < time(20,00):
+                    really_request(sender_id)
+                else:
+                    random_info = get_data()
+                    send_text(sender_id, random_info.title)
+                    if random_info.media != "":
+                        image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(random_info.media)
+                        send_image(sender_id, image)
+                    send_info(sender_id, random_info)
             elif payload == "subscribe_menue" :
                 subscribe_process(sender_id)
             elif payload == "share_bot":
@@ -244,6 +257,24 @@ def text_reply(recipient_id):
         'payload' : 'info'
     }
     quickreplies.append(reply)
+
+    send_text_and_quickreplies(text, quickreplies, recipient_id)
+
+def really_request(recipient_id):
+    text = "Es gibt täglich nur einen neuen Satz an Informationen. Möchtest du trotzdem jetzt schon deine Info haben?"
+    quickreplies = []
+        'content_type' : 'text',
+    reply_one = {
+        'title' : 'Ja',
+        'payload' : 'info_now'
+    }
+    reply_two = {
+        'content_type' : 'text',
+        'title' : 'Nein, später bitte',
+        'payload' : 'info_later'
+    }
+    quickreplies.append(reply_one)
+    quickreplies.append(reply_two)
 
     send_text_and_quickreplies(text, quickreplies, recipient_id)
 
