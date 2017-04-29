@@ -263,8 +263,8 @@ def text_reply(recipient_id):
 def really_request(recipient_id):
     text = "Es gibt täglich nur einen neuen Satz an Informationen. Möchtest du trotzdem jetzt schon deine Info haben?"
     quickreplies = []
-        'content_type' : 'text',
     reply_one = {
+        'content_type' : 'text',
         'title' : 'Ja',
         'payload' : 'info_now'
     }
