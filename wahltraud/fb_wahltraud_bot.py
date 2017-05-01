@@ -8,7 +8,7 @@ from flask import Flask, request
 import requests
 import random
 import schedule
-import time
+from time import sleep
 from datetime import datetime, time
 
 from backend.models import Entry, FacebookUser
@@ -447,7 +447,7 @@ schedule.every().day.at("20:00").do(push_notification)
 def schedule_loop():
     while True:
         schedule.run_pending()
-        time.sleep(1)
+        sleep(1)
 
 schedule_loop_thread = Thread(target=schedule_loop, daemon=True)
 schedule_loop_thread.start()
