@@ -9,7 +9,7 @@ import requests
 import random
 import schedule
 from time import sleep
-from datetime import datetime, time
+from datetime import datetime, time, date
 
 from backend.models import Entry, FacebookUser
 
@@ -107,8 +107,16 @@ def handle_messages(data):
                 reply = "Hallo!"
                 send_text(sender_id, reply)
             elif text == "/link":
-                info = Entry.objects.filter(short_title__contains='Link').latest('pub_date')
-                send_generic_template(sender_id, info)
+                today = date(2017,5,3)
+                info = Entry.objects.filter(pub_date__date=today)
+                if "link" in info.short_title.lower():
+                    send_generic_template(sender_id, info)
+                else:
+                    send_text(sender_id, info.title)
+                    if info.media != "":
+                        image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
+                        send_image(sender_id, image)
+                    send_info(sender_id, info)
             else:
                 text_reply(sender_id)
         elif "postback" in event and event['postback'].get("payload", "") != "":
