@@ -246,13 +246,13 @@ def push_notification():
         reply = "Heute haben wir folgendes Thema für dich:"
         send_text(user, reply)
         if data.web_link:
-            send_generic_template(sender_id, data)
+            send_generic_template(user, data)
         else:
-            send_text(sender_id, data.title)
+            send_text(user, data.title)
             if data.media != "":
                 image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(data.media)
-                send_image(sender_id, image)
-            send_info(sender_id, data)
+                send_image(user, image)
+            send_info(user, data)
     logger.info("pushed messages to " + str(len(user_list)) + " users")
 
 def send_greeting(recipient_id):
@@ -516,7 +516,7 @@ def send(payload):
                   headers=headers)
 
 
-schedule.every().day.at("20:00").do(push_notification)
+schedule.every().day.at("21:15").do(push_notification)
 
 def schedule_loop():
     while True:
