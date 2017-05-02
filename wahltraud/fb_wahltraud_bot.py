@@ -106,6 +106,9 @@ def handle_messages(data):
             elif text == "Hallo".lower() or text == "Hey".lower() or text == "Hi".lower():
                 reply = "Hallo!"
                 send_text(sender_id, reply)
+            elif text == "/link":
+                info = Entry.objects.get(short_title__contains='Link')
+                send_generic_template(sender_id, info)
             else:
                 text_reply(sender_id)
         elif "postback" in event and event['postback'].get("payload", "") != "":
@@ -432,6 +435,73 @@ def send_text_and_quickreplies(reply, quickreplies, recipient_id):
     }
     send(payload)
 
+def send_generic_template(recipient_id, info):
+    """send a generic message with title, text, image and buttons"""
+    selection = []
+
+    for key in gifts:
+        logger.debug(key)
+        gift = key
+
+        title = gifts[gift]['title']
+        logger.debug(title)
+        item_url = gifts[gift]['link']
+        image_url = 'http://www1.wdr.de/mediathek/audio/sendereihen-bilder/wdr_sendereihenbild100~_v-Podcast.jpg'
+        subtitle = gifts[gift]['teaser']
+
+        listen_Button = {
+            'type': 'postback',
+            'title': 'ZeitZeichen anhören',
+            'payload': 'listen_audio#' + item_url
+        }
+        download_Button = {
+            'type': 'web_url',
+            'title': 'ZeitZeichen herunterladen',
+            'url': item_url
+        }
+        visit_Button = {
+            'type': 'web_url',
+            'url': 'http://www1.wdr.de/radio/wdr5/sendungen/zeitzeichen/index.html',
+            'title': 'Zum WDR ZeitZeichen'
+        }
+        share_Button = {
+            'type': 'element_share'
+        }
+        ### Buttons sind auf max 3 begrenzt! ###
+        buttons = []
+        buttons.append(listen_Button)
+        buttons.append(download_Button)
+        buttons.append(share_Button)
+
+        elements = {
+            'title': title,
+            'item_url': item_url,
+            'image_url': image_url,
+            'subtitle': subtitle,
+            'buttons': buttons
+        }
+
+        selection.append(elements)
+
+    load = {
+            'template_type': 'generic',
+            'elements': selection
+        }
+
+    attachment = {
+        'type': 'template',
+        'payload': load
+    }
+
+    message = {'attachment': attachment}
+
+    recipient = {'id': recipient_id}
+
+    payload = {
+        'recipient': recipient,
+        'message': message
+    }
+    send(payload)
 
 def send(payload):
     """send a payload via the graph API"""

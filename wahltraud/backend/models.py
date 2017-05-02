@@ -8,19 +8,20 @@ class Entry(models.Model):
         verbose_name = 'Eintrag'
         verbose_name_plural = 'Einträge'
 
-    title = models.CharField('Titel', max_length=200, null=False)
+    title = models.CharField('Titel', help_text='Wenn Link max. 80 Zeichen!', max_length=200, null=False)
     short_title = models.CharField(
         'Kurzer Titel',
         help_text='Wird auf den Link-Buttons angezeigt (max. 20 Zeichen)',
         max_length=20,
         null=False)
-    text = models.CharField('Text', max_length=640, null=False)
+    text = models.CharField('Text', help_text='Wenn Link max. 80 Zeichen!', max_length=640, null=False)
     link_one = models.ForeignKey(
         'self', verbose_name='Link 1', related_name='+', null=True, blank=True)
     link_two = models.ForeignKey(
         'self', verbose_name='Link 2', related_name='+', null=True, blank=True)
     link_three = models.ForeignKey(
         'self', verbose_name='Link 3', related_name='+', null=True, blank=True)
+    web_link = models.CharField('Link URL', null=True, blank=True)
     media = models.FileField('Medien-Anhang', null=True, blank=True)
     pub_date = models.DateTimeField('Veröffentlicht am', default=timezone.now)
 
