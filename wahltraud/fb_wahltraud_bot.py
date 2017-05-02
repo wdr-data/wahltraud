@@ -53,18 +53,24 @@ def handle_messages(data):
             if Entry.objects.filter(short_title=quick_reply).exists():
                 next_info = Entry.objects.get(short_title=quick_reply)
                 logger.info('weitere Info angefragt: ' + next_info.title)
-                send_text(sender_id, next_info.title)
-                if next_info.media != "":
-                    image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(next_info.media)
-                    send_image(sender_id, image)
-                send_info(sender_id, next_info)
+                if next_info.web_link:
+                    send_generic_template(sender_id, next_info)
+                else:
+                    send_text(sender_id, next_info.title)
+                    if next_info.media != "":
+                        image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(next_info.media)
+                        send_image(sender_id, image)
+                    send_info(sender_id, next_info)
             elif quick_reply == "info":
                 info = get_data()
-                send_text(sender_id, info.title)
-                if info.media != "":
-                    image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
-                    send_image(sender_id, image)
-                send_info(sender_id, info)
+                if info.web_link:
+                    send_generic_template(sender_id, info)
+                else:
+                    send_text(sender_id, info.title)
+                    if info.media != "":
+                        image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
+                        send_image(sender_id, image)
+                    send_info(sender_id, info)
             elif quick_reply == "subscribe_menue":
                 subscribe_process(sender_id)
             elif quick_reply == "subscribe":
@@ -76,23 +82,29 @@ def handle_messages(data):
                 send_text(sender_id, reply)
             elif quick_reply == "info_now":
                 info = get_data()
-                send_text(sender_id, info.title)
-                if info.media != "":
-                    image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
-                    send_image(sender_id, image)
-                send_info(sender_id, info)
+                if info.web_link:
+                    send_generic_template(sender_id, info)
+                else:
+                    send_text(sender_id, info.title)
+                    if info.media != "":
+                        image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
+                        send_image(sender_id, image)
+                    send_info(sender_id, info)
             elif quick_reply == "info_later":
                 reply = "Okay, ich melde mich später mit deinem Update."
                 send_text(sender_id, reply)
         elif "message" in event and event['message'].get("text", "") != "" and event['message'].get('quick_reply') == None:
             text = event['message']['text'].lower()
-            if text == "Schick mir eine Info zur Wahl!".lower():
+            if text == "Schick mir eine Info zur Wahl!".lower() or text == "Info".lower():
                 info = get_data()
-                send_text(sender_id, info.title)
-                if info.media != "":
-                    image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
-                    send_image(sender_id, image)
-                send_info(sender_id, info)
+                if info.web_link:
+                    send_generic_template(sender_id, info)
+                else:
+                    send_text(sender_id, info.title)
+                    if info.media != "":
+                        image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
+                        send_image(sender_id, image)
+                    send_info(sender_id, info)
             elif text == "Anmelden".lower() or text == "Abmelden".lower():
                 subscribe_process(sender_id)
             elif text == "Teilen".lower():
@@ -103,13 +115,16 @@ def handle_messages(data):
                 "Sende uns Feedback über die Messener Option \"Feedback senden\". Danke für Deine Mithilfe! \n"\
                 "Redaktion: Miriam Hochhard - Technische Umsetzung: Lisa Achenbach, Patricia Ennenbach, Jannes Hoeke"
                 send_text(sender_id, reply)
-            elif text == "Hallo".lower() or text == "Hey".lower() or text == "Hi".lower():
-                reply = "Hallo!"
+            elif text == "Hallo".lower() or text == "Hey".lower() or text == "Hi".lower() or text == "Moin".lower():
+                reply = "Hallo! Einen schönen Tag wünsche ich dir."
+                send_text(sender_id, reply)
+            elif text == "Tschüss".lower() or text == "Tschö".lower() or text == "Ciao".lower() or text == "Auf Wiedersehen".lower():
+                reply = "Tschüss, mach es gut."
                 send_text(sender_id, reply)
             elif text == "/link":
                 today = date(2017,5,3)
-                info = Entry.objects.filter(pub_date__date=today)
-                if "link" in info.short_title.lower():
+                info = Entry.objects.get(pub_date__date=today)
+                if info.web_link:
                     send_generic_template(sender_id, info)
                 else:
                     send_text(sender_id, info.title)
@@ -127,12 +142,15 @@ def handle_messages(data):
                 if datetime.now().time() < time(20,00):
                     really_request(sender_id)
                 else:
-                    random_info = get_data()
-                    send_text(sender_id, random_info.title)
-                    if random_info.media != "":
-                        image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(random_info.media)
-                        send_image(sender_id, image)
-                    send_info(sender_id, random_info)
+                    info = get_data()
+                    if info.web_link:
+                        send_generic_template(sender_id, info)
+                    else:
+                        send_text(sender_id, info.title)
+                        if info.media != "":
+                            image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
+                            send_image(sender_id, image)
+                        send_info(sender_id, info)
             elif payload == "subscribe_menue" :
                 subscribe_process(sender_id)
             elif payload == "share_bot":
@@ -227,11 +245,14 @@ def push_notification():
     for user in user_list:
         reply = "Heute haben wir folgendes Thema für dich:"
         send_text(user, reply)
-        send_text(user, data.title)
-        if data.media != "":
-            image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(data.media)
-            send_image(user, image)
-        send_info(user, data)
+        if data.web_link:
+            send_generic_template(sender_id, data)
+        else:
+            send_text(sender_id, data.title)
+            if data.media != "":
+                image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(data.media)
+                send_image(sender_id, image)
+            send_info(sender_id, data)
     logger.info("pushed messages to " + str(len(user_list)) + " users")
 
 def send_greeting(recipient_id):
@@ -445,7 +466,7 @@ def send_text_and_quickreplies(reply, quickreplies, recipient_id):
 
 def send_generic_template(recipient_id, info):
     """send a link with title, text, image and link-url"""
-    """title and subtitle are limited to 80 """
+    """title and subtitle are limited to 80 characters"""
 
     title = info.title
     subtitle = info.text
