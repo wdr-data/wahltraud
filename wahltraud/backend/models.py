@@ -21,7 +21,7 @@ class Entry(models.Model):
         'self', verbose_name='Link 2', related_name='+', null=True, blank=True)
     link_three = models.ForeignKey(
         'self', verbose_name='Link 3', related_name='+', null=True, blank=True)
-    web_link = models.CharField('Link URL', null=True, blank=True)
+    web_link = models.CharField('Link URL', max_length=200, null=True, blank=True)
     media = models.FileField('Medien-Anhang', null=True, blank=True)
     pub_date = models.DateTimeField('Veröffentlicht am', default=timezone.now)
 
