@@ -516,7 +516,7 @@ def send(payload):
                   headers=headers)
 
 
-schedule.every().day.at("21:15").do(push_notification)
+schedule.every().day.at("20:00").do(push_notification)
 
 def schedule_loop():
     while True:
