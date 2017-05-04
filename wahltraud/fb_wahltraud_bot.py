@@ -470,20 +470,27 @@ def send_generic_template(recipient_id, info):
 
     title = info.title
     subtitle = info.text
-    if info.media != "":
-        image_url = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
 
     default_action = {
         'type': 'web_url',
         'url': info.web_link
     }
+    if info.media != "":
+        image_url = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
 
-    elements = {
-        'title': title,
-        'image_url': image_url,
-        'subtitle': subtitle,
-        'default_action': default_action
-    }
+        elements = {
+            'title': title,
+            'image_url': image_url,
+            'subtitle': subtitle,
+            'default_action': default_action
+        }
+    else:
+        elements = {
+            'title': title,
+            'subtitle': subtitle,
+            'default_action': default_action
+        }
+
     selection = []
     selection.append(elements)
 
