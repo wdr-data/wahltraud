@@ -95,6 +95,16 @@ def handle_messages(data):
                 send_text(sender_id, reply)
         elif "message" in event and event['message'].get("text", "") != "" and event['message'].get('quick_reply') == None:
             text = event['message']['text'].lower()
+            if Entry.objects.filter(short_title=text).exists():
+                info = Entry.objects.get(short_title=text)
+                if info.web_link:
+                    send_generic_template(sender_id, info)
+                else:
+                    send_text(sender_id, info.title)
+                    if info.media != "":
+                        image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
+                        send_image(sender_id, image)
+                    send_info(sender_id, info)
             if text == "Schick mir eine Info zur Wahl!".lower() or text == "Info".lower():
                 info = get_data()
                 if info.web_link:
@@ -172,6 +182,17 @@ def get_data():
     elif info.count() >= 1:
         info = random.choice(info)
     return info
+
+def get_wahlkreis(plz):
+    with open('plz_wk.json') as data_file:
+        data = json.load(data_file)
+
+    result = set()
+    for element in data:
+        if any(plz in s for s in element["plzGebiete"]):
+            result.add(element["wk"])
+
+    logger.info("'wk': " + str(result))
 
 def subscribe_process(recipient_id):
     text = "Melde dich an, um automatisch Infos zu den wichtigsten Begriffen rund um die Wahl von mir zu erhalten. " \
