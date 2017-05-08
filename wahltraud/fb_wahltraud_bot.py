@@ -95,7 +95,7 @@ def handle_messages(data):
                 send_text(sender_id, reply)
         elif "message" in event and event['message'].get("text", "") != "" and event['message'].get('quick_reply') == None:
             text = event['message']['text'].lower()
-            if Entry.objects.filter(short_title=text).exists():
+            if Entry.objects.filter(short_title__iexact=text).exists():
                 info = Entry.objects.get(short_title=text)
                 if info.web_link:
                     send_generic_template(sender_id, info)
