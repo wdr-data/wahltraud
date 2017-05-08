@@ -96,7 +96,7 @@ def handle_messages(data):
         elif "message" in event and event['message'].get("text", "") != "" and event['message'].get('quick_reply') == None:
             text = event['message']['text'].lower()
             if Entry.objects.filter(short_title__iexact=text).exists():
-                info = Entry.objects.get(short_title=text)
+                info = Entry.objects.get(short_title__iexact=text)
                 if info.web_link:
                     send_generic_template(sender_id, info)
                 else:
@@ -105,7 +105,9 @@ def handle_messages(data):
                         image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
                         send_image(sender_id, image)
                     send_info(sender_id, info)
-            if text == "Schick mir eine Info zur Wahl!".lower() or text == "Info".lower():
+            elif len(text) == 5 and text.isdigit():
+                get_wahlkreis(text)
+            elif text == "Schick mir eine Info zur Wahl!".lower() or text == "Info".lower():
                 info = get_data()
                 if info.web_link:
                     send_generic_template(sender_id, info)
@@ -184,7 +186,7 @@ def get_data():
     return info
 
 def get_wahlkreis(plz):
-    with open('plz_wk.json') as data_file:
+    with open('plz_wk_unique.json') as data_file:
         data = json.load(data_file)
 
     result = set()
