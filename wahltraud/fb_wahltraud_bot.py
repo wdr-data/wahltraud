@@ -151,6 +151,9 @@ def handle_messages(data):
             elif text == "Tschüss".lower() or text == "Tschö".lower() or text == "Ciao".lower() or text == "Auf Wiedersehen".lower():
                 reply = "Tschüss, mach es gut."
                 send_text(sender_id, reply)
+            elif text == "Danke".lower() or text == "Danke schön".lower():
+                reply = "Gern geschehen. 😊 "
+                send_text(sender_id, reply)
             elif text == "/link":
                 today = date(2017,5,3)
                 info = Entry.objects.get(pub_date__date=today)
