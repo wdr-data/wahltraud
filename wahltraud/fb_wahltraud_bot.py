@@ -71,6 +71,10 @@ def handle_messages(data):
                         image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
                         send_image(sender_id, image)
                     send_info(sender_id, info)
+            elif quick_reply.split("#")[0] == "kandidaten":
+                plz = quick_reply.split("#")[1]
+                wahlkreis = get_wahlkreis(plz)
+                send_kandidatencheck(sender_id, wahlkreis)
             elif quick_reply == "subscribe_menue":
                 subscribe_process(sender_id)
             elif quick_reply == "subscribe":
@@ -106,7 +110,21 @@ def handle_messages(data):
                         send_image(sender_id, image)
                     send_info(sender_id, info)
             elif len(text) == 5 and text.isdigit():
-                get_wahlkreis(text)
+                wahlkreis = get_wahlkreis(text)
+                kreis = set()
+                titel = set()
+                for wk, gebiet in wahlkreis.items():
+                    kreis.add(wk)
+                    titel.add(gebiet)
+                logger.info("kreis: " + str(kreis) + " titel: " + str(titel))
+                if len(kreis) == 1:
+                    send_kandidatencheck(sender_id, wahlkreis)
+                elif len(kreis) > 1:
+                    send_wahlkreis(sender_id, text)
+                else:
+                    text = "Falls das deine Postleitzahl ist, kenne ich sie nicht.\nBitte überprüfe deine Eingabe. "\
+                            "Ich kann nur Postleitzahlen aus NRW verarbeiten und den entsprechenden Wahlkreis suchen."
+                    send_text(sender_id, text)
             elif text == "Schick mir eine Info zur Wahl!".lower() or text == "Info".lower():
                 info = get_data()
                 if info.web_link:
@@ -189,12 +207,30 @@ def get_wahlkreis(plz):
     with open('plz_wk_unique.json') as data_file:
         data = json.load(data_file)
 
-    result = set()
+    result = dict()
     for element in data:
         if any(plz in s for s in element["plzGebiete"]):
-            result.add(element["wk"])
+            result[element["wk"]] = element["gebiet"]
+    logger.info(result)
+    return result
 
-    logger.info("'wk': " + str(result))
+def send_wahlkreis(recipient_id, plz):
+    text = "Ich habe zu deiner Postleitzahl mehrere Wahlkreise gefunden. "\
+            "Bitte prüfe selbst, welchem Wahlkreis du zugeordnet bist."
+    quickreplies = []
+    reply_one = {
+        'content_type' : 'text',
+        'title' : 'Wahlkreis suchen',
+        'payload' : 'Wahlkreise?'
+    }
+    reply_two = {
+        'content_type' : 'text',
+        'title' : 'Wahlkreise anzeigen',
+        'payload' : 'kandidaten#' + str(plz)
+    }
+    quickreplies.append(reply_one)
+    quickreplies.append(reply_two)
+    send_text_and_quickreplies(text, quickreplies, recipient_id)
 
 def subscribe_process(recipient_id):
     text = "Melde dich an, um automatisch Infos zu den wichtigsten Begriffen rund um die Wahl von mir zu erhalten. " \
@@ -536,6 +572,59 @@ def send_generic_template(recipient_id, info):
         'message': message
     }
     send(payload)
+
+def send_kandidatencheck(recipient_id, result):
+    """send a link with title, text, image and link-url"""
+    """title and subtitle are limited to 80 characters"""
+    info = Entry.objects.get(short_title="Dein Wahlkreis")
+
+    for key, value in result.items():
+        title = info.title + " " + value
+        subtitle = info.text
+        link = info.web_link + str(key)
+
+        default_action = {
+            'type': 'web_url',
+            'url': link
+        }
+        if info.media != "":
+            image_url = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
+
+            elements = {
+                'title': title,
+                'image_url': image_url,
+                'subtitle': subtitle,
+                'default_action': default_action
+            }
+        else:
+            elements = {
+                'title': title,
+                'subtitle': subtitle,
+                'default_action': default_action
+            }
+        logger.info("Link: " + title + " " + link)
+        selection = []
+        selection.append(elements)
+
+        load = {
+                'template_type': 'generic',
+                'elements': selection
+            }
+
+        attachment = {
+            'type': 'template',
+            'payload': load
+        }
+
+        message = {'attachment': attachment}
+
+        recipient = {'id': recipient_id}
+
+        payload = {
+            'recipient': recipient,
+            'message': message
+        }
+        send(payload)
 
 def send(payload):
     """send a payload via the graph API"""
