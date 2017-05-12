@@ -110,6 +110,7 @@ def handle_messages(data):
                         send_image(sender_id, image)
                     send_info(sender_id, info)
             elif len(text) == 5 and text.isdigit():
+                logger.info("plz eingabe: " + str(text))
                 wahlkreis = get_wahlkreis(text)
                 kreis = set()
                 titel = set()
@@ -125,6 +126,26 @@ def handle_messages(data):
                     text = "Falls das deine Postleitzahl ist, kenne ich sie nicht.\nBitte überprüfe deine Eingabe. "\
                             "Ich kann nur Postleitzahlen aus NRW verarbeiten und den entsprechenden Wahlkreis suchen."
                     send_text(sender_id, text)
+            elif text.startswith('#'):       #len(text) == 5 and text.isdigit():
+                plz = text[1:]
+                logger.info("test plz eingabe: " + str(plz))
+                wahlkreis = get_wahlkreis(plz)
+                kreis = set()
+                titel = set()
+                for wk, gebiet in wahlkreis.items():
+                    wk = str(wk).zfill(3)
+                    kreis.add(wk)
+                    titel.add(gebiet)
+                logger.info("kreis: " + str(kreis) + " titel: " + str(titel))
+                if len(kreis) == 1:
+                    voting = get_vote(kreis)
+                #     send_kandidatencheck(sender_id, wahlkreis)
+                # elif len(kreis) > 1:
+                #     send_wahlkreis(sender_id, text)
+                # else:
+                #     text = "Falls das deine Postleitzahl ist, kenne ich sie nicht.\nBitte überprüfe deine Eingabe. "\
+                #             "Ich kann nur Postleitzahlen aus NRW verarbeiten und den entsprechenden Wahlkreis suchen."
+                #     send_text(sender_id, text)
             elif text == "Schick mir eine Info zur Wahl!".lower() or text == "Info".lower():
                 info = get_data()
                 if info.web_link:
@@ -214,7 +235,6 @@ def get_wahlkreis(plz):
     for element in data:
         if any(plz in s for s in element["plzGebiete"]):
             result[element["wk"]] = element["gebiet"]
-    logger.info(result)
     return result
 
 def send_wahlkreis(recipient_id, plz):
@@ -234,6 +254,9 @@ def send_wahlkreis(recipient_id, plz):
     quickreplies.append(reply_one)
     quickreplies.append(reply_two)
     send_text_and_quickreplies(text, quickreplies, recipient_id)
+
+def get_vote(kreis):
+    logger.debug("get vote function")
 
 def subscribe_process(recipient_id):
     text = "Melde dich an, um automatisch Infos zu den wichtigsten Begriffen rund um die Wahl von mir zu erhalten. " \
@@ -605,7 +628,6 @@ def send_kandidatencheck(recipient_id, result):
                 'subtitle': subtitle,
                 'default_action': default_action
             }
-        logger.info("Link: " + title + " " + link)
         selection = []
         selection.append(elements)
 

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Ergebniseingang xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Schema/ergebniseingang.xsd">
+    <WahlMetadaten>
+        <File Ursprungsname="erg_05067.xml" Erstellungszeit="2017-05-08T16:15:04"/>
+        <Wahl Wahlart="LANDTAGSWAHLEN_NRW" Wahltermin="2017-05-14" WahlterminVorp="2012-05-13"/>
+        <Daten Eingabe="VORLAEUFIG"/>
+    </WahlMetadaten>
+    <Gebietsergebnis Gebietsnummer="067" Gebietsart="WAHLKREIS" Gebietsname="Essen III" NrAenderung="0">
+        <Direktergebnis LosEntscheid="0" Stichwahl="0">
+            <Gewinner Name="Britta Altenkamp" Gruppe="SPD" Wahldatum="n/a" Anzahl="30000" Prozent="42.0" AnzahlSW="n/a" ProzentSW="n/a" Stichwahl="0" Stichwahldatum="n/a"/>
+        </Direktergebnis>
+        <Gruppenergebnis Gruppenart="ALLGEMEIN" Name="Wahlberechtigte insgesamt">
+            <Stimmergebnis Stimmart="KEINE" Anzahl="100000" Prozent="100.0" AnzahlVergleich="106432" ProzentVergleich="100.0" Differenz="-6432" ProzentDifferenz="0.0"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="ALLGEMEIN" Name="Wähler/-innen insgesamt">
+            <Stimmergebnis Stimmart="KEINE" Anzahl="72500" Prozent="72.5" AnzahlVergleich="60956" ProzentVergleich="57.3" Differenz="11544" ProzentDifferenz="15.2"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="ALLGEMEIN" Name="Ungültige Stimmen">
+            <Stimmergebnis Stimmart="ERST" Anzahl="1000" Prozent="1.4" AnzahlVergleich="862" ProzentVergleich="1.4" Differenz="138" ProzentDifferenz="0.0"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="500" Prozent="0.7" AnzahlVergleich="706" ProzentVergleich="1.2" Differenz="-206" ProzentDifferenz="-0.5"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="ALLGEMEIN" Name="Gültige Stimmen">
+            <Stimmergebnis Stimmart="ERST" Anzahl="71500" Prozent="100.0" AnzahlVergleich="60094" ProzentVergleich="100.0" Differenz="11406" ProzentDifferenz="0.0"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="72000" Prozent="100.0" AnzahlVergleich="60250" ProzentVergleich="100.0" Differenz="11750" ProzentDifferenz="0.0"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="SPD" Direktkandidat="Britta Altenkamp">
+            <Stimmergebnis Stimmart="ERST" Anzahl="30000" Prozent="42.0" AnzahlVergleich="29683" ProzentVergleich="49.4" Differenz="317" ProzentDifferenz="-7.4"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="16000" Prozent="22.2" AnzahlVergleich="25414" ProzentVergleich="42.2" Differenz="-9414" ProzentDifferenz="-20.0"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="CDU" Direktkandidat="Brigitte Harti">
+            <Stimmergebnis Stimmart="ERST" Anzahl="24500" Prozent="34.3" AnzahlVergleich="14188" ProzentVergleich="23.6" Differenz="10312" ProzentDifferenz="10.7"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="14000" Prozent="19.4" AnzahlVergleich="11214" ProzentVergleich="18.6" Differenz="2786" ProzentDifferenz="0.8"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="GRÜNE" Direktkandidat="Ahmad Omeirat">
+            <Stimmergebnis Stimmart="ERST" Anzahl="3000" Prozent="4.2" AnzahlVergleich="5754" ProzentVergleich="9.6" Differenz="-2754" ProzentDifferenz="-5.4"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="5000" Prozent="6.9" AnzahlVergleich="8489" ProzentVergleich="14.1" Differenz="-3489" ProzentDifferenz="-7.1"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="FDP" Direktkandidat="Martin Weber">
+            <Stimmergebnis Stimmart="ERST" Anzahl="4000" Prozent="5.6" AnzahlVergleich="2667" ProzentVergleich="4.4" Differenz="1333" ProzentDifferenz="1.2"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="6000" Prozent="8.3" AnzahlVergleich="4792" ProzentVergleich="8.0" Differenz="1208" ProzentDifferenz="0.4"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="PIRATEN" Direktkandidat="">
+            <Stimmergebnis Stimmart="ERST" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="5504" ProzentVergleich="9.2" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="2000" Prozent="2.8" AnzahlVergleich="5249" ProzentVergleich="8.7" Differenz="-3249" ProzentDifferenz="-5.9"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="DIE LINKE" Direktkandidat="Jules El-Khatib">
+            <Stimmergebnis Stimmart="ERST" Anzahl="1000" Prozent="1.4" AnzahlVergleich="2212" ProzentVergleich="3.7" Differenz="-1212" ProzentDifferenz="-2.3"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="1000" Prozent="1.4" AnzahlVergleich="2225" ProzentVergleich="3.7" Differenz="-1225" ProzentDifferenz="-2.3"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="NPD" Direktkandidat="">
+            <Stimmergebnis Stimmart="ERST" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="0" ProzentVergleich="0.0" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="1000" Prozent="1.4" AnzahlVergleich="400" ProzentVergleich="0.7" Differenz="600" ProzentDifferenz="0.7"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="Die PARTEI" Direktkandidat="Axel Fänger">
+            <Stimmergebnis Stimmart="ERST" Anzahl="1000" Prozent="1.4" AnzahlVergleich="0" ProzentVergleich="0.0" Differenz="1000" ProzentDifferenz="1.4"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="1000" Prozent="1.4" AnzahlVergleich="231" ProzentVergleich="0.4" Differenz="769" ProzentDifferenz="1.0"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="FREIE WÄHLER" Direktkandidat="">
+            <Stimmergebnis Stimmart="ERST" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="0" ProzentVergleich="0.0" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="1000" Prozent="1.4" AnzahlVergleich="97" ProzentVergleich="0.2" Differenz="903" ProzentDifferenz="1.2"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="BIG" Direktkandidat="">
+            <Stimmergebnis Stimmart="ERST" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="0" ProzentVergleich="0.0" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="1000" Prozent="1.4" AnzahlVergleich="114" ProzentVergleich="0.2" Differenz="886" ProzentDifferenz="1.2"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="FBI/FWG" Direktkandidat="">
+            <Stimmergebnis Stimmart="ERST" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="0" ProzentVergleich="0.0" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="1000" Prozent="1.4" AnzahlVergleich="45" ProzentVergleich="0.1" Differenz="955" ProzentDifferenz="1.3"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="ÖDP" Direktkandidat="">
+            <Stimmergebnis Stimmart="ERST" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="0" ProzentVergleich="0.0" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="1000" Prozent="1.4" AnzahlVergleich="54" ProzentVergleich="0.1" Differenz="946" ProzentDifferenz="1.3"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="Volksabstimmung" Direktkandidat="">
+            <Stimmergebnis Stimmart="ERST" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="0" ProzentVergleich="0.0" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="1000" Prozent="1.4" AnzahlVergleich="0" ProzentVergleich="0.0" Differenz="1000" ProzentDifferenz="1.4"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="TIERSCHUTZliste" Direktkandidat="">
+            <Stimmergebnis Stimmart="ERST" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="1000" Prozent="1.4" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="AD-Demokraten NRW" Direktkandidat="">
+            <Stimmergebnis Stimmart="ERST" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="1000" Prozent="1.4" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="AfD" Direktkandidat="Harald Parussel">
+            <Stimmergebnis Stimmart="ERST" Anzahl="4000" Prozent="5.6" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="4000" Prozent="5.6" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="AUFBRUCH C" Direktkandidat="">
+            <Stimmergebnis Stimmart="ERST" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="1000" Prozent="1.4" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="BGE" Direktkandidat="">
+            <Stimmergebnis Stimmart="ERST" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="1000" Prozent="1.4" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="DBD" Direktkandidat="">
+            <Stimmergebnis Stimmart="ERST" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="1000" Prozent="1.4" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="DKP" Direktkandidat="Diana Kummer">
+            <Stimmergebnis Stimmart="ERST" Anzahl="1000" Prozent="1.4" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="1000" Prozent="1.4" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="ZENTRUM" Direktkandidat="">
+            <Stimmergebnis Stimmart="ERST" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="1000" Prozent="1.4" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="DIE RECHTE" Direktkandidat="">
+            <Stimmergebnis Stimmart="ERST" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="1000" Prozent="1.4" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="REP" Direktkandidat="">
+            <Stimmergebnis Stimmart="ERST" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="1000" Prozent="1.4" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="DIE VIOLETTEN" Direktkandidat="">
+            <Stimmergebnis Stimmart="ERST" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="1000" Prozent="1.4" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="JED" Direktkandidat="">
+            <Stimmergebnis Stimmart="ERST" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="1000" Prozent="1.4" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="MLPD" Direktkandidat="Horst Dotten">
+            <Stimmergebnis Stimmart="ERST" Anzahl="1000" Prozent="1.4" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="1000" Prozent="1.4" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="PAN" Direktkandidat="">
+            <Stimmergebnis Stimmart="ERST" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="1000" Prozent="1.4" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="Gesundheitsforschung" Direktkandidat="">
+            <Stimmergebnis Stimmart="ERST" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="1000" Prozent="1.4" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="PARTEILOSE WG „BRD“" Direktkandidat="">
+            <Stimmergebnis Stimmart="ERST" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="1000" Prozent="1.4" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="Schöner Leben" Direktkandidat="">
+            <Stimmergebnis Stimmart="ERST" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="1000" Prozent="1.4" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="V-Partei³" Direktkandidat="">
+            <Stimmergebnis Stimmart="ERST" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="1000" Prozent="1.4" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="FAMILIE" Direktkandidat="">
+            <Stimmergebnis Stimmart="ERST" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="0" ProzentVergleich="0.0" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="222" ProzentVergleich="0.4" Differenz="n/a" ProzentDifferenz="n/a"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="LD" Direktkandidat="">
+            <Stimmergebnis Stimmart="ERST" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="0" ProzentVergleich="0.0" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="0" ProzentVergleich="0.0" Differenz="n/a" ProzentDifferenz="n/a"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="PARTEI" Name="LKR" Direktkandidat="">
+            <Stimmergebnis Stimmart="ERST" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="EINZELKANDIDAT" Name="Einzelbewerber/-in 1">
+            <Stimmergebnis Stimmart="ERST" Anzahl="1000" Prozent="1.4" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="EINZELKANDIDAT" Name="Einzelbewerber/-in 2">
+            <Stimmergebnis Stimmart="ERST" Anzahl="1000" Prozent="1.4" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="n/a" ProzentVergleich="n/a" Differenz="n/a" ProzentDifferenz="n/a"/>
+        </Gruppenergebnis>
+        <Gruppenergebnis Gruppenart="UEBRIGE" Name="Sonstige">
+            <Stimmergebnis Stimmart="ERST" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="86" ProzentVergleich="0.1" Differenz="n/a" ProzentDifferenz="n/a"/>
+            <Stimmergebnis Stimmart="ZWEIT" Anzahl="n/a" Prozent="n/a" AnzahlVergleich="1704" ProzentVergleich="2.8" Differenz="n/a" ProzentDifferenz="n/a"/>
+        </Gruppenergebnis>
+    </Gebietsergebnis>
+</Ergebniseingang>
