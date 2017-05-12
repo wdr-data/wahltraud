@@ -10,6 +10,7 @@ import random
 import schedule
 from time import sleep
 from datetime import datetime, time, date
+import xml.etree.ElementTree as ET
 
 from backend.models import Entry, FacebookUser
 
@@ -75,6 +76,13 @@ def handle_messages(data):
                 plz = quick_reply.split("#")[1]
                 wahlkreis = get_wahlkreis(plz)
                 send_kandidatencheck(sender_id, wahlkreis)
+            elif quick_reply.split("#")[0] == "winner":
+                winner = quick_reply.split("#")[1]
+                send_winner(sender_id, winner)
+            elif quick_reply.split("#")[0] == "more_voting":
+                kreis = quick_reply.split("#")[1]
+                voting, winner = get_vote(kreis[2:5])
+                send_complete_voting(sender_id, voting)
             elif quick_reply == "subscribe_menue":
                 subscribe_process(sender_id)
             elif quick_reply == "subscribe":
@@ -138,8 +146,9 @@ def handle_messages(data):
                     titel.add(gebiet)
                 logger.info("kreis: " + str(kreis) + " titel: " + str(titel))
                 if len(kreis) == 1:
-                    voting = get_vote(kreis)
-                #     send_kandidatencheck(sender_id, wahlkreis)
+                    for element in kreis:
+                        voting, winner = get_vote(element)
+                        send_voting(sender_id, kreis, voting, winner)
                 # elif len(kreis) > 1:
                 #     send_wahlkreis(sender_id, text)
                 # else:
@@ -256,7 +265,73 @@ def send_wahlkreis(recipient_id, plz):
     send_text_and_quickreplies(text, quickreplies, recipient_id)
 
 def get_vote(kreis):
-    logger.debug("get vote function")
+    result_candidate = {}
+    result_party = {}
+    sieger = []
+    #for key in kreis:
+    xml_data = "erg_05" + str(kreis) + ".xml"
+    logger.info(xml_data)
+    if os.path.isfile(xml_data):
+        tree = ET.parse(xml_data)
+        root = tree.getroot()
+        logger.info(root.tag)
+        for gebiet in root.findall('Gebietsergebnis'):
+            for direkt in gebiet.findall('Direktergebnis'):
+                for gewinner in direkt.findall('Gewinner'):
+                    sieger = [gewinner.get('Name'), gewinner.get('Gruppe'), gewinner.get('Prozent')]
+            for gruppe in gebiet.findall('Gruppenergebnis'):
+                if gruppe.get('Gruppenart') == 'PARTEI':
+                    party = gruppe.get('Name')
+                    candidate = gruppe.get('Direktkandidat')
+                    for ergebnis in gruppe.findall('Stimmergebnis'):
+                        if ergebnis.get('Stimmart') == 'ERST':
+                            first_vote = ergebnis.get('Prozent')
+                            result_candidate[candidate] = first_vote
+                        elif ergebnis.get('Stimmart') == 'ZWEIT':
+                            second_vote = ergebnis.get('Prozent')
+                            result_party[party] = second_vote
+    return result_party, sieger
+
+def send_voting(recipient_id, kreis, voting, winner):
+    text = "Mensch, war das eine spannende Wahl! Findest du nicht auch?!\n" \
+        "Aber jetzt ist es Zeit für die Ergebnisse... Ich präsentiere dir feierlich alle Parteien, die die 5%%-Hürde geknackt haben:\n"
+    sorted_voting = sorted(voting.items(), key=lambda x: (x[1],x[0]))
+    copy = dict(sorted_voting)
+    for k,v in copy.items():
+        if v == 'n/a':
+            del k
+        elif float(v) < 5:
+            del k
+        else:
+            text += k + ": " + v + "%%\n"
+
+    quickreplies = []
+    reply_one = {
+        'content_type' : 'text',
+        'title' : 'Weitere Parteien',
+        'payload' : 'more_voting#' + str(kreis)
+    }
+    reply_two = {
+        'content_type' : 'text',
+        'title' : 'Sieger anzeigen',
+        'payload' : 'winner#' + str(winner)
+    }
+    quickreplies.append(reply_one)
+    quickreplies.append(reply_two)
+
+    send_text_and_quickreplies(text, quickreplies, recipient_id)
+
+def send_complete_voting(recipient_id, voting):
+    text = "Alle Parteien im Überblick:\n"
+    sorted_voting = sorted(voting.items(), key=lambda x: (x[1],x[0]))
+    copy = dict(sorted_voting)
+    for k,v in copy.items():
+        if v == 'n/a':
+            del k
+        else:
+            text += k + ": " + v + "%\n"
+
+    send_text(recipient_id, text)
 
 def subscribe_process(recipient_id):
     text = "Melde dich an, um automatisch Infos zu den wichtigsten Begriffen rund um die Wahl von mir zu erhalten. " \
@@ -650,6 +725,59 @@ def send_kandidatencheck(recipient_id, result):
             'message': message
         }
         send(payload)
+
+def send_winner(recipient_id, winner):
+    """send a link with title, text, image and link-url"""
+    """title and subtitle are limited to 80 characters"""
+    info = Entry.objects.get(short_title="Sieger im Wahlkreis")
+
+    winner = eval(winner)
+    title = info.title + " " + winner[0]
+    subtitle = info.text
+    winner_short = winner[0].split(' ')[1]
+    link = info.web_link + str(winner_short)
+
+    default_action = {
+        'type': 'web_url',
+        'url': link
+    }
+    if info.media != "":
+        image_url = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
+
+        elements = {
+            'title': title,
+            'image_url': image_url,
+            'subtitle': subtitle,
+            'default_action': default_action
+        }
+    else:
+        elements = {
+            'title': title,
+            'subtitle': subtitle,
+            'default_action': default_action
+        }
+    selection = []
+    selection.append(elements)
+
+    load = {
+        'template_type': 'generic',
+        'elements': selection
+    }
+
+    attachment = {
+        'type': 'template',
+        'payload': load
+    }
+
+    message = {'attachment': attachment}
+
+    recipient = {'id': recipient_id}
+
+    payload = {
+        'recipient': recipient,
+        'message': message
+    }
+    send(payload)
 
 def send(payload):
     """send a payload via the graph API"""
