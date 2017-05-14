@@ -86,20 +86,23 @@ def handle_messages(data):
                 send_candidate_voting(sender_id, candidate_voting, winner, kreis)
             elif quick_reply.split("#")[0] == "more_voting":
                 kreis = quick_reply.split("#")[1]
+                kreis = str(kreis).zfill(3)
                 voting, winner, candidate_voting = get_vote(kreis)
                 send_complete_voting(sender_id, voting, winner, kreis)
             elif quick_reply.split("#")[0] == 'send_voting':
                 plz = quick_reply.split("#")[1]
+                kreis = quick_reply.split('#')[2]
+                logger.debug("wahlkreis: " + kreis)
                 wahlkreis = get_wahlkreis(plz)
-                kreis = set()
-                titel = set()
                 for wk, gebiet in wahlkreis.items():
-                    wk = str(wk).zfill(3)
-                    kreis.add(wk)
-                    titel.add(gebiet)
-                for element in kreis:
-                    voting, winner, candidate_voting = get_vote(element)
-                    send_voting(sender_id, kreis, voting, winner, titel)
+                    logger.debug("wahlkreis auswahl:" + str(wk))
+                    if wk == int(kreis):
+                        voting, winner, candidate_voting = get_vote(kreis)
+                        if not voting:
+                            text = "Leider habe ich für deinen Wahlkreis noch kein Ergebnis. Versuche es später erneut."
+                            send_text(sender_id, text)
+                        else:
+                            send_voting(sender_id, wk, voting, winner, gebiet)
             elif quick_reply == "subscribe_menue":
                 subscribe_process(sender_id)
             elif quick_reply == "subscribe":
@@ -152,7 +155,7 @@ def handle_messages(data):
             #                 "Ich kann nur Postleitzahlen aus NRW verarbeiten und den entsprechenden Wahlkreis suchen."
             #         send_text(sender_id, text)
             # elif text.startswith('#'):       #len(text) == 5 and text.isdigit():
-                plz = text[1:]
+                plz = text
                 logger.info("plz eingabe: " + str(plz))
                 wahlkreis = get_wahlkreis(plz)
                 kreis = set()
@@ -164,6 +167,8 @@ def handle_messages(data):
                 logger.info("kreis: " + str(kreis) + " titel: " + str(titel))
                 if len(kreis) == 1:
                     for element in kreis:
+                        for t in titel:
+                            titel = t
                         voting, winner, candidate_voting = get_vote(element)
                         if not voting:
                             text = "Leider habe ich für deinen Wahlkreis noch kein Ergebnis. Versuche es später erneut."
@@ -171,9 +176,7 @@ def handle_messages(data):
                         else:
                             send_voting(sender_id, kreis, voting, winner, titel)
                 elif len(kreis) > 1:
-                    text = "Leider habe ich für deinen Wahlkreis noch kein Ergebnis. Versuche es später erneut."
-                    send_text(sender_id, text)
-                    #send_wahlkreis(sender_id, plz)
+                    send_wahlkreis(sender_id, plz, kreis, titel)
                 else:
                     text = "Falls das deine Postleitzahl ist, kenne ich sie nicht.\nBitte überprüfe deine Eingabe. "\
                             "Ich kann nur Postleitzahlen aus NRW verarbeiten und den entsprechenden Wahlkreis suchen."
@@ -269,22 +272,21 @@ def get_wahlkreis(plz):
             result[element["wk"]] = element["gebiet"]
     return result
 
-def send_wahlkreis(recipient_id, plz):
-    text = "Ich habe zu deiner Postleitzahl mehrere Wahlkreise gefunden. "\
-            "Bitte prüfe selbst, welchem Wahlkreis du zugeordnet bist."
+def send_wahlkreis(recipient_id, plz, kreis, titel):
+    text = "Ich habe zu deiner Postleitzahl mehrere Wahlkreise gefunden: \n"
+    for t in titel:
+        text += str(t) + '\n'
+    text += "Bitte prüfe selbst, welchem Wahlkreis du zugeordnet bist."
     quickreplies = []
-    reply_one = {
-        'content_type' : 'text',
-        'title' : 'Wahlkreis suchen',
-        'payload' : 'Wahlkreise?'
-    }
-    reply_two = {
-        'content_type' : 'text',
-        'title' : 'Beide Ergebnisse anzeigen',
-        'payload' : 'send_voting#' + str(plz)
-    }
-    quickreplies.append(reply_one)
-    quickreplies.append(reply_two)
+    i = 1
+    for k in kreis:
+        reply_one = {
+            'content_type' : 'text',
+            'title' : 'Zeige ' + str(i) + '. Wahlkreis',
+            'payload' : 'send_voting#' + str(plz) + '#' + str(k)
+        }
+        i+= 1
+        quickreplies.append(reply_one)
     send_text_and_quickreplies(text, quickreplies, recipient_id)
 
 def get_vote(kreis):
@@ -323,16 +325,14 @@ def get_vote(kreis):
     return result_party, sieger, result_candidate
 
 def send_voting(recipient_id, kreis, voting, winner, wahlkreis):
-    for k in kreis:
-        kreis = k
+    if type(kreis) is not int:
+        for k in kreis:
+            kreis = k
     image_title = "erg_05"+str(kreis)+".jpg"
     image = "https://infos.data.wdr.de:8080/backend/static/jpg/" + image_title
-    #logger.debug("image: " + image_title)
     response = requests.head(image)
     if response.status_code != 404:
         send_image(recipient_id, image)
-    for k in wahlkreis:
-        wahlkreis = k
     text = "Für deinen Wahlkreis " + str(wahlkreis) + " haben diese Parteien mehr als 5 % der Zweitstimmen bekommen:\n"
 
     for k,v in reversed(sorted(voting.items(), key=lambda x: (x[1],x[0]))):
@@ -807,11 +807,15 @@ def send_winner(recipient_id, winner, kreis):
     """title and subtitle are limited to 80 characters"""
     info = Entry.objects.get(short_title="Sieger im Wahlkreis")
 
-    winner = eval(winner)
-    title = info.title + " " + winner[0]
     subtitle = info.text
-    winner_short = winner[0].split(' ')[1]
-    link = info.web_link + str(winner_short)
+    winner = eval(winner)
+    if winner:
+        title = info.title + " " + winner[0]
+        winner_short = winner[0].split(' ')[1]
+        link = info.web_link + str(winner_short)
+    else:
+        title = info.title
+        link = "http://kandidatencheck.wdr.de/kandidatencheck/"
 
     default_action = {
         'type': 'web_url',
