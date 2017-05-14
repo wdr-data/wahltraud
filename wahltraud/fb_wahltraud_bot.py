@@ -328,7 +328,9 @@ def send_voting(recipient_id, kreis, voting, winner, wahlkreis):
     image_title = "erg_05"+str(kreis)+".jpg"
     image = "https://infos.data.wdr.de:8080/backend/static/jpg/" + image_title
     #logger.debug("image: " + image_title)
-    send_image(recipient_id, image)
+    response = requests.head(image)
+    if response.status_code != 404:
+        send_image(recipient_id, image)
     for k in wahlkreis:
         wahlkreis = k
     text = "Für deinen Wahlkreis " + str(wahlkreis) + " haben diese Parteien mehr als 5 % der Zweitstimmen bekommen:\n"
