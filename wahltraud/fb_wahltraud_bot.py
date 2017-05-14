@@ -88,6 +88,18 @@ def handle_messages(data):
                 kreis = quick_reply.split("#")[1]
                 voting, winner, candidate_voting = get_vote(kreis[2:5])
                 send_complete_voting(sender_id, voting, winner, kreis)
+            elif quick_reply.split("#")[0] == 'send_voting':
+                plz = quick_reply.split("#")[1]
+                wahlkreis = get_wahlkreis(plz)
+                kreis = set()
+                titel = set()
+                for wk, gebiet in wahlkreis.items():
+                    wk = str(wk).zfill(3)
+                    kreis.add(wk)
+                    titel.add(gebiet)
+                for element in kreis:
+                    voting, winner, candidate_voting = get_vote(element)
+                    send_voting(sender_id, kreis, voting, winner, titel)
             elif quick_reply == "subscribe_menue":
                 subscribe_process(sender_id)
             elif quick_reply == "subscribe":
@@ -153,13 +165,13 @@ def handle_messages(data):
                 if len(kreis) == 1:
                     for element in kreis:
                         voting, winner, candidate_voting = get_vote(element)
-                        send_voting(sender_id, kreis, voting, winner, titel)
-                # elif len(kreis) > 1:
-                #     send_wahlkreis(sender_id, text)
-                # else:
-                #     text = "Falls das deine Postleitzahl ist, kenne ich sie nicht.\nBitte überprüfe deine Eingabe. "\
-                #             "Ich kann nur Postleitzahlen aus NRW verarbeiten und den entsprechenden Wahlkreis suchen."
-                #     send_text(sender_id, text)
+                        if not voting:
+                            text = "Leider habe ich für deinen Wahlkreis noch kein Ergbenis. Versuche es später erneut."
+                            send_text(sender_id, text)
+                        else:
+                            send_voting(sender_id, kreis, voting, winner, titel)
+                elif len(kreis) > 1:
+                    send_wahlkreis(sender_id, plz)
             elif text == "Schick mir eine Info zur Wahl!".lower() or text == "Info".lower():
                 info = get_data()
                 if info.web_link:
@@ -262,8 +274,8 @@ def send_wahlkreis(recipient_id, plz):
     }
     reply_two = {
         'content_type' : 'text',
-        'title' : 'Wahlkreise anzeigen',
-        'payload' : 'kandidaten#' + str(plz)
+        'title' : 'Beide Ergebnisse anzeigen',
+        'payload' : 'send_voting#' + str(plz)
     }
     quickreplies.append(reply_one)
     quickreplies.append(reply_two)
@@ -301,6 +313,7 @@ def get_vote(kreis):
                                 pass
                             else:
                                 result_party[party] = float(second_vote)
+
     return result_party, sieger, result_candidate
 
 def send_voting(recipient_id, kreis, voting, winner, wahlkreis):
@@ -349,7 +362,7 @@ def send_complete_voting(recipient_id, voting, winner, kreis):
     quickreplies = []
     reply_one = {
         'content_type' : 'text',
-        'title' : 'Sieger anzeigen',
+        'title' : 'Direktkandidat',
         'payload' : 'winner#' + str(winner) + '#' + str(kreis)
     }
     quickreplies.append(reply_one)
@@ -360,7 +373,7 @@ def send_candidate_voting(recipient_id, candidate_voting, winner, kreis):
     text = "Mit der Erststimme haben die Wähler eine Kandidat/In direkt gewählt. Der Politiker "\
         "oder die Politikerin mit den meisten Erststimmen zieht direkt in den Landtag ein. "\
         "Das ist doch ein Grund zum Strahlen ?!  ☀ \n\nSo haben die Kandidaten in deinem Wahlkreis abgeschnitten: \n"
-    for k,v in reversed(sorted(voting.items(), key=lambda x: (x[1],x[0]))):
+    for k,v in reversed(sorted(candidate_voting.items(), key=lambda x: (x[1],x[0]))):
         if v == 'n/a':
             pass
         else:
