@@ -299,16 +299,12 @@ def get_vote(kreis):
 
 def send_voting(recipient_id, kreis, voting, winner):
     text = "Ich präsentiere dir feierlich alle Parteien, die durch die Zweitstimme der Wähler die Fünf-Prozent-Hürde geknackt haben:\n"
-    # for k, v in voting.items():
-    #     if v == 'n/a':
-    #         del k
-    #     else:
-    #         v = float(v)
-    sorted_voting = sorted(voting.items(), key=lambda x: (x[1],x[0]))
+    
+    sorted_voting = sorted(voting.items(), key=lambda x: (x[1]))
     copy = dict(sorted_voting)
     for k,v in copy.items():
         if v == 'n/a':
-                del k
+            del k
         elif float(v) < 5:
             del k
         else:
