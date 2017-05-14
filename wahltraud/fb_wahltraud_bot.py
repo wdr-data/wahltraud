@@ -82,11 +82,11 @@ def handle_messages(data):
                 send_winner(sender_id, winner, kreis)
             elif quick_reply.split("#")[0] == 'whywinner':
                 kreis = quick_reply.split("#")[1]
-                voting, winner, candidate_voting = get_vote(kreis[2:5])
+                voting, winner, candidate_voting = get_vote(kreis)
                 send_candidate_voting(sender_id, candidate_voting, winner, kreis)
             elif quick_reply.split("#")[0] == "more_voting":
                 kreis = quick_reply.split("#")[1]
-                voting, winner, candidate_voting = get_vote(kreis[2:5])
+                voting, winner, candidate_voting = get_vote(kreis)
                 send_complete_voting(sender_id, voting, winner, kreis)
             elif quick_reply.split("#")[0] == 'send_voting':
                 plz = quick_reply.split("#")[1]
@@ -166,12 +166,14 @@ def handle_messages(data):
                     for element in kreis:
                         voting, winner, candidate_voting = get_vote(element)
                         if not voting:
-                            text = "Leider habe ich für deinen Wahlkreis noch kein Ergbenis. Versuche es später erneut."
+                            text = "Leider habe ich für deinen Wahlkreis noch kein Ergebnis. Versuche es später erneut."
                             send_text(sender_id, text)
                         else:
                             send_voting(sender_id, kreis, voting, winner, titel)
                 elif len(kreis) > 1:
-                    send_wahlkreis(sender_id, plz)
+                    text = "Leider habe ich für deinen Wahlkreis noch kein Ergebnis. Versuche es später erneut."
+                    send_text(sender_id, text)
+                    #send_wahlkreis(sender_id, plz)
                 else:
                     text = "Falls das deine Postleitzahl ist, kenne ich sie nicht.\nBitte überprüfe deine Eingabe. "\
                             "Ich kann nur Postleitzahlen aus NRW verarbeiten und den entsprechenden Wahlkreis suchen."
@@ -290,7 +292,7 @@ def get_vote(kreis):
     result_party = {}
     sieger = []
     #for key in kreis:
-    xml_data = "xml/erg_17" + str(kreis) + ".xml"
+    xml_data = "xml/erg_05" + str(kreis) + ".xml"
     logger.info(xml_data)
     if os.path.isfile(xml_data):
         tree = ET.parse(xml_data)
@@ -321,6 +323,12 @@ def get_vote(kreis):
     return result_party, sieger, result_candidate
 
 def send_voting(recipient_id, kreis, voting, winner, wahlkreis):
+    for k in kreis:
+        kreis = k
+    image_title = "erg_05"+str(kreis)+".jpg"
+    image = "https://infos.data.wdr.de:8080/backend/static/jpg/" + image_title
+    #logger.debug("image: " + image_title)
+    send_image(recipient_id, image)
     for k in wahlkreis:
         wahlkreis = k
     text = "Für deinen Wahlkreis " + str(wahlkreis) + " haben diese Parteien mehr als 5 % der Zweitstimmen bekommen:\n"
