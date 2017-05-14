@@ -291,23 +291,28 @@ def get_vote(kreis):
                     for ergebnis in gruppe.findall('Stimmergebnis'):
                         if ergebnis.get('Stimmart') == 'ERST':
                             first_vote = ergebnis.get('Prozent')
-                            result_candidate[candidate] = first_vote
+                            if first_vote == 'n/a':
+                                pass
+                            else:
+                                result_candidate[candidate] = float(first_vote)
                         elif ergebnis.get('Stimmart') == 'ZWEIT':
                             second_vote = ergebnis.get('Prozent')
-                            result_party[party] = second_vote
+                            if second_vote == 'n/a':
+                                pass
+                            else:
+                                result_party[party] = float(second_vote)
     return result_party, sieger, result_candidate
 
 def send_voting(recipient_id, kreis, voting, winner, plz):
     text = "Für deinen Wahlkreis haben diese Parteien mehr als 5 % der Zweitstimmen bekommen:\n"
 
-    #sorted_voting = sorted(voting.items(), key=lambda x: (x[1],x[0]))
-    for k,v in sorted(voting.items(), key=lambda x: (x[1],x[0])):
+    for k,v in reversed(sorted(voting.items(), key=lambda x: (x[1],x[0]))):
         if v == 'n/a':
             pass
         elif float(v) < 5:
             pass
         else:
-            text += k + ": " + v + "%\n"
+            text += k + ": " + str(v) + "%\n"
 
     quickreplies = []
     reply_one = {
@@ -317,7 +322,7 @@ def send_voting(recipient_id, kreis, voting, winner, plz):
     }
     reply_two = {
         'content_type' : 'text',
-        'title' : 'Sieger anzeigen',
+        'title' : 'Direktkandidat',
         'payload' : 'winner#' + str(winner) + '#' + str(kreis)
     }
     reply_three = {
@@ -333,13 +338,11 @@ def send_voting(recipient_id, kreis, voting, winner, plz):
 
 def send_complete_voting(recipient_id, voting, winner, kreis):
     text = "Alle Parteien im Überblick:\n"
-    sorted_voting = sorted(voting.items(), key=lambda x: (x[1],x[0]))
-    copy = dict(sorted_voting)
-    for k,v in copy.items():
+    for k,v in reversed(sorted(voting.items(), key=lambda x: (x[1],x[0]))):
         if v == 'n/a':
-            del k
+            pass
         else:
-            text += k + ": " + v + "%\n"
+            text += k + ": " + str(v) + "%\n"
 
     quickreplies = []
     reply_one = {
@@ -352,17 +355,16 @@ def send_complete_voting(recipient_id, voting, winner, kreis):
     send_text_and_quickreplies(text, quickreplies, recipient_id)
 
 def send_candidate_voting(recipient_id, candidate_voting, winner, kreis):
-    wahlkreis = get_wahlkreis(plz)
-    text = "Mit der Erststimme haben die Wähler einen Kandidat/In direkt gewählt. " \
-        "Der Politiker oder die Politikerin mit den meisten Erststimmen zieht direkt in en Landtag ein.\n" \
-        "Das ist doch ein Grund zum strahlen?! ☀ \n\nSo haben die Kandidaten in deinem Wahlkreis abgeschnitten: \n"
-    sorted_voting = sorted(candidate_voting.items(), key=lambda x: (x[1],x[0]))
-    copy = dict(sorted_voting)
-    for k,v in copy.items():
+    text = "Mit der Erststimme haben die Wähler eine Kandidat/In direkt gewählt. Der Politiker "\
+        "oder die Politikerin mit den meisten Erststimmen zieht direkt in den Landtag ein. "\
+        "Das ist doch ein Grund zum Strahlen ?!  ☀ \n\nSo haben die Kandidaten in deinem Wahlkreis abgeschnitten: \n"
+    for k,v in reversed(sorted(voting.items(), key=lambda x: (x[1],x[0]))):
         if v == 'n/a':
-            del k
+            pass
+        elif float(v) < 5:
+            pass
         else:
-            text += k + ": " + v + "%\n"
+            text += k + ": " + str(v) + "%\n"
 
     quickreplies = []
     reply_one = {
