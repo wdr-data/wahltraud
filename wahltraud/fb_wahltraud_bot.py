@@ -141,7 +141,7 @@ def handle_messages(data):
                     send_text(sender_id, text)
             elif text.startswith('#'):       #len(text) == 5 and text.isdigit():
                 plz = text[1:]
-                logger.info("test plz eingabe: " + str(plz))
+                logger.info("plz eingabe: " + str(plz))
                 wahlkreis = get_wahlkreis(plz)
                 kreis = set()
                 titel = set()
@@ -153,7 +153,7 @@ def handle_messages(data):
                 if len(kreis) == 1:
                     for element in kreis:
                         voting, winner, candidate_voting = get_vote(element)
-                        send_voting(sender_id, kreis, voting, winner)
+                        send_voting(sender_id, kreis, voting, winner, plz)
                 # elif len(kreis) > 1:
                 #     send_wahlkreis(sender_id, text)
                 # else:
@@ -297,16 +297,15 @@ def get_vote(kreis):
                             result_party[party] = second_vote
     return result_party, sieger, result_candidate
 
-def send_voting(recipient_id, kreis, voting, winner):
-    text = "Ich präsentiere dir feierlich alle Parteien, die durch die Zweitstimme der Wähler die Fünf-Prozent-Hürde geknackt haben:\n"
+def send_voting(recipient_id, kreis, voting, winner, plz):
+    text = "Für deinen Wahlkreis haben diese Parteien mehr als 5 % der Zweitstimmen bekommen:\n"
 
-    sorted_voting = sorted(voting.items(), key=lambda x: (x[1]))
-    copy = dict(sorted_voting)
-    for k,v in copy.items():
+    #sorted_voting = sorted(voting.items(), key=lambda x: (x[1],x[0]))
+    for k,v in sorted(voting.items(), key=lambda x: (x[1],x[0])):
         if v == 'n/a':
-            del k
+            pass
         elif float(v) < 5:
-            del k
+            pass
         else:
             text += k + ": " + v + "%\n"
 
@@ -318,13 +317,13 @@ def send_voting(recipient_id, kreis, voting, winner):
     }
     reply_two = {
         'content_type' : 'text',
-        'title' : 'Und die Erststimme?',
-        'payload' : 'whywinner#' + str(kreis)
+        'title' : 'Sieger anzeigen',
+        'payload' : 'winner#' + str(winner) + '#' + str(kreis)
     }
     reply_three = {
         'content_type' : 'text',
-        'title' : 'Sieger anzeigen',
-        'payload' : 'winner#' + str(winner) + '#' + str(kreis)
+        'title' : 'Und die Erststimme?',
+        'payload' : 'whywinner#' + str(kreis)
     }
     quickreplies.append(reply_one)
     quickreplies.append(reply_two)
@@ -353,9 +352,10 @@ def send_complete_voting(recipient_id, voting, winner, kreis):
     send_text_and_quickreplies(text, quickreplies, recipient_id)
 
 def send_candidate_voting(recipient_id, candidate_voting, winner, kreis):
-    text = " Mit der Erststimme haben die Wähler einen Kandidaten direkt gewählt. " \
-        "Der Politiker oder die Politikerin mit den meisten Erststimmen erhält ein Direktmandat und zieht direkt ins Parlament.\n" \
-        "Das kann man doch einen Sieg nennen, oder?! ;-)\nEs folgt die Liste der Kandidaten: \n"
+    wahlkreis = get_wahlkreis(plz)
+    text = "Mit der Erststimme haben die Wähler einen Kandidat/In direkt gewählt. " \
+        "Der Politiker oder die Politikerin mit den meisten Erststimmen zieht direkt in en Landtag ein.\n" \
+        "Das ist doch ein Grund zum strahlen?! ☀ \n\nSo haben die Kandidaten in deinem Wahlkreis abgeschnitten: \n"
     sorted_voting = sorted(candidate_voting.items(), key=lambda x: (x[1],x[0]))
     copy = dict(sorted_voting)
     for k,v in copy.items():
@@ -835,7 +835,7 @@ def send_winner(recipient_id, winner, kreis):
     }
     reply_two = {
         'content_type' : 'text',
-        'title' : 'Wieso Sieger?',
+        'title' : 'Zeige alle Kandidaten',
         'payload' : 'whywinner#' + str(kreis)
     }
     quickreplies.append(reply_one)
