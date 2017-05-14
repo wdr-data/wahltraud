@@ -135,23 +135,23 @@ def handle_messages(data):
                         send_image(sender_id, image)
                     send_info(sender_id, info)
             elif len(text) == 5 and text.isdigit():
-                logger.info("plz eingabe: " + str(text))
-                wahlkreis = get_wahlkreis(text)
-                kreis = set()
-                titel = set()
-                for wk, gebiet in wahlkreis.items():
-                    kreis.add(wk)
-                    titel.add(gebiet)
-                logger.info("kreis: " + str(kreis) + " titel: " + str(titel))
-                if len(kreis) == 1:
-                    send_kandidatencheck(sender_id, wahlkreis)
-                elif len(kreis) > 1:
-                    send_wahlkreis(sender_id, text)
-                else:
-                    text = "Falls das deine Postleitzahl ist, kenne ich sie nicht.\nBitte überprüfe deine Eingabe. "\
-                            "Ich kann nur Postleitzahlen aus NRW verarbeiten und den entsprechenden Wahlkreis suchen."
-                    send_text(sender_id, text)
-            elif text.startswith('#'):       #len(text) == 5 and text.isdigit():
+            #     logger.info("plz eingabe: " + str(text))
+            #     wahlkreis = get_wahlkreis(text)
+            #     kreis = set()
+            #     titel = set()
+            #     for wk, gebiet in wahlkreis.items():
+            #         kreis.add(wk)
+            #         titel.add(gebiet)
+            #     logger.info("kreis: " + str(kreis) + " titel: " + str(titel))
+            #     if len(kreis) == 1:
+            #         send_kandidatencheck(sender_id, wahlkreis)
+            #     elif len(kreis) > 1:
+            #         send_wahlkreis(sender_id, text)
+            #     else:
+            #         text = "Falls das deine Postleitzahl ist, kenne ich sie nicht.\nBitte überprüfe deine Eingabe. "\
+            #                 "Ich kann nur Postleitzahlen aus NRW verarbeiten und den entsprechenden Wahlkreis suchen."
+            #         send_text(sender_id, text)
+            # elif text.startswith('#'):       #len(text) == 5 and text.isdigit():
                 plz = text[1:]
                 logger.info("plz eingabe: " + str(plz))
                 wahlkreis = get_wahlkreis(plz)
@@ -172,6 +172,10 @@ def handle_messages(data):
                             send_voting(sender_id, kreis, voting, winner, titel)
                 elif len(kreis) > 1:
                     send_wahlkreis(sender_id, plz)
+                else:
+                    text = "Falls das deine Postleitzahl ist, kenne ich sie nicht.\nBitte überprüfe deine Eingabe. "\
+                            "Ich kann nur Postleitzahlen aus NRW verarbeiten und den entsprechenden Wahlkreis suchen."
+                    send_text(sender_id, text)
             elif text == "Schick mir eine Info zur Wahl!".lower() or text == "Info".lower():
                 info = get_data()
                 if info.web_link:
@@ -286,7 +290,7 @@ def get_vote(kreis):
     result_party = {}
     sieger = []
     #for key in kreis:
-    xml_data = "xml/erg_05" + str(kreis) + ".xml"
+    xml_data = "xml/erg_17" + str(kreis) + ".xml"
     logger.info(xml_data)
     if os.path.isfile(xml_data):
         tree = ET.parse(xml_data)
