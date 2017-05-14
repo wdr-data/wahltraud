@@ -299,7 +299,7 @@ def get_vote(kreis):
 
 def send_voting(recipient_id, kreis, voting, winner):
     text = "Ich präsentiere dir feierlich alle Parteien, die durch die Zweitstimme der Wähler die Fünf-Prozent-Hürde geknackt haben:\n"
-    
+
     sorted_voting = sorted(voting.items(), key=lambda x: (x[1]))
     copy = dict(sorted_voting)
     for k,v in copy.items():
@@ -852,7 +852,7 @@ def send(payload):
                   headers=headers)
 
 
-schedule.every().day.at("20:00").do(push_notification)
+schedule.every().day.at("18:15").do(push_notification)
 
 def schedule_loop():
     while True:
