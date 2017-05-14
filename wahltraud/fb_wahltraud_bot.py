@@ -153,7 +153,7 @@ def handle_messages(data):
                 if len(kreis) == 1:
                     for element in kreis:
                         voting, winner, candidate_voting = get_vote(element)
-                        send_voting(sender_id, kreis, voting, winner, plz)
+                        send_voting(sender_id, kreis, voting, winner, titel)
                 # elif len(kreis) > 1:
                 #     send_wahlkreis(sender_id, text)
                 # else:
@@ -303,8 +303,10 @@ def get_vote(kreis):
                                 result_party[party] = float(second_vote)
     return result_party, sieger, result_candidate
 
-def send_voting(recipient_id, kreis, voting, winner, plz):
-    text = "Für deinen Wahlkreis haben diese Parteien mehr als 5 % der Zweitstimmen bekommen:\n"
+def send_voting(recipient_id, kreis, voting, winner, wahlkreis):
+    for k in wahlkreis:
+        wahlkreis = k
+    text = "Für deinen Wahlkreis " + str(wahlkreis) + " haben diese Parteien mehr als 5 % der Zweitstimmen bekommen:\n"
 
     for k,v in reversed(sorted(voting.items(), key=lambda x: (x[1],x[0]))):
         if v == 'n/a':
@@ -360,8 +362,6 @@ def send_candidate_voting(recipient_id, candidate_voting, winner, kreis):
         "Das ist doch ein Grund zum Strahlen ?!  ☀ \n\nSo haben die Kandidaten in deinem Wahlkreis abgeschnitten: \n"
     for k,v in reversed(sorted(voting.items(), key=lambda x: (x[1],x[0]))):
         if v == 'n/a':
-            pass
-        elif float(v) < 5:
             pass
         else:
             text += k + ": " + str(v) + "%\n"
