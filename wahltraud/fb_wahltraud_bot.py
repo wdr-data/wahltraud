@@ -78,11 +78,16 @@ def handle_messages(data):
                 send_kandidatencheck(sender_id, wahlkreis)
             elif quick_reply.split("#")[0] == "winner":
                 winner = quick_reply.split("#")[1]
-                send_winner(sender_id, winner)
+                kreis = quick_reply.split("#")[2]
+                send_winner(sender_id, winner, kreis)
+            elif quick_reply.split("#")[0] == 'whywinner':
+                kreis = quick_reply.split("#")[1]
+                voting, winner, candidate_voting = get_vote(kreis[2:5])
+                send_candidate_voting(sender_id, candidate_voting, winner, kreis)
             elif quick_reply.split("#")[0] == "more_voting":
                 kreis = quick_reply.split("#")[1]
-                voting, winner = get_vote(kreis[2:5])
-                send_complete_voting(sender_id, voting)
+                voting, winner, candidate_voting = get_vote(kreis[2:5])
+                send_complete_voting(sender_id, voting, winner, kreis)
             elif quick_reply == "subscribe_menue":
                 subscribe_process(sender_id)
             elif quick_reply == "subscribe":
@@ -147,7 +152,7 @@ def handle_messages(data):
                 logger.info("kreis: " + str(kreis) + " titel: " + str(titel))
                 if len(kreis) == 1:
                     for element in kreis:
-                        voting, winner = get_vote(element)
+                        voting, winner, candidate_voting = get_vote(element)
                         send_voting(sender_id, kreis, voting, winner)
                 # elif len(kreis) > 1:
                 #     send_wahlkreis(sender_id, text)
@@ -269,7 +274,7 @@ def get_vote(kreis):
     result_party = {}
     sieger = []
     #for key in kreis:
-    xml_data = "erg_05" + str(kreis) + ".xml"
+    xml_data = "xml/erg_05" + str(kreis) + ".xml"
     logger.info(xml_data)
     if os.path.isfile(xml_data):
         tree = ET.parse(xml_data)
@@ -290,20 +295,24 @@ def get_vote(kreis):
                         elif ergebnis.get('Stimmart') == 'ZWEIT':
                             second_vote = ergebnis.get('Prozent')
                             result_party[party] = second_vote
-    return result_party, sieger
+    return result_party, sieger, result_candidate
 
 def send_voting(recipient_id, kreis, voting, winner):
-    text = "Mensch, war das eine spannende Wahl! Findest du nicht auch?!\n" \
-        "Aber jetzt ist es Zeit für die Ergebnisse... Ich präsentiere dir feierlich alle Parteien, die die 5%%-Hürde geknackt haben:\n"
+    text = "Ich präsentiere dir feierlich alle Parteien, die durch die Zweitstimme der Wähler die Fünf-Prozent-Hürde geknackt haben:\n"
+    # for k, v in voting.items():
+    #     if v == 'n/a':
+    #         del k
+    #     else:
+    #         v = float(v)
     sorted_voting = sorted(voting.items(), key=lambda x: (x[1],x[0]))
     copy = dict(sorted_voting)
     for k,v in copy.items():
         if v == 'n/a':
-            del k
+                del k
         elif float(v) < 5:
             del k
         else:
-            text += k + ": " + v + "%%\n"
+            text += k + ": " + v + "%\n"
 
     quickreplies = []
     reply_one = {
@@ -313,15 +322,21 @@ def send_voting(recipient_id, kreis, voting, winner):
     }
     reply_two = {
         'content_type' : 'text',
+        'title' : 'Und die Erststimme?',
+        'payload' : 'whywinner#' + str(kreis)
+    }
+    reply_three = {
+        'content_type' : 'text',
         'title' : 'Sieger anzeigen',
-        'payload' : 'winner#' + str(winner)
+        'payload' : 'winner#' + str(winner) + '#' + str(kreis)
     }
     quickreplies.append(reply_one)
     quickreplies.append(reply_two)
+    quickreplies.append(reply_three)
 
     send_text_and_quickreplies(text, quickreplies, recipient_id)
 
-def send_complete_voting(recipient_id, voting):
+def send_complete_voting(recipient_id, voting, winner, kreis):
     text = "Alle Parteien im Überblick:\n"
     sorted_voting = sorted(voting.items(), key=lambda x: (x[1],x[0]))
     copy = dict(sorted_voting)
@@ -331,7 +346,43 @@ def send_complete_voting(recipient_id, voting):
         else:
             text += k + ": " + v + "%\n"
 
-    send_text(recipient_id, text)
+    quickreplies = []
+    reply_one = {
+        'content_type' : 'text',
+        'title' : 'Sieger anzeigen',
+        'payload' : 'winner#' + str(winner) + '#' + str(kreis)
+    }
+    quickreplies.append(reply_one)
+
+    send_text_and_quickreplies(text, quickreplies, recipient_id)
+
+def send_candidate_voting(recipient_id, candidate_voting, winner, kreis):
+    text = " Mit der Erststimme haben die Wähler einen Kandidaten direkt gewählt. " \
+        "Der Politiker oder die Politikerin mit den meisten Erststimmen erhält ein Direktmandat und zieht direkt ins Parlament.\n" \
+        "Das kann man doch einen Sieg nennen, oder?! ;-)\nEs folgt die Liste der Kandidaten: \n"
+    sorted_voting = sorted(candidate_voting.items(), key=lambda x: (x[1],x[0]))
+    copy = dict(sorted_voting)
+    for k,v in copy.items():
+        if v == 'n/a':
+            del k
+        else:
+            text += k + ": " + v + "%\n"
+
+    quickreplies = []
+    reply_one = {
+        'content_type' : 'text',
+        'title' : 'Alle Parteien',
+        'payload' : 'more_voting#' + str(kreis)
+    }
+    reply_two = {
+        'content_type' : 'text',
+        'title' : 'Sieger anzeigen',
+        'payload' : 'winner#' + str(winner) + '#' + str(kreis)
+    }
+    quickreplies.append(reply_one)
+    quickreplies.append(reply_two)
+
+    send_text_and_quickreplies(text, quickreplies, recipient_id)
 
 def subscribe_process(recipient_id):
     text = "Melde dich an, um automatisch Infos zu den wichtigsten Begriffen rund um die Wahl von mir zu erhalten. " \
@@ -726,7 +777,7 @@ def send_kandidatencheck(recipient_id, result):
         }
         send(payload)
 
-def send_winner(recipient_id, winner):
+def send_winner(recipient_id, winner, kreis):
     """send a link with title, text, image and link-url"""
     """title and subtitle are limited to 80 characters"""
     info = Entry.objects.get(short_title="Sieger im Wahlkreis")
@@ -778,6 +829,23 @@ def send_winner(recipient_id, winner):
         'message': message
     }
     send(payload)
+
+    text = "Was nun?"
+    quickreplies = []
+    reply_one = {
+        'content_type' : 'text',
+        'title' : 'Zeige alle Parteien',
+        'payload' : 'more_voting#' + str(kreis)
+    }
+    reply_two = {
+        'content_type' : 'text',
+        'title' : 'Wieso Sieger?',
+        'payload' : 'whywinner#' + str(kreis)
+    }
+    quickreplies.append(reply_one)
+    quickreplies.append(reply_two)
+
+    send_text_and_quickreplies(text, quickreplies, recipient_id)
 
 def send(payload):
     """send a payload via the graph API"""
