@@ -314,7 +314,7 @@ def send_voting(recipient_id, kreis, voting, winner, wahlkreis):
     if type(kreis) is not int:
         for k in kreis:
             kreis = k
-    image_title = "erg_05"+str(kreis)+".jpg"
+    image_title = "erg_05"+str(kreis).zfill(3)+".jpg"
     image = "https://infos.data.wdr.de:8080/backend/static/jpg/" + image_title
     response = requests.head(image)
     if response.status_code != 404:
