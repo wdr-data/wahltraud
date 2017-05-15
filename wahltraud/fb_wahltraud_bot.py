@@ -158,12 +158,12 @@ def handle_messages(data):
                 plz = text
                 logger.info("plz eingabe: " + str(plz))
                 wahlkreis = get_wahlkreis(plz)
-                kreis = set()
-                titel = set()
+                kreis = list()
+                titel = list()
                 for wk, gebiet in wahlkreis.items():
                     wk = str(wk).zfill(3)
-                    kreis.add(wk)
-                    titel.add(gebiet)
+                    kreis.append(wk)
+                    titel.append(gebiet)
                 logger.info("kreis: " + str(kreis) + " titel: " + str(titel))
                 if len(kreis) == 1:
                     for element in kreis:
