@@ -210,9 +210,14 @@ def handle_messages(data):
             elif text == "Danke".lower() or text == "Danke schön".lower():
                 reply = "Gern geschehen. 😊 "
                 send_text(sender_id, reply)
-            elif text == "/link":
-                today = date(2017,5,3)
-                info = Entry.objects.get(pub_date__date=today)
+            else:
+                text_reply(sender_id)
+        elif "postback" in event and event['postback'].get("payload", "") != "":
+            payload = event['postback']['payload']
+            if payload == "start":
+                send_greeting(sender_id)
+            elif payload == "info":
+                info = get_data()
                 if info.web_link:
                     send_generic_template(sender_id, info)
                 else:
@@ -221,25 +226,6 @@ def handle_messages(data):
                         image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
                         send_image(sender_id, image)
                     send_info(sender_id, info)
-            else:
-                text_reply(sender_id)
-        elif "postback" in event and event['postback'].get("payload", "") != "":
-            payload = event['postback']['payload']
-            if payload == "start":
-                send_greeting(sender_id)
-            elif payload == "info":
-                if datetime.now().time() < time(20,00):
-                    really_request(sender_id)
-                else:
-                    info = get_data()
-                    if info.web_link:
-                        send_generic_template(sender_id, info)
-                    else:
-                        send_text(sender_id, info.title)
-                        if info.media != "":
-                            image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
-                            send_image(sender_id, image)
-                        send_info(sender_id, info)
             elif payload == "subscribe_menue" :
                 subscribe_process(sender_id)
             elif payload == "share_bot":
@@ -332,6 +318,7 @@ def send_voting(recipient_id, kreis, voting, winner, wahlkreis):
     image = "https://infos.data.wdr.de:8080/backend/static/jpg/" + image_title
     response = requests.head(image)
     if response.status_code != 404:
+        logger.debug("send image: " + image_title)
         send_image(recipient_id, image)
     text = "Für deinen Wahlkreis " + str(wahlkreis) + " haben diese Parteien mehr als 5 % der Zweitstimmen bekommen:\n"
 
@@ -483,12 +470,14 @@ def push_notification():
         send_text(user, reply)
         if data.web_link:
             send_generic_template(user, data)
+            sleep(1)
         else:
             send_text(user, data.title)
             if data.media != "":
                 image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(data.media)
                 send_image(user, image)
             send_info(user, data)
+            sleep(1)
     logger.info("pushed messages to " + str(len(user_list)) + " users")
 
 def send_greeting(recipient_id):
@@ -528,23 +517,23 @@ def text_reply(recipient_id):
 
     send_text_and_quickreplies(text, quickreplies, recipient_id)
 
-def really_request(recipient_id):
-    text = "Es gibt täglich nur einen neuen Satz an Informationen. Möchtest du trotzdem jetzt schon deine Info haben?"
-    quickreplies = []
-    reply_one = {
-        'content_type' : 'text',
-        'title' : 'Ja',
-        'payload' : 'info_now'
-    }
-    reply_two = {
-        'content_type' : 'text',
-        'title' : 'Nein, später bitte',
-        'payload' : 'info_later'
-    }
-    quickreplies.append(reply_one)
-    quickreplies.append(reply_two)
-
-    send_text_and_quickreplies(text, quickreplies, recipient_id)
+# def really_request(recipient_id):
+#     text = "Es gibt täglich nur einen neuen Satz an Informationen. Möchtest du trotzdem jetzt schon deine Info haben?"
+#     quickreplies = []
+#     reply_one = {
+#         'content_type' : 'text',
+#         'title' : 'Ja',
+#         'payload' : 'info_now'
+#     }
+#     reply_two = {
+#         'content_type' : 'text',
+#         'title' : 'Nein, später bitte',
+#         'payload' : 'info_later'
+#     }
+#     quickreplies.append(reply_one)
+#     quickreplies.append(reply_two)
+#
+#     send_text_and_quickreplies(text, quickreplies, recipient_id)
 
 def send_info(recipient_id, info):
     text = info.text
@@ -885,7 +874,7 @@ def send(payload):
                   headers=headers)
 
 
-schedule.every().day.at("00:10").do(push_notification)
+schedule.every().day.at("10:00").do(push_notification)
 
 def schedule_loop():
     while True:
