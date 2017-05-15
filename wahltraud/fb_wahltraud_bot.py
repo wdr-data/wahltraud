@@ -280,7 +280,7 @@ def get_vote(kreis):
     result_party = {}
     sieger = []
     #for key in kreis:
-    xml_data = "xml/erg_05" + str(kreis) + ".xml"
+    xml_data = "xml/erg_05" + str(kreis).zfill(3) + ".xml"
     logger.info(xml_data)
     if os.path.isfile(xml_data):
         tree = ET.parse(xml_data)
