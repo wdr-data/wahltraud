@@ -211,9 +211,12 @@ def handle_messages(data):
                 reply = "Gern geschehen. 😊 "
                 send_text(sender_id, reply)
             else:
-                logger.info('Feedback: ' + text)
-                text = "Danke für dein Feedback 🙂 Das habe ich mir notiert 📝"
-                send_text(sender_id, text)
+                if datetime.datetime.now() > datetime.datetime(2017, 5, 16, 19, 59):
+                    logger.info('Feedback: ' + text)
+                    text = "Danke für dein Feedback 🙂 Das habe ich mir notiert 📝"
+                    send_text(sender_id, text)
+                else:
+                    text_reply(sender_id)
         elif "postback" in event and event['postback'].get("payload", "") != "":
             payload = event['postback']['payload']
             if payload == "start":
@@ -503,20 +506,20 @@ def send_greeting(recipient_id):
 
     send_text_and_quickreplies(text, quickreplies, recipient_id)
 
-# def text_reply(recipient_id):
-#     text = "Ich bin nur ein einfaches Geschöpf und ich habe deine Nachricht nicht verstanden. " \
-#             "Nutze bitte die Buttons bzw. das Menü um mit mir zu kommunizieren.\n\n" \
-#             "Möchtest du eine Begriffserklärung zur Wahl von mir bekommen?"
-#
-#     quickreplies = []
-#     reply = {
-#         'content_type' : 'text',
-#         'title' : 'Begriff anzeigen',
-#         'payload' : 'info'
-#     }
-#     quickreplies.append(reply)
-#
-#     send_text_and_quickreplies(text, quickreplies, recipient_id)
+def text_reply(recipient_id):
+    text = "Ich bin nur ein einfaches Geschöpf und ich habe deine Nachricht nicht verstanden. " \
+            "Nutze bitte die Buttons bzw. das Menü um mit mir zu kommunizieren.\n\n" \
+            "Möchtest du eine Begriffserklärung zur Wahl von mir bekommen?"
+
+    quickreplies = []
+    reply = {
+        'content_type' : 'text',
+        'title' : 'Begriff anzeigen',
+        'payload' : 'info'
+    }
+    quickreplies.append(reply)
+
+    send_text_and_quickreplies(text, quickreplies, recipient_id)
 
 # def really_request(recipient_id):
 #     text = "Es gibt täglich nur einen neuen Satz an Informationen. Möchtest du trotzdem jetzt schon deine Info haben?"
