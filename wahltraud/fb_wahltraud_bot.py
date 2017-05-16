@@ -211,8 +211,8 @@ def handle_messages(data):
                 reply = "Gern geschehen. 😊 "
                 send_text(sender_id, reply)
             else:
+                logger.info('Feedback: ' + text)
                 if datetime.now() > datetime(2017, 5, 16, 19, 59):
-                    logger.info('Feedback: ' + text)
                     text = "Danke für dein Feedback 🙂 Das habe ich mir notiert 📝"
                     send_text(sender_id, text)
                 else:
