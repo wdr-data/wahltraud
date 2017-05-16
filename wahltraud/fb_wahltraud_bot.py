@@ -211,7 +211,9 @@ def handle_messages(data):
                 reply = "Gern geschehen. 😊 "
                 send_text(sender_id, reply)
             else:
-                text_reply(sender_id)
+                logger.info('Feedback: ' + text)
+                text = "Danke für dein Feedback 🙂 Das habe ich mir notiert 📝"
+                send_text(sender_id, text)
         elif "postback" in event and event['postback'].get("payload", "") != "":
             payload = event['postback']['payload']
             if payload == "start":
@@ -243,7 +245,7 @@ def get_data():
     today = datetime.now().date()
     info = Entry.objects.filter(pub_date__date=today)
     if info.count() == 0:
-        info = Entry.objects.get(short_title="Zeitplan")
+        info = Entry.objects.get(short_title="Danke")
     elif info.count() >= 1:
         info = random.choice(info)
     return info
@@ -482,9 +484,8 @@ def push_notification():
 
 def send_greeting(recipient_id):
     text = "Hallo, ich bin Wahltraud! 🤖 Ich bin dein persönlicher Infobot zur Landtagswahl in NRW 2017!\n" \
-            "Am 14. Mai sind Landtagswahlen! Darum bin ich für die nächsten Tage dein Guide durch den Wahl-Dschungel. " \
-            "Einmal täglich füttere ich dich mit einem wichtigen Begriff zur Landtagswahl in NRW und erkläre, "\
-            "was es damit auf sich hat. \nWenn du genug weißt, kannst du mich auch einfach wieder abbestellen."
+            "Am 14. Mai waren die Landtagswahlen! Darum bin ich dein Guide durch den Wahl-Dschungel. " \
+            "Einmal täglich füttere ich dich mit einem wichtigen Begriff zur Landtagswahl in NRW und erkläre, was es damit auf sich hat."
 
     quickreplies = []
     reply_one = {
@@ -502,20 +503,20 @@ def send_greeting(recipient_id):
 
     send_text_and_quickreplies(text, quickreplies, recipient_id)
 
-def text_reply(recipient_id):
-    text = "Ich bin nur ein einfaches Geschöpf und ich habe deine Nachricht nicht verstanden. " \
-            "Nutze bitte die Buttons bzw. das Menü um mit mir zu kommunizieren.\n\n" \
-            "Möchtest du eine Begriffserklärung zur Wahl von mir bekommen?"
-
-    quickreplies = []
-    reply = {
-        'content_type' : 'text',
-        'title' : 'Begriff anzeigen',
-        'payload' : 'info'
-    }
-    quickreplies.append(reply)
-
-    send_text_and_quickreplies(text, quickreplies, recipient_id)
+# def text_reply(recipient_id):
+#     text = "Ich bin nur ein einfaches Geschöpf und ich habe deine Nachricht nicht verstanden. " \
+#             "Nutze bitte die Buttons bzw. das Menü um mit mir zu kommunizieren.\n\n" \
+#             "Möchtest du eine Begriffserklärung zur Wahl von mir bekommen?"
+#
+#     quickreplies = []
+#     reply = {
+#         'content_type' : 'text',
+#         'title' : 'Begriff anzeigen',
+#         'payload' : 'info'
+#     }
+#     quickreplies.append(reply)
+#
+#     send_text_and_quickreplies(text, quickreplies, recipient_id)
 
 # def really_request(recipient_id):
 #     text = "Es gibt täglich nur einen neuen Satz an Informationen. Möchtest du trotzdem jetzt schon deine Info haben?"
@@ -874,7 +875,7 @@ def send(payload):
                   headers=headers)
 
 
-#schedule.every().day.at("10:00").do(push_notification)
+schedule.every().day.at("20:00").do(push_notification)
 
 def schedule_loop():
     while True:
