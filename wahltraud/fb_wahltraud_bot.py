@@ -231,6 +231,13 @@ def handle_messages(data):
                         image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
                         send_image(sender_id, image)
                     send_info(sender_id, info)
+            elif payload == "wahlkreis":
+                info = Entry.objects.get(short_title="Wahl-Ergebnisse")
+                send_text(sender_id, info.title)
+                if info.media != "":
+                    image = "https://infos.data.wdr.de:8080/backend/static/media/" + str(info.media)
+                    send_image(sender_id, image)
+                send_info(sender_id, info)
             elif payload == "subscribe_menue" :
                 subscribe_process(sender_id)
             elif payload == "share_bot":
