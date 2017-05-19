@@ -893,7 +893,7 @@ def schedule_loop():
         sleep(1)
 
 schedule_loop_thread = Thread(target=schedule_loop, daemon=True)
-schedule_loop_thread.start()
+# schedule_loop_thread.start()
 
 if __name__ == '__main__':
     app.debug = False
