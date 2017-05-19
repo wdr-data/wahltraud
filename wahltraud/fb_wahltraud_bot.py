@@ -476,6 +476,9 @@ def unsubscribe_user(user_id):
 
 def push_notification():
     data = get_data()
+    if data.short_title == 'Danke':
+        return
+
     user_list = FacebookUser.objects.values_list('uid', flat=True)
     for user in user_list:
         reply = "Heute haben wir folgendes Thema für dich:"
@@ -893,7 +896,7 @@ def schedule_loop():
         sleep(1)
 
 schedule_loop_thread = Thread(target=schedule_loop, daemon=True)
-# schedule_loop_thread.start()
+schedule_loop_thread.start()
 
 if __name__ == '__main__':
     app.debug = False
