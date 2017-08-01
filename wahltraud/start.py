@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import logging
 
 os.environ["DJANGO_SETTINGS_MODULE"] = "wahltraud.settings"
 
@@ -13,12 +14,14 @@ from django.conf import settings
 from django.core.handlers.wsgi import WSGIHandler
 from paste.translogger import TransLogger
 
-import fb_wahltraud_bot
+
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    level=logging.DEBUG)
 
 
 class WahltraudApplication(object):
     HOST = "127.0.0.1"
-    PORT = 8002
+    PORT = 8004
 
     def mount_static(self, url, root):
         """
@@ -46,8 +49,6 @@ class WahltraudApplication(object):
 
         cherrypy.log("Loading and serving Django application on %s" % settings.URL_PREFIX)
         cherrypy.tree.graft(TransLogger(WSGIHandler()), settings.URL_PREFIX)
-        cherrypy.log("Loading and serving Flask application on /fb")
-        cherrypy.tree.graft(TransLogger(fb_wahltraud_bot.app), '/fb')
         cherrypy.engine.start()
         cherrypy.log("Your app is running at http://%s:%s" % (self.HOST, self.PORT))
 

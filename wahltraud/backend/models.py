@@ -1,32 +1,100 @@
 from django.db import models
 from django.utils import timezone
 
+from bot.fb import upload_attachment
 
-class Entry(models.Model):
+
+class Push(models.Model):
 
     class Meta:
-        verbose_name = 'Eintrag'
-        verbose_name_plural = 'Einträge'
+        verbose_name = 'Push-Nachricht'
+        verbose_name_plural = 'Push-Nachrichten'
 
-    title = models.CharField('Titel', help_text='Wenn Link max. 80 Zeichen!', max_length=200, null=False)
-    short_title = models.CharField(
-        'Kurzer Titel',
-        help_text='Wird auf den Link-Buttons angezeigt (max. 20 Zeichen)',
-        max_length=20,
-        null=False)
-    text = models.CharField('Text', help_text='Wenn Link max. 80 Zeichen!', max_length=640, null=False)
-    link_one = models.ForeignKey(
-        'self', verbose_name='Link 1', related_name='+', null=True, blank=True)
-    link_two = models.ForeignKey(
-        'self', verbose_name='Link 2', related_name='+', null=True, blank=True)
-    link_three = models.ForeignKey(
-        'self', verbose_name='Link 3', related_name='+', null=True, blank=True)
-    web_link = models.CharField('Link URL', max_length=200, null=True, blank=True)
-    media = models.FileField('Medien-Anhang', null=True, blank=True)
-    pub_date = models.DateTimeField('Veröffentlicht am', default=timezone.now)
+    headline = models.CharField('Übeschrift', max_length=200, null=False)
+    intro_text = models.CharField('Intro-Text', max_length=200, null=False)
+    intro_media = models.FileField('Medien-Anhang Intro', null=True, blank=True)
+    intro_media_note = models.CharField(
+        'Anmerkung', max_length=128, null=True, blank=True, help_text='z. B. Bildrechte')
+    intro_attachment_id = models.CharField(
+        'Facebook Attachment ID', max_length=64, null=True, blank=True,
+        help_text="Wird automatisch ausgefüllt")
+
+    first_question = models.CharField('Erste Frage', max_length=20, null=True, blank=True)
+    first_text = models.CharField('Erster Text', max_length=600, null=True, blank=True)
+    first_media = models.FileField('Erster Medien-Anhang', null=True, blank=True)
+    first_media_note = models.CharField(
+        'Anmerkung', max_length=128, null=True, blank=True, help_text='z. B. Bildrechte')
+    first_attachment_id = models.CharField(
+        'Facebook Attachment ID', max_length=64, null=True, blank=True,
+        help_text="Wird automatisch ausgefüllt")
+
+    second_question = models.CharField('Zweite Frage', max_length=20, null=True, blank=True)
+    second_text = models.CharField('Zweiter Text', max_length=600, null=True, blank=True)
+    second_media = models.FileField('Zweiter Medien-Anhang', null=True, blank=True)
+    second_media_note = models.CharField(
+        'Anmerkung', max_length=128, null=True, blank=True, help_text='z. B. Bildrechte')
+    second_attachment_id = models.CharField(
+        'Facebook Attachment ID', max_length=64, null=True, blank=True,
+        help_text="Wird automatisch ausgefüllt")
+
+    third_question = models.CharField('Dritte Frage', max_length=20, null=True, blank=True)
+    third_text = models.CharField('Dritter Text', max_length=600, null=True, blank=True)
+    third_media = models.FileField('Dritter Medien-Anhang', null=True, blank=True)
+    third_media_note = models.CharField(
+        'Anmerkung', max_length=128, null=True, blank=True, help_text='z. B. Bildrechte')
+    third_attachment_id = models.CharField(
+        'Facebook Attachment ID', max_length=64, null=True, blank=True,
+        help_text="Wird automatisch ausgefüllt")
+
+    pub_date = models.DateTimeField(
+        'Veröffentlicht am',
+        default=timezone.now,
+        help_text='Für morgens auf 6:00, für abends auf 18:00 timen (Uhr-Symbol)')
+    published = models.BooleanField('Veröffentlicht?', null=False, default=False)
+    breaking = models.BooleanField(
+        'Breaking?', null=False, default=False,
+        help_text='Breaking-News werden außerhalb der regelmäßigen Push-Zyklen zu der angegebenen '
+                  'Zeit gesendet')
+    delivered = models.BooleanField(
+        'Versendet?', null=False, default=False,
+        help_text="Wurde der Push bereits vom Bot versendet? Nur relevant für Breaking-News.")
 
     def __str__(self):
-        return '%s (%s)' % (self.short_title, self.pub_date.strftime('%d.%m.%Y'))
+        return '%s - %s' % (self.pub_date.strftime('%d.%m.%Y'), self.headline)
+
+    def save(self, *args, **kwargs):
+        try:
+            orig = Push.objects.get(id=self.id)
+        except Push.DoesNotExist:
+            orig = None
+
+        fields = ('intro_media', 'first_media', 'second_media', 'third_media')
+        updated_fields = list()
+
+        for field_name in fields:
+            field = getattr(self, field_name)
+            orig_field = getattr(orig, field_name) if orig else ''
+
+            if not orig and str(field) or str(field) != str(orig_field):
+                updated_fields.append(field_name)
+
+        super().save(*args, **kwargs)
+
+        for field_name in updated_fields:
+            field = getattr(self, field_name)
+            if str(field):
+                url = "https://infos.data.wdr.de/static/media/" + str(field)
+                attachment_id = upload_attachment(url)
+                attachment_field_name = field_name[:-len('media')] + 'attachment_id'
+                setattr(self, attachment_field_name, attachment_id)
+
+            else:
+                attachment_field_name = field_name[:-len('media')] + 'attachment_id'
+                setattr(self, attachment_field_name, None)
+
+        if updated_fields:
+            self.save()
+
 
 class FacebookUser(models.Model):
 
@@ -35,8 +103,22 @@ class FacebookUser(models.Model):
         verbose_name_plural = 'Facebook User'
 
     uid = models.CharField('User ID', max_length=64, null=False, unique=True)
-    name = models.CharField('Name', max_length=64, null=True, blank=True)
+    state = models.CharField('State', max_length=64, null=True, blank=True)
     add_date = models.DateTimeField('Hinzugefügt am', default=timezone.now)
 
     def __str__(self):
-        return '%s (%s)' % (self.name or 'Kein Name', self.uid)
+        return str(self.uid)
+
+
+class Wiki(models.Model):
+    class Meta:
+        verbose_name = 'Wiki-Eintrag'
+        verbose_name_plural = 'Wiki-Einträge'
+
+    input = models.CharField('Eingabe', max_length=128, null=False, unique=True,
+                             help_text="Der Eingabetext des Nutzers")
+    output = models.CharField('Antwort', max_length=640, null=False, blank=False,
+                              help_text="Die Antwort, die der Bot auf die Eingabe geben soll")
+
+    def __str__(self):
+        return self.input
