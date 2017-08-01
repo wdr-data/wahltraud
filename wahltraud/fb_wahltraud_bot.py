@@ -11,6 +11,7 @@ import schedule
 from time import sleep
 from datetime import datetime, time, date
 import xml.etree.ElementTree as ET
+from wit import Wit
 
 from backend.models import Entry, FacebookUser
 
@@ -23,9 +24,10 @@ logger.info('FB Wahltraud Bot Logging')
 
 PAGE_TOKEN = os.environ.get('WAHLTRAUD_PAGE_TOKEN', 'not set')
 HUB_VERIFY_TOKEN = os.environ.get('WAHLTRAUD_HUB_VERIFY_TOKEN', 'not set')
+WIT_TOKEN = os.environ.get('WAHLTRAUD_WIT_TOKEN', 'not set')
 
 app = Flask(__name__)
-
+wit_client = Wit(WIT_TOKEN)
 
 @app.route('/testbot', methods=["GET"])
 def confirm():
@@ -126,6 +128,7 @@ def handle_messages(data):
                 reply = "Okay, ich melde mich später mit deinem Update."
                 send_text(sender_id, reply)
         elif "message" in event and event['message'].get("text", "") != "" and event['message'].get('quick_reply') == None:
+            wit_client.message(event['message']['text'])
             text = event['message']['text'].lower()
             if Entry.objects.filter(short_title__iexact=text).exists():
                 info = Entry.objects.get(short_title__iexact=text)
