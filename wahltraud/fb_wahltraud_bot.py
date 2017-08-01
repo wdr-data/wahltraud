@@ -128,9 +128,19 @@ def handle_messages(data):
                 reply = "Okay, ich melde mich später mit deinem Update."
                 send_text(sender_id, reply)
         elif "message" in event and event['message'].get("text", "") != "" and event['message'].get('quick_reply') == None:
-            wit_client.message(event['message']['text'])
+            try:
+                wit_client.message(event['message']['text'])
+
+            except:
+                logging.exception('Failed to send message to wit.ai: %s', event['message']['text'])
+
             text = event['message']['text'].lower()
-            if Entry.objects.filter(short_title__iexact=text).exists():
+            if text == 'hallo':
+                send_text(sender_id, "Hi, schön von dir zu lesen. Ich bin gerade auf den Wahlediven und bereite mich intensiv auf die anstehende Bundestagswahl vor.")
+                send_text(sender_id, "Hier im Trainingslager bin ich schwer beschäftigt, denn ich möchte so einiges auswendig lernen:")
+                send_text(sender_id, "Es gilt 299 Wahlkreise, über 2400 Kandidaten, mehr als 25 Parteien und das studieren von 6 Wahlprogrammen..")
+                send_text(sender_id, "Und jetzt kommst du. Aber wo du schon da bist: Wie würdest du mich nach den oben genannten sachen fragen?")
+            elif Entry.objects.filter(short_title__iexact=text).exists():
                 info = Entry.objects.get(short_title__iexact=text)
                 if info.web_link:
                     send_generic_template(sender_id, info)
@@ -214,12 +224,9 @@ def handle_messages(data):
                 reply = "Gern geschehen. 😊 "
                 send_text(sender_id, reply)
             else:
-                logger.info('Feedback: ' + text)
-                if datetime.now() > datetime(2017, 5, 16, 19, 59):
-                    text = "Danke für dein Feedback 🙂 Das habe ich mir notiert 📝"
-                    send_text(sender_id, text)
-                else:
-                    text_reply(sender_id)
+                logger.info('Training: ' + text)
+                text = "Aha, interessant. Was noch?"
+                send_text(sender_id, text)
         elif "postback" in event and event['postback'].get("payload", "") != "":
             payload = event['postback']['payload']
             if payload == "start":
