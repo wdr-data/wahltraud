@@ -61,13 +61,8 @@ def schema(data, user_id):
         reply += ' +++ ' + info.headline
     reply += ' +++ '
 
-    quick_replies = []
-    button = {
-        'content_type': 'text',
-        'title': "Los geht's",
-        'payload': 'info#' + str(first_id) + '#intro'
-    }
-    quick_replies.append(button)
+    button = quick_reply("Los geht's", {'info': first_id, 'next_state': 'intro'})
+    quick_replies = [button]
 
     send_text(user_id, reply, quick_replies=quick_replies)
 
