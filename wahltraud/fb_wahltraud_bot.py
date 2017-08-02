@@ -1,16 +1,15 @@
 import json
 import logging
 import os
-import csv
 from threading import Thread
-
-from flask import Flask, request
-import requests
 import random
 import schedule
 from time import sleep
 from datetime import datetime, time, date
 import xml.etree.ElementTree as ET
+
+from flask import Flask, request
+import requests
 from wit import Wit
 
 from backend.models import Entry, FacebookUser
@@ -28,6 +27,22 @@ WIT_TOKEN = os.environ.get('WAHLTRAUD_WIT_TOKEN', 'not set')
 
 app = Flask(__name__)
 wit_client = Wit(WIT_TOKEN)
+
+
+ACK = [
+    "Aha, interessant. Was noch?",
+    "Das ist eine gute Frage. Was noch?",
+    "Oh ja, muss ich mal drüber nachdenken. Was noch?",
+    "Ich weiß gar nicht, ob ich das wissen will. Was noch?",
+    "Gute Frage! Frag mich mehr?",
+    "Echt? Das magst du wissen? Na gut. Was noch?",
+    "Und sonst? Wie geht es Dir eigentlich?",
+    "Ich halte diese Frage für sehr wichtig. Danke!",
+    "Oh man, wenn ein Trainingslager nur immer soviel Spass machen würde wie mit dir! Was noch?",
+    "Na, ob das wirklich jemanden interessieren wird? Wir werden es sehen?",
+    "Das hoffe ich bald beantworten zu können? Was noch?",
+]
+
 
 @app.route('/testbot', methods=["GET"])
 def confirm():
@@ -136,10 +151,9 @@ def handle_messages(data):
 
             text = event['message']['text'].lower()
             if text == 'hallo':
-                send_text(sender_id, "Hi, schön von dir zu lesen. Ich bin gerade auf den Wahlediven und bereite mich intensiv auf die anstehende Bundestagswahl vor.")
-                send_text(sender_id, "Hier im Trainingslager bin ich schwer beschäftigt, denn ich möchte so einiges auswendig lernen:")
-                send_text(sender_id, "Es gilt 299 Wahlkreise, über 2400 Kandidaten, mehr als 25 Parteien und das studieren von 6 Wahlprogrammen..")
-                send_text(sender_id, "Und jetzt kommst du. Aber wo du schon da bist: Wie würdest du mich nach den oben genannten sachen fragen?")
+                send_text(sender_id, "Hi. Wie gut, dass du da bist, ich kann nämlich deine Hilfe gebrauchen. Ich bin gerade auf den Wahlediven und bereite mich intensiv auf die anstehende Bundestagswahl vor.")
+                send_text(sender_id, "Hier im Trainingslager lerne ich alles über die 29 Parteien, 299 Wahlkreise und mehr als 2400 Kandidaten, die zur Wahl antreten. Aus eigenem Interesse habe ich auch die Wahlprogramme auswendig gelernt und ich lade alle NRW Kandidaten zu einem persönlichen Interview ein.")
+                send_text(sender_id, "Und jetzt kommst du ins Spiel. Wie würdest du mich nach Themen, Kandidaten, Wahlkreisen, Parteien, Wahlprogramm etc. ausfragen?")
             elif Entry.objects.filter(short_title__iexact=text).exists():
                 info = Entry.objects.get(short_title__iexact=text)
                 if info.web_link:
@@ -225,7 +239,7 @@ def handle_messages(data):
                 send_text(sender_id, reply)
             else:
                 logger.info('Training: ' + text)
-                text = "Aha, interessant. Was noch?"
+                text = random.choice(ACK)
                 send_text(sender_id, text)
         elif "postback" in event and event['postback'].get("payload", "") != "":
             payload = event['postback']['payload']
