@@ -1,10 +1,11 @@
 import logging
 from threading import Thread
 from time import sleep
+import os
 
 import schedule
 #from django.utils.timezone import localtime, now
-from fuzzywuzzy import fuzz, process
+from apiai import ApiAI
 
 from backend.models import Push, FacebookUser, Wiki
 from .fb import send_text, send_buttons, button_postback
@@ -21,8 +22,12 @@ logger = logging.getLogger(__name__)
 
 logger.info('FB Wahltraud Logging')
 
+API_AI_TOKEN = os.environ.get('WAHLTRAUD_API_AI_TOKEN', 'na')
+
 
 def make_event_handler():
+    ai = ApiAI(API_AI_TOKEN)
+
     handlers = [
         PayloadHandler(story, ['push_id', 'next_state']),
         PayloadHandler(get_started, ['wahltraud_start_payload']),
@@ -38,6 +43,19 @@ def make_event_handler():
         logger.debug(messaging_events)
 
         for event in messaging_events:
+            message = event.get('message')
+
+            if message:
+                text = message.get('text')
+
+                if text is not None:
+                    request = ai.text_request()
+                    request.lang = 'de'
+                    request.query = text
+                    request.session_id = event['sender']['id']
+                    response = request.getresponse()
+                    logger.info(response.read())
+
             for handler in handlers:
                 try:
                     if handler.check_event(event):
