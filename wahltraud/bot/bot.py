@@ -38,6 +38,8 @@ def make_event_handler():
         PayloadHandler(subscribe_user, ['subscribe']),
         PayloadHandler(unsubscribe_user, ['unsubscribe']),
         PayloadHandler(push, ['push']),
+        ApiAiHandler(candidate.candidate_check, 'kandidatencheck'),
+        ApiAiHandler(candidate.find_district, 'wahlkreis_finder'),
         ApiAiHandler(candidate.basics, 'kandidat'),
         TextHandler(apiai_fulfillment, '.*'),
     ]
