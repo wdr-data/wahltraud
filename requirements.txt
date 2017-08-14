@@ -9,3 +9,4 @@ paste
 schedule
 fuzzywuzzy[speedup]
 redis
+apiai
