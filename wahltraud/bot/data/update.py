@@ -33,7 +33,7 @@ def update():
 	pic_size = 'm'   # 'xs', 's', 'm', 'l'
 	
 	trafo_kandidatencheck(check_short, check_long, nrw_kandidaten_json , pic_size)
-	
+	print('update ' + nrw_kandidaten_json)
 	
 	
 	# create all_kandidaten
@@ -41,7 +41,8 @@ def update():
 	alle_kandidaten_json = 'alle_kandidaten.json'
 	
 	abgewatch_to_alle(abgewatch_data_file, nrw_kandidaten_json, alle_kandidaten_json)
-	
+	print('update ' + alle_kandidaten_json)
+
 	
 	
 	# create wahlkreis_info
@@ -107,22 +108,23 @@ def wahlkreis_info(alle_kandidaten_json, wahlkreis_info_json):
     for item in wk['constituencies']:
 
         wahlkreisId = item['number']
+        wahlkreis_uuid = item['uuid']
         # plz, orte
         plz_ort = plz_ort_finder(item,  ort_plz_wk, take_city),
-        kandmeta = kandidaten_und_meta(wahlkreisId,alle)
+        kandmeta = kandidaten_und_meta(wahlkreis_uuid,alle)
 
-        wkinfo.append({ 'wahlkreisId': item['number'],
-                                'wahlkreis':  item['name'],
-                                'wahl_13': wahl2013(wahlkreisId),
-                                'wk_uuid': item['uuid'],
-                                'bundesland': bundesland_finder(wahlkreisId,wk_bundesland),
+        wkinfo.append({ 'district_id': item['number'],
+                                'district':  item['name'],
+                                'election_13': wahl2013(wahlkreisId),
+                                'district_uuid': item['uuid'],
+                                'state': bundesland_finder(wahlkreisId,wk_bundesland),
                                 'plz': plz_ort[0][0],
-                                'orte': plz_ort[0][1],
-                                'kandidaten':kandmeta[0],
+                                'cities': plz_ort[0][1],
+                                'candidates':kandmeta[0],
                                 'meta': kandmeta[1]
                                  })
     wkinfo2 = {}
-    wkinfo2['wahlkreise'] = wkinfo
+    wkinfo2['districts'] = wkinfo
     
     with open(wahlkreis_info_json, 'w', encoding='utf8') as outfile:  
         json.dump(wkinfo2, outfile, ensure_ascii=False)
@@ -158,14 +160,22 @@ def trafo_kandidatencheck(short_json, long_json, output_json, pic_size = 'm'):
     for index,item in enumerate(short['list']):
     	# take away the list from parteien
     	short['list'][index]['parteien'] = short['list'][index]['parteien'][0]
-    	
+
+    # get picture from erweiterte version
     	for look in long['k']:
         	if look['id'] == item['id']:
         		try:
         			short['list'][index]['img'] = look['img'][pic_size]
         		except:
-        			short['list'][index]['img'] = ''
-	
+        			short['list'][index]['img'] = None
+
+
+	# get videolink
+
+
+    #
+
+
 	# write extended short json in output file
     with open(output_json, 'w', encoding='utf8') as output_file:
         json.dump(short,output_file,  ensure_ascii=False)
@@ -219,13 +229,45 @@ def find_id(last_name,first_name,nrw):
     Yields
         corresponding Id (str) from nrw kandidaten_check
     '''
-    id_here = ''
+
     for row in nrw['list']: 
         if row['nachname'] == last_name:
             if row['vorname'] == first_name:
-                id_here = row['id']
-    
-    return id_here
+                nrw_info = {}
+                #nrw_info['id'] = row['id']
+                try:
+                    nrw_info['pledges'] = row['wahlversprechen']
+                except:
+                    nrw_info['pledges']  = None
+                try:
+                    nrw_info['profession'] = row['beruf']
+                except:
+                    nrw_info['profession'] = None
+
+                try:
+                    nrw_info['img'] = row['img']
+                except:
+                    nrw_info['img'] = None
+
+                try:
+                    string = requests.get(nrw['list'][2]['videoJsonp']).text
+                    m = re.search('143/(.+?),(.+?).mp4', string)
+                    split = m.group(0).split(',')
+                    file_id = split[0] + split[4]
+                    nrw_info['video'] = 'http://ondemand-ww.wdr.de/medp/fsk0/' + file_id + '.mp4'
+                except:
+                    nrw_info['video'] = None
+
+                try:
+                    nrw_info['interests'] = row['interessen']
+                except:
+                    nrw_info['interests'] = None
+
+                break
+        else:
+            nrw_info = None
+
+    return nrw_info
 
 
 
@@ -267,16 +309,19 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
     # how to erstelle kandidaten_file
     for item in data['profiles']:
         if item['personal']['last_name'] != 'Testuser': # there is one test_user in the data
+
+
+
+
             temp = {'uuid': item['meta']['uuid'],
-                    'id': find_id(item['personal']['last_name'],item['personal']['first_name'],nrw),
                     #personal
-                    'alter': item['personal']['birthyear'],  # derzeit nur das alter
-                    'beruf':  item['personal']['profession'],
+                    'age': item['personal']['birthyear'],  # derzeit nur das alter
+                    'profession':  item['personal']['profession'],
                     'education': item['personal']['education'],
                     'degree': item['personal']['degree'],
-                    'nachname': item['personal']['last_name'],
-                    'parteien': item['party'],
-                    'vorname': item['personal']['first_name'],
+                    'last_name': item['personal']['last_name'],
+                    'party': item['party'],
+                    'first_name': item['personal']['first_name'],
                     'gender': item['personal']['gender']
                    }
             # foto nur dann, wenn es kein dummy foto ist
@@ -284,19 +329,29 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
                 temp['img'] =  item['personal']['picture']['url']
             # nicht jeder hat einen Listenplatz
             else:
-                item['list'] = ''
+                item['img'] = None
+
             try:
-                temp['listenplatz'] = item['list']['position']
+                temp['list_nr'] = item['list']['position']
             except:
-                temp['listenplatz'] = ''
+                temp['list_nr'] = None
             if item['constituency'] != []:
-                temp['wahlkreis']  = item['constituency']['name']
-                temp['wahlkreisId'] = item['constituency']['number']
-                temp['wahkreis_uuid'] =  item['constituency']['uuid']
+                #temp['district']  = item['constituency']['name']
+                #temp['district_id'] = item['constituency']['number']
+                temp['district_uuid'] =  item['constituency']['uuid']
             else:
-                temp['wahlkreis']  = ''
-                temp['wahlkreisId'] = ''
-                temp['wahkreis_uuid'] = ''
+                #temp['disctrict']  = None
+                #temp['district_id'] = None
+                temp['disctict_uuid'] = None
+            #NRW Data
+
+
+            temp['nrw'] =  find_id(item['personal']['last_name'],item['personal']['first_name'],nrw)
+
+
+
+
+
             data_list.append(temp)
         
     final = {'list': data_list}
@@ -383,7 +438,7 @@ def plz_ort_finder(item, ort_plz_wk, take_city = False):
         if take_city == True:
             city_name = ort_finder(code_plz,ort_plz_wk)
         else:
-            city_name = ''
+            city_name = None
         ort.append(city_name)  
     orte = list(set(ort))
     return [plz,orte] 
@@ -406,7 +461,7 @@ def ort_finder(plz, ort_plz_wk,api = 0):
     	try:
     		the_ort = json.loads(requests.get('http://api.zippopotam.us/de/'+code_plz).text)['places'][0]['place name']
     	except:
-    		the_ort = ''
+    		the_ort = None
     else:
     	for key, ort in ort_plz_wk.items():
         	if plz in ort['plz']:
@@ -434,7 +489,7 @@ def bundesland_finder(wahlkreisId_str, wk_bundesland):
 	return land
 
 
-def kandidaten_und_meta(wahlkreisId,alle):
+def kandidaten_und_meta(wahlkreis_uuid,alle):
     '''
     Args:
         wahlkreisId (str): 
@@ -456,25 +511,27 @@ def kandidaten_und_meta(wahlkreisId,alle):
     alter = []
     sex = []
     for kandidat in alle['list']:
-        
-        if kandidat['wahlkreisId'] == wahlkreisId:
-            kand_liste.append({'uuid': kandidat['uuid'],
-                               'vorname': kandidat['vorname'],
-                               'nachname': kandidat['nachname'],
-                               'parteien': kandidat['parteien'],
-                               'listenplatz':kandidat['listenplatz'],
-                               'jahrgang': kandidat['alter']
-                              })
-            # Anzahl der Kandidaten in WK + 1
-            counter += 1 
-            
-            
-            alter.append(kandidat['alter'])
-            sex.append(kandidat['gender'])
+        try:
+            if kandidat['district_uuid'] == wahlkreis_uuid:
+                # liste uuid
+                kand_liste.append( kandidat['uuid']
+                                   #'vorname': kandidat['vorname'],
+                                   #'nachname': kandidat['nachname'],
+                                   #'parteien': kandidat['parteien'],
+                                   #'listenplatz':kandidat['listenplatz'],
+                                   #'jahrgang': kandidat['alter']
+                                  )
+                # Anzahl der Kandidaten in WK + 1
+                counter += 1
+                alter.append(kandidat['age'])
+                sex.append(kandidat['gender'])
+        except:
+            free = 0
+
     alter = [x for x in alter if x is not None]
-    alter = [int(x) for x in alter]    
-    quote = sex.count('female')/len(sex)
-    meta = {'avg_alter': np.mean(alter), 'anzahl_kandidaten': counter, 'Frauenquote': quote}
+    alter = [int(x) for x in alter]
+    quote = sex.count('female') / len(sex)
+    meta = {'avg_age': np.mean(alter), 'total_candidates': counter, 'quota_female': quote}
     
     return [kand_liste, meta]
 
