@@ -18,13 +18,15 @@ class ApiAiHandler(Handler):
             It will be called when the :attr:`check_event` has determined that an event should be
             processed by this handler.
         intent (:obj:`str`): Intent name to handle
+        min_score (:obj:`float`): Minimum score required
 
     """
 
-    def __init__(self, callback, intent=None):
+    def __init__(self, callback, intent, min_score=0.5):
         super().__init__(callback)
 
         self.intent = intent
+        self.min_score = min_score
 
         # We use this to carry data from check_event to handle_event in multi-threaded environments
         self.local = threading.local()
@@ -47,10 +49,17 @@ class ApiAiHandler(Handler):
         nlp = message.get('nlp')
 
         if nlp is not None:
-            intent = json.loads(event['message']['nlp']['metadata']['intentName'])
-            self.local.intent = intent
+            result = event['message']['nlp']['result']
 
-            return intent == self.intent
+            intent = result['metadata']['intentName']
+            score = result['score']
+
+            self.local.intent = intent
+            self.local.parameters = result['parameters']
+            self.local.fulfillment = result['fulfillment']
+            self.local.score = score
+
+            return intent == self.intent and score >= self.min_score
 
         else:
             return False
@@ -64,6 +73,9 @@ class ApiAiHandler(Handler):
         """
 
         kwargs = dict()
-        kwargs['entities'] = self.local.entities
+        kwargs['intent'] = self.local.intent
+        kwargs['parameters'] = self.local.parameters
+        kwargs['fulfillment'] = self.local.fulfillment
+        kwargs['score'] = self.local.score
 
         return self.callback(event, **kwargs)
