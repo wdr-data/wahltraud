@@ -13,7 +13,8 @@ from .fb import send_text, send_buttons, button_postback
 from .handlers.payloadhandler import PayloadHandler
 from .handlers.texthandler import TextHandler
 from .handlers.apiaihandler import ApiAiHandler
-from .callbacks.simple import (get_started, push, subscribe_user, unsubscribe_user, wiki, story)
+from .callbacks.simple import (get_started, push, subscribe_user, unsubscribe_user, wiki, story,
+                               apiai_fulfillment)
 from .callbacks.shared import (get_pushes, get_breaking, send_push, schema)
 from .callbacks import candidate
 
@@ -28,8 +29,6 @@ logger.info('FB Wahltraud Logging')
 API_AI_TOKEN = os.environ.get('WAHLTRAUD_API_AI_TOKEN', 'na')
 
 
-
-
 def make_event_handler():
     ai = ApiAI(API_AI_TOKEN)
 
@@ -40,7 +39,7 @@ def make_event_handler():
         PayloadHandler(unsubscribe_user, ['unsubscribe']),
         PayloadHandler(push, ['push']),
         ApiAiHandler(candidate.basics, 'kandidat'),
-        TextHandler(wiki, '(.*)'),
+        TextHandler(apiai_fulfillment, '.*'),
     ]
 
     def event_handler(data):

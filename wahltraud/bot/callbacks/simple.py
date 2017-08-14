@@ -83,3 +83,10 @@ def wiki(event, groups, **kwargs):
         reply = "Tut mir Leid, darauf habe ich keine Antwort."
 
     send_text(user_id, reply)
+
+
+def apiai_fulfillment(event, fulfillment, **kwargs):
+    sender_id = event['sender']['id']
+
+    if fulfillment['speech']:
+        send_text(sender_id, fulfillment['speech'])
