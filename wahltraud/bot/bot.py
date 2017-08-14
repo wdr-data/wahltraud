@@ -12,6 +12,7 @@ from backend.models import Push, FacebookUser, Wiki
 from .fb import send_text, send_buttons, button_postback
 from .handlers.payloadhandler import PayloadHandler
 from .handlers.texthandler import TextHandler
+from .handlers.apiaihandler import ApiAiHandler
 from .callbacks.simple import (get_started, push, subscribe_user, unsubscribe_user, wiki, story)
 from .callbacks.shared import (get_pushes, get_breaking, send_push, schema)
 
@@ -35,6 +36,7 @@ def make_event_handler():
         PayloadHandler(subscribe_user, ['subscribe']),
         PayloadHandler(unsubscribe_user, ['unsubscribe']),
         PayloadHandler(push, ['push']),
+        ApiAiHandler(get_started, 'gruss'),
         TextHandler(wiki, '(.*)'),
     ]
 
