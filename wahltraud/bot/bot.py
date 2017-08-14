@@ -57,7 +57,7 @@ def make_event_handler():
                     response = request.getresponse()
                     nlp = json.loads(response.read().decode())
                     logging.info(nlp)
-                    event['nlp'] = nlp
+                    message['nlp'] = nlp
 
             for handler in handlers:
                 try:
