@@ -2,6 +2,7 @@ import logging
 from threading import Thread
 from time import sleep
 import os
+import json
 
 import schedule
 #from django.utils.timezone import localtime, now
@@ -54,7 +55,9 @@ def make_event_handler():
                     request.query = text
                     request.session_id = event['sender']['id']
                     response = request.getresponse()
-                    logger.info(response.read())
+                    nlp = json.loads(response.read().decode())
+                    logging.info(nlp)
+                    event['nlp'] = nlp
 
             for handler in handlers:
                 try:
