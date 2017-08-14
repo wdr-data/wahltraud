@@ -5,9 +5,9 @@ import json
 from .handler import Handler
 
 
-class WitAiHandler(Handler):
+class ApiAiHandler(Handler):
     """
-    Handler class to handle wit.ai NLP processed messages.
+    Handler class to handle api.ai NLP processed messages.
 
     Attributes:
         callback (:obj:`callable`): The callback function for this handler.
@@ -17,14 +17,14 @@ class WitAiHandler(Handler):
         callback (:obj:`callable`): A function that takes ``event, **kwargs`` as arguments.
             It will be called when the :attr:`check_event` has determined that an event should be
             processed by this handler.
-        entities (:obj:`list[str]`): A list of JSON keys that must be present in the NLP entities
+        intent (:obj:`str`): Intent name to handle
 
     """
 
-    def __init__(self, callback, entities=None):
+    def __init__(self, callback, intent=None):
         super().__init__(callback)
 
-        self.entities = entities
+        self.intent = intent
 
         # We use this to carry data from check_event to handle_event in multi-threaded environments
         self.local = threading.local()
@@ -47,11 +47,10 @@ class WitAiHandler(Handler):
         nlp = message.get('nlp')
 
         if nlp is not None:
-            entities = json.loads(event['message']['nlp']['entities'])
-            self.local.entities = entities
+            intent = json.loads(event['message']['nlp']['metadata']['intentName'])
+            self.local.intent = intent
 
-            # Check if the nlp JSON has all the entities we are looking for
-            return all(entity in entities for entity in self.entities)
+            return intent == self.intent
 
         else:
             return False
