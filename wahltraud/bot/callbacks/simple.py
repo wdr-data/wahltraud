@@ -88,6 +88,6 @@ def wiki(event, groups, **kwargs):
 def apiai_fulfillment(event, **kwargs):
     sender_id = event['sender']['id']
 
-    fulfillment = event['nlp']['result']['fulfillment']
+    fulfillment = event['message']['nlp']['result']['fulfillment']
     if fulfillment['speech']:
         send_text(sender_id, fulfillment['speech'])
