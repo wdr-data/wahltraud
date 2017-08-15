@@ -9,62 +9,64 @@ import pandas as pd
 
 def update():
 
-	# download data from abgeordnetenwatch
+    # download data from abgeordnetenwatch
 
-	Parlament = 'Bundestag'
-	# option =  (1 == 'deputies', 2 == 'candidates', 3 = 'constituencies
-	kind_of_people = 'candidates' 
-	abgewatch_data_file =  'abgeordnetenwatch.json'
-	
-	# make backup json
-	date = datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
-	copyfile(abgewatch_data_file, 'abgeordnetenwatch_backup_'+date+'.json')
-	
-	
-	#abgeordnetenapi(parliament, kind_of_people , output_file_abgeordnetenwatch )
-	
-	
-	
-	# create nrw_kandidaten  from Kandidatencheck-files
+    # option =  (1 == 'deputies', 2 == 'candidates', 3 = 'constituencies
 
-	check_short = 'kandidatencheck_0108.json'
-	check_long = 'kandidatencheck_erweitert_0108.json'
-	nrw_kandidaten_json = 'nrw_kandidaten.json'
-	pic_size = 'm'   # 'xs', 's', 'm', 'l'
-	
-	trafo_kandidatencheck(check_short, check_long, nrw_kandidaten_json , pic_size)
-	print('update ' + nrw_kandidaten_json)
-	
-	
-	# create all_kandidaten
-	
-	alle_kandidaten_json = 'alle_kandidaten.json'
-	
-	abgewatch_to_alle(abgewatch_data_file, nrw_kandidaten_json, alle_kandidaten_json)
-	print('update ' + alle_kandidaten_json)
+    parliament = 'Bundestag'
+    kind_of_people  = 'candidates'
+    output_file_abgeordnetenwatch = 'abgeordnetenwatch.json'
+    abgewatch_data_file = output_file_abgeordnetenwatch
 
-	
-	
-	# create wahlkreis_info
-	wahlkreis_info_json = 'wahlkreis_info.json'
-	
-	# make backup 
-	date = datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
-	copyfile(wahlkreis_info_json , 'wahlkreis_info_backup_'+date+'.json')
-	
-	# make wahlkreis_info_json
-	wahlkreis_info(alle_kandidaten_json, wahlkreis_info_json)
-	
-	
-	
-	# create api.ai entities
+    # make backup json
+    date = datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
+    copyfile(output_file_abgeordnetenwatch, 'abgeordnetenwatch_backup_'+date+'.json')
+    
+    
+    #abgeordnetenapi(parliament, kind_of_people , output_file_abgeordnetenwatch )
+    
+    
+    
+    # create nrw_kandidaten  from Kandidatencheck-files
+
+    check_short = 'kandidatencheck_0108.json'
+    check_long = 'kandidatencheck_erweitert_0108.json'
+    nrw_kandidaten_json = 'nrw_kandidaten.json'
+    pic_size = 'm'   # 'xs', 's', 'm', 'l'
+    
+    trafo_kandidatencheck(check_short, check_long, nrw_kandidaten_json , pic_size)
+    print('update ' + nrw_kandidaten_json)
+    
+    
+    # create all_kandidaten
+    
+    alle_kandidaten_json = 'alle_kandidaten.json'
+    
+    abgewatch_to_alle(abgewatch_data_file, nrw_kandidaten_json, alle_kandidaten_json)
+    print('update ' + alle_kandidaten_json)
+
+    
+    
+    # create wahlkreis_info
+    wahlkreis_info_json = 'wahlkreis_info.json'
+    
+    # make backup 
+    date = datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
+    copyfile(wahlkreis_info_json , 'wahlkreis_info_backup_'+date+'.json')
+    
+    # make wahlkreis_info_json
+    wahlkreis_info(alle_kandidaten_json, wahlkreis_info_json)
+    
+    
+    
+    # create api.ai entities
 
 
 
 
 
-	return print('Done')
-	
+    return print('Done')
+    
 
 
 def wahlkreis_info(alle_kandidaten_json, wahlkreis_info_json):
@@ -88,7 +90,7 @@ def wahlkreis_info(alle_kandidaten_json, wahlkreis_info_json):
     ort_plz_wk = 'ort_plz_wk.json'
     
 
-	
+    
 
     with open(wahlkreis_plz_json) as file2:
         wk = json.load(file2)
@@ -136,7 +138,7 @@ def wahlkreis_info(alle_kandidaten_json, wahlkreis_info_json):
 
 def trafo_kandidatencheck(short_json, long_json, output_json, pic_size = 'm'):
     """ Adds the picture URL from the long Kandidatencheck_json to the short_candidatencheckjson
-    	
+        
 
     Args:
         short_json (str): the file of the short and nice json
@@ -158,25 +160,25 @@ def trafo_kandidatencheck(short_json, long_json, output_json, pic_size = 'm'):
         long = json.load(input_file)
     
     for index,item in enumerate(short['list']):
-    	# take away the list from parteien
-    	short['list'][index]['parteien'] = short['list'][index]['parteien'][0]
+        # take away the list from parteien
+        short['list'][index]['parteien'] = short['list'][index]['parteien'][0]
 
     # get picture from erweiterte version
-    	for look in long['k']:
-        	if look['id'] == item['id']:
-        		try:
-        			short['list'][index]['img'] = look['img'][pic_size]
-        		except:
-        			short['list'][index]['img'] = None
+        for look in long['k']:
+            if look['id'] == item['id']:
+                try:
+                    short['list'][index]['img'] = look['img'][pic_size]
+                except:
+                    short['list'][index]['img'] = None
 
 
-	# get videolink
+    # get videolink
 
 
     #
 
 
-	# write extended short json in output file
+    # write extended short json in output file
     with open(output_json, 'w', encoding='utf8') as output_file:
         json.dump(short,output_file,  ensure_ascii=False)
     
@@ -184,40 +186,40 @@ def trafo_kandidatencheck(short_json, long_json, output_json, pic_size = 'm'):
 
 
 
-	
-	
-	
+    
+    
+    
 def abgeordnetenapi(parliament, option, file_name):
 
-	# option = value 1-3 or one of the strings
-	if option == 1:
-		list_kind = 'deputies'
-	elif option ==2:
-		list_kind = 'candidates'
-	elif option == 3:
-		list_kind = 'constituencies'
-	else:
-		list_kind = option
+    # option = value 1-3 or one of the strings
+    if option == 1:
+        list_kind = 'deputies'
+    elif option ==2:
+        list_kind = 'candidates'
+    elif option == 3:
+        list_kind = 'constituencies'
+    else:
+        list_kind = option
 
-	# get ID for the parliaments of interest
-	r = requests.get('https://www.abgeordnetenwatch.de/api/parliaments.json')
-	parliaments = r.json()
+    # get ID for the parliaments of interest
+    r = requests.get('https://www.abgeordnetenwatch.de/api/parliaments.json')
+    parliaments = r.json()
 
-	for parli in parliaments['parliaments']:
-	    if parli['name'] == parliament:
-	        id_parliament= parli['uuid']
-	  
-	print('request adress ist\n https://www.abgeordnetenwatch.de/api/parliament/'+id_parliament+'/'+list_kind+'.json')
+    for parli in parliaments['parliaments']:
+        if parli['name'] == parliament:
+            id_parliament= parli['uuid']
+      
+    print('request adress ist\n https://www.abgeordnetenwatch.de/api/parliament/'+id_parliament+'/'+list_kind+'.json')
 
-	# get data from current Bundestag
-	r = requests.get('https://www.abgeordnetenwatch.de/api/parliament/'+id_parliament+'/'+list_kind+'.json').json()
-	with open(file_name, 'w') as output_file:
-	    json.dump(r, output_file)
-	output_file.close()
+    # get data from current Bundestag
+    r = requests.get('https://www.abgeordnetenwatch.de/api/parliament/'+id_parliament+'/'+list_kind+'.json').json()
+    with open(file_name, 'w') as output_file:
+        json.dump(r, output_file)
+    output_file.close()
 
-	print('Daten wurden erfolgreich von der abgeordnetenwatch API geladen und in den entsprechenden Dateien gespeichert.')
+    print('Daten wurden erfolgreich von der abgeordnetenwatch API geladen und in den entsprechenden Dateien gespeichert.')
 
-	return
+    return
 
 
 def find_id(last_name,first_name,nrw):
@@ -315,7 +317,7 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
 
             temp = {'uuid': item['meta']['uuid'],
                     #personal
-                    'age': item['personal']['birthyear'],  # derzeit nur das alter
+
                     'profession':  item['personal']['profession'],
                     'education': item['personal']['education'],
                     'degree': item['personal']['degree'],
@@ -324,6 +326,11 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
                     'first_name': item['personal']['first_name'],
                     'gender': item['personal']['gender']
                    }
+            try:
+                temp['age'] = int(item['personal']['birthyear'])  # derzeit nur das alter
+
+            except:
+                temp['age'] = None
             # foto nur dann, wenn es kein dummy foto ist
             if item['personal']['picture']['url'] != 'https://www.abgeordnetenwatch.de/sites/abgeordnetenwatch.de/files/default_images/profil_dummy_0.jpg':
                 temp['img'] =  item['personal']['picture']['url']
@@ -359,7 +366,7 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
         
     final = {'list': data_list}
 
-	# write transformed short json in output file
+    # write transformed short json in output file
     with open(output_file, 'w', encoding='utf8') as output_file:
         json.dump(final,output_file,  ensure_ascii=False) 
 
@@ -461,35 +468,35 @@ def ort_finder(plz, ort_plz_wk,api = 0):
     '''
     
     if api == 1:
-    	try:
-    		the_ort = json.loads(requests.get('http://api.zippopotam.us/de/'+code_plz).text)['places'][0]['place name']
-    	except:
-    		the_ort = None
+        try:
+            the_ort = json.loads(requests.get('http://api.zippopotam.us/de/'+code_plz).text)['places'][0]['place name']
+        except:
+            the_ort = None
     else:
-    	for key, ort in ort_plz_wk.items():
-        	if plz in ort['plz']:
-        		the_ort = key
-		
-			
+        for key, ort in ort_plz_wk.items():
+            if plz in ort['plz']:
+                the_ort = key
+        
+            
             
     return  the_ort
 
 
 def bundesland_finder(wahlkreisId_str, wk_bundesland):
-	'''
-	Args:
-		wahlkreisId_str (str) : '1'-- '299' Wahlkreis ID
+    '''
+    Args:
+        wahlkreisId_str (str) : '1'-- '299' Wahlkreis ID
 
-	Yields:
-		land (str):  corresponding Bundesland
-	'''
-	wahlkreisId = int(wahlkreisId_str)
+    Yields:
+        land (str):  corresponding Bundesland
+    '''
+    wahlkreisId = int(wahlkreisId_str)
 
-	for bundesland, wkID in wk_bundesland.items():
-		if wahlkreisId in wkID['wahlkreisId']:
-			land = bundesland
-	
-	return land
+    for bundesland, wkID in wk_bundesland.items():
+        if wahlkreisId in wkID['wahlkreisId']:
+            land = bundesland
+    
+    return land
 
 
 def kandidaten_und_meta(wahlkreis_uuid,alle):
@@ -532,7 +539,7 @@ def kandidaten_und_meta(wahlkreis_uuid,alle):
             free = 0
 
     alter = [x for x in alter if x is not None]
-    alter = [int(x) for x in alter]
+    #alter = [int(x) for x in alter]
     quote = sex.count('female') / len(sex)
     meta = {'avg_age': np.mean(alter), 'total_candidates': counter, 'quota_female': quote}
     
