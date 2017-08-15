@@ -22,20 +22,41 @@ def basics(event, parameters, **kwargs):
                              {'show_basics': candidate['uuid']})
              for candidate in candidates])
     else:
-        send_buttons(sender_id, """
-        {first_name} {last_name}
-        Partei: {party}
-        Alter/ Jahrgang: {age}
-        """.format(
-            first_name=candidates[0]['first_name'],
-            last_name=candidates[0]['last_name'],
-            party=candidates[0]['party'],
-            age=candidates[0]['age']
-        ),
-                     [
-                         button_postback("Mehr Info", {'more_infos': candidates[0]['uuid']}),
-                         button_postback("Anderer Kandidat", {'candidate_check': candidates[0]['uuid']})
-                     ])
+        show_basics(candidates[0]['uuid'])
+        # send_buttons(sender_id, """
+        # {first_name} {last_name}
+        # Partei: {party}
+        # Alter/ Jahrgang: {age}
+        # """.format(
+        #     first_name=candidates[0]['first_name'],
+        #     last_name=candidates[0]['last_name'],
+        #     party=candidates[0]['party'],
+        #     age=candidates[0]['age']
+        # ),
+        #              [
+        #                  button_postback("Mehr Info", {'more_infos': candidates[0]['uuid']}),
+        #                  button_postback("Anderer Kandidat", {'candidate_check': candidates[0]['uuid']})
+        #              ])
+
+def show_basics(event, parameters, *kwargs):
+    sender_id = event['sender']['id']
+    candidate_uuid = parameters.get('uuid')
+    candidate = by_uuid(candidate_uuid)
+
+    send_buttons(sender_id, """
+    {first_name} {last_name}
+    Partei: {party}
+    Alter/ Jahrgang: {age}
+    """.format(
+        first_name=candidate['first_name'],
+        last_name=candidate['last_name'],
+        party=candidate['party'],
+        age=candidate['age']
+    ),
+                 [
+                     button_postback("Mehr Info", {'more_infos': candidate['uuid']}),
+                     button_postback("Anderer Kandidat", {'candidate_check': candidate['uuid']})
+                 ])
 
 
 def candidate_check(event, **kwargs):
