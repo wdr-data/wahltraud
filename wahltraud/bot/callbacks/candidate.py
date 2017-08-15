@@ -45,8 +45,9 @@ def show_basics(event, payload, **kwargs):
     logger.debug('candidate_uuid: ' + str(candidate_uuid))
     send_buttons(sender_id, """
     {first_name} {last_name}
-    Partei: {party}
-    Alter/ Jahrgang: {age}
+
+Partei: {party}
+Alter/ Jahrgang: {age}
     """.format(
         first_name=candidate['first_name'],
         last_name=candidate['last_name'],
@@ -67,25 +68,39 @@ def more_infos(event, payload, **kwargs):
 
     if candidate['nrw'] is not None:
         profession=candidate['nrw']['profession']
+        if candidate['nrw']['video'] is not None:
+            video_url=candidate['nrw']['video']
+            buttons = [
+                        button_postback("Interview", {'show_video': video_url}),
+                        button_postback("Mehr Info", {'more_infos_nrw': candidate['uuid']}),
+                        button_postback("Anderer Kandidat", {'candidate_check': candidate['uuid']})
+            ]
+        else:
+            buttons = [
+                        button_postback("Mehr Info", {'more_infos_nrw': candidate['uuid']}),
+                        button_postback("Anderer Kandidat", {'candidate_check': candidate['uuid']})
+            ]
     else:
         profession=candidate['profession']
+        if profession == 'MdB':
+            profession = 'Mitglied des Bundestags'
+        buttons = [
+                    button_postback("Info Wahlkreis", {'more_infos_nrw': candidate['uuid']}),
+                    button_postback("Anderer Kandidat", {'show_district': district_uuid})
+        ]
 
     send_buttons(sender_id, """
     Wahlkreis {dicstrict}
-    Landesliste {state}
-    Listenplatz Nr.: {list_nr}
 
-    Beruf: {profession}
+Landesliste {state}
+Listenplatz Nr.: {list_nr}
+Beruf: {profession}
     """.format(
         dicstrict=district['district'],
         state=district['state'],
         list_nr=candidate['list_nr'],
         profession=profession
-    ),
-                 [
-                     button_postback("Mehr Info", {'more_infos': candidate['uuid']}),
-                     button_postback("Anderer Kandidat", {'candidate_check': candidate['uuid']})
-                 ])
+    ),buttons)
 
 def candidate_check(event, **kwargs):
     reply = """
