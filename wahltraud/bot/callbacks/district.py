@@ -108,6 +108,10 @@ def show_candidates(event, payload, **kwargs):
     district = by_uuid[district_uuid]
     candidates = list(sorted((by_uuid[uuid] for uuid in district['candidates']),
                              key=operator.itemgetter('last_name')))
+    num_candidates = 4
+
+    if len(candidates) - offset < 2:
+        num_candidates = 3
 
     elements = [
         list_element(
@@ -115,11 +119,11 @@ def show_candidates(event, payload, **kwargs):
             subtitle="%s" % (candidate['party']),
             buttons=[button_postback("Info", {'show_basics': candidate['uuid']})]
         )
-        for candidate in candidates[offset:offset + 4]
+        for candidate in candidates[offset:offset + num_candidates]
     ]
 
     button = None
-    if len(candidates) - offset > 4:
+    if len(candidates) - offset > num_candidates:
         button = button_postback("Mehr anzeigen",
                                  {'show_candidates': district_uuid, 'offset': offset + 4})
 
