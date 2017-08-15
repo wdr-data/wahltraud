@@ -81,7 +81,8 @@ def show_13(event, payload, **kwargs):
         [
             locale.format_string('%s: %.1f', (party, result * 100))
             for party, result
-            in sorted(district['election_13'].items(), key=operator.itemgetter(1))
+            in sorted(district['election_13'].items(), key=operator.itemgetter(1), reverse=True)
+            if result >= 0.05
         ]
     )
 
