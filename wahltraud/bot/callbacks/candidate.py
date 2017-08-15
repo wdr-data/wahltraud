@@ -70,26 +70,22 @@ def more_infos(event, payload, **kwargs):
     district = by_uuid[district_uuid]
 
     if candidate['nrw'] is not None:
-        profession=candidate['nrw']['profession']
-        if candidate['nrw']['video'] is not None:
-            video_url=candidate['nrw']['video']
-            buttons = [
-                        button_postback("Interview", {'show_video': video_url}),
-                        button_postback("Mehr Info", {'more_infos_nrw': candidate['uuid']}),
-                        button_postback("Anderer Kandidat", {'candidate_check': candidate['uuid']})
-            ]
-        else:
-            buttons = [
-                        button_postback("Mehr Info", {'more_infos_nrw': candidate['uuid']}),
-                        button_postback("Anderer Kandidat", {'candidate_check': candidate['uuid']})
-            ]
-    else:
-        profession=candidate['profession']
-        if profession == 'MdB':
-            profession = 'Mitglied des Bundestags'
+        profession = candidate['nrw']['profession']
+
         buttons = [
-                    button_postback("Info Wahlkreis", {'show_district': district_uuid}),
-                    button_postback("Anderer Kandidat", {'candidate_check': candidate['uuid']})
+            button_postback("Mehr Info", {'more_infos_nrw': candidate['uuid']}),
+            button_postback("Anderer Kandidat", {'candidate_check': candidate['uuid']})
+        ]
+
+        if candidate['nrw']['video'] is not None:
+            video_url = candidate['nrw']['video']
+            buttons.insert(0, button_postback("Interview", {'show_video': video_url}))
+    else:
+        profession = candidate['profession']
+        profession.replace('MdB', 'Mitglied des Bundestags')
+        buttons = [
+            button_postback("Info Wahlkreis", {'show_district': district_uuid}),
+            button_postback("Anderer Kandidat", {'candidate_check': candidate['uuid']})
         ]
 
     send_buttons(sender_id, """
@@ -113,18 +109,14 @@ def more_infos_nrw(event, payload, **kwargs):
 
     pledges = ['- ' + line for line in candidate['nrw']['pledges']]
 
+    buttons = [
+        button_postback("Info Wahlkreis", {'show_district': candidate['district_uuid']}),
+        button_postback("Anderer Kandidat", {'candidate_check': candidate['uuid']})
+    ]
+
     if candidate['nrw']['video'] is not None:
-        video_url=candidate['nrw']['video']
-        buttons = [
-                    button_postback("Interview", {'show_video': video_url}),
-                    button_postback("Info Wahlkreis", {'show_district': candidate['district_uuid']}),
-                    button_postback("Anderer Kandidat", {'candidate_check': candidate['uuid']})
-        ]
-    else:
-        buttons = [
-                    button_postback("Info Wahlkreis", {'show_district': candidate['district_uuid']}),
-                    button_postback("Anderer Kandidat", {'candidate_check': candidate['uuid']})
-        ]
+        video_url = candidate['nrw']['video']
+        buttons.insert(0, button_postback("Interview", {'show_video': video_url}))
 
     send_buttons(sender_id, """
 {pledges}
