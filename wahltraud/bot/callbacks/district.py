@@ -33,15 +33,35 @@ deine Postleitzahl schreibst."""
                          )
 
 
-def show_district(event, payload, **kwargs):
-    sender_id = event['sender']['id']
-    district_uuid = payload['show_district']
-    send_text(sender_id, "Zeige Wahlkreis %s" % district_uuid)
-
-
 def send_district(sender_id, district_uuid):
     send_buttons(sender_id,
                  'Ok. Der Wahlkreis deiner Wahl ist {district}'.format(
                      district=by_uuid[district_uuid]['district']),
                  [button_postback("Zeige Wahlkreis-Info",
                                   {'show_district': district_uuid})])
+
+
+def show_district(event, payload, **kwargs):
+    sender_id = event['sender']['id']
+    district_uuid = payload['show_district']
+    district = by_uuid[district_uuid]
+
+    send_buttons(sender_id, """
+Wahlkreis #{number}
+{name}
+Liegt in {state}
+
+Es treten {nr_of_candidates:.1f} Kandidaten an und ihr Durchschnittsalter ist {avg_age}. 
+""".format(
+        number=district['district_id'],
+        name=district['district'],
+        state=district['state'],
+        nr_of_candidates=len(district['candidates']),
+        avg_age=2017.7 - district['meta']['avg_age']
+    ),
+                 [
+                     button_postback("Kandidaten", {'show_candidates': district_uuid}),
+                     button_postback("Bundestagswahl 2013", {'show_13': district_uuid}),
+                     # button_postback("Anderer Wahlkreis", {'show_13': district_uuid}),
+                 ])
+
