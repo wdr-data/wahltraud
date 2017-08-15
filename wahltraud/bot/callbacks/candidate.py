@@ -65,6 +65,10 @@ def more_infos(event, payload, **kwargs):
     district_uuid = candidate['district_uuid']
     district = by_uuid[district_uuid]
 
+    if candidate['nrw'] != 'null':
+        profession=candidate['nrw']['profession']
+    else profession=candidate['profession']
+
     send_buttons(sender_id, """
     Wahlkreis {dicstrict}
     Landesliste {state}
@@ -75,9 +79,7 @@ def more_infos(event, payload, **kwargs):
         dicstrict=district['district'],
         state=district['state'],
         list_nr=candidate['list_nr'],
-        if candidate['nrw'] is not null:
-            profession=candidate['nrw']['profession']
-        else profession=candidate['profession']
+        profession=profession
     ),
                  [
                      button_postback("Mehr Info", {'more_infos': candidate['uuid']}),
