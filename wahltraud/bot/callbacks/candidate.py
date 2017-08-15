@@ -22,7 +22,6 @@ def basics(event, parameters, **kwargs):
                              {'show_basics': candidate['uuid']})
              for candidate in candidates])
     else:
-        if candidates[0]['nrw']
         send_buttons(sender_id, """
         {first_name} {last_name}
         Partei: {party}
