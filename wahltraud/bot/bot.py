@@ -44,6 +44,7 @@ def make_event_handler():
         PayloadHandler(district.show_13, ['show_13']),
         PayloadHandler(candidate.show_basics, ['show_basics']),
         PayloadHandler(candidate.more_infos, ['more_infos']),
+        PayloadHandler(candidate.more_infos_nrw, ['more_infos_nrw']),
         PayloadHandler(district.show_candidates, ['show_candidates']),
         ApiAiHandler(district.find_district, 'wahlkreis_finder'),
         PayloadHandler(district.show_district, ['show_district']),
