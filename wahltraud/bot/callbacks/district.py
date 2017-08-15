@@ -50,7 +50,7 @@ def show_district(event, payload, **kwargs):
     district = by_uuid[district_uuid]
 
     send_buttons(sender_id, """
-Der Wahlkreis #{number} "{name}" liegt in {state}. Es treten {nr_of_candidates} Kandidaten an und ihr Durchschnittsalter ist {avg_age}. 
+Der Wahlkreis "{name}" hat die Nummer {number} und liegt in {state}. Es treten {nr_of_candidates} Kandidaten an, deren Durchschnittsalter {avg_age} Jahre beträgt. 
 """.format(
         number=district['district_id'],
         name=district['district'],
