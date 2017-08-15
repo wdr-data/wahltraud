@@ -9,23 +9,30 @@ def basics(event, parameters, **kwargs):
     sender_id = event['sender']['id']
     first_name = parameters.get('vorname')
     last_name = parameters.get('nachname')
-    candidate = dict()
-    candidate = find_candidates(first_name, last_name)
-    logger.debug('candidate information: ' + str(candidate)) #['first_name'] + ' ' + candidate['last_name'] + ' Partei: ' + candidate['party'] + ' Jahrgang: ' + candidate['age'])
-    send_buttons(sender_id, """
-    {first_name}{last_name}
-    Partei: {party}
-    Alter/ Jahrgang: {age}
-    """.format(
-        first_name=candidate[0]['first_name'],
-        last_name=candidate[0]['last_name'],
-        party=candidate[0]['party'],
-        age=candidate[0]['age']
-    ),
-                 [
-                     button_postback("Mehr Info", {'more_infos': candidate[0]['uuid']}),
-                     button_postback("Anderer Kandidat", {'candidate_check': candidate[0]['uuid']})
-                 ])
+    candidates = dict()
+    candidates = find_candidates(first_name, last_name)
+    if len(candidates) > 1:
+        send_buttons(sender_id, """
+        Es gibt mehrere Kandidaten mit diesem Namen. Welchen möchtest du genauer unter die Lupe nehmen?
+        """,
+            [button_postback(candidate['first_name'] candidate['last_name'] candidate['party'],
+                             {'show_basics': candidate['uuid']})
+             for candidate in candidates])
+    else:
+        send_buttons(sender_id, """
+        {first_name} {last_name}
+        Partei: {party}
+        Alter/ Jahrgang: {age}
+        """.format(
+            first_name=candidates[0]['first_name'],
+            last_name=candidates[0]['last_name'],
+            party=candidates[0]['party'],
+            age=candidates[0]['age']
+        ),
+                     [
+                         button_postback("Mehr Info", {'more_infos': candidates[0]['uuid']}),
+                         button_postback("Anderer Kandidat", {'candidate_check': candidates[0]['uuid']})
+                     ])
     #send_text(
     #    sender_id,
     #    'Du möchtest etwas über {first_name} {last_name} erfahren?'.format(
