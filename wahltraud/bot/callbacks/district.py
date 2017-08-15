@@ -110,7 +110,7 @@ def show_candidates(event, payload, **kwargs):
                              key=operator.itemgetter('last_name')))
     num_candidates = 4
 
-    if len(candidates) - offset < 2:
+    if len(candidates) - (offset + num_candidates) < 2:
         num_candidates = 3
 
     elements = [
