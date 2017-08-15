@@ -104,7 +104,7 @@ Beruf: {profession}
 
 def more_infos_nrw(event, payload, **kwargs):
     sender_id = event['sender']['id']
-    candidate_uuid = payload['more_infos']
+    candidate_uuid = payload['more_infos_nrw']
     candidate = by_uuid[candidate_uuid]
 
     for line in candidate['nrw']['pledges']:
