@@ -19,7 +19,7 @@ def basics(event, parameters, **kwargs):
             last_name=candidates[0]['last_name']
         ),
             [button_postback(candidate['party'],
-                             {'show_basics': candidate['uuid'])
+                             {'show_basics': candidate['uuid']})
              for candidate in candidates])
     else:
         show_basics(candidates[0]['uuid'])
