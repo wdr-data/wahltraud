@@ -1,6 +1,9 @@
+import logging
 
 from ..fb import send_buttons, button_postback, send_text
 from ..data import by_uuid, find_candidates
+
+logger = logging.getLogger(__name__)
 
 
 def basics(event, parameters, **kwargs):
