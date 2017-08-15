@@ -332,7 +332,7 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
                 item['img'] = None
 
             try:
-                temp['list_nr'] = item['list']['position']
+                temp['list_nr'] = int(item['list']['position'])
             except:
                 temp['list_nr'] = None
             if item['constituency'] != []:
