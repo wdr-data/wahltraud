@@ -122,10 +122,11 @@ def show_candidates(event, payload, **kwargs):
         for candidate in candidates[offset:offset + num_candidates]
     ]
 
-    button = None
     if len(candidates) - offset > num_candidates:
         button = button_postback("Mehr anzeigen",
                                  {'show_candidates': district_uuid,
                                   'offset': offset + num_candidates})
+    else:
+        button = button_postback("Anderer Wahlkreis", ['intro_district'])
 
     send_list(sender_id, elements, button=button)
