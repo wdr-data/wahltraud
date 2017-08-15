@@ -1,6 +1,9 @@
+import locale
 
 from ..fb import send_buttons, button_postback, send_text
 from ..data import by_uuid, by_plz
+
+locale.setlocale(locale.LC_NUMERIC, 'de_DE.UTF-8')
 
 
 def find_district(event, parameters, **kwargs):
@@ -51,13 +54,13 @@ Wahlkreis #{number}
 {name}
 Liegt in {state}
 
-Es treten {nr_of_candidates:.1f} Kandidaten an und ihr Durchschnittsalter ist {avg_age}. 
+Es treten {nr_of_candidates} Kandidaten an und ihr Durchschnittsalter ist {avg_age}. 
 """.format(
         number=district['district_id'],
         name=district['district'],
         state=district['state'],
         nr_of_candidates=len(district['candidates']),
-        avg_age=2017.7 - district['meta']['avg_age']
+        avg_age=locale.format('%.1f', 2017.7 - district['meta']['avg_age'])
     ),
                  [
                      button_postback("Kandidaten", {'show_candidates': district_uuid}),
