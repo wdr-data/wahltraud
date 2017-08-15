@@ -5,7 +5,6 @@ from ..data import by_uuid, find_candidates
 
 logger = logging.getLogger(__name__)
 
-
 def basics(event, parameters, **kwargs):
     sender_id = event['sender']['id']
     first_name = parameters.get('vorname')
@@ -18,14 +17,14 @@ def basics(event, parameters, **kwargs):
     Partei: {party}
     Alter/ Jahrgang: {age}
     """.format(
-        first_name=candidate['first_name'],
-        last_name=candidate['last_name'],
-        party=candidate['party'],
-        age=candidate['age']
+        first_name=candidate[0]['first_name'],
+        last_name=candidate[0]['last_name'],
+        party=candidate[0]['party'],
+        age=candidate[0]['age']
     ),
                  [
-                     button_postback("Mehr Info", {'more_infos': candidate['uuid']}),
-                     button_postback("Anderer Kandidat", {'candidate_check': candidate['uuid']})
+                     button_postback("Mehr Info", {'more_infos': candidate[0]['uuid']}),
+                     button_postback("Anderer Kandidat", {'candidate_check': candidate[0]['uuid']})
                  ])
     #send_text(
     #    sender_id,
