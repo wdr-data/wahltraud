@@ -138,8 +138,10 @@ def show_candidates(event, payload, **kwargs):
 
     elements = [
         list_element(
-            "%s %s" % (candidate['first_name'], candidate['last_name']),
-            subtitle="%s" % (candidate['party']),
+            ' '.join(filter(bool, (candidate['degree'],
+                                   candidate['first_name'],
+                                   candidate['last_name']))),
+            subtitle="%s, Jahrgang %d" % (candidate['party'], candidate['age'] or 'unbekannt'),
             buttons=[button_postback("Info", {'show_basics': candidate['uuid']})]
         )
         for candidate in candidates[offset:offset + num_candidates]
