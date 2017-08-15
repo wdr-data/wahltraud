@@ -25,7 +25,7 @@ def basics(event, parameters, **kwargs):
     else:
         send_buttons(sender_id, """
         {first_name} {last_name}
-        
+
 Partei: {party}
 Alter/ Jahrgang: {age}
         """.format(
@@ -36,7 +36,7 @@ Alter/ Jahrgang: {age}
         ),
                      [
                          button_postback("Mehr Info", {'more_infos': candidates[0]['uuid']}),
-                         button_postback("Anderer Kandidat", {'candidate_check': candidates[0]['uuid']})
+                         button_postback("Anderer Kandidat", {'intro_candidate'})
                       ])
 
 def show_basics(event, payload, **kwargs):
@@ -58,7 +58,7 @@ Alter/ Jahrgang: {age}
     ),
                  [
                      button_postback("Mehr Info", {'more_infos': candidate['uuid']}),
-                     button_postback("Anderer Kandidat", {'candidate_check': candidate['uuid']})
+                     button_postback("Anderer Kandidat", {'intro_candidate'})
                  ])
 
 def more_infos(event, payload, **kwargs):
@@ -75,12 +75,12 @@ def more_infos(event, payload, **kwargs):
             buttons = [
                         button_postback("Interview", {'show_video': video_url}),
                         button_postback("Mehr Info", {'more_infos_nrw': candidate['uuid']}),
-                        button_postback("Anderer Kandidat", {'candidate_check': candidate['uuid']})
+                        button_postback("Anderer Kandidat", {'intro_candidate'})
             ]
         else:
             buttons = [
                         button_postback("Mehr Info", {'more_infos_nrw': candidate['uuid']}),
-                        button_postback("Anderer Kandidat", {'candidate_check': candidate['uuid']})
+                        button_postback("Anderer Kandidat", {'intro_candidate'})
             ]
     else:
         profession=candidate['profession']
@@ -88,7 +88,7 @@ def more_infos(event, payload, **kwargs):
             profession = 'Mitglied des Bundestags'
         buttons = [
                     button_postback("Info Wahlkreis", {'show_district': district_uuid}),
-                    button_postback("Anderer Kandidat", {'candidate_check': candidate['uuid']})
+                    button_postback("Anderer Kandidat", {'intro_candidate'})
         ]
 
     send_buttons(sender_id, """
@@ -119,12 +119,12 @@ def more_infos_nrw(event, payload, **kwargs):
         buttons = [
                     button_postback("Interview", {'show_video': video_url}),
                     button_postback("Info Wahlkreis", {'show_district': candidate['district_uuid']}),
-                    button_postback("Anderer Kandidat", {'candidate_check': candidate['uuid']})
+                    button_postback("Anderer Kandidat", {'intro_candidate'})
         ]
     else:
         buttons = [
                     button_postback("Info Wahlkreis", {'show_district': candidate['district_uuid']}),
-                    button_postback("Anderer Kandidat", {'candidate_check': candidate['uuid']})
+                    button_postback("Anderer Kandidat", {'intro_candidate'})
         ]
 
     send_buttons(sender_id, """
@@ -135,6 +135,10 @@ def more_infos_nrw(event, payload, **kwargs):
         interests=candidate['nrw']['interests']
     ),buttons)
 
+def intro_candidate(event, **kwargs):
+    sender_id = event['sender']['id']
+    send_text(sender_id, "Du kannst mir direkt dem Namen eines Kandidaten als Nachricht schreiben.")
+
 def candidate_check(event, **kwargs):
     reply = """
 Du kannst Kandidaten nach Wahlkreis oder Partei suchen.
@@ -142,6 +146,6 @@ Alternativ kannst du auch direkt den Namen eines Kandidaten als Nachricht schrei
     sender_id = event['sender']['id']
 
     send_buttons(sender_id, reply,
-                 buttons=[button_postback('Wahlkreis', ['find_district']),
+                 buttons=[button_postback('Wahlkreis', ['intro_district']),
                           button_postback('Partei', ['party_list']),
                           button_postback('Zufälliger Kandidat', {'show_basics': random_candidate()['uuid']})])
