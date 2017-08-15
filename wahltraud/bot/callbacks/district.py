@@ -98,6 +98,8 @@ Der Wahlkreis "{name}" hat die Nummer {number} und liegt in {state}. Es treten {
 def show_13(event, payload, **kwargs):
     sender_id = event['sender']['id']
     district_uuid = payload['show_13']
+    show_all = payload.get('show_all', False)
+
     district = by_uuid[district_uuid]
     election_13 = district['election_13'].copy()
 
@@ -108,20 +110,35 @@ def show_13(event, payload, **kwargs):
             locale.format_string('%s: %.1f%%', (party, result * 100))
             for party, result
             in sorted(election_13.items(), key=operator.itemgetter(1), reverse=True)
-            if result >= 0.05
+            if show_all or result > 0.05
         ]
     )
 
-    send_buttons(
-        sender_id,
-        "Bei der Bundestagswahl 2013 haben diese Parteien mehr als 5% der Zweitstimmen erhalten:"
-        "\n\n{results}\n\nDie Wahlbeteiligung betrug {beteiligung}%.".format(
-            results=results,
-            beteiligung=locale.format('%.1f', beteiligung * 100)),
-        [
-            button_postback("Anderer Wahlkreis", ['intro_district']),
-        ]
-    )
+    if show_all:
+        send_buttons(
+            sender_id,
+            "Alle Parteien im Überblick:"
+            "\n\n{results}".format(
+                results=results),
+            [
+                button_postback("Anderer Wahlkreis", ['intro_district']),
+            ]
+        )
+
+    else:
+        send_buttons(
+            sender_id,
+            "Bei der Bundestagswahl 2013 haben diese Parteien im Wahlkreis \"{district}\" "
+            "mehr als 5% der Zweitstimmen erhalten:"
+            "\n\n{results}\n\nDie Wahlbeteiligung betrug {beteiligung}%.".format(
+                results=results,
+                district=district['district'],
+                beteiligung=locale.format('%.1f', beteiligung * 100)),
+            [
+                button_postback("Alle anzeigen", {'show_13': district_uuid, 'show_all': True}),
+                button_postback("Anderer Wahlkreis", ['intro_district']),
+            ]
+        )
 
 
 def show_candidates(event, payload, **kwargs):

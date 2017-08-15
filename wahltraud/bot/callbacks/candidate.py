@@ -5,11 +5,11 @@ from ..data import by_uuid, find_candidates, random_candidate
 
 logger = logging.getLogger(__name__)
 
+
 def basics(event, parameters, **kwargs):
     sender_id = event['sender']['id']
     first_name = parameters.get('vorname')
     last_name = parameters.get('nachname')
-    candidates = dict()
     candidates = find_candidates(first_name, last_name)
 
     if len(candidates) > 1:
@@ -24,10 +24,14 @@ def basics(event, parameters, **kwargs):
              for candidate in candidates])
     else:
         send_buttons(sender_id, """
+<<<<<<< HEAD
         {first_name} {last_name}
 
+=======
+{first_name} {last_name}
+>>>>>>> 53efea1b47d39e460a14eb95eac46e8a409beeb4
 Partei: {party}
-Alter/ Jahrgang: {age}
+Jahrgang: {age}
         """.format(
             first_name=candidates[0]['first_name'],
             last_name=candidates[0]['last_name'],
@@ -39,6 +43,7 @@ Alter/ Jahrgang: {age}
                          button_postback("Anderer Kandidat", {'intro_candidate'})
                       ])
 
+
 def show_basics(event, payload, **kwargs):
     sender_id = event['sender']['id']
     candidate_uuid = payload['show_basics']
@@ -46,7 +51,7 @@ def show_basics(event, payload, **kwargs):
 
     logger.debug('candidate_uuid: ' + str(candidate_uuid))
     send_buttons(sender_id, """
-    {first_name} {last_name}
+{first_name} {last_name}
 
 Partei: {party}
 Alter/ Jahrgang: {age}
@@ -61,6 +66,7 @@ Alter/ Jahrgang: {age}
                      button_postback("Anderer Kandidat", {'intro_candidate'})
                  ])
 
+
 def more_infos(event, payload, **kwargs):
     sender_id = event['sender']['id']
     candidate_uuid = payload['more_infos']
@@ -69,8 +75,15 @@ def more_infos(event, payload, **kwargs):
     district = by_uuid[district_uuid]
 
     if candidate['nrw'] is not None:
-        profession=candidate['nrw']['profession']
+        profession = candidate['nrw']['profession']
+
+        buttons = [
+            button_postback("Mehr Info", {'more_infos_nrw': candidate['uuid']}),
+            button_postback("Anderer Kandidat", {'candidate_check': candidate['uuid']})
+        ]
+
         if candidate['nrw']['video'] is not None:
+<<<<<<< HEAD
             video_url=candidate['nrw']['video']
             buttons = [
                         button_postback("Interview", {'show_video': video_url}),
@@ -82,17 +95,25 @@ def more_infos(event, payload, **kwargs):
                         button_postback("Mehr Info", {'more_infos_nrw': candidate['uuid']}),
                         button_postback("Anderer Kandidat", {'intro_candidate'})
             ]
+=======
+            video_url = candidate['nrw']['video']
+            buttons.insert(0, button_postback("Interview", {'show_video': video_url}))
+>>>>>>> 53efea1b47d39e460a14eb95eac46e8a409beeb4
     else:
-        profession=candidate['profession']
-        if profession == 'MdB':
-            profession = 'Mitglied des Bundestags'
+        profession = candidate['profession']
+        profession = profession.replace('MdB', 'Mitglied des Bundestags')
         buttons = [
+<<<<<<< HEAD
                     button_postback("Info Wahlkreis", {'show_district': district_uuid}),
                     button_postback("Anderer Kandidat", {'intro_candidate'})
+=======
+            button_postback("Info Wahlkreis", {'show_district': district_uuid}),
+            button_postback("Anderer Kandidat", {'candidate_check': candidate['uuid']})
+>>>>>>> 53efea1b47d39e460a14eb95eac46e8a409beeb4
         ]
 
     send_buttons(sender_id, """
-    Wahlkreis {dicstrict}
+Wahlkreis {dicstrict}
 
 Landesliste {state}
 Listenplatz Nr.: {list_nr}
@@ -102,19 +123,23 @@ Beruf: {profession}
         state=district['state'],
         list_nr=candidate['list_nr'],
         profession=profession
-    ),buttons)
+    ), buttons)
+
 
 def more_infos_nrw(event, payload, **kwargs):
     sender_id = event['sender']['id']
     candidate_uuid = payload['more_infos_nrw']
     candidate = by_uuid[candidate_uuid]
 
-    pledges = list()
-    for line in candidate['nrw']['pledges']:
-        pledges = str(pledges) + '- ' + line + '\n'
-    pledges = pledges.replace("[]", "")
+    pledges = ['- ' + line for line in candidate['nrw']['pledges']]
+
+    buttons = [
+        button_postback("Info Wahlkreis", {'show_district': candidate['district_uuid']}),
+        button_postback("Anderer Kandidat", {'candidate_check': candidate['uuid']})
+    ]
 
     if candidate['nrw']['video'] is not None:
+<<<<<<< HEAD
         video_url=candidate['nrw']['video']
         buttons = [
                     button_postback("Interview", {'show_video': video_url}),
@@ -126,14 +151,20 @@ def more_infos_nrw(event, payload, **kwargs):
                     button_postback("Info Wahlkreis", {'show_district': candidate['district_uuid']}),
                     button_postback("Anderer Kandidat", {'intro_candidate'})
         ]
+=======
+        video_url = candidate['nrw']['video']
+        buttons.insert(0, button_postback("Interview", {'show_video': video_url}))
+>>>>>>> 53efea1b47d39e460a14eb95eac46e8a409beeb4
 
     send_buttons(sender_id, """
-    {pledges}
+{pledges}
+
 {interests}
     """.format(
-        pledges=pledges,
+        pledges='\n'.join(pledges),
         interests=candidate['nrw']['interests']
-    ),buttons)
+    ), buttons)
+
 
 def intro_candidate(event, **kwargs):
     sender_id = event['sender']['id']
