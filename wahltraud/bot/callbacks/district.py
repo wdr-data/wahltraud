@@ -21,7 +21,7 @@ deine Postleitzahl schreibst."""
             send_text(sender_id, "Diese PLZ sagt mir nichts...")
 
         elif len(district_uuids) == 1:
-            send_district(sender_id, by_plz[plz])
+            send_district(sender_id, district_uuids.pop())
 
         else:
             send_buttons(sender_id,
