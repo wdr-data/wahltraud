@@ -20,9 +20,9 @@ for candidate in candidate_list:
 
 for district in district_list:
     for plz in district['plz']:
-        by_plz[plz].add(district['wk_uuid'])
+        by_plz[plz].add(district['district_uuid'])
 
-    by_uuid[district['wk_uuid']] = district
+    by_uuid[district['district_uuid']] = district
 
 
 def find_candidates(first_name, last_name):
