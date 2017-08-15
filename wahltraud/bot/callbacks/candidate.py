@@ -23,44 +23,95 @@ def basics(event, parameters, **kwargs):
                              {'show_basics': candidate['uuid']})
              for candidate in candidates])
     else:
+        district_uuid = candidates[0]['district_uuid']
+        district = by_uuid[district_uuid]
+
+        if candidates[0]['nrw'] is not None:
+            profession = candidates[0]['nrw']['profession']
+
+            buttons = [
+                button_postback("Mehr Info", {'more_infos_nrw': candidates[0]['uuid']}),
+                button_postback("Anderer Kandidat", ['intro_candidate'])
+            ]
+
+            if candidates[0]['nrw']['video'] is not None:
+                video_url = candidates[0]['nrw']['video']
+                buttons.insert(0, button_postback("Interview", {'show_video': video_url}))
+        else:
+            profession = candidates[0]['profession']
+            profession = profession.replace('MdB', 'Mitglied des Bundestags')
+            buttons = [
+                button_postback("Info Wahlkreis", {'show_district': district_uuid}),
+                button_postback("Anderer Kandidat", ['intro_candidate'])
+            ]
+        
         send_buttons(sender_id, """
 {first_name} {last_name}
 Partei: {party}
 Jahrgang: {age}
+
+Wahlkreis {dicstrict}
+Landesliste {state}
+Listenplatz Nr.: {list_nr}
+Beruf: {profession}
         """.format(
             first_name=candidates[0]['first_name'],
             last_name=candidates[0]['last_name'],
             party=candidates[0]['party'],
-            age=candidates[0]['age']
-        ),
-                     [
-                         button_postback("Mehr Info", {'more_infos': candidates[0]['uuid']}),
-                         button_postback("Anderer Kandidat", ['intro_candidate'])
-                      ])
-
+            age=candidates[0]['age'],
+            dicstrict=district[0]['district'],
+            state=district[0]['state'],
+            list_nr=candidates[0]['list_nr'],
+            profession=profession
+        ), buttons)
 
 def show_basics(event, payload, **kwargs):
     sender_id = event['sender']['id']
     candidate_uuid = payload['show_basics']
     candidate = by_uuid[candidate_uuid]
+    district_uuid = candidate['district_uuid']
+    district = by_uuid[district_uuid]
 
     logger.debug('candidate_uuid: ' + str(candidate_uuid))
+
+    if candidate['nrw'] is not None:
+        profession = candidate['nrw']['profession']
+
+        buttons = [
+            button_postback("Mehr Info", {'more_infos_nrw': candidate['uuid']}),
+            button_postback("Anderer Kandidat", ['intro_candidate'])
+        ]
+
+        if candidate['nrw']['video'] is not None:
+            video_url = candidate['nrw']['video']
+            buttons.insert(0, button_postback("Interview", {'show_video': video_url}))
+    else:
+        profession = candidate['profession']
+        profession = profession.replace('MdB', 'Mitglied des Bundestags')
+        buttons = [
+            button_postback("Info Wahlkreis", {'show_district': district_uuid}),
+            button_postback("Anderer Kandidat", ['intro_candidate'])
+        ]
+
     send_buttons(sender_id, """
 {first_name} {last_name}
-
 Partei: {party}
-Alter/ Jahrgang: {age}
+Jahrgang: {age}
+
+Wahlkreis {dicstrict}
+Landesliste {state}
+Listenplatz Nr.: {list_nr}
+Beruf: {profession}
     """.format(
         first_name=candidate['first_name'],
         last_name=candidate['last_name'],
         party=candidate['party'],
-        age=candidate['age']
-    ),
-                 [
-                     button_postback("Mehr Info", {'more_infos': candidate['uuid']}),
-                     button_postback("Anderer Kandidat", ['intro_candidate'])
-                 ])
-
+        age=candidate['age'],
+        dicstrict=district['district'],
+        state=district['state'],
+        list_nr=candidate['list_nr'],
+        profession=profession
+    ), buttons)
 
 def more_infos(event, payload, **kwargs):
     sender_id = event['sender']['id']
