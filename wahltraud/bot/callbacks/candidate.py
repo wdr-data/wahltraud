@@ -107,6 +107,7 @@ def more_infos_nrw(event, payload, **kwargs):
     candidate_uuid = payload['more_infos_nrw']
     candidate = by_uuid[candidate_uuid]
 
+    pledges = list()
     for line in candidate['nrw']['pledges']:
         pledges = pledges + '- ' + line + '\n'
 
