@@ -38,10 +38,13 @@ def basics(event, parameters, **kwargs):
         #                  button_postback("Anderer Kandidat", {'candidate_check': candidates[0]['uuid']})
         #              ])
 
-def show_basics(event, payload, **kwargs):
+def show_basics(event, payload=None, uuid=None, **kwargs):
     sender_id = event['sender']['id']
-    candidate_uuid = payload['show_basics']
-    candidate = by_uuid[candidate_uuid]
+    if payload is not None:
+        candidate_uuid = payload['show_basics']
+        candidate = by_uuid[candidate_uuid]
+    else:
+        candidate = by_uuid[uuid]
 
     send_buttons(sender_id, """
     {first_name} {last_name}
