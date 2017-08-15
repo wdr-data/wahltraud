@@ -5,8 +5,11 @@ from ..data import by_uuid
 
 def basics(event, parameters, **kwargs):
     sender_id = event['sender']['id']
-    first_name = parameters.get('vorname')
-    last_name = parameters.get('nachname')
+    first_name = parameters.get('first_name')
+    last_name = parameters.get('last_name')
+    candidate = dict()
+    candidate = find_candidates(first_name, last_name)
+    logger.debug('candidate information: ' + candidate['first_name'] + ' ' + candidate['last_name'] + ' Partei: ' + candidate['party'] + ' Jahrgang: ' + candidate['age'])
     send_text(
         sender_id,
         'Du möchtest etwas über {first_name} {last_name} erfahren?'.format(
@@ -23,4 +26,3 @@ Alternativ kannst du auch direkt den Namen eines Kandidaten als Nachricht schrei
                  buttons=[button_postback('Wahlkreis', ['find_district']),
                           button_postback('Partei', ['party_list']),
                           button_postback('Zufälliger Kandidat', ['random_candidate'])])
-
