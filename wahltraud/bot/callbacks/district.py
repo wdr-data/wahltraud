@@ -1,9 +1,16 @@
 import locale
+import operator
 
 from ..fb import send_buttons, button_postback, send_text
 from ..data import by_uuid, by_plz
 
 locale.setlocale(locale.LC_NUMERIC, 'de_DE.UTF-8')
+
+
+def intro_district(event, **kwargs):
+    sender_id = event['sender']['id']
+    send_text(sender_id, "Lass mich schauen, wer in deinem Wahlkreis zur Wahl steht. "
+                         "Schreib mir doch einfach deine PLZ, und ich schaue nach.")
 
 
 def find_district(event, parameters, **kwargs):
@@ -61,6 +68,26 @@ Der Wahlkreis "{name}" hat die Nummer {number} und liegt in {state}. Es treten {
                  [
                      button_postback("Kandidaten", {'show_candidates': district_uuid}),
                      button_postback("Bundestagswahl 2013", {'show_13': district_uuid}),
-                     # button_postback("Anderer Wahlkreis", {'show_13': district_uuid}),
+                     button_postback("Anderer Wahlkreis", ['intro_district']),
                  ])
 
+
+def show_13(event, payload, **kwargs):
+    sender_id = event['sender']['id']
+    district_uuid = payload['show_13']
+    district = by_uuid[district_uuid]
+
+    results = '\n'.join(
+        [
+            locale.format_string('%s: %.1f', (party, result * 100))
+            for party, result
+            in sorted(district['election_13'], key=operator.itemgetter(1))
+        ]
+    )
+
+    send_buttons(sender_id, "Bei der Bundestagswahl 2013 haben diese Parteien mehr als 5% der "
+                            "Zweitstimmen erhalten:\n\n" + results,
+                 [
+                     button_postback("Anderer Wahlkreis", ['intro_district']),
+                 ]
+                 )
