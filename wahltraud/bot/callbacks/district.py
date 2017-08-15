@@ -42,6 +42,6 @@ def show_district(event, payload, **kwargs):
 def send_district(sender_id, district_uuid):
     send_buttons(sender_id,
                  'Ok. Der Wahlkreis deiner Wahl ist {district}'.format(
-                     district=by_uuid[district_uuid]['name']),
+                     district=by_uuid[district_uuid]['district']),
                  [button_postback("Zeige Wahlkreis-Info",
                                   {'show_district': district_uuid})])
