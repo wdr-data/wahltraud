@@ -116,7 +116,7 @@ def wahlkreis_info(alle_kandidaten_json, wahlkreis_info_json):
         wkinfo.append({ 'district_id': item['number'],
                                 'district':  item['name'],
                                 'election_13': wahl2013(wahlkreisId),
-                                'district_uuid': item['uuid'],
+                                'uuid': item['uuid'],
                                 'state': bundesland_finder(wahlkreisId,wk_bundesland),
                                 'plz': plz_ort[0][0],
                                 'cities': plz_ort[0][1],
@@ -338,7 +338,7 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
             if item['constituency'] != []:
                 #temp['district']  = item['constituency']['name']
                 #temp['district_id'] = item['constituency']['number']
-                temp['district_uuid'] =  item['constituency']['uuid']
+                temp['uuid'] =  item['constituency']['uuid']
             else:
                 #temp['disctrict']  = None
                 #temp['district_id'] = None
@@ -512,7 +512,7 @@ def kandidaten_und_meta(wahlkreis_uuid,alle):
     sex = []
     for kandidat in alle['list']:
         try:
-            if kandidat['district_uuid'] == wahlkreis_uuid:
+            if kandidat['uuid'] == wahlkreis_uuid:
                 # liste uuid
                 kand_liste.append( kandidat['uuid']
                                    #'vorname': kandidat['vorname'],
