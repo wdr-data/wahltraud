@@ -13,12 +13,16 @@ def basics(event, parameters, **kwargs):
     candidates = find_candidates(first_name, last_name)
     if len(candidates) > 1:
         send_buttons(sender_id, """
-        Es gibt mehrere Kandidaten mit diesem Namen. Welchen möchtest du genauer unter die Lupe nehmen?
-        """,
-            [button_postback(candidate['first_name'] + ' ' + candidate['last_name'] + ', ' + candidate['party'],
+        Es gibt mehrere Kandidaten mit dem Namen {first_name} {last_name}. Von welcher Partei ist der gesuchte Kandidat?
+        """.format(
+            first_name=candidates[0]['first_name'],
+            last_name=candidates[0]['last_name']
+        ),
+            [button_postback(candidate['party'],
                              {'show_basics': candidate['uuid']})
              for candidate in candidates])
     else:
+        if candidates[0]['nrw']
         send_buttons(sender_id, """
         {first_name} {last_name}
         Partei: {party}
@@ -33,10 +37,6 @@ def basics(event, parameters, **kwargs):
                          button_postback("Mehr Info", {'more_infos': candidates[0]['uuid']}),
                          button_postback("Anderer Kandidat", {'candidate_check': candidates[0]['uuid']})
                      ])
-    #send_text(
-    #    sender_id,
-    #    'Du möchtest etwas über {first_name} {last_name} erfahren?'.format(
-    #        first_name=first_name, last_name=last_name))
 
 
 def candidate_check(event, **kwargs):
