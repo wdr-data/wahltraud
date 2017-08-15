@@ -1,7 +1,7 @@
 import locale
 import operator
 
-from ..fb import send_buttons, button_postback, send_text, send_list, list_element
+from ..fb import send_buttons, button_postback, send_text, send_list, list_element, quick_reply
 from ..data import by_uuid, by_plz, by_city
 
 locale.setlocale(locale.LC_NUMERIC, 'de_DE.UTF-8')
@@ -40,7 +40,7 @@ deine Postleitzahl schreibst."""
         elif len(district_uuids) == 1:
             send_district(sender_id, district_uuids.pop())
 
-        else:
+        elif len(district_uuids) < 4:
             send_buttons(sender_id,
                          'Welchen Wahlkreis meinst du?',
                          [button_postback(district['district'],
@@ -48,6 +48,22 @@ deine Postleitzahl schreibst."""
                           for district in
                           [by_uuid[uuid] for uuid in district_uuids]]
                          )
+
+        elif len(district_uuids) < 12:
+            send_text(sender_id,
+                      'Bitte wähle einen der folgenden Wahlkreise. '
+                      'Alternativ kannst du mir auch deine PLZ senden.',
+                      [quick_reply(district['district'],
+                                   {'show_district': district['uuid']})
+                       for district in
+                       [by_uuid[uuid] for uuid in district_uuids]]
+                      )
+        else:
+            send_text(sender_id,
+                      "{city} hat {n} Wahlkreise. So viele kann ich leider nicht anzeigen. "
+                      "Bitte sende mir stattdessen deine PLZ.".format(
+                          city=city,
+                          n=len(district_uuids)))
 
 
 def send_district(sender_id, district_uuid):
