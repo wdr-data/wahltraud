@@ -17,6 +17,15 @@ by_uuid = dict()
 
 state_lists = defaultdict(list)
 
+for candidate in candidate_list:
+    by_first_name[candidate['first_name']].add(candidate['uuid'])
+    by_last_name[candidate['last_name']].add(candidate['uuid'])
+
+    if candidate.get('list_nr') is not None:
+        state_lists[candidate['state']].append(candidate)
+
+    by_uuid[candidate['uuid']] = candidate
+
 for district in district_list:
     for plz in district['plz']:
         by_plz[plz].add(district['uuid'])
@@ -25,14 +34,6 @@ for district in district_list:
         by_city[city].add(district['uuid'])
 
     by_uuid[district['uuid']] = district
-
-for candidate in candidate_list:
-    by_first_name[candidate['first_name']].add(candidate['uuid'])
-    by_last_name[candidate['last_name']].add(candidate['uuid'])
-
-    state_lists[by_uuid[candidate['district_uuid']]['state']].append(candidate)
-
-    by_uuid[candidate['uuid']] = candidate
 
 for state in state_lists.keys():
     state_lists[state] = list(sorted(state_lists[state], key=operator.itemgetter('list_nr')))
