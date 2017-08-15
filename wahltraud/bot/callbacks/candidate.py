@@ -109,7 +109,7 @@ def more_infos_nrw(event, payload, **kwargs):
 
     pledges = list()
     for line in candidate['nrw']['pledges']:
-        pledges = pledges + '- ' + line + '\n'
+        pledges = str(pledges) + '- ' + line + '\n'
 
     if candidate['nrw']['video'] is not None:
         video_url=candidate['nrw']['video']
