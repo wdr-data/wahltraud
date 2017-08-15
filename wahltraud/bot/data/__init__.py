@@ -15,14 +15,14 @@ by_plz = defaultdict(set)
 by_city = defaultdict(set)
 by_uuid = dict()
 
-state_lists = defaultdict(list)
+state_lists = defaultdict(lambda: defaultdict(list))
 
 for candidate in candidate_list:
     by_first_name[candidate['first_name']].add(candidate['uuid'])
     by_last_name[candidate['last_name']].add(candidate['uuid'])
 
     if candidate.get('list_nr') is not None:
-        state_lists[candidate['state']].append(candidate)
+        state_lists[candidate['list_name']][candidate['party']].append(candidate)
 
     by_uuid[candidate['uuid']] = candidate
 
@@ -35,8 +35,9 @@ for district in district_list:
 
     by_uuid[district['uuid']] = district
 
-for state in state_lists.keys():
-    state_lists[state] = list(sorted(state_lists[state], key=operator.itemgetter('list_nr')))
+for state in state_lists.values():
+    for party in state.keys():
+        state[party] = list(sorted(state[party], key=operator.itemgetter('list_nr')))
 
 
 def find_candidates(first_name, last_name):
