@@ -8,8 +8,8 @@ logger = logging.getLogger(__name__)
 
 def basics(event, parameters, **kwargs):
     sender_id = event['sender']['id']
-    first_name = parameters.get('first_name')
-    last_name = parameters.get('last_name')
+    first_name = parameters.get('vorname')
+    last_name = parameters.get('nachname')
     candidate = dict()
     candidate = find_candidates(first_name, last_name)
     logger.debug('candidate information: ' + str(candidate)) #['first_name'] + ' ' + candidate['last_name'] + ' Partei: ' + candidate['party'] + ' Jahrgang: ' + candidate['age'])
