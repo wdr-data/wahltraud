@@ -41,6 +41,7 @@ def make_event_handler():
         ApiAiHandler(candidate.basics, 'kandidat'),
         ApiAiHandler(candidate.candidate_check, 'kandidatencheck'),
         PayloadHandler(district.intro_district, ['intro_district']),
+        PayloadHandler(district.intro_candidate, ['intro_candidate']),
         PayloadHandler(district.show_13, ['show_13']),
         PayloadHandler(candidate.show_basics, ['show_basics']),
         PayloadHandler(candidate.more_infos, ['more_infos']),
