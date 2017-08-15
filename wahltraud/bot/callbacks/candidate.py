@@ -67,7 +67,8 @@ def more_infos(event, payload, **kwargs):
 
     if candidate['nrw'] != 'null':
         profession=candidate['nrw']['profession']
-    else profession=candidate['profession']
+    else:
+        profession=candidate['profession']
 
     send_buttons(sender_id, """
     Wahlkreis {dicstrict}
