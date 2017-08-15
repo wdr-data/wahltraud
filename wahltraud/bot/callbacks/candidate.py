@@ -22,30 +22,27 @@ def basics(event, parameters, **kwargs):
                              {'show_basics': candidate['uuid']})
              for candidate in candidates])
     else:
-        show_basics(candidates[0]['uuid'])
-        # send_buttons(sender_id, """
-        # {first_name} {last_name}
-        # Partei: {party}
-        # Alter/ Jahrgang: {age}
-        # """.format(
-        #     first_name=candidates[0]['first_name'],
-        #     last_name=candidates[0]['last_name'],
-        #     party=candidates[0]['party'],
-        #     age=candidates[0]['age']
-        # ),
-        #              [
-        #                  button_postback("Mehr Info", {'more_infos': candidates[0]['uuid']}),
-        #                  button_postback("Anderer Kandidat", {'candidate_check': candidates[0]['uuid']})
-        #              ])
+        send_buttons(sender_id, """
+        {first_name} {last_name}
+        Partei: {party}
+        Alter/ Jahrgang: {age}
+        """.format(
+            first_name=candidates[0]['first_name'],
+            last_name=candidates[0]['last_name'],
+            party=candidates[0]['party'],
+            age=candidates[0]['age']
+        ),
+                     [
+                         button_postback("Mehr Info", {'more_infos': candidates[0]['uuid']}),
+                         button_postback("Anderer Kandidat", {'candidate_check': candidates[0]['uuid']})
+                      ])
 
-def show_basics(event, payload=None, uuid=None, **kwargs):
+def show_basics(event, payload, **kwargs):
     sender_id = event['sender']['id']
-    if payload is not None:
-        candidate_uuid = payload['show_basics']
-        candidate = by_uuid[candidate_uuid]
-    else:
-        candidate = by_uuid[uuid]
+    candidate_uuid = payload['show_basics']
+    candidate = by_uuid[candidate_uuid]
 
+    logger.debug('candidate_uuid: ' + str(candidate_uuid))
     send_buttons(sender_id, """
     {first_name} {last_name}
     Partei: {party}
