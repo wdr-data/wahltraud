@@ -58,6 +58,31 @@ def show_basics(event, payload, **kwargs):
                      button_postback("Anderer Kandidat", {'candidate_check': candidate['uuid']})
                  ])
 
+def more_infos(event, payload, **kwargs):
+    sender_id = event['sender']['id']
+    candidate_uuid = payload['more_infos']
+    candidate = by_uuid[candidate_uuid]
+    district_uuid = candidate['district_uuid']
+    district = by_uuid[district_uuid]
+
+    send_buttons(sender_id, """
+    Wahlkreis {dicstrict}
+    Landesliste {state}
+    Listenplatz Nr.: {list_nr}
+
+    Beruf: {profession}
+    """.format(
+        dicstrict=district['district'],
+        state=district['state'],
+        list_nr=candidate['list_nr'],
+        if candidate['nrw'] is not null:
+            profession=candidate['nrw']['profession']
+        else profession=candidate['profession']
+    ),
+                 [
+                     button_postback("Mehr Info", {'more_infos': candidate['uuid']}),
+                     button_postback("Anderer Kandidat", {'candidate_check': candidate['uuid']})
+                 ])
 
 def candidate_check(event, **kwargs):
     reply = """
