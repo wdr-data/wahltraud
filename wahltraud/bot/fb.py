@@ -4,6 +4,8 @@ import logging
 
 import requests
 
+from .models import Attachment
+
 PAGE_TOKEN = os.environ.get('WAHLTRAUD_PAGE_TOKEN', 'na')
 logger = logging.getLogger(__name__)
 
@@ -179,7 +181,28 @@ def quick_reply(title, payload, image_url=None):
     return payload_
 
 
-def send_attachment(recipient_id, attachment_id, type):
+def send_attachment(recipient_id, url, type=None):
+    """
+    Send an attachment by URL. If the URL has not been uploaded before, it will be uploaded and the
+    attachment ID will be saved to the database. If the URL has been uploaded before, the ID is
+    fetched from the database. Then, the attachment is sent by ID.
+    :param recipient_id: The user ID of the recipient
+    :param url: The URL of the attachment
+    :param type: Type of the attachment. If not defined, guess_attachment_type is used
+    """
+    try:
+        attachment = Attachment.objects.get(url=url)
+        attachment_id = attachment.attachment_id
+    except Attachment.DoesNotExist:
+        attachment_id = upload_attachment(url, type)
+        if attachment_id is None:
+            raise ValueError('Uploading attachment with URL %s failed' % url)
+        Attachment(url=url, attachment_id=attachment_id).save()
+
+    send_attachment_by_id(recipient_id, attachment_id, type or guess_attachment_type(url))
+
+
+def send_attachment_by_id(recipient_id, attachment_id, type):
     """
     Sends an attachment via ID
     :param recipient_id: The user ID of the recipient
@@ -219,12 +242,12 @@ def send(payload):
     logger.debug(r.content.decode())
 
 
-def upload_attachment(url):
+def upload_attachment(url, type=None):
     """Uploads an attachment and returns the attachment ID, or None if the upload fails"""
     payload = {
         "message": {
             "attachment": {
-                "type": guess_attachment_type(url),
+                "type": type or guess_attachment_type(url),
                 "payload": {
                     "url": url,
                     "is_reusable": True,
