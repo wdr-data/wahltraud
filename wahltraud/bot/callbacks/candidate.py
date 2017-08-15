@@ -1,6 +1,6 @@
 
 from ..fb import send_buttons, button_postback, send_text
-from ..data import by_uuid
+from ..data import by_uuid, find_candidates
 
 
 def basics(event, parameters, **kwargs):
