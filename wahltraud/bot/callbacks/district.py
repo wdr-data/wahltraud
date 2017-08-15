@@ -141,8 +141,9 @@ def show_candidates(event, payload, **kwargs):
             ' '.join(filter(bool, (candidate['degree'],
                                    candidate['first_name'],
                                    candidate['last_name']))),
-            subtitle="%s, Jahrgang %d" % (candidate['party'], candidate['age'] or 'unbekannt'),
-            buttons=[button_postback("Info", {'show_basics': candidate['uuid']})]
+            subtitle="%s, Jahrgang %s" % (candidate['party'], candidate['age'] or 'unbekannt'),
+            buttons=[button_postback("Info", {'show_basics': candidate['uuid']})],
+            image_url=candidate.get('img') or None
         )
         for candidate in candidates[offset:offset + num_candidates]
     ]
