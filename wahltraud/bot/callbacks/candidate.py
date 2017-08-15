@@ -27,7 +27,7 @@ def basics(event, parameters, **kwargs):
 
 def payload_basics(event, payload, **kwargs):
     sender_id = event['sender']['id']
-    candidate_uuid = payload['show_basics']
+    candidate_uuid = payload['payload_basics']
 
     show_basics(sender_id, candidate_uuid)
 
