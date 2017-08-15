@@ -44,7 +44,7 @@ def basics(event, parameters, **kwargs):
                 button_postback("Info Wahlkreis", {'show_district': district_uuid}),
                 button_postback("Anderer Kandidat", ['intro_candidate'])
             ]
-        
+
         send_buttons(sender_id, """
 {first_name} {last_name}
 Partei: {party}
@@ -59,8 +59,8 @@ Beruf: {profession}
             last_name=candidates[0]['last_name'],
             party=candidates[0]['party'],
             age=candidates[0]['age'],
-            dicstrict=district[0]['district'],
-            state=district[0]['state'],
+            dicstrict=district['district'],
+            state=district['state'],
             list_nr=candidates[0]['list_nr'],
             profession=profession
         ), buttons)
