@@ -37,7 +37,7 @@ deine Postleitzahl schreibst."""
             send_buttons(sender_id,
                          'Welchen Wahlkreis meinst du?',
                          [button_postback(district['district'],
-                                          {'show_district': district['district_uuid']})
+                                          {'show_district': district['uuid']})
                           for district in
                           [by_uuid[uuid] for uuid in district_uuids]]
                          )
