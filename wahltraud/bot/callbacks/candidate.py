@@ -108,7 +108,7 @@ def more_infos_nrw(event, payload, **kwargs):
     candidate = by_uuid[candidate_uuid]
 
     for line in candidate['nrw']['pledges']:
-        pledges = '- ' + line
+        pledges = pledges + '- ' + line + '\n'
 
     if candidate['nrw']['video'] is not None:
         video_url=candidate['nrw']['video']
