@@ -65,7 +65,7 @@ def more_infos(event, payload, **kwargs):
     district_uuid = candidate['district_uuid']
     district = by_uuid[district_uuid]
 
-    if candidate['nrw'] != 'null':
+    if candidate['nrw'] is None:
         profession=candidate['nrw']['profession']
     else:
         profession=candidate['profession']
