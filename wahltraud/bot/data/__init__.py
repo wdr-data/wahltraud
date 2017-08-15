@@ -11,6 +11,7 @@ district_list = json.load(open(str(DATA_DIR/'wahlkreis_info.json')))['districts'
 by_first_name = defaultdict(set)
 by_last_name = defaultdict(set)
 by_plz = defaultdict(set)
+by_city = defaultdict(set)
 by_uuid = dict()
 
 for candidate in candidate_list:
@@ -21,6 +22,9 @@ for candidate in candidate_list:
 for district in district_list:
     for plz in district['plz']:
         by_plz[plz].add(district['uuid'])
+
+    for city in district['cities']:
+        by_city[city].add(district['uuid'])
 
     by_uuid[district['uuid']] = district
 

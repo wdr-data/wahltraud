@@ -2,7 +2,7 @@ import locale
 import operator
 
 from ..fb import send_buttons, button_postback, send_text, send_list, list_element
-from ..data import by_uuid, by_plz
+from ..data import by_uuid, by_plz, by_city
 
 locale.setlocale(locale.LC_NUMERIC, 'de_DE.UTF-8')
 
@@ -15,9 +15,10 @@ def intro_district(event, **kwargs):
 
 def find_district(event, parameters, **kwargs):
     sender_id = event['sender']['id']
-    plz = parameters['plz']
+    plz = parameters.get('plz')
+    city = parameters.get('orte')
 
-    if not plz:
+    if not plz and not city:
         reply = """
 Viele Wege führen zum Wahlkreis deiner Wahl. Am schnellsten geht es, indem du mir 
 deine Postleitzahl schreibst."""
@@ -25,10 +26,16 @@ deine Postleitzahl schreibst."""
         send_text(sender_id, reply)
 
     else:
-        district_uuids = by_plz.get(plz)
+        if plz:
+            district_uuids = by_plz.get(plz)
+        else:
+            district_uuids = by_city.get(city)
 
         if not district_uuids:
-            send_text(sender_id, "Diese PLZ sagt mir nichts...")
+            if plz:
+                send_text(sender_id, "Diese PLZ sagt mir nichts...")
+            else:
+                send_text(sender_id, "Tut mir Leid, diesen Ort kenne ich nicht...")
 
         elif len(district_uuids) == 1:
             send_district(sender_id, district_uuids.pop())
