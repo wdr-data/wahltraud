@@ -125,6 +125,7 @@ def show_candidates(event, payload, **kwargs):
     button = None
     if len(candidates) - offset > num_candidates:
         button = button_postback("Mehr anzeigen",
-                                 {'show_candidates': district_uuid, 'offset': offset + 4})
+                                 {'show_candidates': district_uuid,
+                                  'offset': offset + num_candidates})
 
     send_list(sender_id, elements, button=button)
