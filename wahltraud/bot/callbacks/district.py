@@ -1,7 +1,7 @@
 import locale
 import operator
 
-from ..fb import send_buttons, button_postback, send_text
+from ..fb import send_buttons, button_postback, send_text, send_list, list_element
 from ..data import by_uuid, by_plz
 
 locale.setlocale(locale.LC_NUMERIC, 'de_DE.UTF-8')
@@ -99,3 +99,28 @@ def show_13(event, payload, **kwargs):
             button_postback("Anderer Wahlkreis", ['intro_district']),
         ]
     )
+
+
+def show_candidates(event, payload, **kwargs):
+    sender_id = event['sender']['id']
+    district_uuid = payload['show_candidates']
+    offset = int(payload.get('offset', 0))
+    district = by_uuid[district_uuid]
+    candidates = list(sorted((by_uuid[uuid] for uuid in district['candidates']),
+                             key=operator.itemgetter('last_name')))
+
+    elements = [
+        list_element(
+            "%s %s" % (candidate['first_name'], candidate['last_name']),
+            subtitle="%s" % (candidate['party']),
+            buttons=[button_postback("Info", {'show_basics': candidate['uuid']})]
+        )
+        for candidate in candidates[offset:offset + 4]
+    ]
+
+    button = None
+    if len(candidates) - offset > 4:
+        button = button_postback("Mehr anzeigen",
+                                 {'show_candidates': district_uuid, 'offset': offset + 4})
+
+    send_list(sender_id, elements, button=button)
