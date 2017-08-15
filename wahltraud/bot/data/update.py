@@ -332,9 +332,12 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
                 item['img'] = None
 
             try:
+                temp['list_name'] = item['list']['name']
                 temp['list_nr'] = int(item['list']['position'])
             except:
+                temp['list_name'] = None
                 temp['list_nr'] = None
+
             if item['constituency'] != []:
                 #temp['district']  = item['constituency']['name']
                 #temp['district_id'] = item['constituency']['number']
@@ -342,7 +345,7 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
             else:
                 #temp['disctrict']  = None
                 #temp['district_id'] = None
-                temp['disctict_uuid'] = None
+                temp['district_uuid'] = None
             #NRW Data
 
 
