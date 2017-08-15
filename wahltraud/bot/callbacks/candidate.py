@@ -35,7 +35,7 @@ Jahrgang: {age}
         ),
                      [
                          button_postback("Mehr Info", {'more_infos': candidates[0]['uuid']}),
-                         button_postback("Anderer Kandidat", {'intro_candidate'})
+                         button_postback("Anderer Kandidat", ['intro_candidate'])
                       ])
 
 
@@ -58,7 +58,7 @@ Alter/ Jahrgang: {age}
     ),
                  [
                      button_postback("Mehr Info", {'more_infos': candidate['uuid']}),
-                     button_postback("Anderer Kandidat", {'intro_candidate'})
+                     button_postback("Anderer Kandidat", ['intro_candidate'])
                  ])
 
 
@@ -74,7 +74,7 @@ def more_infos(event, payload, **kwargs):
 
         buttons = [
             button_postback("Mehr Info", {'more_infos_nrw': candidate['uuid']}),
-            button_postback("Anderer Kandidat", {'candidate_check': candidate['uuid']})
+            button_postback("Anderer Kandidat", ['intro_candidate'])
         ]
 
         if candidate['nrw']['video'] is not None:
@@ -85,7 +85,7 @@ def more_infos(event, payload, **kwargs):
         profession = profession.replace('MdB', 'Mitglied des Bundestags')
         buttons = [
             button_postback("Info Wahlkreis", {'show_district': district_uuid}),
-            button_postback("Anderer Kandidat", {'intro_candidate'})
+            button_postback("Anderer Kandidat", ['intro_candidate'])
         ]
 
     send_buttons(sender_id, """
@@ -111,7 +111,7 @@ def more_infos_nrw(event, payload, **kwargs):
 
     buttons = [
         button_postback("Info Wahlkreis", {'show_district': candidate['district_uuid']}),
-        button_postback("Anderer Kandidat", {'candidate_check': candidate['uuid']})
+        button_postback("Anderer Kandidat", ['intro_candidate'])
     ]
 
     if candidate['nrw']['video'] is not None:
@@ -119,8 +119,10 @@ def more_infos_nrw(event, payload, **kwargs):
         buttons.insert(0, button_postback("Interview", {'show_video': video_url}))
 
     send_buttons(sender_id, """
+Das sind die Wahlversprechen von {vorname} {nachname}:
 {pledges}
 
+Und die Interessen:
 {interests}
     """.format(
         pledges='\n'.join(pledges),
