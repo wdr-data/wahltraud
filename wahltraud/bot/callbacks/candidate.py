@@ -19,10 +19,10 @@ def basics(event, parameters, **kwargs):
             last_name=candidates[0]['last_name']
         ),
             [button_postback(candidate['party'],
-                             {'show_basics': sender_id, candidate['uuid']})
+                             {'show_basics': candidate['uuid'])
              for candidate in candidates])
     else:
-        show_basics(sender_id, candidates[0]['uuid'])
+        show_basics(candidates[0]['uuid'])
         # send_buttons(sender_id, """
         # {first_name} {last_name}
         # Partei: {party}
@@ -38,7 +38,9 @@ def basics(event, parameters, **kwargs):
         #                  button_postback("Anderer Kandidat", {'candidate_check': candidates[0]['uuid']})
         #              ])
 
-def show_basics(sender_id, candidate_uuid):
+def show_basics(event, payload, **kwargs):
+    sender_id = event['sender']['id']
+    candidate_uuid = payload['show_basics']
     candidate = by_uuid[candidate_uuid]
 
     send_buttons(sender_id, """
