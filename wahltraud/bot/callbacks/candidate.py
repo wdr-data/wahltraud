@@ -82,7 +82,7 @@ def more_infos(event, payload, **kwargs):
             buttons.insert(0, button_postback("Interview", {'show_video': video_url}))
     else:
         profession = candidate['profession']
-        profession.replace('MdB', 'Mitglied des Bundestags')
+        profession = profession.replace('MdB', 'Mitglied des Bundestags')
         buttons = [
             button_postback("Info Wahlkreis", {'show_district': district_uuid}),
             button_postback("Anderer Kandidat", {'candidate_check': candidate['uuid']})
