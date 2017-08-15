@@ -120,4 +120,4 @@ Alternativ kannst du auch direkt den Namen eines Kandidaten als Nachricht schrei
     send_buttons(sender_id, reply,
                  buttons=[button_postback('Wahlkreis', ['intro_district']),
                           button_postback('Partei', ['party_list']),
-                          button_postback('Zufälliger Kandidat', {'show_basics': payload_basics()['uuid']})])
+                          button_postback('Zufälliger Kandidat', {'payload_basics': random_candidate()['uuid']})])
