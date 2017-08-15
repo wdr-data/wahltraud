@@ -1,7 +1,7 @@
 import logging
 
 from ..fb import send_buttons, button_postback, send_text
-from ..data import by_uuid, find_candidates
+from ..data import by_uuid, find_candidates, random_candidate
 
 logger = logging.getLogger(__name__)
 
@@ -11,6 +11,7 @@ def basics(event, parameters, **kwargs):
     last_name = parameters.get('nachname')
     candidates = dict()
     candidates = find_candidates(first_name, last_name)
+
     if len(candidates) > 1:
         send_buttons(sender_id, """
         Es gibt mehrere Kandidaten mit dem Namen {first_name} {last_name}. Von welcher Partei ist der gesuchte Kandidat?
@@ -22,6 +23,8 @@ def basics(event, parameters, **kwargs):
                              {'show_basics': candidate['uuid']})
              for candidate in candidates])
     else:
+        if candidates[0]['img'] is not None:
+
         send_buttons(sender_id, """
         {first_name} {last_name}
         Partei: {party}
@@ -109,7 +112,7 @@ def more_infos_nrw(event, payload, **kwargs):
 
     pledges = list()
     for line in candidate['nrw']['pledges']:
-        pledges = str(pledges) + '- ' + line + '\n'
+        pledges.append('- ' + line + '\n')
 
     if candidate['nrw']['video'] is not None:
         video_url=candidate['nrw']['video']
@@ -142,4 +145,4 @@ Alternativ kannst du auch direkt den Namen eines Kandidaten als Nachricht schrei
     send_buttons(sender_id, reply,
                  buttons=[button_postback('Wahlkreis', ['find_district']),
                           button_postback('Partei', ['party_list']),
-                          button_postback('Zufälliger Kandidat', ['random_candidate'])])
+                          button_postback('Zufälliger Kandidat', {'show_basics': random_candidate()['uuid']})])

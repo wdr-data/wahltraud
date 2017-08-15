@@ -39,6 +39,8 @@ for state in state_lists.values():
     for party in state.keys():
         state[party] = list(sorted(state[party], key=operator.itemgetter('list_nr')))
 
+def random_candidate():
+    return candidate = random.choice(candidate_list)
 
 def find_candidates(first_name, last_name):
     """Returns a list of candidates that have the given first and last name"""
