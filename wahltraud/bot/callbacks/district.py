@@ -76,19 +76,26 @@ def show_13(event, payload, **kwargs):
     sender_id = event['sender']['id']
     district_uuid = payload['show_13']
     district = by_uuid[district_uuid]
+    election_13 = district['election_13'].copy()
+
+    beteiligung = election_13.pop('wahlbeteiligung')
 
     results = '\n'.join(
         [
-            locale.format_string('%s: %.1f', (party, result * 100))
+            locale.format_string('%s: %.1f%%', (party, result * 100))
             for party, result
-            in sorted(district['election_13'].items(), key=operator.itemgetter(1), reverse=True)
+            in sorted(election_13.items(), key=operator.itemgetter(1), reverse=True)
             if result >= 0.05
         ]
     )
 
-    send_buttons(sender_id, "Bei der Bundestagswahl 2013 haben diese Parteien mehr als 5% der "
-                            "Zweitstimmen erhalten:\n\n" + results,
-                 [
-                     button_postback("Anderer Wahlkreis", ['intro_district']),
-                 ]
-                 )
+    send_buttons(
+        sender_id,
+        "Bei der Bundestagswahl 2013 haben diese Parteien mehr als 5% der Zweitstimmen erhalten:"
+        "\n\n{results}\n\nDie Wahlbeteiligung betrug {beteiligung}%.".format(
+            results=results,
+            beteiligung=locale.format('%.1f', beteiligung)),
+        [
+            button_postback("Anderer Wahlkreis", ['intro_district']),
+        ]
+    )
