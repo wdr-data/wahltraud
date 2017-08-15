@@ -338,7 +338,7 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
             if item['constituency'] != []:
                 #temp['district']  = item['constituency']['name']
                 #temp['district_id'] = item['constituency']['number']
-                temp['uuid'] =  item['constituency']['uuid']
+                temp['district_uuid'] =  item['constituency']['uuid']
             else:
                 #temp['disctrict']  = None
                 #temp['district_id'] = None
@@ -512,7 +512,7 @@ def kandidaten_und_meta(wahlkreis_uuid,alle):
     sex = []
     for kandidat in alle['list']:
         try:
-            if kandidat['uuid'] == wahlkreis_uuid:
+            if kandidat['district_uuid'] == wahlkreis_uuid:
                 # liste uuid
                 kand_liste.append( kandidat['uuid']
                                    #'vorname': kandidat['vorname'],
