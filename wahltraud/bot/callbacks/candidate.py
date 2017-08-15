@@ -25,8 +25,9 @@ def basics(event, parameters, **kwargs):
     else:
         send_buttons(sender_id, """
         {first_name} {last_name}
-        Partei: {party}
-        Alter/ Jahrgang: {age}
+        
+Partei: {party}
+Alter/ Jahrgang: {age}
         """.format(
             first_name=candidates[0]['first_name'],
             last_name=candidates[0]['last_name'],
@@ -128,7 +129,6 @@ def more_infos_nrw(event, payload, **kwargs):
 
     send_buttons(sender_id, """
     {pledges}
-
 {interests}
     """.format(
         pledges=pledges,
