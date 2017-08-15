@@ -15,7 +15,7 @@ def basics(event, parameters, **kwargs):
         send_buttons(sender_id, """
         Es gibt mehrere Kandidaten mit diesem Namen. Welchen möchtest du genauer unter die Lupe nehmen?
         """,
-            [button_postback(candidate['first_name'] candidate['last_name'] candidate['party'],
+            [button_postback(candidate['first_name'] + ' ' + candidate['last_name'] + ', ' + candidate['party'],
                              {'show_basics': candidate['uuid']})
              for candidate in candidates])
     else:
