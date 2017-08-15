@@ -119,12 +119,14 @@ def more_infos_nrw(event, payload, **kwargs):
         buttons.insert(0, button_postback("Interview", {'show_video': video_url}))
 
     send_buttons(sender_id, """
-Das sind die Wahlversprechen von {vorname} {nachname}:
+Das sind die Wahlversprechen von {first_name} {last_name}:
 {pledges}
 
 Und die Interessen:
 {interests}
     """.format(
+        first_name=candidate['first_name'],
+        last_name=candidate['last_name'],
         pledges='\n'.join(pledges),
         interests=candidate['nrw']['interests']
     ), buttons)
