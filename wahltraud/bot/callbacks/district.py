@@ -94,7 +94,7 @@ def show_13(event, payload, **kwargs):
         "Bei der Bundestagswahl 2013 haben diese Parteien mehr als 5% der Zweitstimmen erhalten:"
         "\n\n{results}\n\nDie Wahlbeteiligung betrug {beteiligung}%.".format(
             results=results,
-            beteiligung=locale.format('%.1f', beteiligung)),
+            beteiligung=locale.format('%.1f', beteiligung * 100)),
         [
             button_postback("Anderer Wahlkreis", ['intro_district']),
         ]
