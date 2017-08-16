@@ -45,13 +45,13 @@ def select_state(event, payload, **kwargs):
     if not more:
         options = options[:8]
         options.append(
-            quick_reply('▶️', {
+            quick_reply('➡️️', {
                 'select_state': party,
                 'more': True
             }))
     else:
         options = options[8:]
-        options.insert(0, quick_reply('◀️️', {'select_state': party}))
+        options.insert(0, quick_reply('⬅️️️', {'select_state': party}))
 
     send_text(sender_id, 'Wähle dein Bundesland', quick_replies=options)
 
@@ -75,12 +75,12 @@ def select_party(event, payload, **kwargs):
     if offset > 0:
         options.insert(
             0,
-            quick_reply('◀', {'select_party': state, 'offset': offset - 9})
+            quick_reply('⬅️', {'select_party': state, 'offset': offset - 9})
         )
 
     if offset + 9 < len(parties):
         options.append(
-            quick_reply('▶', {'select_party': state, 'offset': offset + 9})
+            quick_reply('➡️', {'select_party': state, 'offset': offset + 9})
         )
 
     send_text(
@@ -108,7 +108,9 @@ def show_list(event, payload, **kwargs):
             ' '.join(filter(bool, (candidate['degree'],
                                    candidate['first_name'],
                                    candidate['last_name']))),
-            subtitle="Listenplatz %d" % candidate['list_nr'],
+            subtitle="#%d, %s, Jahrgang %s" % (candidate['list_nr'],
+                                               candidate['party'],
+                                               candidate['age'] or 'unbekannt'),
             buttons=[button_postback("Info", {'payload_basics': candidate['uuid']})],
             image_url=candidate.get('img') or None
         )
@@ -125,6 +127,9 @@ def show_list(event, payload, **kwargs):
         button = button_postback("Andere Partei", {'select_party': state})
 
     if not offset:
-        send_text(sender_id, 'Hier die {list_name} der {party}'.format(list_name=state, party=party))
+        send_text(
+            sender_id,
+            'Hier die {list_name} der Partei {party}'.format(list_name=state, party=party)
+        )
 
     send_list(sender_id, elements, button=button)
