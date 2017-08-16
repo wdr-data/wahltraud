@@ -45,17 +45,17 @@ def random_candidate():
 
 def find_candidates(first_name, last_name):
     """Returns a list of candidates that have the given first and last name"""
-    out = [by_uuid[uuid] for uuid in by_first_name[first_name] & by_last_name[last_name]]
+    out = by_first_name[first_name] & by_last_name[last_name]
     if not out:
         last_name_matches = by_last_name[last_name]
         first_name_matches = by_first_name[first_name]
 
-        if len(first_name_matches) > len(last_name_matches) > 0:
-            out = list(last_name_matches)
+        if 0 < len(last_name_matches) < len(first_name_matches) or not first_name_matches:
+            out = last_name_matches
         else:
-            out = list(first_name_matches)
+            out = first_name_matches
 
-    return out
+    return [by_uuid[uuid] for uuid in out]
 
 MANIFESTO_DIR = Path(__file__).absolute().parent.parent/'output'
 
