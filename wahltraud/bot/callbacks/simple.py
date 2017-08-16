@@ -61,12 +61,12 @@ def menue_manifesto(event, **kwargs):
     send_text(sender_id,
               'Was steht eigentlich in so einem Wahlprogramm?'
               'Kaum ein Wähler liest sich ein Wahlprogramm durch. Ich biete Dir an dieser Stelle einen Einblick in die einzelnen Programme und zwar zu dem Thema, welches dich interessiert.',
-              replies.append([quick_reply('weiter', {about_manifesto: 'one'})]))
+              [quick_reply('weiter', {about_manifesto: 'one'})])
 
 def about_manifesto(event, payload, **kwargs):
     sender_id = event['sender']['id']
     state = payload['about_manifesto']
-    
+
     replies = []
     replies = quick_reply('Ich habs verstanden', 'end')
 
