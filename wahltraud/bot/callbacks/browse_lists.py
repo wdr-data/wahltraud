@@ -114,10 +114,12 @@ def show_list(event, payload, **kwargs):
         candidates = state_lists[state][party]
     except KeyError:
         send_text(sender_id, 'Die Partei %s hat keine %s' % (party, state))
+        return
 
     if len(candidates) == 1:
         send_text(sender_id, 'Die %s der Partei %s hat nur einen Kandidaten:' % (state, party))
         show_candidate_basics(sender_id, candidates[0]['uuid'])
+        return
 
     num_candidates = 4
 
@@ -149,7 +151,9 @@ def show_list(event, payload, **kwargs):
     if not offset:
         send_text(
             sender_id,
-            'Hier die {list_name} der Partei {party}'.format(list_name=state, party=party)
+            'Hier die {list_name} der Partei {party}. '
+            'Insgesamt sind {nr_of_candidates} Kandidaten aufgestellt.'.format(
+                list_name=state, party=party, nr_of_candidates=candidates[-1]['list_nr'])
         )
 
     send_list(sender_id, elements, button=button)
