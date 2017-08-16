@@ -14,7 +14,7 @@ from .handlers.payloadhandler import PayloadHandler
 from .handlers.texthandler import TextHandler
 from .handlers.apiaihandler import ApiAiHandler
 from .callbacks.simple import (get_started, push, subscribe_user, unsubscribe_user, wiki, story,
-                               apiai_fulfillment)
+                               apiai_fulfillment, about_manifesto)
 from .callbacks.shared import (get_pushes, get_breaking, send_push, schema)
 from .callbacks import candidate, district, browse_lists, manifesto
 
@@ -38,10 +38,10 @@ def make_event_handler():
         PayloadHandler(subscribe_user, ['subscribe']),
         PayloadHandler(unsubscribe_user, ['unsubscribe']),
         PayloadHandler(push, ['push']),
+        PayloadHandler(about_manifesto, ['about_manifesto']),
         ApiAiHandler(candidate.basics, 'kandidat'),
         ApiAiHandler(candidate.candidate_check, 'kandidatencheck'),
         ApiAiHandler(manifesto.manifesto, 'wahlprogramm'),
-        PayloadHandler(manifesto.about_manifesto, ['about_manifesto']),
         PayloadHandler(district.intro_district, ['intro_district']),
         PayloadHandler(candidate.intro_candidate, ['intro_candidate']),
         PayloadHandler(district.show_13, ['show_13']),
@@ -72,7 +72,7 @@ def make_event_handler():
                 if (text is not None
                     and event.get('postback') is None
                     and message.get('quick_reply') is None):
-                    
+
                     request = ai.text_request()
                     request.lang = 'de'
                     request.query = text
