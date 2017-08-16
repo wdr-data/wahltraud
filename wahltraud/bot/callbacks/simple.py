@@ -106,7 +106,7 @@ def wiki(event, parameters, **kwargs):
         reply = best_match[0].output
 
     else:
-        reply = "Tut mir Leid, darauf habe noch ich keine Antwort. Frag mich die Tage nochmal " + text + "."
+        reply = "Tut mir Leid, darauf habe noch ich keine Antwort. Frag mich die Tage nochmal."
 
     send_text(user_id, reply)
 
