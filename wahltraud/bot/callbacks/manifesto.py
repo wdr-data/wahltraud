@@ -54,8 +54,8 @@ def search_word(event, word, offset=0):
             subtitle="Anzahl: %d (%s%%)" % (seg['count'], format('%.2f', seg['share'])),
             buttons=[button_postback("Zeige Satz", {'show_sentence': word, 'party': party})],
         )
-        for party, seg in sorted(segs[offset:offset + num_words].items())
-    ]
+        for party, seg in sorted(segs.items())
+    ][offset:offset + num_words]
 
     if len(segs) - offset > num_words:
         button = button_postback("Mehr anzeigen",
