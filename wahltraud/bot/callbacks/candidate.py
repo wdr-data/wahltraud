@@ -96,7 +96,7 @@ def more_infos_nrw(event, payload, **kwargs):
     if not candidate['nrw']['pledges']:
         pledges = None
     else:
-        pledges = '- '.join(candidate['nrw']['pledges'])
+        pledges = ['- ' + line for line in candidate['nrw']['pledges']]
 
     buttons = [
         button_postback("Info Wahlkreis", {'show_district': candidate['district_uuid']}),
