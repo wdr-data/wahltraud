@@ -46,7 +46,7 @@ def show_basics(sender_id, candidate_uuid):
 
         buttons = [
             button_postback("Mehr Info", {'more_infos_nrw': candidate['uuid']}),
-            button_postback("Anderer Kandidat", ['intro_candidate'])
+            button_postback("Anderer Kandidat", ['about_manifesto'])
         ]
 
         if candidate['nrw']['video'] is not None:
