@@ -13,7 +13,7 @@ def manifesto_start(event, **kwargs):
 
     random_words = list()
     for i in range(10):
-        word = random.choice(all_words)['word']
+        word = random.choice(all_words)
         random_words.append(quick_reply(word, {'show_word': word}))
 
     send_text(
