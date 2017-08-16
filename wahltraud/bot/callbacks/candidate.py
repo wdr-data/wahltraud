@@ -58,7 +58,7 @@ def show_basics(sender_id, candidate_uuid):
         ]
 
     if candidate['img'] is not None:
-        send_attachment(sender_id, candidate['img'], type=image)
+        send_attachment(sender_id, candidate['img'], type='image')
 
     send_buttons(sender_id, """
 {first_name} {last_name}
