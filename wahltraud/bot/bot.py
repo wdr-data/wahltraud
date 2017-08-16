@@ -38,7 +38,7 @@ def make_event_handler():
         PayloadHandler(subscribe_user, ['subscribe']),
         PayloadHandler(unsubscribe_user, ['unsubscribe']),
         PayloadHandler(push, ['push']),
-        PayloadHandler(wiki, 'wiki'),
+        ApiAiHandler(wiki, 'wiki'),
         PayloadHandler(menue_manifesto, ['menue_manifesto']),
         PayloadHandler(about_manifesto, ['about_manifesto']),
         ApiAiHandler(candidate.basics, 'kandidat'),
