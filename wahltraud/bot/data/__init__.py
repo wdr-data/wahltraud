@@ -51,9 +51,9 @@ def find_candidates(first_name, last_name):
         first_name_matches = by_first_name[first_name]
 
         if len(first_name_matches) > len(last_name_matches) > 0:
-            out = last_name_matches
+            out = list(last_name_matches)
         else:
-            out = first_name_matches
+            out = list(first_name_matches)
 
     return out
 
