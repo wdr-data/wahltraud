@@ -58,7 +58,7 @@ manifesto_file = MANIFESTO_DIR/'all.json'
 
 all_words_list = json.load(open(str(manifesto_file)))['data']
 all_words = {word['word']: word for word in all_words_list}
-random_word_list = [
+random_words_list = [
     word['word']
     for word in all_words_list
     if word['word'][0].isupper() and word['count'] > 10

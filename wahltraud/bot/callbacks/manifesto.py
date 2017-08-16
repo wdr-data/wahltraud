@@ -82,7 +82,7 @@ def show_word(event, word, offset, **kwargs):
                                             locale.format('%.2f', seg['share'] * 100)),
             buttons=[button_postback("Zeige Satz", {'show_sentence': word, 'party': party})],
         )
-        for party, seg in sorted(segs.items())
+        for party, seg in sorted(segs.items(), key=lambda kv: kv[1]['share'], reverse=True)
     ][offset:offset + num_words]
 
     if len(segs) - offset > num_words:
