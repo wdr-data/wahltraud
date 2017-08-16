@@ -103,7 +103,34 @@ def show_sentence(event, word, party, **kwargs):
     sentence = paragraph[start:end].strip()
     send_text(sender_id, "Hier ein zufällig gewählter Satz aus dem Wahlprogramm der "
                          "Partei \"%s\"" % party_abbr[party])
-    send_buttons(
+    send_text(
         sender_id,
         '"%s"' % sentence,
-        buttons=[button_postback('Ob das wohl klappt?', ['no'])])
+        quick_replies=[
+            quick_reply(
+                'Satz im Kontext',
+                {'show_paragraph': occurence['paragraph_index'], 'party': party, 'word': word}
+            ),
+            quick_reply(
+                'Noch ein Satz',
+                {'show_sentence': word, 'party': party}
+            ),
+        ])
+
+
+def show_paragraph(event, payload, **kwargs):
+    sender_id = event['sender']['id']
+    paragraph = payload['show_paragraph']
+    party = payload['party']
+    word = payload['word']
+    paragraph = manifestos[party][paragraph]
+
+    send_text(
+        sender_id,
+        '"%s"' % paragraph,
+        quick_replies=[
+            quick_reply(
+                'Noch ein Satz',
+                {'show_sentence': word, 'party': party}
+            ),
+        ])
