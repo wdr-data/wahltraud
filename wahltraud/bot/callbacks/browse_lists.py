@@ -108,7 +108,7 @@ def show_list(event, payload, **kwargs):
             ' '.join(filter(bool, (candidate['degree'],
                                    candidate['first_name'],
                                    candidate['last_name']))),
-            subtitle="%s, Jahrgang %s" % (candidate['party'], candidate['age'] or 'unbekannt'),
+            subtitle="Listenplatz %d" % candidate['list_nr'],
             buttons=[button_postback("Info", {'payload_basics': candidate['uuid']})],
             image_url=candidate.get('img') or None
         )
@@ -123,5 +123,8 @@ def show_list(event, payload, **kwargs):
                                   'offset': offset + num_candidates})
     else:
         button = button_postback("Andere Partei", {'select_party': state})
+
+    if not offset:
+        send_text(sender_id, 'Hier die {list_name} der {party}'.format(list_name=state, party=party))
 
     send_list(sender_id, elements, button=button)
