@@ -109,7 +109,7 @@ def show_list(event, payload, **kwargs):
                                    candidate['first_name'],
                                    candidate['last_name']))),
             subtitle="%s, Jahrgang %s" % (candidate['party'], candidate['age'] or 'unbekannt'),
-            buttons=[button_postback("Info", {'show_basics': candidate['uuid']})],
+            buttons=[button_postback("Info", {'payload_basics': candidate['uuid']})],
             image_url=candidate.get('img') or None
         )
         for candidate in candidates[offset:offset + num_candidates]
