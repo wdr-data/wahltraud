@@ -42,7 +42,6 @@ def make_event_handler():
         ApiAiHandler(candidate.basics, 'kandidat'),
         ApiAiHandler(party.basics, 'parteien'),
         ApiAiHandler(candidate.candidate_check, 'kandidatencheck'),
-        ApiAiHandler(manifesto.manifesto, 'wahlprogramm'),
         PayloadHandler(district.intro_district, ['intro_district']),
         PayloadHandler(candidate.intro_candidate, ['intro_candidate']),
         PayloadHandler(district.show_13, ['show_13']),
@@ -56,6 +55,8 @@ def make_event_handler():
         PayloadHandler(browse_lists.select_state, ['select_state']),
         PayloadHandler(browse_lists.select_party, ['select_party']),
         PayloadHandler(browse_lists.show_list, ['show_list', 'state', 'party']),
+        PayloadHandler(manifesto.search_word_payload, ['search_word']),
+        ApiAiHandler(manifesto.search_word_apiai, 'wahlprogramm'),
         TextHandler(apiai_fulfillment, '.*'),
     ]
 

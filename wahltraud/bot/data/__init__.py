@@ -46,3 +46,8 @@ def random_candidate():
 def find_candidates(first_name, last_name):
     """Returns a list of candidates that have the given first and last name"""
     return [by_uuid[uuid] for uuid in by_first_name[first_name] & by_last_name[last_name]]
+
+
+manifesto_file = Path(__file__).absolute().parent.parent/'output'/'all.json'
+
+words = {word['word']: word for word in json.load(open(str(manifesto_file)))['data']}
