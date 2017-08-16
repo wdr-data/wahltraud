@@ -69,15 +69,15 @@ def about_manifesto(event, payload, **kwargs):
     state = payload['about_manifesto']
 
     replies = list
-    replies.append(quick_reply('Ich habs verstanden', 'end'))
+    replies.append([quick_reply('Ich habs verstanden', 'end')])
 
     if state == 'one':
-        replies.append(quick_reply('weiter', {'about_manifesto': 'two'}))
+        replies.append([quick_reply('weiter', {'about_manifesto': 'two'}]))
         send_text(sender_id,
                   'Du kannst jederzeit ein Wahlthema eintippen und ich schaue nach in welchen Programmen es vorkommt. \nz.B. Steuern',
                   replies)
     elif state == 'two':
-        replies.append(quick_reply('weiter', {'about_manifesto': 'three'}))
+        replies.append([quick_reply('weiter', {'about_manifesto': 'three'}]))
         send_text(sender_id,
                   'Nenne mir ein Wort und eine Partei und ich zeige dir sofort einen Satz aus dem Programm. \nz.B. Steuern + SPD',
                   replies)
