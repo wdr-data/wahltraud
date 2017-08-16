@@ -82,9 +82,9 @@ def story(event, payload, **kwargs):
     send_push(sender_id, data, next_state)
 
 
-def wiki(event, groups, **kwargs):
+def wiki(event, parameters, **kwargs):
     user_id = event['sender']['id']
-    text = groups[0]
+    text = parameters.get('wiki')
 
     wikis = Wiki.objects.all()
 
@@ -98,7 +98,7 @@ def wiki(event, groups, **kwargs):
         reply = best_match[0].output
 
     else:
-        reply = "Tut mir Leid, darauf habe ich keine Antwort."
+        reply = "Tut mir Leid, darauf habe noch ich keine Antwort. Frag mich die Tage nochmal " + text + "."
 
     send_text(user_id, reply)
 
