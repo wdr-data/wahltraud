@@ -105,12 +105,11 @@ def show_list(event, payload, **kwargs):
 
     elements = [
         list_element(
-            ' '.join(filter(bool, (candidate['degree'],
+            ' '.join(filter(bool, (candidate['list_nr'],
+                                   candidate['degree'],
                                    candidate['first_name'],
                                    candidate['last_name']))),
-            subtitle="#%d, %s, Jahrgang %s" % (candidate['list_nr'],
-                                               candidate['party'],
-                                               candidate['age'] or 'unbekannt'),
+            subtitle="%s, Jahrgang %s" % (candidate['party'], candidate['age'] or 'unbekannt'),
             buttons=[button_postback("Info", {'payload_basics': candidate['uuid']})],
             image_url=candidate.get('img') or None
         )
