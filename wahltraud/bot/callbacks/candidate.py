@@ -34,7 +34,10 @@ def payload_basics(event, payload, **kwargs):
 def show_basics(sender_id, candidate_uuid):
     candidate = by_uuid[candidate_uuid]
     district_uuid = candidate['district_uuid']
-    district = by_uuid[district_uuid]
+    if district_uuid:
+        district = by_uuid[district_uuid]
+        candidate_district = district['district'],
+        state = district['state'],
 
     logger.debug('candidate_uuid: ' + str(candidate_uuid))
 
@@ -73,11 +76,11 @@ Beruf: {profession}
         first_name=candidate['first_name'],
         last_name=candidate['last_name'],
         party=candidate['party'],
-        age=candidate['age'],
-        dicstrict=district['district'],
-        state=district['state'],
-        list_nr=candidate['list_nr'],
-        profession=profession
+        age='-' if candidate['age'] is None else candidate['age'],
+        dicstrict='-' if district_uuid is None else candidate_district,
+        state='-' if district_uuid is None else state,
+        list_nr='-' if candidate['list_nr'] is None else candidate['list_nr'],
+        profession='-' if profession is None else profession
     ), buttons)
 
 def more_infos_nrw(event, payload, **kwargs):
