@@ -96,7 +96,7 @@ def show_list(event, payload, **kwargs):
     party = payload['party']
     offset = payload.get('offset', 0)
 
-    candidates = state_lists[state]
+    candidates = state_lists[state][party]
 
     num_candidates = 4
 
