@@ -47,8 +47,9 @@ def find_candidates(first_name, last_name):
     """Returns a list of candidates that have the given first and last name"""
     return [by_uuid[uuid] for uuid in by_first_name[first_name] & by_last_name[last_name]]
 
+MANIFESTO_DIR = Path(__file__).absolute().parent.parent/'output'
 
-manifesto_file = Path(__file__).absolute().parent.parent/'output'/'all.json'
+manifesto_file = MANIFESTO_DIR/'all.json'
 
 all_words = {word['word']: word for word in json.load(open(str(manifesto_file)))['data']}
 
@@ -61,3 +62,9 @@ party_abbr = {
     'afd': 'AfD',
 
 }
+
+manifestos = dict()
+
+for party in party_abbr:
+    with open(str(MANIFESTO_DIR/'%s.txt' % party)) as fp:
+        manifestos[party] = [line.strip() for line in fp.readlines()]

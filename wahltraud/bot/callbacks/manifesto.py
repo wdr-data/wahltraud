@@ -1,26 +1,36 @@
 import locale
+import random
+from re import findall
 
 from ..fb import send_buttons, button_postback, send_text, send_list, list_element, quick_reply
-from ..data import all_words, party_abbr
+from ..data import all_words, party_abbr, manifestos
 
 locale.setlocale(locale.LC_NUMERIC, 'de_DE.UTF-8')
 
 
-def search_word_apiai(event, parameters, **kwargs):
+def show_word_apiai(event, parameters, **kwargs):
     word = parameters.get('thema')
     party = parameters.get('partei')
 
     if not party:
-        search_word(event, word)
+        show_word(event, word, 0, **kwargs)
+    else:
+        show_sentence(event, word, party, **kwargs)
 
 
-def search_word_payload(event, payload, **kwargs):
-    word = payload.get('search_word')
+def show_word_payload(event, payload, **kwargs):
+    word = payload.get('show_word')
     offset = payload.get('offset', 0)
-    search_word(event, word, offset)
+    show_word(event, word, offset, **kwargs)
 
 
-def search_word(event, word, offset=0):
+def show_sentence_payload(event, payload, **kwargs):
+    word = payload.get('show_sentence')
+    party = payload.get('party')
+    show_sentence(event, word, party, **kwargs)
+
+
+def show_word(event, word, offset, **kwargs):
     sender_id = event['sender']['id']
     stat = all_words.get(word)
 
@@ -61,7 +71,7 @@ def search_word(event, word, offset=0):
 
     if len(segs) - offset > num_words:
         button = button_postback("Mehr anzeigen",
-                                 {'search_word': word,
+                                 {'show_word': word,
                                   'offset': offset + num_words})
     else:
         button = button_postback("Neues Wort", ['random_word'])
@@ -76,3 +86,19 @@ def search_word(event, word, offset=0):
             ))
 
     send_list(sender_id, elements, button=button)
+
+
+def show_sentence(event, word, party, **kwargs):
+    sender_id = event['sender']['id']
+    occurences = all_words[word]['segments'][party]
+    occurence = random.choice(occurences)
+    paragraph = manifestos[party][occurence['paragraph_index']]
+    pos = occurence['position']
+
+    stops = paragraph.replace(':!?', '.')
+    start = stops.rfind('.', 0, pos + 1)
+    end = stops.find('.', pos)
+    if end == -1:
+        end = None
+    sentence = paragraph[start:end]
+    send_buttons(sender_id, sentence, buttons=[button_postback('Ob das wohl klappt?', ['no'])])

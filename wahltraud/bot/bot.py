@@ -56,8 +56,8 @@ def make_event_handler():
         PayloadHandler(browse_lists.select_state, ['select_state']),
         PayloadHandler(browse_lists.select_party, ['select_party']),
         PayloadHandler(browse_lists.show_list, ['show_list', 'state', 'party']),
-        PayloadHandler(manifesto.search_word_payload, ['search_word']),
-        ApiAiHandler(manifesto.search_word_apiai, 'wahlprogramm'),
+        PayloadHandler(manifesto.show_word_payload, ['show_word']),
+        ApiAiHandler(manifesto.show_word_apiai, 'wahlprogramm'),
         TextHandler(apiai_fulfillment, '.*'),
     ]
 
