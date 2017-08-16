@@ -16,7 +16,7 @@ from .handlers.apiaihandler import ApiAiHandler
 from .callbacks.simple import (get_started, push, subscribe_user, unsubscribe_user, wiki, story,
                                apiai_fulfillment)
 from .callbacks.shared import (get_pushes, get_breaking, send_push, schema)
-from .callbacks import candidate, district, manifesto
+from .callbacks import candidate, district, browse_lists, manifesto
 
 # TODO: The idea is simple. When you send "subscribe" to the bot, the bot server would add a record according to the sender_id to their
 # database or memory , then the bot server could set a timer to distribute the news messages to those sender_id who have subscribed for the news.
@@ -50,6 +50,10 @@ def make_event_handler():
         PayloadHandler(district.show_candidates, ['show_candidates']),
         ApiAiHandler(district.find_district, 'wahlkreis_finder'),
         PayloadHandler(district.show_district, ['show_district']),
+        PayloadHandler(browse_lists.intro_lists, ['intro_lists']),
+        PayloadHandler(browse_lists.select_state, ['select_state']),
+        PayloadHandler(browse_lists.select_party, ['select_party']),
+        PayloadHandler(browse_lists.show_list, ['show_list', 'state', 'party']),
         TextHandler(apiai_fulfillment, '.*'),
     ]
 
