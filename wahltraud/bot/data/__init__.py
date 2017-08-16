@@ -45,13 +45,24 @@ def random_candidate():
 
 def find_candidates(first_name, last_name):
     """Returns a list of candidates that have the given first and last name"""
-    return [by_uuid[uuid] for uuid in by_first_name[first_name] & by_last_name[last_name]]
+    out = [by_uuid[uuid] for uuid in by_first_name[first_name] & by_last_name[last_name]]
+    if not out:
+        out = by_last_name[last_name]
+        if len(out) > len(by_first_name[first_name]) and (len(by_first_name[first_name]) > 0):
+            out = by_first_name[first_name]
+    return out
 
 MANIFESTO_DIR = Path(__file__).absolute().parent.parent/'output'
 
 manifesto_file = MANIFESTO_DIR/'all.json'
 
-all_words = {word['word']: word for word in json.load(open(str(manifesto_file)))['data']}
+all_words_list = json.load(open(str(manifesto_file)))['data']
+all_words = {word['word']: word for word in all_words_list}
+random_word_list = [
+    word['word']
+    for word in all_words_list
+    if word['word'][0].isupper() and word['count'] > 10
+]
 
 party_abbr = {
     'cdu': 'CDU',
