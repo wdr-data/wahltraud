@@ -60,8 +60,9 @@ party_abbr = {
     'linke': 'DIE LINKE',
     'gruene': 'DIE GRÜNEN',
     'afd': 'AfD',
-
 }
+
+party_rev = {v: k for k, v in party_abbr.items()}
 
 manifestos = dict()
 

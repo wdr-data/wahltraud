@@ -3,7 +3,7 @@ import random
 from re import findall
 
 from ..fb import send_buttons, button_postback, send_text, send_list, list_element, quick_reply
-from ..data import all_words, party_abbr, manifestos
+from ..data import all_words, party_abbr, party_rev, manifestos
 
 locale.setlocale(locale.LC_NUMERIC, 'de_DE.UTF-8')
 
@@ -90,6 +90,10 @@ def show_word(event, word, offset, **kwargs):
 
 def show_sentence(event, word, party, **kwargs):
     sender_id = event['sender']['id']
+
+    if party not in party_abbr:
+        party = party_rev[party]
+
     occurences = all_words[word]['segments'][party]['occurence']
     occurence = random.choice(occurences)
     paragraph = manifestos[party][occurence['paragraph_index']]
