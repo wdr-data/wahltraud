@@ -64,7 +64,7 @@ def show_basics(sender_id, candidate_uuid):
         send_attachment(sender_id, candidate['img'], type='image')
 
     send_buttons(sender_id, """
-{first_name} {last_name}
+{name}
 Partei: {party}
 Jahrgang: {age}
 
@@ -73,8 +73,9 @@ Landesliste {state}
 Listenplatz Nr.: {list_nr}
 Beruf: {profession}
     """.format(
-        first_name=candidate['first_name'],
-        last_name=candidate['last_name'],
+        name=' '.join(filter(bool, (candidate['degree'],
+                               candidate['first_name'],
+                               candidate['last_name']))),
         party=candidate['party'],
         age='-' if candidate['age'] is None else candidate['age'],
         dicstrict='-' if district_uuid is None else candidate_district,
