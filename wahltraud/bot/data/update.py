@@ -4,6 +4,7 @@ from shutil import copyfile
 from datetime import datetime
 import numpy as np
 import pandas as pd
+import re
 
 
 
@@ -55,7 +56,7 @@ def update():
     #copyfile(wahlkreis_info_json , 'wahlkreis_info_backup_'+date+'.json')
     
     # make wahlkreis_info_json
-    wahlkreis_info(alle_kandidaten_json, wahlkreis_info_json)
+    #wahlkreis_info(alle_kandidaten_json, wahlkreis_info_json)
     
     
     
@@ -252,7 +253,7 @@ def find_id(last_name,first_name,nrw):
                     nrw_info['img'] = None
 
                 try:
-                    string = requests.get(nrw['list'][2]['videoJsonp']).text
+                    string = requests.get(row['videoJsonp']).text
                     m = re.search('143/(.+?),(.+?).mp4', string)
                     split = m.group(0).split(',')
                     file_id = split[0] + split[4]
