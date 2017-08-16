@@ -13,7 +13,7 @@ def intro_lists(event, **kwargs):
                  'Welches Bundesland interessiert dich?',
                  [
                      button_postback('NRW', {'select_party': 'Landesliste Nordrhein-Westfalen'}),
-                     button_postback('Ein anderes Bundesland', ['select_state']),
+                     button_postback('Anderes Bundesland', ['select_state']),
                  ])
 
 
