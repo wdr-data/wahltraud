@@ -378,8 +378,8 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
             if temp['uuid'] in male_candidates:
                 temp['gender'] = 'male'
 
-
-
+            vornamen.append({'value': temp['first_name'] , 'synonyms': [temp['first_name']]})
+            nachnamen.append({'value': temp['last_name'], 'synonyms': [temp['last_name']]})
             data_list.append(temp)
         
     final = {'list': data_list}
@@ -389,9 +389,9 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
         json.dump(final,output_file,  ensure_ascii=False)
 
     with open('apiai_entities_vorname.json' ,  'w', encoding='utf8') as output_file:
-        json.dump(vorname,output_file,  ensure_ascii=False)
+        json.dump(vornamen,output_file,  ensure_ascii=False)
     with open('apiai_entities_nachname.json', 'w', encoding='utf8') as output_file:
-        json.dump(nachname, output_file, ensure_ascii=False)
+        json.dump(nachnamen, output_file, ensure_ascii=False)
 
     return
     
