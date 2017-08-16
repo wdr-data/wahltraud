@@ -48,7 +48,7 @@ def find_candidates(first_name, last_name):
     out = [by_uuid[uuid] for uuid in by_first_name[first_name] & by_last_name[last_name]]
     if out == []:
         out = by_last_name[last_name]
-        if len(out) > len(by_first_name[first_name]):
+        if len(out) > len(by_first_name[first_name]) and (len(by_first_name[first_name]>0)):
             out = by_first_name[first_name]
     return out
 
