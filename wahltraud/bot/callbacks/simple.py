@@ -55,7 +55,7 @@ def unsubscribe_user(event, **kwargs):
         reply = "Du bist noch kein Nutzer der Push-Nachrichten. Wenn du dich anmelden möchtest wähle \"Anmelden\" im Menü."
         send_text(user_id, reply)
 
-def about_manifesto(event, payload, **kwargs):
+def about_manifesto(event, payload='intro', **kwargs):
     sender_id = event['sender']['id']
     state = payload['about_manifesto']
     replies = []
