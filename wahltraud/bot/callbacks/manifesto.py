@@ -37,7 +37,7 @@ def search_word(event, word, offset=0):
             '({share}% aller Wörter).'.format(
                 party=party_abbr[party],
                 n=seg['count'],
-                share=format('%.2f', seg['share']),
+                share=locale.format('%.2f', seg['share']),
             ),
             [button_postback("Zeige Satz", {'show_sentence': word, 'party': party})]
         )
@@ -51,7 +51,7 @@ def search_word(event, word, offset=0):
     elements = [
         list_element(
             party_abbr[party],
-            subtitle="Anzahl: %d (%s%%)" % (seg['count'], format('%.2f', seg['share'])),
+            subtitle="Anzahl: %d (%s%%)" % (seg['count'], locale.format('%.2f', seg['share'])),
             buttons=[button_postback("Zeige Satz", {'show_sentence': word, 'party': party})],
         )
         for party, seg in sorted(segs.items())
