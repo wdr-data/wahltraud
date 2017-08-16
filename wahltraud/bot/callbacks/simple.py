@@ -60,7 +60,7 @@ def menue_manifesto(event, **kwargs):
     send_text(sender_id,
               'Was steht eigentlich in so einem Wahlprogramm?'
               'Kaum ein Wähler liest sich ein Wahlprogramm durch. Ich biete Dir an dieser Stelle einen Einblick in die einzelnen Programme und zwar zu dem Thema, welches dich interessiert.',
-              replies.append([quick_reply('weiter', 'about_manifesto': 'one'])]))
+              replies.append([quick_reply('weiter', {about_manifesto: 'one'})]))
 
 def about_manifesto(event, payload, **kwargs):
     sender_id = event['sender']['id']
@@ -71,11 +71,11 @@ def about_manifesto(event, payload, **kwargs):
     if state == 'one':
         send_text(sender_id,
                   'Du kannst jederzeit ein Wahlthema eintippen und ich schaue nach in welchen Programmen es vorkommt. \nz.B. Steuern',
-                  replies.append([quick_reply('weiter', 'about_manifesto': 'two')]))
+                  replies.append([quick_reply('weiter', {'about_manifesto': 'two'})]))
     elif state == 'two':
         send_text(sender_id,
                   'Nenne mir ein Wort und eine Partei und ich zeige dir sofort einen Satz aus dem Programm. \nz.B. Steuern + SPD',
-                  replies.append([quick_reply('weiter', 'about_manifesto': 'three')]))
+                  replies.append([quick_reply('weiter', {'about_manifesto': 'three'})]))
 
 def story(event, payload, **kwargs):
     sender_id = event['sender']['id']
