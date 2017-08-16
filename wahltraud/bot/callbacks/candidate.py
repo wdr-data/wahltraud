@@ -49,7 +49,7 @@ def show_basics(event, payload, **kwargs):
 {first_name} {last_name}
 
 Partei: {party}
-Alter/ Jahrgang: {age}
+Jahrgang: {age}
     """.format(
         first_name=candidate['first_name'],
         last_name=candidate['last_name'],
