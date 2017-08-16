@@ -20,7 +20,7 @@ def update():
 
     # make backup json
     date = datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
-    copyfile(output_file_abgeordnetenwatch, 'abgeordnetenwatch_backup_'+date+'.json')
+    #copyfile(output_file_abgeordnetenwatch, 'abgeordnetenwatch_backup_'+date+'.json')
     
     
     #abgeordnetenapi(parliament, kind_of_people , output_file_abgeordnetenwatch )
@@ -52,7 +52,7 @@ def update():
     
     # make backup 
     date = datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
-    copyfile(wahlkreis_info_json , 'wahlkreis_info_backup_'+date+'.json')
+    #copyfile(wahlkreis_info_json , 'wahlkreis_info_backup_'+date+'.json')
     
     # make wahlkreis_info_json
     wahlkreis_info(alle_kandidaten_json, wahlkreis_info_json)
@@ -307,7 +307,8 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
         nrw = json.load(file)
     # erstelle liste
     data_list = []
-    
+    vornamen = []
+    nachnamen = []
     # how to erstelle kandidaten_file
     for item in data['profiles']:
         if item['personal']['last_name'] != 'Testuser': # there is one test_user in the data
@@ -385,8 +386,12 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
 
     # write transformed short json in output file
     with open(output_file, 'w', encoding='utf8') as output_file:
-        json.dump(final,output_file,  ensure_ascii=False) 
+        json.dump(final,output_file,  ensure_ascii=False)
 
+    with open('apiai_entities_vorname.json' ,  'w', encoding='utf8') as output_file:
+        json.dump(vorname,output_file,  ensure_ascii=False)
+    with open('apiai_entities_nachname.json', 'w', encoding='utf8') as output_file:
+        json.dump(nachname, output_file, ensure_ascii=False)
 
     return
     
