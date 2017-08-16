@@ -4,6 +4,8 @@ import operator
 from ..fb import send_buttons, button_postback, send_text, send_list, list_element, quick_reply
 from ..data import by_uuid, by_plz, by_city, state_lists
 
+from .candidate import show_basics as show_candidate_basics
+
 locale.setlocale(locale.LC_NUMERIC, 'de_DE.UTF-8')
 
 
@@ -90,13 +92,32 @@ def select_party(event, payload, **kwargs):
     )
 
 
+def apiai(event, parameters, **kwargs):
+    party = parameters.get('partei')
+    state = parameters.get('bundesland')
+
+    if not party and not state:
+        intro_lists(event, **kwargs)
+    elif party and not state:
+        select_state(event, {'select_state': party})
+    elif party and state:
+        show_list(event, {'party': party, 'state': 'Landesliste %s' % state})
+
+
 def show_list(event, payload, **kwargs):
     sender_id = event['sender']['id']
     state = payload['state']
     party = payload['party']
     offset = payload.get('offset', 0)
 
-    candidates = state_lists[state][party]
+    try:
+        candidates = state_lists[state][party]
+    except KeyError:
+        send_text(sender_id, 'Die Partei %s hat keine %s' % (party, state))
+
+    if len(candidates) == 1:
+        send_text(sender_id, 'Die %s der Partei %s hat nur einen Kandidaten:' % (state, party))
+        show_candidate_basics(sender_id, candidates[0]['uuid'])
 
     num_candidates = 4
 
