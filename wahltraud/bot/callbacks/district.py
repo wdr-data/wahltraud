@@ -20,7 +20,7 @@ def find_district(event, parameters, **kwargs):
 
     if not plz and not city:
         reply = """
-Viele Wege führen zum Wahlkreis deiner Wahl. Am schnellsten geht es, indem du mir 
+Viele Wege führen zum Wahlkreis deiner Wahl. Am schnellsten geht es, indem du mir
 deine Postleitzahl schreibst."""
 
         send_text(sender_id, reply)
@@ -80,7 +80,7 @@ def show_district(event, payload, **kwargs):
     district = by_uuid[district_uuid]
 
     send_buttons(sender_id, """
-Der Wahlkreis "{name}" hat die Nummer {number} und liegt in {state}. Es treten {nr_of_candidates} Kandidaten an, deren Durchschnittsalter {avg_age} Jahre beträgt. 
+Der Wahlkreis "{name}" hat die Nummer {number} und liegt in {state}. Es treten {nr_of_candidates} Kandidaten an, deren Durchschnittsalter {avg_age} Jahre beträgt.
 """.format(
         number=district['district_id'],
         name=district['district'],
@@ -159,7 +159,7 @@ def show_candidates(event, payload, **kwargs):
                                    candidate['first_name'],
                                    candidate['last_name']))),
             subtitle="%s, Jahrgang %s" % (candidate['party'], candidate['age'] or 'unbekannt'),
-            buttons=[button_postback("Info", {'show_basics': candidate['uuid']})],
+            buttons=[button_postback("Info", {'payload_basics': candidate['uuid']})],
             image_url=candidate.get('img') or None
         )
         for candidate in candidates[offset:offset + num_candidates]

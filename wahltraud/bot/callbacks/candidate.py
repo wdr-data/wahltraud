@@ -1,6 +1,6 @@
 import logging
 
-from ..fb import send_buttons, button_postback, send_text
+from ..fb import send_buttons, button_postback, send_text, send_attachment
 from ..data import by_uuid, find_candidates, random_candidate
 
 logger = logging.getLogger(__name__)
@@ -20,54 +20,26 @@ def basics(event, parameters, **kwargs):
             last_name=candidates[0]['last_name']
         ),
             [button_postback(candidate['party'],
-                             {'show_basics': candidate['uuid']})
+                             {'payload_basics': candidate['uuid']})
              for candidate in candidates])
     else:
-        send_buttons(sender_id, """
-{first_name} {last_name}
-Partei: {party}
-Jahrgang: {age}
-        """.format(
-            first_name=candidates[0]['first_name'],
-            last_name=candidates[0]['last_name'],
-            party=candidates[0]['party'],
-            age=candidates[0]['age']
-        ),
-                     [
-                         button_postback("Mehr Info", {'more_infos': candidates[0]['uuid']}),
-                         button_postback("Anderer Kandidat", ['intro_candidate'])
-                      ])
+        show_basics(sender_id, candidates[0]['uuid'])
 
-
-def show_basics(event, payload, **kwargs):
+def payload_basics(event, payload, **kwargs):
     sender_id = event['sender']['id']
-    candidate_uuid = payload['show_basics']
-    candidate = by_uuid[candidate_uuid]
+    candidate_uuid = payload['payload_basics']
 
-    logger.debug('candidate_uuid: ' + str(candidate_uuid))
-    send_buttons(sender_id, """
-{first_name} {last_name}
+    show_basics(sender_id, candidate_uuid)
 
-Partei: {party}
-Jahrgang: {age}
-    """.format(
-        first_name=candidate['first_name'],
-        last_name=candidate['last_name'],
-        party=candidate['party'],
-        age=candidate['age']
-    ),
-                 [
-                     button_postback("Mehr Info", {'more_infos': candidate['uuid']}),
-                     button_postback("Anderer Kandidat", ['intro_candidate'])
-                 ])
-
-
-def more_infos(event, payload, **kwargs):
-    sender_id = event['sender']['id']
-    candidate_uuid = payload['more_infos']
+def show_basics(sender_id, candidate_uuid):
     candidate = by_uuid[candidate_uuid]
     district_uuid = candidate['district_uuid']
-    district = by_uuid[district_uuid]
+    if district_uuid:
+        district = by_uuid[district_uuid]
+        candidate_district = district['district'],
+        state = district['state'],
+
+    logger.debug('candidate_uuid: ' + str(candidate_uuid))
 
     if candidate['nrw'] is not None:
         profession = candidate['nrw']['profession']
@@ -88,19 +60,29 @@ def more_infos(event, payload, **kwargs):
             button_postback("Anderer Kandidat", ['intro_candidate'])
         ]
 
-    send_buttons(sender_id, """
-Wahlkreis {dicstrict}
+    if 'img' in candidate:
+        send_attachment(sender_id, candidate['img'], type='image')
 
-Landesliste {state}
+    send_buttons(sender_id, """
+{name}
+Partei: {party}
+Jahrgang: {age}
+
+Wahlkreis: {dicstrict}
+Landesliste: {state}
 Listenplatz Nr.: {list_nr}
 Beruf: {profession}
     """.format(
-        dicstrict=district['district'],
-        state=district['state'],
-        list_nr=candidate['list_nr'],
-        profession=profession
+        name=' '.join(filter(bool, (candidate['degree'],
+                               candidate['first_name'],
+                               candidate['last_name']))),
+        party=candidate['party'],
+        age='-' if candidate['age'] is None else candidate['age'],
+        dicstrict='-' if district_uuid is None else ' '.join(candidate_district),
+        state='-' if district_uuid is None else ' '.join(state),
+        list_nr='-' if candidate['list_nr'] is None else candidate['list_nr'],
+        profession='-' if profession is None else profession
     ), buttons)
-
 
 def more_infos_nrw(event, payload, **kwargs):
     sender_id = event['sender']['id']
@@ -144,5 +126,5 @@ Alternativ kannst du auch direkt den Namen eines Kandidaten als Nachricht schrei
 
     send_buttons(sender_id, reply,
                  buttons=[button_postback('Wahlkreis', ['intro_district']),
-                          button_postback('Partei', ['party_list']),
-                          button_postback('Zufälliger Kandidat', {'show_basics': random_candidate()['uuid']})])
+                          button_postback('Partei', ['intro_lists']),
+                          button_postback('Zufälliger Kandidat', {'payload_basics': random_candidate()['uuid']})])

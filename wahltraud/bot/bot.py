@@ -14,9 +14,9 @@ from .handlers.payloadhandler import PayloadHandler
 from .handlers.texthandler import TextHandler
 from .handlers.apiaihandler import ApiAiHandler
 from .callbacks.simple import (get_started, push, subscribe_user, unsubscribe_user, wiki, story,
-                               apiai_fulfillment)
+                               apiai_fulfillment, about_manifesto)
 from .callbacks.shared import (get_pushes, get_breaking, send_push, schema)
-from .callbacks import candidate, district, party
+from .callbacks import candidate, district, browse_lists, manifesto, party
 
 # TODO: The idea is simple. When you send "subscribe" to the bot, the bot server would add a record according to the sender_id to their
 # database or memory , then the bot server could set a timer to distribute the news messages to those sender_id who have subscribed for the news.
@@ -38,17 +38,24 @@ def make_event_handler():
         PayloadHandler(subscribe_user, ['subscribe']),
         PayloadHandler(unsubscribe_user, ['unsubscribe']),
         PayloadHandler(push, ['push']),
+        PayloadHandler(about_manifesto, ['about_manifesto']),
         ApiAiHandler(candidate.basics, 'kandidat'),
         ApiAiHandler(party.basics, 'parteien'),
         ApiAiHandler(candidate.candidate_check, 'kandidatencheck'),
+        ApiAiHandler(manifesto.manifesto, 'wahlprogramm'),
         PayloadHandler(district.intro_district, ['intro_district']),
+        PayloadHandler(candidate.intro_candidate, ['intro_candidate']),
         PayloadHandler(district.show_13, ['show_13']),
-        PayloadHandler(candidate.show_basics, ['show_basics']),
-        PayloadHandler(candidate.more_infos, ['more_infos']),
+        PayloadHandler(candidate.payload_basics, ['payload_basics']),
         PayloadHandler(candidate.more_infos_nrw, ['more_infos_nrw']),
         PayloadHandler(district.show_candidates, ['show_candidates']),
         ApiAiHandler(district.find_district, 'wahlkreis_finder'),
         PayloadHandler(district.show_district, ['show_district']),
+        ApiAiHandler(browse_lists.apiai, 'liste'),
+        PayloadHandler(browse_lists.intro_lists, ['intro_lists']),
+        PayloadHandler(browse_lists.select_state, ['select_state']),
+        PayloadHandler(browse_lists.select_party, ['select_party']),
+        PayloadHandler(browse_lists.show_list, ['show_list', 'state', 'party']),
         TextHandler(apiai_fulfillment, '.*'),
     ]
 
@@ -63,7 +70,10 @@ def make_event_handler():
             if message:
                 text = message.get('text')
 
-                if text is not None:
+                if (text is not None
+                    and event.get('postback') is None
+                    and message.get('quick_reply') is None):
+
                     request = ai.text_request()
                     request.lang = 'de'
                     request.query = text

@@ -4,7 +4,7 @@ import logging
 from fuzzywuzzy import fuzz, process
 
 from backend.models import FacebookUser, Wiki, Push
-from ..fb import send_buttons, button_postback, send_text
+from ..fb import send_buttons, button_postback, send_text, quick_reply
 from .shared import get_pushes, schema, send_push
 
 logger = logging.getLogger(__name__)
@@ -55,6 +55,18 @@ def unsubscribe_user(event, **kwargs):
         reply = "Du bist noch kein Nutzer der Push-Nachrichten. Wenn du dich anmelden möchtest wähle \"Anmelden\" im Menü."
         send_text(user_id, reply)
 
+def about_manifesto(event, **kwargs):
+    sender_id = event['sender']['id']
+    manifesto_info(sender_id, 'intro')
+
+def manifesto_info(sender_id, state='intro'):
+    if state == 'intro':
+        reply = """
+Was steht eigentlich in so einem Wahlprogramm?
+Kaum ein Wähler liest sich ein Wahlprogramm durch. Ich biete Dir an dieser Stelle einen Einblick in die einzelnen Programme und zwar zu dem Thema, welches dich interessiert."""
+
+        button = quick_reply('mehr', '', image_url=None)
+        send_text(sender_id, "Du kannst jederzeit ein Wort eintippen und ich schaue nach in welchen Wahlprogrammen es vorkommt, z.B. Steuern.", button)
 
 def story(event, payload, **kwargs):
     sender_id = event['sender']['id']
