@@ -56,7 +56,8 @@ def unsubscribe_user(event, **kwargs):
         send_text(user_id, reply)
 
 def menue_manifesto(event, **kwargs):
-    user_id = event['sender']['id']
+    sender_id = event['sender']['id']
+
     send_text(sender_id,
               'Was steht eigentlich in so einem Wahlprogramm?'
               'Kaum ein Wähler liest sich ein Wahlprogramm durch. Ich biete Dir an dieser Stelle einen Einblick in die einzelnen Programme und zwar zu dem Thema, welches dich interessiert.',
@@ -65,6 +66,7 @@ def menue_manifesto(event, **kwargs):
 def about_manifesto(event, payload, **kwargs):
     sender_id = event['sender']['id']
     state = payload['about_manifesto']
+    
     replies = []
     replies = quick_reply('Ich habs verstanden', 'end')
 
