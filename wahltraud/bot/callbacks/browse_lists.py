@@ -28,30 +28,30 @@ def select_state(event, payload, **kwargs):
 
     if not party:
         options = [
-            button_postback(sl[len('Landesliste '):], {'select_party': sl})
+            quick_reply(sl[len('Landesliste '):], {'select_party': sl})
             for sl in sorted(state_lists)
         ]
     else:
         options = [
-            button_postback(sl[len('Landesliste '):],
-                            {
-                                'show_list': True,
-                                'party': party,
-                                'state': sl,
-                            })
+            quick_reply(sl[len('Landesliste '):],
+                        {
+                            'show_list': True,
+                            'party': party,
+                            'state': sl,
+                        })
             for sl in sorted(state_lists)
         ]
 
     if not more:
         options = options[:8]
         options.append(
-            button_postback('>', {
+            quick_reply('▶️', {
                 'select_state': party,
                 'more': True
             }))
     else:
         options = options[8:]
-        options.insert(0, button_postback('<', {'select_state': party}))
+        options.insert(0, quick_reply('◀️️', {'select_state': party}))
 
     send_text(sender_id, 'Wähle dein Bundesland', quick_replies=options)
 
@@ -64,7 +64,7 @@ def select_party(event, payload, **kwargs):
     parties = state_lists[state]
 
     options = [
-        button_postback(p, {
+        quick_reply(p, {
             'show_list': True,
             'party': p,
             'state': state,
@@ -75,12 +75,12 @@ def select_party(event, payload, **kwargs):
     if offset > 0:
         options.insert(
             0,
-            button_postback('◀', {'select_party': state, 'offset': offset - 9})
+            quick_reply('◀', {'select_party': state, 'offset': offset - 9})
         )
 
     if offset + 9 < len(parties):
         options.append(
-            button_postback('▶', {'select_party': state, 'offset': offset + 9})
+            quick_reply('▶', {'select_party': state, 'offset': offset + 9})
         )
 
     send_text(
