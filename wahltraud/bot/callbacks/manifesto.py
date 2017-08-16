@@ -90,15 +90,20 @@ def show_word(event, word, offset, **kwargs):
 
 def show_sentence(event, word, party, **kwargs):
     sender_id = event['sender']['id']
-    occurences = all_words[word]['segments'][party]
+    occurences = all_words[word]['segments'][party]['occurence']
     occurence = random.choice(occurences)
     paragraph = manifestos[party][occurence['paragraph_index']]
     pos = occurence['position']
 
     stops = paragraph.replace(':!?', '.')
-    start = stops.rfind('.', 0, pos + 1)
-    end = stops.find('.', pos)
-    if end == -1:
+    start = stops.rfind('.', 0, pos + 1) + 1
+    end = stops.find('.', pos) + 1
+    if not end:
         end = None
-    sentence = paragraph[start:end]
-    send_buttons(sender_id, sentence, buttons=[button_postback('Ob das wohl klappt?', ['no'])])
+    sentence = paragraph[start:end].strip()
+    send_text(sender_id, "Hier ein zufällig gewählter Satz aus dem Wahlprogramm der "
+                         "Partei \"%s\"" % party_abbr[party])
+    send_buttons(
+        sender_id,
+        '"%s"' % sentence,
+        buttons=[button_postback('Ob das wohl klappt?', ['no'])])

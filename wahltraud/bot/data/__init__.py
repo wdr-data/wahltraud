@@ -66,5 +66,5 @@ party_abbr = {
 manifestos = dict()
 
 for party in party_abbr:
-    with open(str(MANIFESTO_DIR/'%s.txt' % party)) as fp:
+    with open(str(MANIFESTO_DIR/('%s.txt' % party))) as fp:
         manifestos[party] = [line.strip() for line in fp.readlines()]
