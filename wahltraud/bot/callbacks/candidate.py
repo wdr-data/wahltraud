@@ -1,6 +1,6 @@
 import logging
 
-from ..fb import send_buttons, button_postback, send_text
+from ..fb import send_buttons, button_postback, send_text, send_attachment
 from ..data import by_uuid, find_candidates, random_candidate
 
 logger = logging.getLogger(__name__)
