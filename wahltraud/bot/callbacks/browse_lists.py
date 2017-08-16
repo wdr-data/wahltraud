@@ -110,9 +110,8 @@ def show_list(event, payload, **kwargs):
     party = payload['party']
     offset = payload.get('offset', 0)
 
-    try:
-        candidates = state_lists[state][party]
-    except KeyError:
+    candidates = state_lists[state][party]
+    if not candidates:
         send_text(sender_id, 'Die Partei %s hat keine %s' % (party, state))
         return
 
