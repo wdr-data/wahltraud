@@ -69,7 +69,7 @@ def make_event_handler():
             if message:
                 text = message.get('text')
 
-                if text is not None:
+                if text is not None and event.get('postback') is None:
                     request = ai.text_request()
                     request.lang = 'de'
                     request.query = text
