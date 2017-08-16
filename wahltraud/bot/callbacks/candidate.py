@@ -46,7 +46,7 @@ def show_basics(sender_id, candidate_uuid):
 
         buttons = [
             button_postback("Mehr Info", {'more_infos_nrw': candidate['uuid']}),
-            button_postback("Anderer Kandidat", ['menue_manifesto'])
+            button_postback("Anderer Kandidat", ['intro_candidate'])
         ]
 
         if candidate['nrw']['video'] is not None:
@@ -101,15 +101,16 @@ def more_infos_nrw(event, payload, **kwargs):
         buttons.insert(0, button_postback("Interview", {'show_video': video_url}))
 
     send_buttons(sender_id, """
-Das sind die Wahlversprechen von {first_name} {last_name}:
+Die Themen von {first_name} {last_name} in der kommenden Legislaturperiode sind ...
 {pledges}
 
-Und die Interessen:
+{gender} Herz schlägt für ...
 {interests}
     """.format(
         first_name=candidate['first_name'],
         last_name=candidate['last_name'],
         pledges='\n'.join(pledges),
+        gender='Sein' if candidate['gender']=='male' else 'Ihr',
         interests=candidate['nrw']['interests']
     ), buttons)
 
