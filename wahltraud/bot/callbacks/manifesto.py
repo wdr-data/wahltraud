@@ -8,6 +8,22 @@ from ..data import all_words, party_abbr, party_rev, manifestos
 locale.setlocale(locale.LC_NUMERIC, 'de_DE.UTF-8')
 
 
+def manifesto_start(event, **kwargs):
+    sender_id = event['sender']['id']
+
+    random_words = list()
+    for i in range(10):
+        word = random.choice(all_words)['word']
+        random_words.append(quick_reply(word, {'show_word': word}))
+
+    send_text(
+        sender_id,
+        "Lass mich für dich die Programme nach einem Wort durchsuchen. "
+        "Schreib mir einfach ein Wort, welches dich interessiert.",
+        random_words
+    )
+
+
 def show_word_apiai(event, parameters, **kwargs):
     word = parameters.get('thema')
     party = parameters.get('partei')
@@ -119,6 +135,10 @@ def show_sentence(event, word, party, **kwargs):
                 'Noch ein Satz',
                 {'show_sentence': word, 'party': party}
             ),
+            quick_reply(
+                'Neues Wort',
+                ['manifesto_start']
+            ),
         ])
 
 
@@ -136,5 +156,9 @@ def show_paragraph(event, payload, **kwargs):
             quick_reply(
                 'Noch ein Satz',
                 {'show_sentence': word, 'party': party}
+            ),
+            quick_reply(
+                'Neues Wort',
+                ['manifesto_start']
             ),
         ])

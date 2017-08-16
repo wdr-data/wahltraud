@@ -57,6 +57,7 @@ def make_event_handler():
         PayloadHandler(browse_lists.select_state, ['select_state']),
         PayloadHandler(browse_lists.select_party, ['select_party']),
         PayloadHandler(browse_lists.show_list, ['show_list', 'state', 'party']),
+        PayloadHandler(manifesto.manifesto_start, ['manifesto_start']),
         PayloadHandler(manifesto.show_word_payload, ['show_word']),
         PayloadHandler(manifesto.show_sentence_payload, ['show_sentence']),
         PayloadHandler(manifesto.show_paragraph, ['show_paragraph']),
