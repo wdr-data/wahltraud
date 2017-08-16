@@ -45,7 +45,21 @@ class PushAdmin(admin.ModelAdmin):
     list_display = ('headline', 'pub_date', 'published', 'breaking')
 
 
+class WikiModelForm(forms.ModelForm):
+    output = forms.CharField(
+        required=True, label="Antwort", widget=forms.Textarea, max_length=640)
+
+    class Meta:
+        model = Wiki
+        fields = '__all__'
+
+
+class WikiAdmin(admin.ModelAdmin):
+    form = WikiModelForm
+    search_fields = ['input']
+
+
 # Register your models here.
 admin.site.register(Push, PushAdmin)
 admin.site.register(FacebookUser)
-admin.site.register(Wiki)
+admin.site.register(Wiki, WikiAdmin)
