@@ -3,7 +3,7 @@ import random
 from re import findall
 
 from ..fb import send_buttons, button_postback, send_text, send_list, list_element, quick_reply
-from ..data import all_words, all_words_list, party_abbr, party_rev, manifestos
+from ..data import all_words, random_words_list, party_abbr, party_rev, manifestos
 
 locale.setlocale(locale.LC_NUMERIC, 'de_DE.UTF-8')
 
@@ -13,7 +13,7 @@ def manifesto_start(event, **kwargs):
 
     random_words = list()
     for i in range(10):
-        word = random.choice(all_words_list)['word']
+        word = random.choice(random_words_list)
         random_words.append(quick_reply(word, {'show_word': word}))
 
     send_text(
