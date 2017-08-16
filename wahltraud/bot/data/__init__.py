@@ -47,9 +47,14 @@ def find_candidates(first_name, last_name):
     """Returns a list of candidates that have the given first and last name"""
     out = [by_uuid[uuid] for uuid in by_first_name[first_name] & by_last_name[last_name]]
     if not out:
-        out = by_last_name[last_name]
-        if len(out) > len(by_first_name[first_name]) and (len(by_first_name[first_name]) > 0):
-            out = by_first_name[first_name]
+        last_name_matches = by_last_name[last_name]
+        first_name_matches = by_first_name[first_name]
+
+        if len(first_name_matches) > len(last_name_matches) > 0:
+            out = last_name_matches
+        else:
+            out = first_name_matches
+
     return out
 
 MANIFESTO_DIR = Path(__file__).absolute().parent.parent/'output'
