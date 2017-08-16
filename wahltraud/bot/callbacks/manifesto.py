@@ -90,7 +90,7 @@ def show_word(event, word, offset, **kwargs):
                                  {'show_word': word,
                                   'offset': offset + num_words})
     else:
-        button = button_postback("Neues Wort", ['random_word'])
+        button = button_postback("Neues Wort", ['manifesto_start'])
 
     if not offset:
         send_text(
