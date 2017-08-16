@@ -24,21 +24,13 @@ def send_text(recipient_id, text, quick_replies=None):
     while len(text) > max_len:
         max_len = 630
 
-        split_at = text.rfind(' ', 0, max_len) + 1
-
+        split_at = text.rfind(' ', 0, max_len)
         part = text[:split_at or 630]
-        message = {'text': prefix + part + '...'}
 
-        payload = {
-            'recipient': {
-                'id': recipient_id,
-            },
-            'message': message,
-        }
+        send_text(recipient_id, prefix + part + '...')
 
-        send(payload)
         prefix = '...'
-        text = text[(split_at or 630) + 1:]
+        text = text[split_at or 630:]
 
     message = {'text': prefix + text}
 
@@ -62,6 +54,21 @@ def send_buttons(recipient_id, text, buttons):
     :param text: The text to be sent (max. 640 characters)
     :param buttons: Up to 3 buttons
     """
+
+    prefix = ''
+    max_len = 640
+
+    while len(text) > max_len:
+        max_len = 630
+
+        split_at = text.rfind(' ', 0, max_len)
+        part = text[:split_at or 630]
+
+        send_text(recipient_id, prefix + part + '...')
+
+        prefix = '...'
+        text = text[split_at or 630:]
+
     payload = {
         'recipient': {
             'id': recipient_id
@@ -71,7 +78,7 @@ def send_buttons(recipient_id, text, buttons):
                 'type': 'template',
                 'payload': {
                     'template_type': 'button',
-                    'text': text,
+                    'text': prefix + text,
                     'buttons': buttons
                 }
             }
