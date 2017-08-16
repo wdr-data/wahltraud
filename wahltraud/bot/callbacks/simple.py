@@ -76,6 +76,11 @@ def about_manifesto(event, payload, **kwargs):
         send_text(sender_id,
                   'Nenne mir ein Wort und eine Partei und ich zeige dir sofort einen Satz aus dem Programm. \nz.B. Steuern + SPD',
                   [quick_reply('Ich habs verstanden', {'about_manifesto': 'end'}), quick_reply('weiter', {'about_manifesto': 'three'})])
+    elif state == 'three':
+        send_text(sender_id,
+                  'Ein einzelner Satz ist oft nicht hilfreich, darum kannst du dir den Kontext anzeigen lassen. '
+                  'Falls du richtig neugierig geworden bist, gibt es den Link zum Wahlprogramm.',
+                  [quick_reply('Los geht\'s', {'about_manifesto': 'end'})])
 
 def story(event, payload, **kwargs):
     sender_id = event['sender']['id']
