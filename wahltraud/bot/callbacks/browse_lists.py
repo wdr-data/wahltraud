@@ -105,7 +105,7 @@ def show_list(event, payload, **kwargs):
 
     elements = [
         list_element(
-            ' '.join(filter(bool, (str(candidate['list_nr']),
+            ' '.join(filter(bool, ('#%d -' % candidate['list_nr'],
                                    candidate['degree'],
                                    candidate['first_name'],
                                    candidate['last_name']))),
