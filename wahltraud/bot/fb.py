@@ -17,7 +17,30 @@ def send_text(recipient_id, text, quick_replies=None):
     :param text: The text to be sent
     :param quick_replies: A list of quick replies (optional)
     """
-    message = {'text': text}
+
+    prefix = ''
+    max_len = 640
+
+    while len(text) > max_len:
+        max_len = 630
+
+        split_at = text.rfind(' ', 0, max_len) + 1
+
+        part = text[:split_at or 630]
+        message = {'text': prefix + part + '...'}
+
+        payload = {
+            'recipient': {
+                'id': recipient_id,
+            },
+            'message': message,
+        }
+
+        send(payload)
+        prefix = '...'
+        text = text[(split_at or 630) + 1:]
+
+    message = {'text': prefix + text}
 
     if quick_replies is not None:
         message['quick_replies'] = quick_replies
