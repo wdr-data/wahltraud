@@ -50,4 +50,14 @@ def find_candidates(first_name, last_name):
 
 manifesto_file = Path(__file__).absolute().parent.parent/'output'/'all.json'
 
-words = {word['word']: word for word in json.load(open(str(manifesto_file)))['data']}
+all_words = {word['word']: word for word in json.load(open(str(manifesto_file)))['data']}
+
+party_abbr = {
+    'cdu': 'CDU',
+    'spd': 'SPD',
+    'fdp': 'FDP',
+    'linke': 'DIE LINKE',
+    'gruene': 'DIE GRÜNEN',
+    'afd': 'AfD',
+
+}
