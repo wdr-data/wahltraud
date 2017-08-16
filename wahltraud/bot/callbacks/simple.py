@@ -55,18 +55,21 @@ def unsubscribe_user(event, **kwargs):
         reply = "Du bist noch kein Nutzer der Push-Nachrichten. Wenn du dich anmelden möchtest wähle \"Anmelden\" im Menü."
         send_text(user_id, reply)
 
-def about_manifesto(event, **kwargs):
+def about_manifesto(event, payload, **kwargs):
     sender_id = event['sender']['id']
-    manifesto_info(sender_id, 'intro')
+    state = payload['about_manifesto']
+    replies = []
+    replies = quick_reply('Ich habs verstanden', 'end')
 
-def manifesto_info(sender_id, state='intro'):
     if state == 'intro':
-        reply = """
-Was steht eigentlich in so einem Wahlprogramm?
-Kaum ein Wähler liest sich ein Wahlprogramm durch. Ich biete Dir an dieser Stelle einen Einblick in die einzelnen Programme und zwar zu dem Thema, welches dich interessiert."""
-
-        button = quick_reply('mehr', '', image_url=None)
-        send_text(sender_id, "Du kannst jederzeit ein Wort eintippen und ich schaue nach in welchen Wahlprogrammen es vorkommt, z.B. Steuern.", button)
+        send_text(sender_id,
+                  'Was steht eigentlich in so einem Wahlprogramm?'
+                  'Kaum ein Wähler liest sich ein Wahlprogramm durch. Ich biete Dir an dieser Stelle einen Einblick in die einzelnen Programme und zwar zu dem Thema, welches dich interessiert.',
+                  replies.append([quick_reply('weiter', 'two')]))
+    elif state == 'one':
+        send_text(sender_id,
+                  'Du kannst jederzeit ein Wahlthema eintippen und ich schaue nach in welchen Programmen es vorkommt, z.B. Steuern.',
+                  replies.append([quick_reply('weiter', 'one')]))
 
 def story(event, payload, **kwargs):
     sender_id = event['sender']['id']
