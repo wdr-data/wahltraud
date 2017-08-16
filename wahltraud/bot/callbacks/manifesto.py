@@ -16,7 +16,8 @@ def search_word_apiai(event, parameters, **kwargs):
 
 def search_word_payload(event, payload, **kwargs):
     word = payload.get('search_word')
-    search_word(event, word)
+    offset = payload.get('offset', 0)
+    search_word(event, word, offset)
 
 
 def search_word(event, word, offset=0):
