@@ -114,7 +114,7 @@ Die Themen von {first_name} {last_name} in der kommenden Legislaturperiode sind 
         """.format(
             first_name=candidate['first_name'],
             last_name=candidate['last_name'],
-            pledges='\n'.join(pledges)), buttons)
+            pledges=pledges), buttons)
     elif pledges is None and candidate['nrw']['interests']is not None:
         send_buttons(sender_id, """
 Das Herz von {first_name} {last_name} schlägt für ...
