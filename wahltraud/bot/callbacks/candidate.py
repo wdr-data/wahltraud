@@ -68,8 +68,8 @@ def show_basics(sender_id, candidate_uuid):
 Partei: {party}
 Jahrgang: {age}
 
-Wahlkreis {dicstrict}
-Landesliste {state}
+Wahlkreis: {dicstrict}
+Landesliste: {state}
 Listenplatz Nr.: {list_nr}
 Beruf: {profession}
     """.format(
@@ -78,8 +78,8 @@ Beruf: {profession}
                                candidate['last_name']))),
         party=candidate['party'],
         age='-' if candidate['age'] is None else candidate['age'],
-        dicstrict='-' if district_uuid is None else str(candidate_district),
-        state='-' if district_uuid is None else str(state),
+        dicstrict='-' if district_uuid is None else ' '.join(candidate_district),
+        state='-' if district_uuid is None else ' '.join(state),
         list_nr='-' if candidate['list_nr'] is None else candidate['list_nr'],
         profession='-' if profession is None else profession
     ), buttons)
