@@ -90,7 +90,7 @@ def show_word(event, word, offset, **kwargs):
 
 def show_sentence(event, word, party, **kwargs):
     sender_id = event['sender']['id']
-    occurences = all_words[word]['segments'][party]
+    occurences = all_words[word]['segments'][party]['occurence']
     occurence = random.choice(occurences)
     paragraph = manifestos[party][occurence['paragraph_index']]
     pos = occurence['position']
