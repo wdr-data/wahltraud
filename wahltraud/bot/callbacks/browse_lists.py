@@ -114,10 +114,12 @@ def show_list(event, payload, **kwargs):
         candidates = state_lists[state][party]
     except KeyError:
         send_text(sender_id, 'Die Partei %s hat keine %s' % (party, state))
+        return
 
     if len(candidates) == 1:
         send_text(sender_id, 'Die %s der Partei %s hat nur einen Kandidaten:' % (state, party))
         show_candidate_basics(sender_id, candidates[0]['uuid'])
+        return 
 
     num_candidates = 4
 
