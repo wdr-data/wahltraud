@@ -45,9 +45,13 @@ def show_basics(sender_id, candidate_uuid):
         profession = candidate['nrw']['profession']
 
         buttons = [
-            button_postback("Mehr Info", {'more_infos_nrw': candidate['uuid']}),
             button_postback("Anderer Kandidat", ['intro_candidate'])
         ]
+
+        if candidate['nrw']['pledges'] is None and candidate['nrw']['interests'] is None:
+            buttons.insert(0, button_postback("Info Wahlkreis", {'show_district': district_uuid}))
+        else:
+            buttons.insert(0, button_postback("Mehr Info", {'more_infos_nrw': candidate['uuid']}))
 
         if candidate['nrw']['video'] is not None:
             video_url = candidate['nrw']['video']
@@ -100,20 +104,36 @@ def more_infos_nrw(event, payload, **kwargs):
         video_url = candidate['nrw']['video']
         buttons.insert(0, button_postback("Interview", {'show_video': video_url}))
 
-    send_buttons(sender_id, """
+    if candidate['nrw']['interests'] is None and pledges is not None:
+        send_buttons(sender_id, """
+Die Themen von {first_name} {last_name} in der kommenden Legislaturperiode sind ...
+{pledges}
+        """.format(
+            first_name=candidate['first_name'],
+            last_name=candidate['last_name'],
+            pledges='\n'.join(pledges)), buttons)
+    elif pledges is None and candidate['nrw']['interests']is not None:
+        send_buttons(sender_id, """
+Das Herz von {first_name} {last_name} schlägt für ...
+{interests}
+        """.format(
+            first_name=candidate['first_name'],
+            last_name=candidate['last_name'],
+            interests=candidate['nrw']['interests']), buttons)
+    else:
+        send_buttons(sender_id, """
 Die Themen von {first_name} {last_name} in der kommenden Legislaturperiode sind ...
 {pledges}
 
 {gender} Herz schlägt für ...
 {interests}
-    """.format(
-        first_name=candidate['first_name'],
-        last_name=candidate['last_name'],
-        pledges='\n'.join(pledges),
-        gender='Sein' if candidate['gender']=='male' else 'Ihr',
-        interests=candidate['nrw']['interests']
-    ), buttons)
-
+        """.format(
+            first_name=candidate['first_name'],
+            last_name=candidate['last_name'],
+            pledges='\n'.join(pledges),
+            gender='Sein' if candidate['gender']=='male' else 'Ihr',
+            interests=candidate['nrw']['interests']
+        ), buttons)
 
 def intro_candidate(event, **kwargs):
     sender_id = event['sender']['id']
