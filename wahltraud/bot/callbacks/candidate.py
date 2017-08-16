@@ -48,7 +48,7 @@ def show_basics(sender_id, candidate_uuid):
             button_postback("Anderer Kandidat", ['intro_candidate'])
         ]
 
-        if candidate['nrw']['pledges'] is None and candidate['nrw']['interests'] is None:
+        if not candidate['nrw']['pledges'] and candidate['nrw']['interests'] is None:
             buttons.insert(0, button_postback("Info Wahlkreis", {'show_district': district_uuid}))
         else:
             buttons.insert(0, button_postback("Mehr Info", {'more_infos_nrw': candidate['uuid']}))
@@ -93,7 +93,10 @@ def more_infos_nrw(event, payload, **kwargs):
     candidate_uuid = payload['more_infos_nrw']
     candidate = by_uuid[candidate_uuid]
 
-    pledges = ['- ' + line for line in candidate['nrw']['pledges']]
+    if not candidate['nrw']['pledges']:
+        pledges = None
+    else:
+        pledges = '- '.join(candidate['nrw']['pledges'])
 
     buttons = [
         button_postback("Info Wahlkreis", {'show_district': candidate['district_uuid']}),
