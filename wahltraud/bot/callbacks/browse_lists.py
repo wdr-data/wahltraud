@@ -45,13 +45,13 @@ def select_state(event, payload, **kwargs):
     if not more:
         options = options[:8]
         options.append(
-            button_postback('▶️', {
+            button_postback('>', {
                 'select_state': party,
                 'more': True
             }))
     else:
         options = options[8:]
-        options.insert(0, button_postback('◀️️', {'select_state': party}))
+        options.insert(0, button_postback('<', {'select_state': party}))
 
     send_text(sender_id, 'Wähle dein Bundesland', quick_replies=options)
 
