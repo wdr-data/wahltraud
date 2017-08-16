@@ -29,8 +29,8 @@ def update():
     
     # create nrw_kandidaten  from Kandidatencheck-files
 
-    check_short = 'kandidatencheck_0108.json'
-    check_long = 'kandidatencheck_erweitert_0108.json'
+    check_short = 'kandidatencheck_1508.json'
+    check_long = 'kandidatencheck_erweitert_1508.json'
     nrw_kandidaten_json = 'nrw_kandidaten.json'
     pic_size = 'm'   # 'xs', 's', 'm', 'l'
     
@@ -327,7 +327,10 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
                     'gender': item['personal']['gender']
                    }
             try:
-                temp['age'] = int(item['personal']['birthyear'])  # derzeit nur das alter
+                if (item['meta']['uuid'] == '3f466bf5-aae1-4f1e-8f6e-6679b310f2e0') and (item['personal']['birthyear'] == '2017'):
+                    temp['age'] = 1989
+                else:
+                    temp['age'] = int(item['personal']['birthyear'])  # derzeit nur das alter
 
             except:
                 temp['age'] = None
@@ -358,7 +361,21 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
 
             temp['nrw'] =  find_id(item['personal']['last_name'],item['personal']['first_name'],nrw)
 
-
+            # male candidates
+            male_candidates = ['618c50ab-4eba-48bb-b85d-3f6bfcfc9cae',
+                                '1016482c-da2b-46dc-9835-0cdd5e1b54ed',
+                                '644bc016-9652-4b32-bd2b-fba4f5c05b8a',
+                                 'da6e09e2-af3f-43c8-8a64-2fba978d63e3',
+                                 'c29a6e79-3e46-400d-9cb8-117a831a5ca7',
+                                 '1eacca1e-cb17-4b83-a3e1-013a1493e718',
+                                 'a797e17d-52e5-445c-9f10-a124cda7320a',
+                                 '36d0c560-0582-4a3f-8ff5-c71ef9d1373a',
+                                 'e7326871-6fdc-485c-a7b9-e6ad18d84944',
+                                 'fe71f013-e6fa-469e-b8f9-1a08cacac071',
+                                 'a4c94792-122a-4bfd-8712-bcddef8ff5e2',
+                                 '57e06956-8616-4d85-ac4a-0eca8b8c2ee5']
+            if temp['uuid'] in male_candidates:
+                temp['gender'] = 'male'
 
 
 
