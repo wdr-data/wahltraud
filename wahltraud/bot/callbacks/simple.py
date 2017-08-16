@@ -55,24 +55,27 @@ def unsubscribe_user(event, **kwargs):
         reply = "Du bist noch kein Nutzer der Push-Nachrichten. Wenn du dich anmelden möchtest wähle \"Anmelden\" im Menü."
         send_text(user_id, reply)
 
-def about_manifesto(event, payload=None, **kwargs):
+def menue_manifesto(event, **kwargs):
+    user_id = event['sender']['id']
+    send_text(sender_id,
+              'Was steht eigentlich in so einem Wahlprogramm?'
+              'Kaum ein Wähler liest sich ein Wahlprogramm durch. Ich biete Dir an dieser Stelle einen Einblick in die einzelnen Programme und zwar zu dem Thema, welches dich interessiert.',
+              replies.append([quick_reply('weiter', 'about_manifesto': 'one'])]))
+
+def about_manifesto(event, payload, **kwargs):
     sender_id = event['sender']['id']
-    if payload is not None:
-        state = payload['about_manifesto']
-    else:
-        state = 'intro'
+    state = payload['about_manifesto']
     replies = []
     replies = quick_reply('Ich habs verstanden', 'end')
 
-    if state == 'intro':
+    if state == 'one':
         send_text(sender_id,
-                  'Was steht eigentlich in so einem Wahlprogramm?'
-                  'Kaum ein Wähler liest sich ein Wahlprogramm durch. Ich biete Dir an dieser Stelle einen Einblick in die einzelnen Programme und zwar zu dem Thema, welches dich interessiert.',
-                  replies.append([quick_reply('weiter', 'two')]))
-    elif state == 'one':
+                  'Du kannst jederzeit ein Wahlthema eintippen und ich schaue nach in welchen Programmen es vorkommt. \nz.B. Steuern',
+                  replies.append([quick_reply('weiter', 'about_manifesto': 'two')]))
+    elif state == 'two':
         send_text(sender_id,
-                  'Du kannst jederzeit ein Wahlthema eintippen und ich schaue nach in welchen Programmen es vorkommt, z.B. Steuern.',
-                  replies.append([quick_reply('weiter', 'one')]))
+                  'Nenne mir ein Wort und eine Partei und ich zeige dir sofort einen Satz aus dem Programm. \nz.B. Steuern + SPD',
+                  replies.append([quick_reply('weiter', 'about_manifesto': 'three')]))
 
 def story(event, payload, **kwargs):
     sender_id = event['sender']['id']
