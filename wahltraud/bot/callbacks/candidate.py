@@ -36,8 +36,8 @@ def show_basics(sender_id, candidate_uuid):
     district_uuid = candidate['district_uuid']
     if district_uuid:
         district = by_uuid[district_uuid]
-        candidate_district = district['district'],
-        state = district['state'],
+        candidate_district = district['district']
+        state = district['state']
 
     logger.debug('candidate_uuid: ' + str(candidate_uuid))
 
