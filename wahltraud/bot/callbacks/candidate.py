@@ -58,7 +58,8 @@ def show_basics(sender_id, candidate_uuid):
             buttons.insert(0, button_postback("Interview", {'show_video': video_url}))
     else:
         profession = candidate['profession']
-        profession = profession.replace('MdB', 'Mitglied des Bundestags')
+        if profession:
+            profession = profession.replace('MdB', 'Mitglied des Bundestags')
         buttons = [
             button_postback("Info Wahlkreis", {'show_district': district_uuid}),
             button_postback("Anderer Kandidat", ['intro_candidate'])
@@ -78,12 +79,12 @@ Listenplatz Nr.: {list_nr}
 Beruf: {profession}
     """.format(
         name=' '.join(filter(bool, (candidate['degree'],
-                               candidate['first_name'],
-                               candidate['last_name']))),
+                                    candidate['first_name'],
+                                    candidate['last_name']))),
         party=candidate['party'],
         age='-' if candidate['age'] is None else candidate['age'],
-        dicstrict='-' if district_uuid is None else ' '.join(candidate_district),
-        state='-' if district_uuid is None else ' '.join(state),
+        dicstrict='-' if district_uuid is None else candidate_district,
+        state='-' if district_uuid is None else state,
         list_nr='-' if candidate['list_nr'] is None else candidate['list_nr'],
         profession='-' if profession is None else profession
     ), buttons)
