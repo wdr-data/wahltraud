@@ -14,7 +14,7 @@ def basics(event, parameters, **kwargs):
 
     if len(candidates) > 1:
         send_buttons(sender_id, """
-        Es gibt mehrere Kandidaten mit dem Namen {first_name} {last_name}. Von welcher Partei ist der gesuchte Kandidat?
+        Deine Eingabe war nicht eindeutig. Welcher der Kandidaten soll es sein?
         """.format(
             first_name=candidates[0]['first_name'],
             last_name=candidates[0]['last_name']
@@ -45,7 +45,7 @@ def show_basics(sender_id, candidate_uuid):
         profession = candidate['nrw']['profession']
 
         buttons = [
-            button_postback("Anderer Kandidat", ['intro_candidate'])
+            button_postback("Anderer Kandidat", ['candidate_check'])
         ]
 
         if not candidate['nrw']['pledges'] and candidate['nrw']['interests'] is None:
@@ -62,7 +62,7 @@ def show_basics(sender_id, candidate_uuid):
             profession = profession.replace('MdB', 'Mitglied des Bundestags')
         buttons = [
             button_postback("Info Wahlkreis", {'show_district': district_uuid}),
-            button_postback("Anderer Kandidat", ['intro_candidate'])
+            button_postback("Anderer Kandidat", ['candidate_check'])
         ]
 
     if 'img' in candidate:
@@ -72,11 +72,11 @@ def show_basics(sender_id, candidate_uuid):
 {name}
 Partei: {party}
 Jahrgang: {age}
+Beruf: {profession}
 
 Wahlkreis: {dicstrict}
-Landesliste: {state}
 Listenplatz Nr.: {list_nr}
-Beruf: {profession}
+Landesliste {state}
     """.format(
         name=' '.join(filter(bool, (candidate['degree'],
                                     candidate['first_name'],
@@ -101,7 +101,7 @@ def more_infos_nrw(event, payload, **kwargs):
 
     buttons = [
         button_postback("Info Wahlkreis", {'show_district': candidate['district_uuid']}),
-        button_postback("Anderer Kandidat", ['intro_candidate'])
+        button_postback("Anderer Kandidat", ['candidate_check'])
     ]
 
     if candidate['nrw']['video'] is not None:
@@ -145,11 +145,11 @@ def intro_candidate(event, **kwargs):
 
 def candidate_check(event, **kwargs):
     reply = """
-Du kannst Kandidaten nach Wahlkreis oder Partei suchen.
+Du kannst dir die Kandidaten nach Wahlkreis oder Partei anzeigen lassen.
 Alternativ kannst du auch direkt den Namen eines Kandidaten als Nachricht schreiben."""
     sender_id = event['sender']['id']
 
     send_buttons(sender_id, reply,
-                 buttons=[button_postback('Wahlkreis', ['intro_district']),
-                          button_postback('Partei', ['intro_lists']),
-                          button_postback('Zufälliger Kandidat', {'payload_basics': random_candidate()['uuid']})])
+                 buttons=[button_postback('Wahlkreis (Direktkandidat)', ['intro_district']),
+                          button_postback('Partei (Landeslisten)', ['intro_lists']),
+                          button_postback('zufälligen KandidatIn', {'payload_basics': random_candidate()['uuid']})])
