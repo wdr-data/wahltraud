@@ -24,7 +24,7 @@ def update():
     #copyfile(output_file_abgeordnetenwatch, 'abgeordnetenwatch_backup_'+date+'.json')
     
     
-    #abgeordnetenapi(parliament, kind_of_people , output_file_abgeordnetenwatch )
+    abgeordnetenapi(parliament, kind_of_people , output_file_abgeordnetenwatch )
     
     
     
@@ -56,7 +56,7 @@ def update():
     #copyfile(wahlkreis_info_json , 'wahlkreis_info_backup_'+date+'.json')
     
     # make wahlkreis_info_json
-    #wahlkreis_info(alle_kandidaten_json, wahlkreis_info_json)
+    wahlkreis_info(alle_kandidaten_json, wahlkreis_info_json)
     
     
     
@@ -374,8 +374,9 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
                                  '36d0c560-0582-4a3f-8ff5-c71ef9d1373a',
                                  'e7326871-6fdc-485c-a7b9-e6ad18d84944',
                                  'fe71f013-e6fa-469e-b8f9-1a08cacac071',
-                                 'a4c94792-122a-4bfd-8712-bcddef8ff5e2',
-                                 '57e06956-8616-4d85-ac4a-0eca8b8c2ee5']
+                                 'a4c94792-122a-4bfd-8712-bcddef8ff5e2',''
+                                 '57e06956-8616-4d85-ac4a-0eca8b8c2ee5',
+                                 'c9a683bb-24de-437a-91d4-465dbc28d09d]
             if temp['uuid'] in male_candidates:
                 temp['gender'] = 'male'
 
@@ -564,7 +565,8 @@ def kandidaten_und_meta(wahlkreis_uuid,alle):
     alter = [x for x in alter if x is not None]
     #alter = [int(x) for x in alter]
     quote = sex.count('female') / len(sex)
-    meta = {'avg_age': np.mean(alter), 'total_candidates': counter, 'quota_female': quote}
+    females_total = sex.count('female')
+    meta = {'avg_age': np.mean(alter), 'total_candidates': counter, 'quota_female': quote, 'females_total' : females_total}
     
     return [kand_liste, meta]
 
