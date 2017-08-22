@@ -140,7 +140,7 @@ Die Themen von {first_name} {last_name} in der kommenden Legislaturperiode sind 
         ), buttons)
 
 def intro_candidate(event, **kwargs):
-    repyly = """
+    reply = """
     Über 2800 Kandidaten sind zur Wahl zugelassen. Viel Freude beim kennenlernen.
     """
     sender_id = event['sender']['id']
