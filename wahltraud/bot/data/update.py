@@ -30,8 +30,8 @@ def update():
     
     # create nrw_kandidaten  from Kandidatencheck-files
 
-    check_short = 'kandidatencheck_1508.json'
-    check_long = 'kandidatencheck_erweitert_1508.json'
+    check_short = 'kandidatencheck_2108.json'
+    check_long = 'kandidatencheck_erweitert_2108.json'
     nrw_kandidaten_json = 'nrw_kandidaten.json'
     pic_size = 'm'   # 'xs', 's', 'm', 'l'
     
