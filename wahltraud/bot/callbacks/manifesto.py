@@ -161,4 +161,5 @@ def show_paragraph(event, payload, **kwargs):
                 'Neues Wort',
                 ['manifesto_start']
             ),
+
         ])
