@@ -45,7 +45,7 @@ def show_basics(sender_id, candidate_uuid):
         profession = candidate['nrw']['profession']
 
         buttons = [
-            button_postback("Anderer Kandidat", ['candidate_check'])
+            button_postback("Anderer Kandidat", ['intro_candidate'])
         ]
 
         if not candidate['nrw']['pledges'] and candidate['nrw']['interests'] is None:
@@ -62,14 +62,14 @@ def show_basics(sender_id, candidate_uuid):
             profession = profession.replace('MdB', 'Mitglied des Bundestags')
         buttons = [
             button_postback("Info Wahlkreis", {'show_district': district_uuid}),
-            button_postback("Anderer Kandidat", ['candidate_check'])
+            button_postback("Anderer Kandidat", ['intro_candidate'])
         ]
 
     if 'img' in candidate:
         send_attachment(sender_id, candidate['img'], type='image')
 
     send_buttons(sender_id, """
-{name}
+Ein paar Fakten über {name}:
 Partei: {party}
 Jahrgang: {age}
 Beruf: {profession}
@@ -101,7 +101,7 @@ def more_infos_nrw(event, payload, **kwargs):
 
     buttons = [
         button_postback("Info Wahlkreis", {'show_district': candidate['district_uuid']}),
-        button_postback("Anderer Kandidat", ['candidate_check'])
+        button_postback("Anderer Kandidat", ['intro_candidate'])
     ]
 
     if candidate['nrw']['video'] is not None:
@@ -140,13 +140,21 @@ Die Themen von {first_name} {last_name} in der kommenden Legislaturperiode sind 
         ), buttons)
 
 def intro_candidate(event, **kwargs):
+    repyly = """
+    Über 2800 Kandidaten sind zur Wahl zugelassen. Viel Freude beim kennenlernen.
+    """
     sender_id = event['sender']['id']
-    send_text(sender_id, "Du kannst mir direkt dem Namen eines Kandidaten als Nachricht schreiben.")
+    #send_text(sender_id, "Du kannst mir direkt dem Namen eines Kandidaten als Nachricht schreiben.")
+    send_buttons(sender_id, reply,
+                 buttons=[button_postback('Wahlkreis (Direktkandidat)', ['intro_district']),
+                          button_postback('Partei (Landeslisten)', ['intro_lists']),
+                          button_postback('zufälligen KandidatIn', {'payload_basics': random_candidate()['uuid']})])
+
 
 def candidate_check(event, **kwargs):
     reply = """
-Du kannst dir die Kandidaten nach Wahlkreis oder Partei anzeigen lassen.
-Alternativ kannst du auch direkt den Namen eines Kandidaten als Nachricht schreiben."""
+Du kannst dir die zur Wahl stehenden Kandidaten nach Wahlkreis oder Partei anzeigen lassen. Ich hab zu allen Kandidaten ein paar Infos parat.
+Oder stehst du gerade vor einem Plakat und magst mehr über die Person darauf erfahren? Dann schreib mir einfach den Namen. """
     sender_id = event['sender']['id']
 
     send_buttons(sender_id, reply,
