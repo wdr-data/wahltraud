@@ -7,7 +7,7 @@ import operator
 
 DATA_DIR = Path(__file__).absolute().parent
 
-party_list = json.load(open(str(DATA_DIR/'parteien_info.json')))
+party_list = json.load(open(str(DATA_DIR/'parteien_info.json')))['list']
 candidate_list = json.load(open(str(DATA_DIR/'alle_kandidaten.json')))['list']
 district_list = json.load(open(str(DATA_DIR/'wahlkreis_info.json')))['districts']
 
