@@ -21,8 +21,13 @@ def basics(event, parameters, **kwargs):
         show_search_candidate_list(
             event, candidates, first_name, last_name)
 
-    else:
+    elif len(candidates) == 1:
         show_basics(sender_id, candidates[0]['uuid'])
+    else:
+        send_text(
+            sender_id,
+            "Mhmm, leider habe ich niemanden mit diesem Namen gefunden."
+        )
 
 
 def search_candidate_list(event, payload, **kwargs):
