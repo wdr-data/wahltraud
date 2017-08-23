@@ -139,6 +139,12 @@ Die Themen von {first_name} {last_name} in der kommenden Legislaturperiode sind 
             interests=candidate['nrw']['interests']
         ), buttons)
 
+def show_video(event, payload, **kwargs):
+    sender_id = event['sender']['id']
+    url = payload['show_video']
+
+    send_attachment(sender_id, url, type='video')
+
 def intro_candidate(event, **kwargs):
     reply = """
     Über 2800 Kandidaten sind zur Wahl zugelassen. Viel Freude beim kennenlernen.
