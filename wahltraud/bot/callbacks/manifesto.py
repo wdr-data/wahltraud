@@ -159,7 +159,7 @@ def show_paragraph(event, payload, **kwargs):
             'Parteiprgramm zeigen',
             {'show_link': party_info['skript']}
         )
-    logger.debug('Link Parteiprogramm: ' + str(party_info['skript']))
+    logger.debug('Link Parteiprogramm: ' + str(party_link))
 
     send_text(
         sender_id,
