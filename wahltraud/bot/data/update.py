@@ -21,10 +21,10 @@ def update():
 
     # make backup json
     date = datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
-    #copyfile(output_file_abgeordnetenwatch, 'abgeordnetenwatch_backup_'+date+'.json')
+    copyfile(output_file_abgeordnetenwatch, 'abgeordnetenwatch_backup_'+date+'.json')
     
     
-    abgeordnetenapi(parliament, kind_of_people , output_file_abgeordnetenwatch )
+    #abgeordnetenapi(parliament, kind_of_people , output_file_abgeordnetenwatch )
     
     
     
@@ -57,7 +57,8 @@ def update():
     
     # make wahlkreis_info_json
     wahlkreis_info(alle_kandidaten_json, wahlkreis_info_json)
-    
+    print('update ' + wahlkreis_info_json)
+
     
     
     # create api.ai entities
@@ -248,7 +249,7 @@ def find_id(last_name,first_name,nrw):
                     nrw_info['profession'] = None
 
                 try:
-                    nrw_info['img'] = row['img']
+                    nrw_info['img'] = 'http:'+ row['img']
                 except:
                     nrw_info['img'] = None
 
@@ -319,7 +320,6 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
 
             temp = {'uuid': item['meta']['uuid'],
                     #personal
-
                     'profession':  item['personal']['profession'],
                     'education': item['personal']['education'],
                     'degree': item['personal']['degree'],
@@ -332,7 +332,7 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
                 if (item['meta']['uuid'] == '3f466bf5-aae1-4f1e-8f6e-6679b310f2e0') and (item['personal']['birthyear'] == '2017'):
                     temp['age'] = 1989
                 else:
-                    temp['age'] = int(item['personal']['birthyear'])  # derzeit nur das alter
+                    temp['age'] = int(item['personal']['birthyear'])  # derzeit nur der Jahrgang
 
             except:
                 temp['age'] = None
@@ -376,14 +376,70 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
                                  'fe71f013-e6fa-469e-b8f9-1a08cacac071',
                                  'a4c94792-122a-4bfd-8712-bcddef8ff5e2',''
                                  '57e06956-8616-4d85-ac4a-0eca8b8c2ee5',
-                                 'c9a683bb-24de-437a-91d4-465dbc28d09d]
+                                 'c9a683bb-24de-437a-91d4-465dbc28d09d']
             if temp['uuid'] in male_candidates:
                 temp['gender'] = 'male'
 
             vornamen.append({'value': temp['first_name'] , 'synonyms': [temp['first_name']]})
             nachnamen.append({'value': temp['last_name'], 'synonyms': [temp['last_name']]})
             data_list.append(temp)
-        
+
+    # go through kandidatencheck_liste
+    '''
+    for row in nrw['list']:
+        exists = False
+        for testing in data_list:
+            if row['nachname'] == testing['last_name']:
+                if row['vorname'] == testing['first_name']:
+                    # check if name already exists
+                    exists = True
+        if exists == False:
+            temp = {}
+            temp['first_name'] = row['vorname']
+            temp['last_name']  = row['nachname']
+            temp['uuid'] = row['id']
+
+
+
+            nrw_info = {}
+            # nrw_info['id'] = row['id']
+            try:
+                nrw_info['pledges'] = row['wahlversprechen']
+            except:
+                nrw_info['pledges'] = None
+            try:
+                nrw_info['profession'] = row['beruf']
+            except:
+                nrw_info['profession'] = None
+
+            try:
+                nrw_info['img'] = row['img']
+            except:
+                nrw_info['img'] = None
+
+            try:
+                string = requests.get(row['videoJsonp']).text
+                m = re.search('143/(.+?),(.+?).mp4', string)
+                split = m.group(0).split(',')
+                file_id = str(split[0] + split[4])
+                nrw_info['video'] = 'http://ondemand-ww.wdr.de/medp/fsk0/' + file_id + '.mp4'
+            except:
+                nrw_info['video'] = None
+
+            try:
+                nrw_info['interests'] = row['interessen']
+            except:
+                nrw_info['interests'] = None
+
+
+            temp['nrw'] = nrw_info
+            vornamen.append({'value': temp['first_name'], 'synonyms': [temp['first_name']]})
+            nachnamen.append({'value': temp['last_name'], 'synonyms': [temp['last_name']]})
+            data_list.append(temp)
+    '''
+
+
+
     final = {'list': data_list}
 
     # write transformed short json in output file
