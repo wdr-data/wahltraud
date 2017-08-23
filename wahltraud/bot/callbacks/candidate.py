@@ -67,7 +67,7 @@ def show_basics(sender_id, candidate_uuid):
 
     if 'img' in candidate['nrw']:
         send_attachment(sender_id, candidate['nrw']['img'], type='image')
-    else if not 'img' in candidate['nrw'] and 'img' in candidate:
+    elif not 'img' in candidate['nrw'] and 'img' in candidate:
         send_attachment(sender_id, candidate['img'], type='image')
 
     send_buttons(sender_id, """
