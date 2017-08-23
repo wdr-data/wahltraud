@@ -56,6 +56,11 @@ def show_basics(sender_id, candidate_uuid):
         if candidate['nrw']['video'] is not None:
             video_url = candidate['nrw']['video']
             buttons.insert(0, button_postback("Interview", {'show_video': video_url}))
+
+        if 'img' in candidate['nrw']:
+            send_attachment(sender_id, candidate['nrw']['img'], type='image')
+        elif 'img' in candidate and 'img' in candidate['nrw'] is None:
+            send_attachment(sender_id, candidate['img'], type='image')
     else:
         profession = candidate['profession']
         if profession:
@@ -65,11 +70,8 @@ def show_basics(sender_id, candidate_uuid):
             button_postback("Anderer Kandidat", ['intro_candidate'])
         ]
 
-    if 'img' in candidate['nrw']:
-        url = 'http://kandidatencheck.wdr.de/bundestagswahl/img/Christian_Hohn/687684-M.jpg'
-        send_attachment(sender_id, url, type='image')
-    elif not 'img' in candidate['nrw'] and 'img' in candidate:
-        send_attachment(sender_id, candidate['img'], type='image')
+        if 'img' in candidate:
+            send_attachment(sender_id, candidate['img'], type='image')
 
     send_buttons(sender_id, """
 Ein paar Fakten über {name}:
