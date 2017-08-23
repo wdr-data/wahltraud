@@ -1,6 +1,7 @@
 import logging
+import operator
 
-from ..fb import send_buttons, button_postback, send_text, send_attachment
+from ..fb import send_buttons, button_postback, send_text, send_attachment, send_list, list_element
 from ..data import by_uuid, find_candidates, random_candidate
 
 logger = logging.getLogger(__name__)
@@ -13,17 +14,64 @@ def basics(event, parameters, **kwargs):
     candidates = find_candidates(first_name, last_name)
 
     if len(candidates) > 1:
-        send_buttons(sender_id, """
-        Deine Eingabe war nicht eindeutig. Welcher der Kandidaten soll es sein?
-        """.format(
-            first_name=candidates[0]['first_name'],
-            last_name=candidates[0]['last_name']
-        ),
-            [button_postback(candidate['party'],
-                             {'payload_basics': candidate['uuid']})
-             for candidate in candidates])
-    else:
+        send_text(
+            sender_id,
+            "Deine Eingabe war nicht eindeutig. Welcher der Kandidaten soll es sein?"
+        )
+        show_search_candidate_list(
+            event, candidates, first_name, last_name)
+
+    elif len(candidates) == 1:
         show_basics(sender_id, candidates[0]['uuid'])
+    else:
+        send_text(
+            sender_id,
+            "Mhmm, leider habe ich niemanden mit diesem Namen gefunden."
+        )
+
+
+def search_candidate_list(event, payload, **kwargs):
+    first_name = payload['first_name']
+    last_name = payload['last_name']
+    offset = payload['offset']
+    candidates = find_candidates(first_name, last_name)
+
+    show_search_candidate_list(
+        event, candidates, first_name, last_name, offset)
+
+
+def show_search_candidate_list(event, candidates, first_name, last_name, offset=0):
+    sender_id = event['sender']['id']
+    candidates = list(sorted(candidates,
+                             key=lambda c: (c['last_name'], c['first_name'], c['uuid'])))
+    num_candidates = 4
+
+    if len(candidates) - (offset + num_candidates) == 1:
+        num_candidates = 3
+
+    elements = [
+        list_element(
+            ' '.join(filter(bool, (candidate['degree'],
+                                   candidate['first_name'],
+                                   candidate['last_name']))),
+            subtitle="%s, Jahrgang %s" % (candidate['party'], candidate['age'] or 'unbekannt'),
+            buttons=[button_postback("Info", {'payload_basics': candidate['uuid']})],
+            image_url=candidate.get('img') or None
+        )
+        for candidate in candidates[offset:offset + num_candidates]
+    ]
+
+    if len(candidates) - offset > num_candidates:
+        button = button_postback("Mehr anzeigen",
+                                 {'search_candidate_list': True,
+                                  'first_name': first_name,
+                                  'last_name': last_name,
+                                  'offset': offset + num_candidates})
+    else:
+        button = None
+
+    send_list(sender_id, elements, button=button)
+
 
 def payload_basics(event, payload, **kwargs):
     sender_id = event['sender']['id']
