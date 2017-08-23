@@ -39,7 +39,7 @@ for district in district_list:
     by_uuid[district['uuid']] = district
 
 for party in party_list:
-    by_party[party] = party
+    by_party[party['party']] = party
 
 for state in state_lists.values():
     for party in state.keys():
