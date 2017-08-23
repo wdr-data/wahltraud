@@ -1,4 +1,4 @@
-from ..fb import send_buttons, button_postback
+from ..fb import send_buttons, button_postback, button_url
 from ..data import by_party
 
 
@@ -15,8 +15,8 @@ def basics(event, parameters, **kwargs):
         ),
                      [
                          button_postback("Kandidaten (Listen)", ['select_state']),
-                         button_postback("Wahlprogramm", {'show_link': party_info['skript']}),
-                         button_postback("Homepage",  {'show_link': party_info['page']})
+                         button_url("Wahlprogramm",  party_info['skript']),
+                         button_url("Homepage",  party_info['page'])
                      ])
     else:
         send_buttons(sender_id, """
@@ -26,5 +26,5 @@ def basics(event, parameters, **kwargs):
         ),
                      [
                          button_postback("Kandidaten (Listen)", ['select_state']),
-                         button_postback("Homepage", {'show_link': party_info['page']})
+                         button_url("Homepage",  party_info['page'])
                      ])
