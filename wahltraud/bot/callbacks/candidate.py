@@ -37,7 +37,8 @@ def search_candidate_list(event, payload, **kwargs):
 
 def show_search_candidate_list(event, candidates, first_name, last_name, offset=0):
     sender_id = event['sender']['id']
-    candidates = list(sorted(candidates, key=operator.itemgetter('last_name')))
+    candidates = list(sorted(candidates,
+                             key=lambda c: (c['last_name'], c['first_name'], c['uuid'])))
     num_candidates = 4
 
     if len(candidates) - (offset + num_candidates) == 1:
