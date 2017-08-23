@@ -1,9 +1,12 @@
 from ..fb import send_buttons, button_postback
+from ..data import by_party
+
 
 def basics(event, parameters, **kwargs):
     sender_id = event['sender']['id']
     party = parameters.get('partei')
     party_info = by_party[party]
+
     if 'skript' in party_info:
         send_buttons(sender_id, """
         Ich kann dich wie folgt über die  Partei {party} informieren.
