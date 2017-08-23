@@ -155,13 +155,6 @@ def show_paragraph(event, payload, **kwargs):
     party_info = by_party[party]
     logger.debug('Parteiprogramm: ' + str(party_info)
 
-    if 'skript' in party_info:
-        party_link = quick_reply(
-            'Parteiprgramm zeigen',
-            {'show_link': party_info['skript']}
-        )
-    logger.debug('Link Parteiprogramm: ' + str(party_link))
-
     send_text(
         sender_id,
         '"%s"' % paragraph,
@@ -174,5 +167,9 @@ def show_paragraph(event, payload, **kwargs):
                 'Neues Wort',
                 ['manifesto_start']
             ),
-
+            if 'skript' in party_info:
+                quick_reply(
+                    'Parteiprgramm zeigen',
+                    {'show_link': party_info['skript']}
+                )
         ])
