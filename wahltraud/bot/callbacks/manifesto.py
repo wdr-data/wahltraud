@@ -154,7 +154,7 @@ def show_paragraph(event, payload, **kwargs):
     party_link = dict
     party_info = by_party[party]
 
-    if party_info['skript']:
+    if 'skript' in party_info:
         party_link = quick_reply(
             'Parteiprgramm zeigen',
             {'show_link': party_info['skript']}
