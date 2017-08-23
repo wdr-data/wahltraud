@@ -10,7 +10,7 @@ Ich kann dich wie folgt über die  Partei {party} informieren.
         party=party
     ),
                  [
-                     button_postback("Landeslisten (Kandidaten)", ['select_state']),
+                     button_postback("Kandidaten (Listen)", ['select_state']),
                      button_postback("Wahlprogramm", ['intro_candidate']),
                      button_postback("Homepage", ['intro_candidate'])
                  ])
