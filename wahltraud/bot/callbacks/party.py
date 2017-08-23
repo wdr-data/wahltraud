@@ -1,10 +1,11 @@
+from ..fb import send_buttons
 
 def basics(event, parameters, **kwargs):
     sender_id = event['sender']['id']
     party = parameters.get('partei')
 
     send_buttons(sender_id, """
-Ich kann dich wie folgt über die  Partei {Partei} informieren. 
+Ich kann dich wie folgt über die  Partei {Partei} informieren.
     """.format(
         party=party
     ),
