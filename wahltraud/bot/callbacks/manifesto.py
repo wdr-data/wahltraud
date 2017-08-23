@@ -1,10 +1,12 @@
 import locale
 import random
+import logging
 from re import findall
 
 from ..fb import send_buttons, button_postback, send_text, send_list, list_element, quick_reply
-from ..data import all_words, random_words_list, party_abbr, party_rev, manifestos
+from ..data import all_words, random_words_list, party_abbr, party_rev, manifestos, by_party
 
+logger = logging.getLogger(__name__)
 locale.setlocale(locale.LC_NUMERIC, 'de_DE.UTF-8')
 
 
@@ -148,6 +150,13 @@ def show_paragraph(event, payload, **kwargs):
     party = payload['party']
     word = payload['word']
     paragraph = manifestos[party][paragraph]
+
+    if party in by_party[party]:
+        party_link = quick_reply(
+            'Parteiprgramm zeigen',
+            {'show_link': party}
+        )
+    logger.debug('Link Parteiprogramm: ' + str(party_link))
 
     send_text(
         sender_id,

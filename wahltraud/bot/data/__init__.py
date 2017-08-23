@@ -7,6 +7,7 @@ import operator
 
 DATA_DIR = Path(__file__).absolute().parent
 
+party_list = json.load(open(str(DATA_DIR/'parteien_info.json')))
 candidate_list = json.load(open(str(DATA_DIR/'alle_kandidaten.json')))['list']
 district_list = json.load(open(str(DATA_DIR/'wahlkreis_info.json')))['districts']
 
@@ -15,6 +16,7 @@ by_last_name = defaultdict(set)
 by_plz = defaultdict(set)
 by_city = defaultdict(set)
 by_uuid = dict()
+by_party = defaultdict(set)
 
 state_lists = defaultdict(lambda: defaultdict(list))
 
@@ -35,6 +37,9 @@ for district in district_list:
         by_city[city].add(district['uuid'])
 
     by_uuid[district['uuid']] = district
+
+for party in party_list:
+    by_party[party] = party
 
 for state in state_lists.values():
     for party in state.keys():
