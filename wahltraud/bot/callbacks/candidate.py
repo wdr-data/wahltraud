@@ -66,7 +66,8 @@ def show_basics(sender_id, candidate_uuid):
         ]
 
     if 'img' in candidate['nrw']:
-        send_attachment(sender_id, candidate['nrw']['img'], type='image')
+        url = 'http://kandidatencheck.wdr.de/bundestagswahl/img/Christian_Hohn/687684-M.jpg'
+        send_attachment(sender_id, url, type='image')
     elif not 'img' in candidate['nrw'] and 'img' in candidate:
         send_attachment(sender_id, candidate['img'], type='image')
 
