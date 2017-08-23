@@ -80,12 +80,14 @@ def show_district(event, payload, **kwargs):
     district = by_uuid[district_uuid]
 
     send_buttons(sender_id, """
-Der Wahlkreis "{name}" hat die Nummer {number} und liegt in {state}. Es treten {nr_of_candidates} Kandidaten an, deren Durchschnittsalter {avg_age} Jahre beträgt.
+Der Wahlkreis {number},  "{name}", liegt in {state}. Hier stehen {nr_of_candidates} Kandidaten zur Wahl, davon sind {total_female} Frauen. 
+Das Durchschnittsalter der Kandidaten beträgt {avg_age} Jahre.
 """.format(
         number=district['district_id'],
         name=district['district'],
         state=district['state'],
         nr_of_candidates=len(district['candidates']),
+        total_female = district['meta']['females_total'],
         avg_age=locale.format('%.1f', 2017.7 - district['meta']['avg_age'])
     ),
                  [
@@ -171,5 +173,6 @@ def show_candidates(event, payload, **kwargs):
                                   'offset': offset + num_candidates})
     else:
         button = button_postback("Anderer Wahlkreis", ['intro_district'])
+
 
     send_list(sender_id, elements, button=button)
