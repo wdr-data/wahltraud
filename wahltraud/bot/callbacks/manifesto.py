@@ -151,6 +151,7 @@ def show_paragraph(event, payload, **kwargs):
     word = payload['word']
     paragraph = manifestos[party][paragraph]
 
+    party_link = None
     if party in by_party[party]:
         party_link = quick_reply(
             'Parteiprgramm zeigen',
