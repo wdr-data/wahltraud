@@ -1,57 +1,216 @@
 {
   "list": [
-    {"CDU": {"page": "https://www.cdu.de/",
-          "skript": "https://www.cdu.de/regierungsprogramm",
-          "top_candidates": ["5683618f-48d0-4c2b-8f99-58d6e4002123"]}},
-    {"CSU":{"page": "http://www.csu.de/",
-            "skript": "http://www.csu.de/programm/bayernplan",
-                "top_candidates": ["715ca498-0bde-46ec-b33a-bda60ad1f2f6"]}},
-    {"FDP": {"page": "https://www.fdp.de/",
-            "skript":"https://www.fdp.de/denkenwirneu",
-                "top_candidates": ["d78483e4-f668-4559-9222-8e4dd1ce4f6b"]}},
-    {"AfD": {"page": "https://www.afd.de/",
-            "skript":"https://www.afd.de/wahlprogramm",
-                "top_candidates": ["35053564-a376-4391-831d-fedbea74f18e","03f528a4-7c7c-4fa6-b69a-e1fc09f9cbac"]}},
-    {"SPD": {"page": "https://www.spd.de/", "skript": "https://www.spd.de/standpunkte/regierungsprogramm/",
-                "top_candidates": ["d623efb5-7afc-4b56-a794-dfe6c1def0f9"]}},
-    {"DIE GRÜNEN":{"page": "https://www.gruene.de/landingpages/bundestagswahl-2017-buendnis-90die-gruenen.html#/",
-                  "skript": "https://www.gruene.de/ueber-uns/2017/gruenes-wahlprogramm-zur-bundestagswahl-2017-zukunft-wird-aus-mut-gemacht.html?pk_campaign=programm-hh-programm17",
-                  "top_candidates": ["cb970cbe-d16a-4961-8377-0cbfe0d6ff6e", "9d52bbca-c235-4896-8a52-5880917a3c47"]}},
-    {"DIE LINKE":{"page": "https://www.die-linke.de/start/",
-                  "skript": "https://www.die-linke.de/wahlen/wahlprogramm/",
-                   "top_candidates": ["47b3e404-b468-4b6d-b74b-e696c6378f9c", "11759fa9-6386-4f16-9a53-2c54d62d2b2f"]}},
-    {"PIRATEN" :{"page": "https://www.piratenpartei.de/", "skript": "https://www.piratenpartei.de/mission/wahl-und-grundsatzprogramme/wahlprogramm-btw2017/"}},
-    {"DIE PARTEI": {"page": null, "skript":"https://www.die-partei.de/regierungsprogramm/"}},
-    {"DIE VIOLETTEN": {"page": null, "skript":"http://die-violetten.de/wahlprogramm-zur-bundestagswahl-2017/"}},
-    {"FREIE WÄHLER":{"page": "http://www.freiewaehler.eu/startseite/", "skript": "http://www.wv-leipzig.de/wp-content/uploads/2017/04/FW-Wahlprogramm-2017-Die-anstaendige-Alternative.pdf"}},
-    {"ÖDP": {"page": "https://www.oedp.de/startseite/", "skript": null}},
-    {"Tierschutzpartei": {"page": "https://www.tierschutzpartei.de/", "skript": "https://www.tierschutzpartei.de/partei/wahl/bundestagswahl-2017/wahlprogramm/"}},
-    {"Unabhängige für bürgernahe Demokratie": {"page": "http://unabhaengige.info/", "skript": null}},
-    {"Bündnis C": {"page": "https://www.buendnis-c.de/", "skript": null}},
-    {"NPD": {"page": "https://npd.de/", "skript": null} },
-    {"Sozialistische Gleichheitspartei": {"page": "http://www.gleichheit.de/", "skript": null}},
-    {"FAMILIEN-PARTEI": {"page": "http://www.familienpartei.net/", "skript": null}},
-    {"Partei für Gesundheitsforschung": {"page": "https://parteifuergesundheitsforschung.de/", "skript": "https://parteifuergesundheitsforschung.de/wahlprogramm-der-partei-fuer-gesundheitsforschung-fuer-die-bundestagswahl-2017"}},
-    {"BAYERNPARTEI":  {"page": "http://landesverband.bayernpartei.de/", "skript": null}},
-    {"BüSo": {"page": "http://www.bueso.de/", "skript": null}} ,
-    {"DKP":  {"page": "http://bundestagswahl2017.dkp.de/", "skript": null}},
-    {"MENSCHLICHE WELT": {"page": "http://www.menschlichewelt.de/", "skript": null}},
-    {"DIE FRAUEN" : {"page": "http://www.feministischepartei.de/startseite.html", "skript": null}},
-    {"MLPD": {"page": "https://www.mlpd.de/view?set_language=de", "skript": "https://www.mlpd.de/internationalistische-liste/internationalistisch-antifaschistisch-klassenkaempferisch-revolutionaer-konsequent"}},
-    {"Bergpartei": {"page": "http://www.bergpartei.de/", "skript": null}},
-    {"Magdeburger Gartenpartei": {"page": "http://www.magdeburger-gartenpartei.de/", "skript": null}},
-    {"Ab jetzt...Demokratie durch Volksabstimmung": {"page":  null}},
-    {"V-Partei": {"page": "https://v-partei.de/", "skrip": null}},
-    {"APPD": {"page": null}},
-    {"DIE EINHEIT": { "page": null}},
-    {"Die Rechte": {"page": null}},
-    {"Graue": {"page": null}},
-    {"Mieterpartei": {"page": null}},
-    {"Neue Liberale": { "page": null}},
-    {"Tierschutzallianz": {"page": null}},
-    {"VIP": { "page": null}},
-    {"BÜRGER-BLOCK e.V.": {"page": null}},
-    {"Unsere Zukunft": {"page": null}},
-    {"Partei der Vernunft": { "page": null}}
-]
+    {
+      "party": "CDU",
+      "page": "https://www.cdu.de/",
+      "skript": "https://www.cdu.de/regierungsprogramm",
+      "top_candidates": [
+        "5683618f-48d0-4c2b-8f99-58d6e4002123"
+      ]
+    },
+    {
+      "party": "CSU",
+      "page": "http://www.csu.de/",
+      "skript": "http://www.csu.de/programm/bayernplan",
+      "top_candidates": [
+        "715ca498-0bde-46ec-b33a-bda60ad1f2f6"
+      ]
+    },
+    {
+      "party": "FDP",
+      "page": "https://www.fdp.de/",
+      "skript": "https://www.fdp.de/denkenwirneu",
+      "top_candidates": [
+        "d78483e4-f668-4559-9222-8e4dd1ce4f6b"
+      ]
+    },
+    {
+      "party": "AfD",
+      "page": "https://www.afd.de/",
+      "skript": "https://www.afd.de/wahlprogramm",
+      "top_candidates": [
+        "35053564-a376-4391-831d-fedbea74f18e",
+        "03f528a4-7c7c-4fa6-b69a-e1fc09f9cbac"
+      ]
+    },
+    {
+      "party": "SPD",
+      "page": "https://www.spd.de/",
+      "skript": "https://www.spd.de/standpunkte/regierungsprogramm/",
+      "top_candidates": [
+        "d623efb5-7afc-4b56-a794-dfe6c1def0f9"
+      ]
+    },
+    {
+      "party": "DIE GRÜNEN",
+      "page": "https://www.gruene.de/landingpages/bundestagswahl-2017-buendnis-90die-gruenen.html#/",
+      "skript": "https://www.gruene.de/ueber-uns/2017/gruenes-wahlprogramm-zur-bundestagswahl-2017-zukunft-wird-aus-mut-gemacht.html?pk_campaign=programm-hh-programm17",
+      "top_candidates": [
+        "cb970cbe-d16a-4961-8377-0cbfe0d6ff6e",
+        "9d52bbca-c235-4896-8a52-5880917a3c47"
+      ]
+    },
+    {
+      "party": "DIE LINKE",
+      "page": "https://www.die-linke.de/start/",
+      "skript": "https://www.die-linke.de/wahlen/wahlprogramm/",
+      "top_candidates": [
+        "47b3e404-b468-4b6d-b74b-e696c6378f9c",
+        "11759fa9-6386-4f16-9a53-2c54d62d2b2f"
+      ]
+    },
+    {
+      "party": "PIRATEN",
+      "page": "https://www.piratenpartei.de/",
+      "skript": "https://www.piratenpartei.de/mission/wahl-und-grundsatzprogramme/wahlprogramm-btw2017/"
+    },
+    {
+      "party": "DIE PARTEI",
+      "page": null,
+      "skript": "https://www.die-partei.de/regierungsprogramm/"
+    },
+    {
+      "party": "DIE VIOLETTEN",
+      "page": null,
+      "skript": "http://die-violetten.de/wahlprogramm-zur-bundestagswahl-2017/"
+    },
+    {
+      "party": "FREIE WÄHLER",
+      "page": "http://www.freiewaehler.eu/startseite/",
+      "skript": "http://www.wv-leipzig.de/wp-content/uploads/2017/04/FW-Wahlprogramm-2017-Die-anstaendige-Alternative.pdf"
+    },
+    {
+      "party": "ÖDP",
+      "page": "https://www.oedp.de/startseite/",
+      "skript": null
+    },
+    {
+      "party": "Tierschutzpartei",
+      "page": "https://www.tierschutzpartei.de/",
+      "skript": "https://www.tierschutzpartei.de/partei/wahl/bundestagswahl-2017/wahlprogramm/"
+    },
+    {
+      "party": "Unabhängige für bürgernahe Demokratie",
+      "page": "http://unabhaengige.info/",
+      "skript": null
+    },
+    {
+      "party": "Bündnis C",
+      "page": "https://www.buendnis-c.de/",
+      "skript": null
+    },
+    {
+      "party": "NPD",
+      "page": "https://npd.de/",
+      "skript": null
+    },
+    {
+      "party": "Sozialistische Gleichheitspartei",
+      "page": "http://www.gleichheit.de/",
+      "skript": null
+    },
+    {
+      "party": "FAMILIEN-PARTEI",
+      "page": "http://www.familienpartei.net/",
+      "skript": null
+    },
+    {
+      "party": "Partei für Gesundheitsforschung",
+      "page": "https://parteifuergesundheitsforschung.de/",
+      "skript": "https://parteifuergesundheitsforschung.de/wahlprogramm-der-partei-fuer-gesundheitsforschung-fuer-die-bundestagswahl-2017"
+    },
+    {
+      "party": "BAYERNPARTEI",
+      "page": "http://landesverband.bayernpartei.de/",
+      "skript": null
+    },
+    {
+      "party": "BüSo",
+      "page": "http://www.bueso.de/",
+      "skript": null
+    },
+    {
+      "party": "DKP",
+      "page": "http://bundestagswahl2017.dkp.de/",
+      "skript": null
+    },
+    {
+      "party": "MENSCHLICHE WELT",
+      "page": "http://www.menschlichewelt.de/",
+      "skript": null
+    },
+    {
+      "party": "DIE FRAUEN",
+      "page": "http://www.feministischepartei.de/startseite.html",
+      "skript": null
+    },
+    {
+      "party": "MLPD",
+      "page": "https://www.mlpd.de/view?set_language=de",
+      "skript": "https://www.mlpd.de/internationalistische-liste/internationalistisch-antifaschistisch-klassenkaempferisch-revolutionaer-konsequent"
+    },
+    {
+      "party": "Bergpartei",
+      "page": "http://www.bergpartei.de/",
+      "skript": null
+    },
+    {
+      "party": "Magdeburger Gartenpartei",
+      "page": "http://www.magdeburger-gartenpartei.de/",
+      "skript": null
+    },
+    {
+      "party": "Ab jetzt...Demokratie durch Volksabstimmung",
+      "page": null
+    },
+    {
+      "party": "V-Partei",
+      "page": "https://v-partei.de/",
+      "skrip": null
+    },
+    {
+      "party": "APPD",
+      "page": null
+    },
+    {
+      "party": "DIE EINHEIT",
+      "page": null
+    },
+    {
+      "party": "Die Rechte",
+      "page": null
+    },
+    {
+      "party": "Graue",
+      "page": null
+    },
+    {
+      "party": "Mieterpartei",
+      "page": null
+    },
+    {
+      "party": "Neue Liberale",
+      "page": null
+    },
+    {
+      "party": "Tierschutzallianz",
+      "page": null
+    },
+    {
+      "party": "VIP",
+      "page": null
+    },
+    {
+      "party": "BÜRGER-BLOCK e.V.",
+      "page": null
+    },
+    {
+      "party": "Unsere Zukunft",
+      "page": null
+    },
+    {
+      "party": "Partei der Vernunft",
+      "page": null
+    }
+  ]
 }
