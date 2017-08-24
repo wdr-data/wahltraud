@@ -161,7 +161,11 @@ def show_paragraph(event, payload, **kwargs):
     word = payload['word']
     paragraph = manifestos[party][paragraph]
 
-    logger.debug('party CDU: ' + str(find_party('CDU')))
+    party_manifesto = find_party(party)
+    get_link = dict
+    if party_manifesto:
+        if party_manifesto['skript'] is not None:
+            get_link = [quick_reply('Wahlprogramm lesen', {'show_manifesto': party_manifesto['skript']})]
 
     send_text(
         sender_id,
@@ -175,5 +179,9 @@ def show_paragraph(event, payload, **kwargs):
                 'Neues Wort',
                 ['manifesto_start']
             )
+        ]
+        if get_link:
+            quick_replies.extend(get_link))
 
-        ])
+def show_manifesto(event, payload, **kwargs):
+    logger.debug('Show link')
