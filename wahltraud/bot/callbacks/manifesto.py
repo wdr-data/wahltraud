@@ -171,7 +171,7 @@ def show_paragraph(event, payload, **kwargs):
         )
     ]
 
-    party_manifesto = find_party(party)
+    party_manifesto = find_party(party_abbr[party])
     logger.debug('infos about party: ' + str(party_manifesto))
     get_link = dict
     # if party_manifesto['skript'] is not None:
