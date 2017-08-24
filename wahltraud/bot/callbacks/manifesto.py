@@ -110,7 +110,7 @@ def show_sentence(event, word, party, **kwargs):
     sender_id = event['sender']['id']
 
     if party not in party_abbr:
-        if party not in party_rev[party]:
+        if party not party_rev:
             send_text(
                 sender_id,
                 'Zu dieser Partei liegt mir leider kein Wahlprogramm vor. Versuche es doch mit einer anderen Partei.',
