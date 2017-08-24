@@ -152,8 +152,8 @@ def show_paragraph(event, payload, **kwargs):
     paragraph = manifestos[party][paragraph]
 
     # party_link = dict
-    # party_info = by_party[party]
-    # logger.debug('Parteiprogramm: ' + str(party_info)
+    party_info = by_party[party]
+    logger.debug('Parteiprogramm: ' + str(party_info)
 
     # if 'skript' in party_info:
     #     quick_reply(
