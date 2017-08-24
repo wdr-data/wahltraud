@@ -13,8 +13,6 @@ party_list = json.load(open(str(DATA_DIR/'parteien_info.json')))['list']
 candidate_list = json.load(open(str(DATA_DIR/'alle_kandidaten.json')))['list']
 district_list = json.load(open(str(DATA_DIR/'wahlkreis_info.json')))['districts']
 
-logger.debug('Partei aus data: ' + str(party_list))
-
 by_first_name = defaultdict(set)
 by_last_name = defaultdict(set)
 by_plz = defaultdict(set)
@@ -43,7 +41,9 @@ for district in district_list:
     by_uuid[district['uuid']] = district
 
 for party in party_list:
-    by_party[party['party']] = party
+    by_party['CDU'] = party
+
+logger.debug('CDU aus data: ' + str(party))
 
 for state in state_lists.values():
     for party in state.keys():
