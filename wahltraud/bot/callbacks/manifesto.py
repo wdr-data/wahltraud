@@ -4,7 +4,7 @@ import logging
 from re import findall
 
 from ..fb import send_buttons, button_postback, send_text, send_list, list_element, quick_reply
-from ..data import all_words, random_words_list, party_abbr, party_rev, manifestos, by_party
+from ..data import all_words, random_words_list, party_abbr, party_rev, manifestos, find_party
 
 logger = logging.getLogger(__name__)
 locale.setlocale(locale.LC_NUMERIC, 'de_DE.UTF-8')
@@ -152,8 +152,8 @@ def show_paragraph(event, payload, **kwargs):
     paragraph = manifestos[party][paragraph]
 
     # party_link = dict
-    party_info = by_party[party]
-    logger.debug('Parteiprogramm: ' + str(party_info))
+    #party_info = by_party[party]
+    logger.debug('party CDU: ' + str(find_party('CDU')))
 
     # if 'skript' in party_info:
     #     quick_reply(
