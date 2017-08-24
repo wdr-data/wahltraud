@@ -172,11 +172,11 @@ def show_paragraph(event, payload, **kwargs):
     ]
 
     party_manifesto = find_party(party)
-    logger.debug('infos about party: ' + party_manifesto)
+    logger.debug('infos about party: ' + str(party_manifesto))
     get_link = dict
-    if party_manifesto['skript'] is not None:
-        quick_replies.insert(0,quick_reply('Wahlprogramm lesen', {'show_manifesto': party_manifesto['skript']}))
-        logger.debug('link existing')
+    # if party_manifesto['skript'] is not None:
+    #     quick_replies.insert(0,quick_reply('Wahlprogramm lesen', {'show_manifesto': party_manifesto['skript']}))
+    #     logger.debug('link existing')
 
     send_text(sender_id, '"%s"' % paragraph, quick_replies)
 
