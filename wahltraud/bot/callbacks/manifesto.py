@@ -20,8 +20,8 @@ def manifesto_start(event, **kwargs):
 
     send_text(
         sender_id,
-        "Lass mich für dich die Programme nach einem Wort durchsuchen. "
-        "Schreib mir einfach ein Wort, welches dich interessiert.",
+        "Lass mich für dich die Programme nach einem Thema durchsuchen. "
+        "Schreib mir einfach ein Thema, welches dich interessiert.",
         random_words
     )
 
@@ -53,7 +53,7 @@ def show_word(event, word, offset, **kwargs):
     stat = all_words.get(word)
 
     if not stat:
-        send_text(sender_id, 'Hmmm... dieses Wort erkenne ich nicht.')
+        send_text(sender_id, 'Hmmm... dieses Wort finde ich in keinem Programm.')
         return
 
     segs = stat['segments']
@@ -123,7 +123,7 @@ def show_sentence(event, word, party, **kwargs):
     if not end:
         end = None
     sentence = paragraph[start:end].strip()
-    send_text(sender_id, "Hier ein zufällig gewählter Satz aus dem Wahlprogramm der "
+    send_text(sender_id, "Hier ein Satz aus dem Wahlprogramm der "
                          "Partei \"%s\"" % party_abbr[party])
     send_text(
         sender_id,
@@ -165,4 +165,5 @@ def show_paragraph(event, payload, **kwargs):
                 'Neues Wort',
                 ['manifesto_start']
             )
+
         ])
