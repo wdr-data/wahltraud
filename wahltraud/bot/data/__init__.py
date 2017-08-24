@@ -42,7 +42,6 @@ for district in district_list:
 
 for party in party_list:
     by_party[party['party']] = party
-    logger.debug('CDU aus data: ' + str(party))
 
 for state in state_lists.values():
     for party in state.keys():
@@ -50,6 +49,12 @@ for state in state_lists.values():
 
 def random_candidate():
     return random.choice(candidate_list)
+
+def find_party(party):
+    out = by_party[party]
+    return [by_party[party] for party in out]
+
+logger.debug('party CDU: ' + find_party('CDU'))
 
 def find_candidates(first_name, last_name):
     """Returns a list of candidates that have the given first and last name"""
