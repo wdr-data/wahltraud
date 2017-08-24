@@ -110,7 +110,13 @@ def show_sentence(event, word, party, **kwargs):
     sender_id = event['sender']['id']
 
     if party not in party_abbr:
-        party = party_rev[party]
+        if party not in party_rev[party]:
+            send_text(
+                sender_id,
+                'Zu dieser Partei liegt mir leider kein Wahlprogramm vor. Versuche es doch mit einer anderen Partei.',
+            )
+        else:
+            party = party_rev[party]
 
     occurences = all_words[word]['segments'][party]['occurence']
     occurence = random.choice(occurences)
