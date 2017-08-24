@@ -54,7 +54,7 @@ def find_party(party):
     out = by_party[party]
     return [by_party[party] for party in out]
 
-logger.debug('party CDU: ' + find_party('CDU'))
+logger.debug('party CDU: ' + str(find_party('CDU')))
 
 def find_candidates(first_name, last_name):
     """Returns a list of candidates that have the given first and last name"""
