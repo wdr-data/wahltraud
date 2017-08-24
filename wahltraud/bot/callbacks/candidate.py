@@ -151,8 +151,11 @@ def more_infos_nrw(event, payload, **kwargs):
     candidate_uuid = payload['more_infos_nrw']
     candidate = by_uuid[candidate_uuid]
 
-    logger.info('Kandidatencheck - mehr Infos zu {first_name} {last_name} von Partei {party}'.format(
-        first_name=first_name, last_name=last_name, party=candidate['party']))
+    logger.info('Kandidatencheck - mehr Infos zu {name} von Partei {party}'.format(
+        name=' '.join(filter(bool, (candidate['degree'],
+                                    candidate['first_name'],
+                                    candidate['last_name']))),
+        party=candidate['party']))
 
     if not candidate['nrw']['pledges']:
         pledges = None
