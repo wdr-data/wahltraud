@@ -67,12 +67,12 @@
     },
     {
       "party": "DIE PARTEI",
-      "page": null,
+      "page": "https://www.die-partei.de/",
       "skript": "https://www.die-partei.de/regierungsprogramm/"
     },
     {
       "party": "DIE VIOLETTEN",
-      "page": null,
+      "page": "http://die-violetten.de/",
       "skript": "http://die-violetten.de/wahlprogramm-zur-bundestagswahl-2017/"
     },
     {
@@ -83,7 +83,7 @@
     {
       "party": "ÖDP",
       "page": "https://www.oedp.de/startseite/",
-      "skript": null
+      "skript": "https://www.oedp.de/fileadmin/user_upload/bundesverband/programm/programme/BundespolitischesProgramm.pdf"
     },
     {
       "party": "Tierschutzpartei",
@@ -157,61 +157,73 @@
     },
     {
       "party": "Magdeburger Gartenpartei",
-      "page": "http://www.magdeburger-gartenpartei.de/",
-      "skript": null
+     "page": "http://www.magdeburger-gartenpartei.de/",
+      "skript": "http://www.magdeburger-gartenpartei.de/pdf/wahlprogramm2017.pdf"
     },
     {
       "party": "Ab jetzt...Demokratie durch Volksabstimmung",
-      "page": null
+      "page":  "http://www.demokratie-durch-volksabstimmung.de/",
+      "skrip": null
     },
     {
       "party": "V-Partei",
       "page": "https://v-partei.de/",
-      "skrip": null
+      "skrip": "https://v-partei.de/vparteihoch3/parteiprogramm/"
     },
     {
       "party": "APPD",
-      "page": null
+      "page": "https://www.appd-gdnk.de/",
+      "skript": null
     },
     {
       "party": "DIE EINHEIT",
-      "page": null
+       "page": "http://parteieinheit.com/",
+      "skript": null
     },
     {
       "party": "Die Rechte",
-      "page": null
+      "page": "http://die-rechte.com/",
+      "skript": null
     },
     {
       "party": "Graue",
-      "page": null
+      "page": "http://www.agp-bv.de/bund/",
+      "skript": null
     },
     {
       "party": "Mieterpartei",
-      "page": null
+      "page": "http://mieterpartei.jetzt/",
+      "skript": null
     },
     {
       "party": "Neue Liberale",
-      "page": null
+      "page": "https://www.neueliberale.org/",
+      "skript": "https://www.neueliberale.org/parteiprogramm/"
     },
     {
       "party": "Tierschutzallianz",
-      "page": null
+      "page": "http://tierschutzallianz.de/",
+      "skript": "http://tierschutzallianz.de/images/materialien/wahlen/wahlen2017/Bundestagwahlprogramm_2017.pdf"
     },
     {
       "party": "VIP",
-      "page": null
+       "page": null,
+      "skript": null
     },
     {
       "party": "BÜRGER-BLOCK e.V.",
-      "page": null
+      "page": "http://www.xn--brger-block-thb.de/",
+      "skript": null
     },
     {
       "party": "Unsere Zukunft",
-      "page": null
+      "page": "https://www.makerfab.de/zukunftspartei",
+      "skript": null
     },
     {
       "party": "Partei der Vernunft",
-      "page": null
+      "page": "https://parteidervernunft.de/",
+      "skript": "https://parteidervernunft.de/aktuelles/bundestagswahl-2017/"
     }
   ]
 }
