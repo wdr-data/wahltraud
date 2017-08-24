@@ -110,7 +110,7 @@ def show_sentence(event, word, party, **kwargs):
     sender_id = event['sender']['id']
 
     if party not in party_abbr:
-        party = party_rev[party]
+        party = party_rev#[party]
 
     occurences = all_words[word]['segments'][party]['occurence']
     occurence = random.choice(occurences)
