@@ -108,45 +108,50 @@ def show_word(event, word, offset, **kwargs):
 
 def show_sentence(event, word, party, **kwargs):
     sender_id = event['sender']['id']
+    found = True
 
-    if party not in party_abbr and party not in party_rev:
+    if party not in party_abbr:
+        if party not in party_rev:
+            found = False
+            send_text(
+                sender_id,
+                'Zu dieser Partei liegt mir leider kein Wahlprogramm vor. Versuche es doch mit einer anderen Partei.',
+            )
+        else:
+            found = True
+            party = party_rev[party]
+
+    if found:
+        occurences = all_words[word]['segments'][party]['occurence']
+        occurence = random.choice(occurences)
+        paragraph = manifestos[party][occurence['paragraph_index']]
+        pos = occurence['position']
+
+        stops = paragraph.replace(':!?', '.')
+        start = stops.rfind('.', 0, pos + 1) + 1
+        end = stops.find('.', pos) + 1
+        if not end:
+            end = None
+        sentence = paragraph[start:end].strip()
+        send_text(sender_id, "Hier ein Satz aus dem Wahlprogramm der "
+                             "Partei \"%s\"" % party_abbr[party])
         send_text(
             sender_id,
-            'Zu dieser Partei liegt mir leider kein Wahlprogramm vor. Versuche es doch mit einer anderen Partei.',
-        )
-    elif party not in party_abbr and party in party_rev:
-        party = party_rev[party]
-
-    occurences = all_words[word]['segments'][party]['occurence']
-    occurence = random.choice(occurences)
-    paragraph = manifestos[party][occurence['paragraph_index']]
-    pos = occurence['position']
-
-    stops = paragraph.replace(':!?', '.')
-    start = stops.rfind('.', 0, pos + 1) + 1
-    end = stops.find('.', pos) + 1
-    if not end:
-        end = None
-    sentence = paragraph[start:end].strip()
-    send_text(sender_id, "Hier ein Satz aus dem Wahlprogramm der "
-                         "Partei \"%s\"" % party_abbr[party])
-    send_text(
-        sender_id,
-        '"%s"' % sentence,
-        quick_replies=[
-            quick_reply(
-                'Satz im Kontext',
-                {'show_paragraph': occurence['paragraph_index'], 'party': party, 'word': word}
-            ),
-            quick_reply(
-                'Noch ein Satz',
-                {'show_sentence': word, 'party': party}
-            ),
-            quick_reply(
-                'Neues Wort',
-                ['manifesto_start']
-            ),
-        ])
+            '"%s"' % sentence,
+            quick_replies=[
+                quick_reply(
+                    'Satz im Kontext',
+                    {'show_paragraph': occurence['paragraph_index'], 'party': party, 'word': word}
+                ),
+                quick_reply(
+                    'Noch ein Satz',
+                    {'show_sentence': word, 'party': party}
+                ),
+                quick_reply(
+                    'Neues Wort',
+                    ['manifesto_start']
+                ),
+            ])
 
 
 def show_paragraph(event, payload, **kwargs):
