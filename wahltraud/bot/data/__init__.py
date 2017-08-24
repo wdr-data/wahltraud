@@ -41,7 +41,7 @@ for district in district_list:
     by_uuid[district['uuid']] = district
 
 for party in party_list:
-    by_party['CDU'] = party
+    by_party[party['party']] = party
     logger.debug('CDU aus data: ' + str(party))
 
 for state in state_lists.values():
