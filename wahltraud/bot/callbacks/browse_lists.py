@@ -1,4 +1,5 @@
 import locale
+import logging
 
 from ..fb import send_buttons, button_postback, send_text, send_list, list_element, quick_reply
 from ..data import state_lists
@@ -7,6 +8,8 @@ from .candidate import show_basics as show_candidate_basics
 
 locale.setlocale(locale.LC_NUMERIC, 'de_DE.UTF-8')
 
+# Enable logging
+logger = logging.getLogger(__name__)
 
 def intro_lists(event, **kwargs):
     sender_id = event['sender']['id']
@@ -110,6 +113,9 @@ def show_list(event, payload, **kwargs):
     state = payload['state']
     party = payload['party']
     offset = payload.get('offset', 0)
+
+    logger.info('Landesliste anzeigen von Partei {party} im Bundesland {state}'.format(
+        party=party, state=state))
 
     candidates = state_lists[state][party]
     if not candidates:

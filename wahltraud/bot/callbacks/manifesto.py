@@ -56,6 +56,7 @@ def show_word(event, word, offset, **kwargs):
         send_text(sender_id, 'Hmmm... dieses Wort finde ich in keinem Programm.')
         return
 
+    logger.info('Wahlprogramm - Wort: {word}'.format(word=word))
     segs = stat['segments']
 
     if len(segs) == 1:
@@ -124,6 +125,8 @@ def show_sentence(event, word, party, **kwargs):
         else:
             party = party_rev[party]
 
+    logger.info('Wahlprogramm - Wort: {word} Partei: {party}'.format(word=word, party=party))
+
     occurences = all_words[word]['segments'][party]['occurence']
     occurence = random.choice(occurences)
     paragraph = manifestos[party][occurence['paragraph_index']]
@@ -183,6 +186,8 @@ def show_manifesto(event, payload, **kwargs):
     sender_id = event['sender']['id']
     link = payload['show_manifesto']
     party = payload['party']
+
+    logger.info('Wahlprogramm - Link angefordert')
 
     send_text(
         sender_id,

@@ -1,11 +1,14 @@
 import locale
 import operator
+import logging
 
 from ..fb import send_buttons, button_postback, send_text, send_list, list_element, quick_reply
 from ..data import by_uuid, by_plz, by_city
 
 locale.setlocale(locale.LC_NUMERIC, 'de_DE.UTF-8')
 
+# Enable logging
+logger = logging.getLogger(__name__)
 
 def intro_district(event, **kwargs):
     sender_id = event['sender']['id']
@@ -79,8 +82,11 @@ def show_district(event, payload, **kwargs):
     district_uuid = payload['show_district']
     district = by_uuid[district_uuid]
 
+    logger.info('Wahlkreisinfo: {district} - {number}'.format(
+        district=district['district'], number=district['district_id']))
+
     send_buttons(sender_id, """
-Der Wahlkreis {number},  "{name}", liegt in {state}. Hier stehen {nr_of_candidates} Kandidaten zur Wahl, davon sind {total_female} Frauen. 
+Der Wahlkreis {number},  "{name}", liegt in {state}. Hier stehen {nr_of_candidates} Kandidaten zur Wahl, davon sind {total_female} Frauen.
 Das Durchschnittsalter der Kandidaten beträgt {avg_age} Jahre.
 """.format(
         number=district['district_id'],
@@ -106,6 +112,9 @@ def show_13(event, payload, **kwargs):
     election_13 = district['election_13'].copy()
 
     beteiligung = election_13.pop('wahlbeteiligung')
+
+    logger.info('Wahl 2013 zu Wahlkreis: {district}'.format(
+        district=district['district']))
 
     results = '\n'.join(
         [
@@ -150,6 +159,9 @@ def show_candidates(event, payload, **kwargs):
     district = by_uuid[district_uuid]
     candidates = list(sorted((by_uuid[uuid] for uuid in district['candidates']),
                              key=operator.itemgetter('last_name')))
+    logger.info('Kandidatenliste zu Wahlkreis: {district}'.format(
+        district=district['district']))
+
     num_candidates = 4
 
     if len(candidates) - (offset + num_candidates) == 1:

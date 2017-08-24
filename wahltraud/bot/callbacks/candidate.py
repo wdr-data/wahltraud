@@ -87,7 +87,8 @@ def show_basics(sender_id, candidate_uuid):
         candidate_district = district['district']
         state = district['state']
 
-    logger.debug('candidate_uuid: ' + str(candidate_uuid))
+    logger.info('Kandidatencheck {first_name} {last_name} von Partei {party}'.format(
+        first_name=first_name, last_name=last_name, party=candidate['party']))
 
     if candidate['nrw'] is not None:
         profession = candidate['nrw']['profession']
@@ -147,6 +148,9 @@ def more_infos_nrw(event, payload, **kwargs):
     candidate_uuid = payload['more_infos_nrw']
     candidate = by_uuid[candidate_uuid]
 
+    logger.info('Kandidatencheck - mehr Infos zu {first_name} {last_name} von Partei {party}'.format(
+        first_name=first_name, last_name=last_name, party=candidate['party']))
+
     if not candidate['nrw']['pledges']:
         pledges = None
     else:
@@ -195,6 +199,8 @@ Die Themen von {first_name} {last_name} in der kommenden Legislaturperiode sind 
 def show_video(event, payload, **kwargs):
     sender_id = event['sender']['id']
     url = payload['show_video']
+
+    logger.info('Kandidatencheck Video: {url}'.format(url=url))
 
     send_attachment(sender_id, url, type='video')
 
