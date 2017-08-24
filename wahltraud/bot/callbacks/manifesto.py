@@ -175,7 +175,7 @@ def show_paragraph(event, payload, **kwargs):
     get_link = dict
     if party_manifesto:
         if party_manifesto['skript'] is not None:
-             quick_replies.extend([quick_reply('Wahlprogramm lesen', {'show_manifesto': party_manifesto['skript']})])
+             quick_replies.extend(quick_reply('Wahlprogramm lesen', {'show_manifesto': party_manifesto['skript']}))
 
     send_text(sender_id, '"%s"' % paragraph, quick_replies)
 
