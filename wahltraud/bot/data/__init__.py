@@ -53,8 +53,6 @@ def random_candidate():
 def find_party(party):
     return [by_party[party] for party in by_party[party]]
 
-logger.debug('party CDU: ' + str(find_party('CDU')))
-
 def find_candidates(first_name, last_name):
     """Returns a list of candidates that have the given first and last name"""
     out = by_first_name[first_name] & by_last_name[last_name]
