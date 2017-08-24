@@ -87,8 +87,11 @@ def show_basics(sender_id, candidate_uuid):
         candidate_district = district['district']
         state = district['state']
 
-    logger.info('Kandidatencheck {first_name} {last_name} von Partei {party}'.format(
-        first_name=first_name, last_name=last_name, party=candidate['party']))
+    logger.info('Kandidatencheck {name} von Partei {party}'.format(
+        name=' '.join(filter(bool, (candidate['degree'],
+                                    candidate['first_name'],
+                                    candidate['last_name']))),
+        party=candidate['party']))
 
     if candidate['nrw'] is not None:
         profession = candidate['nrw']['profession']
