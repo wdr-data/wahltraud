@@ -51,8 +51,7 @@ def random_candidate():
     return random.choice(candidate_list)
 
 def find_party(party):
-    out = by_party[party]
-    return [by_party[party] for party in party_list['party']]
+    return [by_party[party] for party in by_party[party]]
 
 logger.debug('party CDU: ' + str(find_party('CDU')))
 
