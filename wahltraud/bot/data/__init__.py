@@ -50,8 +50,8 @@ for state in state_lists.values():
 def random_candidate():
     return random.choice(candidate_list)
 
-def find_party(party):
-    return [by_party[party] for party in by_party[party]]
+def find_party(party_wanted):
+    return [by_party[party] for party in by_party[party_wanted]]
 
 def find_candidates(first_name, last_name):
     """Returns a list of candidates that have the given first and last name"""
