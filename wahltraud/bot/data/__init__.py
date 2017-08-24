@@ -42,8 +42,7 @@ for district in district_list:
 
 for party in party_list:
     by_party['CDU'] = party
-
-logger.debug('CDU aus data: ' + str(party))
+    logger.debug('CDU aus data: ' + str(party))
 
 for state in state_lists.values():
     for party in state.keys():
