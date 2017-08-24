@@ -153,7 +153,7 @@ def show_paragraph(event, payload, **kwargs):
 
     # party_link = dict
     party_info = by_party[party]
-    logger.debug('Parteiprogramm: ' + str(party_info)
+    logger.debug('Parteiprogramm: ' + str(party_info))
 
     # if 'skript' in party_info:
     #     quick_reply(
