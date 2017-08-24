@@ -110,7 +110,7 @@ def show_sentence(event, word, party, **kwargs):
     sender_id = event['sender']['id']
 
     if party not in party_abbr:
-        party = party_rev#[party]
+        party = party_rev[party]
 
     occurences = all_words[word]['segments'][party]['occurence']
     occurence = random.choice(occurences)
@@ -154,7 +154,7 @@ def show_paragraph(event, payload, **kwargs):
     # party_link = dict
     # party_info = by_party[party]
     # logger.debug('Parteiprogramm: ' + str(party_info)
-    #
+
     # if 'skript' in party_info:
     #     quick_reply(
     #         'Parteiprgramm zeigen',
@@ -172,5 +172,5 @@ def show_paragraph(event, payload, **kwargs):
             quick_reply(
                 'Neues Wort',
                 ['manifesto_start']
-            ),
+            )
         ])
