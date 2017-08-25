@@ -85,6 +85,7 @@ def show_basics(sender_id, candidate_uuid):
     if district_uuid:
         district = by_uuid[district_uuid]
         candidate_district = district['district']
+        candidate_district_nr = district['district_id']
         state = district['state']
 
     logger.info('Kandidatencheck {name} von Partei {party}'.format(
@@ -101,7 +102,7 @@ def show_basics(sender_id, candidate_uuid):
         ]
 
         if not candidate['nrw']['pledges'] and candidate['nrw']['interests'] is None:
-            buttons.insert(0, button_postback("Info Wahlkreis", {'show_district': district_uuid}))
+            buttons.insert(0, button_postback("Info Wahlkreis" + candidate_district_nr, {'show_district': district_uuid}))
         else:
             buttons.insert(0, button_postback("Mehr Info", {'more_infos_nrw': candidate['uuid']}))
 
