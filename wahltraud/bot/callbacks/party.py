@@ -12,7 +12,7 @@ def basics(event, parameters, **kwargs):
 
     logger.info('Infos zur Partei {party} angefordert.'.format(party=party))
 
-    if 'skript' in party_info:
+    if not party_info['skript']:
         send_buttons(sender_id, """
         Ich kann dich wie folgt über die  Partei {party} informieren.
         """.format(

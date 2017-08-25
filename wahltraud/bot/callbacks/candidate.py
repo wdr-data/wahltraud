@@ -109,7 +109,7 @@ def show_basics(sender_id, candidate_uuid):
             video_url = candidate['nrw']['video']
             buttons.insert(0, button_postback("Interview", {'show_video': video_url}))
 
-        if 'img' in candidate['nrw']:
+        if candidate['nrw']['img'] is not None:
             send_attachment(sender_id, candidate['nrw']['img'], type='image')
         elif 'img' in candidate and 'img' in candidate['nrw'] is None:
             send_attachment(sender_id, candidate['img'], type='image')
