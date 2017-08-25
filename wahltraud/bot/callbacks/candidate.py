@@ -176,7 +176,7 @@ def no_video_to_show(event,payload,**kwargs):
             """.format(
                     first_name=candidate['first_name'],
                     last_name=candidate['last_name'],
-                    zusatz_info = candidate['nrw']['zusatz']
+                    zusatz_info = candidate['nrw']["zusatz"]
                     ), buttons)
 
 

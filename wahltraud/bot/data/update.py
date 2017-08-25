@@ -242,7 +242,7 @@ def give_nrw_info(last_name,first_name,row):
         file_id = split[0] + split[4]
         nrw_info["video"] = "http://ondemand-ww.wdr.de/medp/fsk0/" + file_id + ".mp4"
     except:
-        nrw_info["video"] = "shit"
+        nrw_info["video"] = None
 
     try:
         nrw_info["interests"] = row["i"]
