@@ -109,6 +109,8 @@ def show_basics(sender_id, candidate_uuid):
         if candidate['nrw']['video'] is not None:
             video_url = candidate['nrw']['video']
             buttons.insert(0, button_postback("Interview", {'show_video': video_url}))
+        else:
+            buttons.insert(0, button_postback("Interview", {'no_video_to_show': candidate['uuid']}))
 
         if candidate['nrw']['img'] is not None:
             send_attachment(sender_id, candidate['nrw']['img'], type='image')
@@ -146,6 +148,33 @@ Landesliste {state}
         list_nr='-' if candidate['list_nr'] is None else candidate['list_nr'],
         profession='-' if profession is None else profession
     ), buttons)
+
+
+def no_video_to_show(event,payload,**kwargs):
+    sender_id = event['sender']['id']
+    candidate_uuid = payload['no_video_to_show']
+    candidate = by_uuid[candidate_uuid]
+    district = by_uuid[district_uuid]
+    candidate_district_id = district['district_id']
+
+    logger.info('Kandidatencheck - keine video von {name} von Partei {party}'.format(
+        name=' '.join(filter(bool, (candidate['degree'],
+                                    candidate['first_name'],
+                                    candidate['last_name']))),
+        party=candidate['party']))
+
+    buttons = [
+        button_postback("Info Wahlkreis " + candidate_district_id, {'show_district': candidate['district_uuid']}),
+        button_postback("Weitere Kandidaten", ['intro_candidate'])
+    ]
+
+    send_buttons(sender_id, """
+    Leider gibt es von {first_name} {last_name} (noch) kein Interview.
+            """.format(
+            first_name=candidate['first_name'],
+            last_name=candidate['last_name']
+        ), buttons)
+
 
 def more_infos_nrw(event, payload, **kwargs):
     sender_id = event['sender']['id']
