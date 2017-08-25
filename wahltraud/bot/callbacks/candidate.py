@@ -170,10 +170,13 @@ def no_video_to_show(event,payload,**kwargs):
     ]
 
     send_buttons(sender_id, """
-    Leider gibt es von {first_name} {last_name} (noch) kein Interview.
+    Leider gibt es von {first_name} {last_name} (noch) kein Interview. 
+    
+    {zusatz_info}
             """.format(
                     first_name=candidate['first_name'],
-                    last_name=candidate['last_name']
+                    last_name=candidate['last_name'],
+                    zusatz_info = candidate['zusatz']
                     ), buttons)
 
 
