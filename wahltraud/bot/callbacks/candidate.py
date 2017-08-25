@@ -112,7 +112,7 @@ def show_basics(sender_id, candidate_uuid):
 
         if candidate['nrw']['img'] is not None:
             send_attachment(sender_id, candidate['nrw']['img'], type='image')
-        elif 'img' in candidate and 'img' in candidate['nrw'] is None:
+        elif candidate['img'] is not None:
             send_attachment(sender_id, candidate['img'], type='image')
     else:
         profession = candidate['profession']
