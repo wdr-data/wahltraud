@@ -101,6 +101,14 @@ def make_event_handler():
                         except:
                             logging.exception("Handling event failed")
 
+                            try:
+                                send_text(
+                                    event['sender']['id'],
+                                    'Huppsala, das hat nicht funktioniert :('
+                                )
+                            except:
+                                pass
+
                         finally:
                             break
 
