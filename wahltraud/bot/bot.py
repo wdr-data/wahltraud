@@ -9,7 +9,7 @@ import schedule
 from apiai import ApiAI
 
 from backend.models import Push, FacebookUser, Wiki
-from .fb import send_text, send_buttons, button_postback
+from .fb import send_text, send_buttons, button_postback, PAGE_TOKEN
 from .handlers.payloadhandler import PayloadHandler
 from .handlers.texthandler import TextHandler
 from .handlers.apiaihandler import ApiAiHandler
@@ -27,6 +27,11 @@ logger = logging.getLogger(__name__)
 logger.info('FB Wahltraud Logging')
 
 API_AI_TOKEN = os.environ.get('WAHLTRAUD_API_AI_TOKEN', 'na')
+
+ADMINS = [
+    1781215881903416,  # Christian
+    1450422691688898,  # Jannes
+]
 
 
 def make_event_handler():
@@ -98,14 +103,21 @@ def make_event_handler():
                         try:
                             handler.handle_event(event)
 
-                        except:
+                        except Exception as e:
                             logging.exception("Handling event failed")
 
                             try:
+                                sender_id = event['sender']['id']
                                 send_text(
-                                    event['sender']['id'],
+                                    sender_id,
                                     'Huppsala, das hat nicht funktioniert :('
                                 )
+
+                                if int(sender_id) in ADMINS:
+                                    txt = str(e)
+                                    txt = txt.replace(PAGE_TOKEN, '[redacted]')
+                                    txt = txt.replace(API_AI_TOKEN, '[redacted]')
+                                    send_text(sender_id, txt)
                             except:
                                 pass
 
