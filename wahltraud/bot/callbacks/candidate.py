@@ -171,9 +171,9 @@ def no_video_to_show(event,payload,**kwargs):
     send_buttons(sender_id, """
     Leider gibt es von {first_name} {last_name} (noch) kein Interview.
             """.format(
-            first_name=candidate['first_name'],
-            last_name=candidate['last_name']
-        ), buttons)
+                    first_name=candidate['first_name'],
+                    last_name=candidate['last_name']
+                    ), buttons)
 
 
 def more_infos_nrw(event, payload, **kwargs):
