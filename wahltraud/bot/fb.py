@@ -269,7 +269,11 @@ def send(payload):
     r = requests.post("https://graph.facebook.com/v2.6/me/messages?access_token=" + PAGE_TOKEN,
                       data=json.dumps(payload),
                       headers=headers)
-    logger.debug(r.content.decode())
+    response = r.content.decode()
+    logger.debug(response)
+    error = json.loads(response).get('error')
+    if error:
+        raise Exception(error)
 
 
 def upload_attachment(url, type=None):
