@@ -18,7 +18,6 @@ def get_started(event, **kwargs):
     send_buttons(sender_id, reply,
                  buttons=[button_postback('OK', ['subscribe'])])
 
-
 def push(event, **kwargs):
     sender_id = event['sender']['id']
     data = get_pushes()
@@ -31,6 +30,16 @@ def push(event, **kwargs):
 def subscribe_menue(event, **kwargs):
     sender_id = event['sender']['id']
     reply = " Hier kannst du dich an oder abmelden um Push-Nachrichten zu erhalten."
+    send_text(sender_id, reply)
+
+def share_bot(event, **kwargs):
+    sender_id = event['sender']['id']
+    reply = "Teile Wahltraud mit deinen Freunden!"
+    send_text(sender_id, reply)
+
+def about(event, **kwargs):
+    sender_id = event['sender']['id']
+    reply = "Erfahre alles über Wahltrauds Funktionen."
     send_text(sender_id, reply)
 
 def subscribe_user(event, **kwargs):

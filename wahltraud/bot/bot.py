@@ -14,7 +14,7 @@ from .handlers.payloadhandler import PayloadHandler
 from .handlers.texthandler import TextHandler
 from .handlers.apiaihandler import ApiAiHandler
 from .callbacks.simple import (get_started, push, subscribe_user, unsubscribe_user, wiki, story,
-                               apiai_fulfillment, about_manifesto, menue_manifesto, subscribe_menue)
+                               apiai_fulfillment, about_manifesto, menue_manifesto, subscribe_menue, share_bot, about)
 from .callbacks.shared import (get_pushes, get_breaking, send_push, schema)
 from .callbacks import candidate, district, browse_lists, manifesto, party
 
@@ -40,7 +40,9 @@ def make_event_handler():
     handlers = [
         PayloadHandler(story, ['push_id', 'next_state']),
         PayloadHandler(get_started, ['wahltraud_start_payload']),
+        PayloadHandler(about, ['about']),
         PayloadHandler(subscribe_menue, ['subscribe_menue']),
+        PayloadHandler(share_bot, ['share_bot']),
         PayloadHandler(subscribe_user, ['subscribe']),
         PayloadHandler(unsubscribe_user, ['unsubscribe']),
         PayloadHandler(push, ['push']),
