@@ -53,7 +53,7 @@ def basics(event, parameters, **kwargs):
 
 def show_parties(event, payload, **kwargs):
     sender_id = event['sender']['id']
-    kind = payload('show_parties')
+    kind = payload['show_parties']
 
 
     #if not isinstance(payload, dict):
