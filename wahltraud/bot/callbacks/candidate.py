@@ -85,6 +85,7 @@ def show_basics(sender_id, candidate_uuid):
     if district_uuid:
         district = by_uuid[district_uuid]
         candidate_district = district['district']
+        candidate_district_id = district['district_id']
         state = district['state']
 
     logger.info('Kandidatencheck {name} von Partei {party}'.format(
@@ -97,29 +98,31 @@ def show_basics(sender_id, candidate_uuid):
         profession = candidate['nrw']['profession']
 
         buttons = [
-            button_postback("Anderer Kandidat", ['intro_candidate'])
+            button_postback("Weitere Kandidaten", ['intro_candidate'])
         ]
 
         if not candidate['nrw']['pledges'] and candidate['nrw']['interests'] is None:
-            buttons.insert(0, button_postback("Info Wahlkreis", {'show_district': district_uuid}))
+            buttons.insert(0, button_postback("Info Wahlkreis " + candidate_district_id, {'show_district': district_uuid}))
         else:
             buttons.insert(0, button_postback("Mehr Info", {'more_infos_nrw': candidate['uuid']}))
 
         if candidate['nrw']['video'] is not None:
             video_url = candidate['nrw']['video']
             buttons.insert(0, button_postback("Interview", {'show_video': video_url}))
+        else:
+            buttons.insert(0, button_postback("Interview", {'no_video_to_show': candidate['uuid']}))
 
-        if 'img' in candidate['nrw']:
+        if candidate['nrw']['img'] is not None:
             send_attachment(sender_id, candidate['nrw']['img'], type='image')
-        elif 'img' in candidate and 'img' in candidate['nrw'] is None:
+        elif candidate['img'] is not None:
             send_attachment(sender_id, candidate['img'], type='image')
     else:
         profession = candidate['profession']
         if profession:
             profession = profession.replace('MdB', 'Mitglied des Bundestags')
         buttons = [
-            button_postback("Info Wahlkreis", {'show_district': district_uuid}),
-            button_postback("Anderer Kandidat", ['intro_candidate'])
+            button_postback("Info Wahlkreis " + candidate_district_id, {'show_district': district_uuid}),
+            button_postback("Weitere Kandidaten", ['intro_candidate'])
         ]
 
         if 'img' in candidate:
@@ -146,10 +149,44 @@ Landesliste {state}
         profession='-' if profession is None else profession
     ), buttons)
 
+
+def no_video_to_show(event,payload,**kwargs):
+    sender_id = event['sender']['id']
+    candidate_uuid = payload['no_video_to_show']
+    candidate = by_uuid[candidate_uuid]
+    district_uuid = candidate['district_uuid']
+    district = by_uuid[district_uuid]
+    candidate_district_id = district['district_id']
+
+    logger.info('Kandidatencheck - keine video von {name} von Partei {party}'.format(
+        name=' '.join(filter(bool, (candidate['degree'],
+                                    candidate['first_name'],
+                                    candidate['last_name']))),
+        party=candidate['party']))
+
+    buttons = [
+        button_postback("Info Wahlkreis " + candidate_district_id, {'show_district': candidate['district_uuid']}),
+        button_postback("Weitere Kandidaten", ['intro_candidate'])
+    ]
+
+    send_buttons(sender_id, """
+    Leider gibt es von {first_name} {last_name} (noch) kein Interview. 
+    
+    {zusatz_info}
+            """.format(
+                    first_name=candidate['first_name'],
+                    last_name=candidate['last_name'],
+                    zusatz_info = candidate['nrw']["zusatz"]
+                    ), buttons)
+
+
 def more_infos_nrw(event, payload, **kwargs):
     sender_id = event['sender']['id']
     candidate_uuid = payload['more_infos_nrw']
     candidate = by_uuid[candidate_uuid]
+    district_uuid = candidate['district_uuid']
+    district = by_uuid[district_uuid]
+    candidate_district_id = district['district_id']
 
     logger.info('Kandidatencheck - mehr Infos zu {name} von Partei {party}'.format(
         name=' '.join(filter(bool, (candidate['degree'],
@@ -163,8 +200,8 @@ def more_infos_nrw(event, payload, **kwargs):
         pledges = ['- ' + line for line in candidate['nrw']['pledges']]
 
     buttons = [
-        button_postback("Info Wahlkreis", {'show_district': candidate['district_uuid']}),
-        button_postback("Anderer Kandidat", ['intro_candidate'])
+        button_postback("Info Wahlkreis " + candidate_district_id, {'show_district': district_uuid}),
+        button_postback("Weitere Kandidaten", ['intro_candidate'])
     ]
 
     if candidate['nrw']['video'] is not None:
@@ -219,7 +256,7 @@ def intro_candidate(event, **kwargs):
     send_buttons(sender_id, reply,
                  buttons=[button_postback('Wahlkreis (Direktkandidat)', ['intro_district']),
                           button_postback('Partei (Landeslisten)', ['intro_lists']),
-                          button_postback('zufälligen KandidatIn', {'payload_basics': random_candidate()['uuid']})])
+                          button_postback('Zufalls-KandidatIn', {'payload_basics': random_candidate()['uuid']})])
 
 
 def candidate_check(event, **kwargs):
@@ -231,4 +268,4 @@ Oder stehst du gerade vor einem Plakat und magst mehr über die Person darauf er
     send_buttons(sender_id, reply,
                  buttons=[button_postback('Wahlkreis (Direktkandidat)', ['intro_district']),
                           button_postback('Partei (Landeslisten)', ['intro_lists']),
-                          button_postback('zufälligen KandidatIn', {'payload_basics': random_candidate()['uuid']})])
+                          button_postback('Zufalls-KandidatIn', {'payload_basics': random_candidate()['uuid']})])

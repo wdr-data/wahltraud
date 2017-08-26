@@ -9,7 +9,7 @@ import schedule
 from apiai import ApiAI
 
 from backend.models import Push, FacebookUser, Wiki
-from .fb import send_text, send_buttons, button_postback
+from .fb import send_text, send_buttons, button_postback, PAGE_TOKEN
 from .handlers.payloadhandler import PayloadHandler
 from .handlers.texthandler import TextHandler
 from .handlers.apiaihandler import ApiAiHandler
@@ -28,6 +28,11 @@ logger.info('FB Wahltraud Logging')
 
 API_AI_TOKEN = os.environ.get('WAHLTRAUD_API_AI_TOKEN', 'na')
 
+ADMINS = [
+    1781215881903416,  # Christian
+    1450422691688898,  # Jannes
+]
+
 
 def make_event_handler():
     ai = ApiAI(API_AI_TOKEN)
@@ -44,6 +49,7 @@ def make_event_handler():
         PayloadHandler(about_manifesto, ['about_manifesto']),
         ApiAiHandler(candidate.basics, 'kandidat'),
         ApiAiHandler(party.basics, 'parteien'),
+        PayloadHandler(party.show_parties, ['show_parties']),
         ApiAiHandler(candidate.candidate_check, 'kandidatencheck'),
         PayloadHandler(district.intro_district, ['intro_district']),
         PayloadHandler(candidate.intro_candidate, ['intro_candidate']),
@@ -51,6 +57,7 @@ def make_event_handler():
         PayloadHandler(candidate.search_candidate_list, ['search_candidate_list']),
         PayloadHandler(candidate.payload_basics, ['payload_basics']),
         PayloadHandler(candidate.more_infos_nrw, ['more_infos_nrw']),
+        PayloadHandler(candidate.no_video_to_show, ['no_video_to_show']),
         PayloadHandler(candidate.show_video, ['show_video']),
         PayloadHandler(district.show_candidates, ['show_candidates']),
         ApiAiHandler(district.find_district, 'wahlkreis_finder'),
@@ -99,8 +106,23 @@ def make_event_handler():
                         try:
                             handler.handle_event(event)
 
-                        except:
+                        except Exception as e:
                             logging.exception("Handling event failed")
+
+                            try:
+                                sender_id = event['sender']['id']
+                                send_text(
+                                    sender_id,
+                                    'Huppsala, das hat nicht funktioniert :('
+                                )
+
+                                if int(sender_id) in ADMINS:
+                                    txt = str(e)
+                                    txt = txt.replace(PAGE_TOKEN, '[redacted]')
+                                    txt = txt.replace(API_AI_TOKEN, '[redacted]')
+                                    send_text(sender_id, txt)
+                            except:
+                                pass
 
                         finally:
                             break
