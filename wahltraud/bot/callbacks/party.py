@@ -24,7 +24,7 @@ def basics(event, parameters, **kwargs):
                      ])
 
     else:
-
+        # make decission process and handle in new payload function --> show_basics
         if not party_info['skript']:
             send_buttons(sender_id, """
             Ich kann dich wie folgt über die  Partei {party} informieren.
@@ -61,7 +61,7 @@ def show_parties(event, payload, **kwargs):
 
 
     if kind == 'etabliert':
-        sent_text(sender_id,'etablierte parteien')
+        send_text(sender_id,'etablierte parteien')
         '''
         options = [
             quick_reply(sl[len('Landesliste '):], {'select_party': sl})
