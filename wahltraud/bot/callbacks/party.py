@@ -56,8 +56,8 @@ def show_parties(event, payload, **kwargs):
     kind = payload('show_parties')
 
 
-    if not isinstance(payload, dict):
-        payload = {pl: None for pl in payload}
+    #if not isinstance(payload, dict):
+    #    payload = {pl: None for pl in payload}
 
 
     if kind == 'etabliert':
