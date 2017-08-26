@@ -28,6 +28,10 @@ def push(event, **kwargs):
     else:
         schema(data, sender_id)
 
+def subscribe_menue(event, **kwargs):
+    sender_id = event['sender']['id']
+    reply = " Hier kannst du dich an oder abmelden um Push-Nachrichten zu erhalten."
+    send_text(sender_id, reply)
 
 def subscribe_user(event, **kwargs):
     user_id = event['sender']['id']

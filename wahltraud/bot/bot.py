@@ -35,6 +35,7 @@ def make_event_handler():
     handlers = [
         PayloadHandler(story, ['push_id', 'next_state']),
         PayloadHandler(get_started, ['wahltraud_start_payload']),
+        PayloadHandler(subscribe_user, ['subscribe_menue']),
         PayloadHandler(subscribe_user, ['subscribe']),
         PayloadHandler(unsubscribe_user, ['unsubscribe']),
         PayloadHandler(push, ['push']),
