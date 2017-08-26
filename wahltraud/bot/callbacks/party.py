@@ -43,7 +43,7 @@ def basics(event, parameters, **kwargs):
                 ),
                              [
                                  button_postback("Kandidaten (Listen)", ['select_state']),
-                                 button_url("Wahlprogramm (pdf)",  party_info['skript']),
+                                 button_url("Wahlprogramm (PDF)",  party_info['skript']),
                                  button_url("Homepage",  party_info['page'])
                              ])
 
