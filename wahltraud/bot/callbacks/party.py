@@ -19,8 +19,8 @@ def basics(event, parameters, **kwargs):
                     """,
                      [
                          button_postback("Etablierte Parteien", {'show_parties': 'etabliert'}),
-                         button_url("Kleine Parteien", {'show_parties': 'klein'}),
-                         button_url("Zeige Alle", {'show_parties': 'alle'})
+                         button_postback("Kleine Parteien", {'show_parties': 'klein'}),
+                         button_postback("Zeige Alle", {'show_parties': 'alle'})
                      ])
 
     else:
