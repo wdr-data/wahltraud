@@ -61,7 +61,7 @@ def show_parties(event, payload, **kwargs):
 
 
     if kind == 'etabliert':
-        send_text(sender_id,'etablierte parteien')
+        send_text(sender_id,'Hier sind bald die etablierte Parteien aufgelistet (Bundestag und im Landtag vertretende)')
         '''
         options = [
             quick_reply(sl[len('Landesliste '):], {'select_party': sl})
@@ -69,7 +69,7 @@ def show_parties(event, payload, **kwargs):
         ] 
         '''
     elif kind == 'klein':
-        send_text(sender_id,'kleine Parteien')
+        send_text(sender_id,'Hier findest du bald die kleinen Parteien')
         '''
         
         options = [
@@ -83,7 +83,7 @@ def show_parties(event, payload, **kwargs):
         ]
         '''
     else:
-        send_text(sender_id, 'alle')
+        send_text(sender_id, 'Hier sind bald alle Parteien alphabetisch aufgelistet')
     '''
         
     if not more:
