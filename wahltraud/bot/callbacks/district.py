@@ -23,7 +23,7 @@ def find_district(event, parameters, **kwargs):
 
     if not plz and not city:
         reply = """
-Viele Wege führen zum Wahlkreis deiner Wahl. Am schnellsten geht es, indem du mir
+Nenne mir den Ort oder das PLZ-Gebiet um zum Wahlkreis zu gelangen. Typ: Am schnellsten geht es, indem du mir
 deine Postleitzahl schreibst."""
 
         send_text(sender_id, reply)
@@ -41,7 +41,7 @@ deine Postleitzahl schreibst."""
                 send_text(sender_id, "Tut mir Leid, diesen Ort kenne ich nicht...")
 
         elif len(district_uuids) == 1:
-            send_district(sender_id, next(iter(district_uuids)))
+            show_district(sender_id, next(iter(district_uuids)))
 
         elif len(district_uuids) < 4:
             send_buttons(sender_id,
