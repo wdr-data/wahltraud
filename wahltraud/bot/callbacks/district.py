@@ -41,7 +41,8 @@ deine Postleitzahl schreibst."""
                 send_text(sender_id, "Tut mir Leid, diesen Ort kenne ich nicht...")
 
         elif len(district_uuids) == 1:
-            show_district(sender_id, next(iter(district_uuids)))
+            district = [by_uuid[uuid] for uuid in district_uuids][0]
+            show_district(sender_id, district['uuid'])
 
         elif len(district_uuids) < 4:
             send_buttons(sender_id,
