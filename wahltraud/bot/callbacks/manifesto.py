@@ -98,8 +98,7 @@ def show_word(event, word, offset, **kwargs):
     if not offset:
         send_text(
             sender_id,
-            'Wusstest Du, dass das Wort "{word}" insgesamt {n} mal in den Wahlprogrammen aller '
-            'Parteien vorkommt?'.format(
+            'Das Wort "{word}" kommt insgesamt {n} mal in allen Wahlprogrammen vor? Hier eine Auflistung nach relativer Häufigkeit.'.format(
                 word=word,
                 n=stat['count']
             ))
@@ -164,6 +163,13 @@ def show_paragraph(event, payload, **kwargs):
     party = payload['party']
     word = payload['word']
     paragraph = manifestos[party][paragraph]
+
+    party_manifesto = find_party(party_abbr[party])
+    get_link = dict
+    if party_manifesto['skript'] is not None:
+        quick_replies.insert(0,quick_reply('Wahlprogramm lesen', {'show_manifesto': party_manifesto['skript'], 'party': party}))
+
+
     quick_replies=[
         quick_reply(
             'Noch ein Satz',
@@ -174,11 +180,6 @@ def show_paragraph(event, payload, **kwargs):
             ['manifesto_start']
         )
     ]
-
-    party_manifesto = find_party(party_abbr[party])
-    get_link = dict
-    if party_manifesto['skript'] is not None:
-        quick_replies.insert(0,quick_reply('Wahlprogramm lesen', {'show_manifesto': party_manifesto['skript'], 'party': party}))
 
     send_text(sender_id, '"%s"' % paragraph, quick_replies)
 
