@@ -282,18 +282,18 @@
       "page": "https://www.appd-gdnk.de/",
       "skript": null,
       "category" : "klein",
-      "name": null,
+      "name": "Anarchischen Pogo-Partei Deutschlands",
       "logo": null,
-      "short": null
+      "short": "APPD"
     },
     {
       "party": "DIE EINHEIT",
        "page": "http://parteieinheit.com/",
       "skript": null,
       "category" : "klein",
-      "name": null,
+      "name": "DIE EINHEIT",
       "logo": null,
-      "short": null
+      "short": "EINHEIT"
     },
     {
       "party": "Die Rechte",
@@ -354,18 +354,18 @@
       "page": "http://www.xn--brger-block-thb.de/",
       "skript": null,
       "category" : "unknown",
-      "name": null,
+      "name": "BÜRGER-BLOCK e.V.",
       "logo": null,
-      "short": null
+      "short": "BÜRGER-BLOCK e.V."
     },
     {
       "party": "Unsere Zukunft",
       "page": "https://www.makerfab.de/zukunftspartei",
       "skript": null,
       "category" : "unknown",
-      "name": null,
+      "name": "Unsere Zukunft",
       "logo": null,
-      "short": null
+      "short": "ZUKUNFT"
     },
     {
       "party": "Partei der Vernunft",
