@@ -73,12 +73,12 @@ def show_party_candidates(event, payload, **kwargs):
     if party_info['top_candidates'] is not None:
         if len(party_info['top_candidates']) == 1:
             buttons.insert(0, button_postback("Spitzenkandidat", {'payload_basics': party_info['top_candidates'][0]}))
-            buttons.insert(2, button_postback("ALLE (alphabetisch)", {'show_list_all', party}))
+            buttons.insert(2, button_postback("ALLE (alphabetisch)", {'show_list_all': party}))
         else:
             buttons.insert(0, button_postback("Spitzenkandidat A", {'payload_basics': party_info['top_candidates'][0]}))
             buttons.insert(0, button_postback("Spitzenkandidat B", {'payload_basics': party_info['top_candidates'][1]}))
     else:
-        buttons.insert(2, button_postback("ALLE (alphabetisch)", {'show_list_all', party}))
+        buttons.insert(2, button_postback("ALLE (alphabetisch)", {'show_list_all': party}))
 
 
 
