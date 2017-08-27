@@ -72,11 +72,11 @@ def show_party_candidates(event, payload, **kwargs):
 
     if party_info['top_candidates'] is not None:
         if len(party_info['top_candidates']) == 1:
-            buttons.insert(0, button_postback("Spitzenkandidat", {'payload_basic': party_info['top_candidate'][0]}))
+            buttons.insert(0, button_postback("Spitzenkandidat", {'payload_basic': party_info['top_candidates'][0]}))
             buttons.insert(2, button_postback("ALLE (alphabetisch)", {'show_list_all', party}))
         else:
-            buttons.insert(0, button_postback("Spitzenkandidat A", {'payload_basic': party_info['top_candidate'][0]}))
-            buttons.insert(0, button_postback("Spitzenkandidat B", {'payload_basic': party_info['top_candidate'][1]}))
+            buttons.insert(0, button_postback("Spitzenkandidat A", {'payload_basic': party_info['top_candidates'][0]}))
+            buttons.insert(0, button_postback("Spitzenkandidat B", {'payload_basic': party_info['top_candidates'][1]}))
     else:
         buttons.insert(2, button_postback("ALLE (alphabetisch)", {'show_list_all', party}))
 
@@ -93,7 +93,7 @@ def show_list_all(event, payload, **kwargs):
     sender_id = event['sender']['id']
     party = payload['show_list_all']
     party_info = by_party[party]
-    send_text(sender_id, "Hier sind bald alle 1000 Kandidaten der Partei {partei} zu sehen. Viel Freude".format(
+    send_text(sender_id, "Hier sind bald alle 1000 Kandidaten der Partei {party} zu sehen. Viel Freude".format(
         party = party_info['short']
     ))
 
