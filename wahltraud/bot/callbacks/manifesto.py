@@ -175,6 +175,10 @@ def show_paragraph(event, payload, **kwargs):
         quick_reply(
             'Neues Wort',
             ['manifesto_start']
+        ),
+        quick_reply(
+            'Info '+ party,
+            {'show_party_options': party}
         )
     ]
 
