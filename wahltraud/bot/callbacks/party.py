@@ -51,8 +51,8 @@ def show_party_options(event, payload, **kwargs):
             party=party_info['name'], party_short=party_info['short']
         ),
                      [
-                         button_postback("Kandidaten (Listen)", ['select_state']),
-                         button_postback("Wahlprogramm (PDF)", {'show_electorial': party}),
+                         button_postback("Kandidaten", {'select_state': party}),
+                         button_postback("Wahlprogramm", {'show_electorial': party}),
                          button_url("Homepage", party_info['page'])
                      ])
 
