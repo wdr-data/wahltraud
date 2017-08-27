@@ -95,7 +95,8 @@
       "category" : "etabliert",
       "name": "Piratenpartei Deutschland",
       "logo": null,
-      "short": "PIRATEN"
+      "short": "PIRATEN",
+      "top_candidates": null
     },
     {
       "party": "DIE PARTEI",
@@ -104,7 +105,8 @@
       "category" : "klein" ,
       "name": "Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative",
       "logo": null,
-      "short": "DIE PARTEI"
+      "short": "DIE PARTEI",
+      "top_candidates": null
     },
     {
       "party": "DIE VIOLETTEN",
@@ -113,7 +115,8 @@
       "category" : "klein",
       "name": "Die Violetten - für spirituelle Politik",
       "logo": null,
-      "short": "DIE VIOLETTEN"
+      "short": "DIE VIOLETTEN",
+      "top_candidates": null
     },
     {
       "party": "FREIE WÄHLER",
@@ -122,7 +125,8 @@
       "category" : "etabliert",
       "name": "FREIE WÄHLER",
       "logo": null,
-      "short": "FREIE WÄHLER"
+      "short": "FREIE WÄHLER",
+      "top_candidates": null
     },
     {
       "party": "ÖDP",
@@ -131,7 +135,8 @@
       "category" : "klein" ,
       "name": "Ökologisch-Demokratische Partei",
       "logo": null,
-      "short": "ÖDP"
+      "short": "ÖDP",
+      "top_candidates": null
     },
     {
       "party": "Tierschutzpartei",
@@ -140,7 +145,8 @@
       "category" : "klein" ,
       "name": "PARTEI MENSCH UMWELT TIERSCHUTZ",
       "logo": null,
-      "short": "Tierschutzpartei"
+      "short": "Tierschutzpartei",
+      "top_candidates": null
     },
     {
       "party": "Unabhängige für bürgernahe Demokratie",
@@ -149,7 +155,8 @@
       "category" : "klein" ,
       "name": "UNABHÄNGIGE für bürgernahe Demokratie",
       "logo": null,
-      "short": "UNABHÄNGIGE"
+      "short": "UNABHÄNGIGE",
+      "top_candidates": null
     },
     {
       "party": "Bündnis C",
@@ -158,7 +165,8 @@
       "category" : "klein" ,
       "name": "Bündnis C - Christen für Deutschland",
       "logo": null,
-      "short": "Bündnis C"
+      "short": "Bündnis C",
+      "top_candidates": null
     },
     {
       "party": "NPD",
@@ -167,7 +175,8 @@
       "category" : "klein" ,
       "name": "Nationaldemokratische Partei Deutschlands",
       "logo": null,
-      "short": "NPD"
+      "short": "NPD",
+      "top_candidates": null
     },
     {
       "party": "Sozialistische Gleichheitspartei",
@@ -176,7 +185,8 @@
       "category" : "klein" ,
       "name": "Sozialistische Gleichheitspartei, Vierte Internationale",
       "logo": null,
-      "short": "SGP"
+      "short": "SGP",
+      "top_candidates": null
     },
     {
       "party": "FAMILIEN-PARTEI",
@@ -185,7 +195,8 @@
       "category" : "klein" ,
       "name": "Familien-Partei Deutschlands",
       "logo": null,
-      "short": "FAMILIE"
+      "short": "FAMILIE",
+      "top_candidates": null
     },
     {
       "party": "Partei für Gesundheitsforschung",
@@ -194,7 +205,8 @@
       "category" : "klein" ,
       "name": "Partei für Gesundheitsforschung",
       "logo": null,
-      "short": "Gesundheitsforschung"
+      "short": "Gesundheitsforschung",
+      "top_candidates": null
     },
     {
       "party": "BAYERNPARTEI",
@@ -203,7 +215,8 @@
       "category" : "klein" ,
       "name": "Bayernpartei",
       "logo": null,
-      "short": "BP"
+      "short": "BP",
+      "top_candidates": null
     },
     {
       "party": "BüSo",
@@ -212,7 +225,8 @@
       "category" : "klein" ,
       "name": "Bürgerrechtsbewegung Solidarität",
       "logo": null,
-      "short": "BüSo"
+      "short": "BüSo",
+      "top_candidates": null
     },
     {
       "party": "MENSCHLICHE WELT",
@@ -221,7 +235,8 @@
       "category" : "klein",
       "name": "Menschliche Welt",
       "logo": null,
-      "short": "MENSCHLICHE WELT"
+      "short": "MENSCHLICHE WELT",
+      "top_candidates": null
     },
     {
       "party": "DIE FRAUEN",
@@ -230,7 +245,8 @@
       "category" : "klein",
       "name": "Feministische Partei DIE FRAUEN",
       "logo": null,
-      "short": "DIE FRAUEN"
+      "short": "DIE FRAUEN",
+      "top_candidates": null
     },
     {
       "party": "MLPD",
@@ -239,7 +255,8 @@
       "category" : "klein",
       "name": "Marxistisch-Leninistische Partei Deutschlands",
       "logo": null,
-      "short": "MLPD"
+      "short": "MLPD",
+      "top_candidates": null
     },
     {
       "party": "Bergpartei",
@@ -248,7 +265,8 @@
       "category" : "klein",
       "name": "bergpartei, die überpartei",
       "logo": null,
-      "short": "B*"
+      "short": "B*",
+      "top_candidates": null
     },
     {
       "party": "Magdeburger Gartenpartei",
@@ -257,25 +275,28 @@
       "category" : "klein",
       "name": "Magdeburger Gartenpartei",
       "logo": null,
-      "short": "MG"
+      "short": "MG",
+      "top_candidates": null
     },
     {
       "party": "Ab jetzt...Demokratie durch Volksabstimmung",
       "page":  "http://www.demokratie-durch-volksabstimmung.de/",
-      "skrip": null,
+      "skript": null,
       "category" : "klein",
       "name": "Ab jetzt…Demokratie durch Volksabstimmung",
       "logo": null,
-      "short": "Volksabstimmung"
+      "short": "Volksabstimmung",
+      "top_candidates": null
     },
     {
       "party": "V-Partei",
       "page": "https://v-partei.de/",
-      "skrip": "https://v-partei.de/vparteihoch3/parteiprogramm/",
+      "skript": "https://v-partei.de/vparteihoch3/parteiprogramm/",
       "category" : "klein",
       "name": "V-Partei - Partei für Veränderung, Vegetarier und Veganer",
       "logo": null,
-      "short": "V-Partei"
+      "short": "V-Partei",
+      "top_candidates": null
     },
     {
       "party": "APPD",
@@ -284,7 +305,8 @@
       "category" : "klein",
       "name": "Anarchischen Pogo-Partei Deutschlands",
       "logo": null,
-      "short": "APPD"
+      "short": "APPD",
+      "top_candidates": null
     },
     {
       "party": "DIE EINHEIT",
@@ -293,7 +315,8 @@
       "category" : "klein",
       "name": "DIE EINHEIT",
       "logo": null,
-      "short": "EINHEIT"
+      "short": "EINHEIT",
+      "top_candidates": null
     },
     {
       "party": "Die Rechte",
@@ -302,7 +325,8 @@
       "category" : "klein",
       "name": "DIE RECHTE",
       "logo": null,
-      "short": "DIE RECHTE"
+      "short": "DIE RECHTE",
+      "top_candidates": null
     },
     {
       "party": "Graue",
@@ -311,7 +335,8 @@
       "category" : "klein",
       "name": "Die Grauen – Für alle Generationen",
       "logo": null,
-      "short": "Die Grauen"
+      "short": "Die Grauen",
+      "top_candidates": null
     },
     {
       "party": "Mieterpartei",
@@ -320,7 +345,8 @@
       "category" : "klein",
       "name": "Mieterpartei",
       "logo": null,
-      "short": "MIETERPARTEI"
+      "short": "MIETERPARTEI",
+      "top_candidates": null
     },
     {
       "party": "Neue Liberale",
@@ -329,7 +355,8 @@
       "category" : "klein",
       "name": "Neue Liberale – Die Sozialliberalen",
       "logo": null,
-      "short": "Neue Liberale"
+      "short": "Neue Liberale",
+      "top_candidates": null
     },
     {
       "party": "Tierschutzallianz",
@@ -338,7 +365,8 @@
       "category" : "klein",
       "name": "Allianz für Menschenrechte, Tier- und Naturschutz",
       "logo": null,
-      "short": "Tierschutzallianz"
+      "short": "Tierschutzallianz",
+      "top_candidates": null
     },
     {
       "party": "VIP",
@@ -347,7 +375,8 @@
       "category" : "klein",
       "name": null,
       "logo": null,
-      "short": null
+      "short": null,
+      "top_candidates": null
     },
     {
       "party": "BÜRGER-BLOCK e.V.",
@@ -356,7 +385,8 @@
       "category" : "unknown",
       "name": "BÜRGER-BLOCK e.V.",
       "logo": null,
-      "short": "BÜRGER-BLOCK e.V."
+      "short": "BÜRGER-BLOCK e.V.",
+      "top_candidates": null
     },
     {
       "party": "Unsere Zukunft",
@@ -365,7 +395,8 @@
       "category" : "unknown",
       "name": "Unsere Zukunft",
       "logo": null,
-      "short": "ZUKUNFT"
+      "short": "ZUKUNFT",
+      "top_candidates": null
     },
     {
       "party": "Partei der Vernunft",
@@ -374,7 +405,8 @@
       "category" : "klein",
       "name": "Partei der Vernunft",
       "logo": null,
-      "short": "PDV"
+      "short": "PDV",
+      "top_candidates": null
     },
     {
       "party": "AD",
@@ -383,7 +415,8 @@
       "category" : "klein",
       "name": "Allianz Deutscher Demokraten",
       "logo": null,
-      "short": "AD"
+      "short": "AD",
+      "top_candidates": null
     },
     {
       "party": "Bündnis Grundeinkommen",
@@ -392,7 +425,8 @@
       "category" : "klein",
       "name": "Bündnis Grundeinkommen",
       "logo": null,
-      "short": "BGE"
+      "short": "BGE",
+      "top_candidates": null
     },
     {
       "party": "DiB",
@@ -401,7 +435,8 @@
       "category" : "klein",
       "name": "DEMOKRATIE IN BEWEGUNG",
       "logo": null,
-      "short": "DiB"
+      "short": "DiB",
+      "top_candidates": null
     },
     {
       "party": "DKP",
@@ -410,7 +445,8 @@
       "category" : "klein",
       "name": "Deutsche Kommunistische Partei",
       "logo": null,
-      "short": "DKB"
+      "short": "DKB",
+      "top_candidates": null
     },
     {
       "party": "DM",
@@ -419,7 +455,8 @@
       "category" : "klein",
       "name": "Deutsche Mitte",
       "logo": null,
-      "short": "DM"
+      "short": "DM",
+      "top_candidates": null
     },
     {
       "party": "du.",
@@ -428,7 +465,8 @@
       "category" : "klein",
       "name": "Die Urbane. Eine HipHop Partei",
       "logo": null,
-      "short": "du."
+      "short": "du.",
+      "top_candidates": null
     },
     {
       "party": "Die Humanisten",
@@ -437,7 +475,8 @@
       "category" : "klein",
       "name": "Partei der Humanisten",
       "logo": null,
-      "short": "Die Humanisten"
+      "short": "Die Humanisten",
+      "top_candidates": null
     }
   ]
 }
