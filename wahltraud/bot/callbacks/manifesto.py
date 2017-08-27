@@ -177,7 +177,7 @@ def show_paragraph(event, payload, **kwargs):
             ['manifesto_start']
         ),
         quick_reply(
-            'Info '+ party,
+            'Info '+ party_rev[party],
             {'show_party_options': party}
         )
     ]
