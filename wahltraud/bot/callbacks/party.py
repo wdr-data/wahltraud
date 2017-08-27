@@ -27,9 +27,9 @@ def basics(event, parameters, **kwargs):
         # make decission process and handle in new payload function --> show_basics
         if not party_info['skript']:
             send_buttons(sender_id, """
-                              Ich kann dich wie folgt über die  Partei {party} informieren.
+                              Ich kann dich wie folgt über die Partei {party} ({party_short}) informieren.
                               """.format(
-                                     party=party
+                                     party=party_info['name'], party_short = party_info['short']
                                          ),
                          [
                              button_postback("Kandidaten (Listen)", ['select_state']),
@@ -37,10 +37,10 @@ def basics(event, parameters, **kwargs):
                          ])
         else:
             send_buttons(sender_id, """
-                Ich kann dich wie folgt über die  Partei {party} informieren.
-                """.format(
-                    party=party
-                ),
+               Ich kann dich wie folgt über die Partei {party} ({party_short}) informieren.
+                              """.format(
+                                     party=party_info['name'], party_short = party_info['short']
+                                         ),
                              [
                                  button_postback("Kandidaten (Listen)", ['select_state']),
                                  button_url("Wahlprogramm (PDF)",  party_info['skript']),

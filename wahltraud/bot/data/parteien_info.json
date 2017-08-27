@@ -8,7 +8,10 @@
       "top_candidates": [
         "5683618f-48d0-4c2b-8f99-58d6e4002123"
       ],
-      "category" : "etabliert"
+      "category" : "etabliert",
+      "name": "Christlich Demokratische Union Deutschlands",
+      "logo": null,
+      "short": "CDU"
     },
     {
       "party": "CSU",
@@ -17,7 +20,10 @@
       "top_candidates": [
         "715ca498-0bde-46ec-b33a-bda60ad1f2f6"
       ],
-      "category" : "etabliert"
+      "category" : "etabliert",
+      "name": "Christlich-Soziale Union in Bayern e.V.",
+      "logo": null,
+      "short": "CSU"
     },
     {
       "party": "FDP",
@@ -26,7 +32,10 @@
       "top_candidates": [
         "d78483e4-f668-4559-9222-8e4dd1ce4f6b"
       ],
-      "category" : "etabliert"
+      "category" : "etabliert",
+      "name": "Freie Demokratische Partei",
+      "logo": null,
+      "short": "FDP"
     },
     {
       "party": "AfD",
@@ -36,7 +45,10 @@
         "35053564-a376-4391-831d-fedbea74f18e",
         "03f528a4-7c7c-4fa6-b69a-e1fc09f9cbac"
       ],
-      "category" : "etabliert"
+      "category" : "etabliert",
+      "name": "Alternative für Deutschland",
+      "logo": null,
+      "short": "AfD"
     },
     {
       "party": "SPD",
@@ -45,7 +57,10 @@
       "top_candidates": [
         "d623efb5-7afc-4b56-a794-dfe6c1def0f9"
       ],
-      "category" : "etabliert"
+      "category" : "etabliert",
+      "name": "Sozialdemokratische Partei Deutschlands",
+      "logo": null,
+      "short": "SPD"
     },
     {
       "party": "DIE GRÜNEN",
@@ -55,7 +70,10 @@
         "cb970cbe-d16a-4961-8377-0cbfe0d6ff6e",
         "9d52bbca-c235-4896-8a52-5880917a3c47"
       ],
-      "category" : "etabliert"
+      "category" : "etabliert",
+      "name": "BÜNDNIS 90/DIE GRÜNEN",
+      "logo": null,
+      "short": "GRÜNE"
     },
     {
       "party": "DIE LINKE",
@@ -65,205 +83,361 @@
         "47b3e404-b468-4b6d-b74b-e696c6378f9c",
         "11759fa9-6386-4f16-9a53-2c54d62d2b2f"
       ],
-      "category" : "etabliert"
+      "category" : "etabliert",
+      "name": "DIE LINKE",
+      "logo": null,
+      "short": "DIE LINKE"
     },
     {
       "party": "PIRATEN",
       "page": "https://www.piratenpartei.de/",
       "skript": "https://www.piratenpartei.de/mission/wahl-und-grundsatzprogramme/wahlprogramm-btw2017/",
-      "category" : "etabliert"
+      "category" : "etabliert",
+      "name": "Piratenpartei Deutschland",
+      "logo": null,
+      "short": "PIRATEN"
     },
     {
       "party": "DIE PARTEI",
       "page": "https://www.die-partei.de/",
       "skript": "https://www.die-partei.de/regierungsprogramm/",
-      "category" : "klein" 
+      "category" : "klein" ,
+      "name": "Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative",
+      "logo": null,
+      "short": "DIE PARTEI"
     },
     {
       "party": "DIE VIOLETTEN",
       "page": "http://die-violetten.de/",
       "skript": "http://die-violetten.de/wahlprogramm-zur-bundestagswahl-2017/",
-      "category" : "klein"
+      "category" : "klein",
+      "name": "Die Violetten - für spirituelle Politik",
+      "logo": null,
+      "short": "DIE VIOLETTEN"
     },
     {
       "party": "FREIE WÄHLER",
       "page": "http://www.freiewaehler.eu/startseite/",
       "skript": "http://www.wv-leipzig.de/wp-content/uploads/2017/04/FW-Wahlprogramm-2017-Die-anstaendige-Alternative.pdf",
-      "category" : "etabliert"
+      "category" : "etabliert",
+      "name": "FREIE WÄHLER",
+      "logo": null,
+      "short": "FREIE WÄHLER"
     },
     {
       "party": "ÖDP",
       "page": "https://www.oedp.de/startseite/",
       "skript": "https://www.oedp.de/fileadmin/user_upload/bundesverband/programm/programme/BundespolitischesProgramm.pdf",
-      "category" : "klein" 
+      "category" : "klein" ,
+      "name": "Ökologisch-Demokratische Partei",
+      "logo": null,
+      "short": "ÖDP"
     },
     {
       "party": "Tierschutzpartei",
       "page": "https://www.tierschutzpartei.de/",
       "skript": "https://www.tierschutzpartei.de/partei/wahl/bundestagswahl-2017/wahlprogramm/",
-      "category" : "klein" 
+      "category" : "klein" ,
+      "name": "PARTEI MENSCH UMWELT TIERSCHUTZ",
+      "logo": null,
+      "short": "Tierschutzpartei"
     },
     {
       "party": "Unabhängige für bürgernahe Demokratie",
       "page": "http://unabhaengige.info/",
       "skript": null,
-      "category" : "klein" 
+      "category" : "klein" ,
+      "name": "UNABHÄNGIGE für bürgernahe Demokratie",
+      "logo": null,
+      "short": "UNABHÄNGIGE"
     },
     {
       "party": "Bündnis C",
       "page": "https://www.buendnis-c.de/",
       "skript": null,
-      "category" : "klein" 
+      "category" : "klein" ,
+      "name": "Bündnis C - Christen für Deutschland",
+      "logo": null,
+      "short": "Bündnis C"
     },
     {
       "party": "NPD",
       "page": "https://npd.de/",
       "skript": null,
-      "category" : "klein" 
+      "category" : "klein" ,
+      "name": "Nationaldemokratische Partei Deutschlands",
+      "logo": null,
+      "short": "NPD"
     },
     {
       "party": "Sozialistische Gleichheitspartei",
       "page": "http://www.gleichheit.de/",
       "skript": null,
-      "category" : "klein" 
+      "category" : "klein" ,
+      "name": "Sozialistische Gleichheitspartei, Vierte Internationale",
+      "logo": null,
+      "short": "SGP"
     },
     {
       "party": "FAMILIEN-PARTEI",
       "page": "http://www.familienpartei.net/",
       "skript": null,
-      "category" : "klein" 
+      "category" : "klein" ,
+      "name": "Familien-Partei Deutschlands",
+      "logo": null,
+      "short": "FAMILIE"
     },
     {
       "party": "Partei für Gesundheitsforschung",
       "page": "https://parteifuergesundheitsforschung.de/",
       "skript": "https://parteifuergesundheitsforschung.de/wahlprogramm-der-partei-fuer-gesundheitsforschung-fuer-die-bundestagswahl-2017",
-      "category" : "klein" 
+      "category" : "klein" ,
+      "name": "Partei für Gesundheitsforschung",
+      "logo": null,
+      "short": "Gesundheitsforschung"
     },
     {
       "party": "BAYERNPARTEI",
       "page": "http://landesverband.bayernpartei.de/",
       "skript": null,
-      "category" : "klein" 
+      "category" : "klein" ,
+      "name": "Bayernpartei",
+      "logo": null,
+      "short": "BP"
     },
     {
       "party": "BüSo",
       "page": "http://www.bueso.de/",
       "skript": null,
-      "category" : "klein" 
-    },
-    {
-      "party": "DKP",
-      "page": "http://bundestagswahl2017.dkp.de/",
-      "skript": null,
-      "category" : "klein"
+      "category" : "klein" ,
+      "name": "Bürgerrechtsbewegung Solidarität",
+      "logo": null,
+      "short": "BüSo"
     },
     {
       "party": "MENSCHLICHE WELT",
       "page": "http://www.menschlichewelt.de/",
       "skript": null,
-      "category" : "klein"
+      "category" : "klein",
+      "name": "Menschliche Welt",
+      "logo": null,
+      "short": "MENSCHLICHE WELT"
     },
     {
       "party": "DIE FRAUEN",
       "page": "http://www.feministischepartei.de/startseite.html",
       "skript": null,
-      "category" : "klein"
+      "category" : "klein",
+      "name": "Feministische Partei DIE FRAUEN",
+      "logo": null,
+      "short": "DIE FRAUEN"
     },
     {
       "party": "MLPD",
       "page": "https://www.mlpd.de/view?set_language=de",
       "skript": "https://www.mlpd.de/internationalistische-liste/internationalistisch-antifaschistisch-klassenkaempferisch-revolutionaer-konsequent",
-      "category" : "klein"
+      "category" : "klein",
+      "name": "Marxistisch-Leninistische Partei Deutschlands",
+      "logo": null,
+      "short": "MLPD"
     },
     {
       "party": "Bergpartei",
       "page": "http://www.bergpartei.de/",
       "skript": null,
-      "category" : "klein"
+      "category" : "klein",
+      "name": "bergpartei, die überpartei",
+      "logo": null,
+      "short": "B*"
     },
     {
       "party": "Magdeburger Gartenpartei",
      "page": "http://www.magdeburger-gartenpartei.de/",
       "skript": "http://www.magdeburger-gartenpartei.de/pdf/wahlprogramm2017.pdf",
-      "category" : "klein"
+      "category" : "klein",
+      "name": "Magdeburger Gartenpartei,
+      "logo": null,
+      "short": "MG"
     },
     {
       "party": "Ab jetzt...Demokratie durch Volksabstimmung",
       "page":  "http://www.demokratie-durch-volksabstimmung.de/",
       "skrip": null,
-      "category" : "klein"
+      "category" : "klein",
+      "name": "Ab jetzt…Demokratie durch Volksabstimmung",
+      "logo": null,
+      "short": "Volksabstimmung"
     },
     {
       "party": "V-Partei",
       "page": "https://v-partei.de/",
       "skrip": "https://v-partei.de/vparteihoch3/parteiprogramm/",
-      "category" : "klein"
+      "category" : "klein",
+      "name": "V-Partei³ - Partei für Veränderung, Vegetarier und Veganer",
+      "logo": null,
+      "short": "V-Partei³"
     },
     {
       "party": "APPD",
       "page": "https://www.appd-gdnk.de/",
       "skript": null,
-      "category" : "klein"
+      "category" : "klein",
+      "name": null,
+      "logo": null,
+      "short": null
     },
     {
       "party": "DIE EINHEIT",
        "page": "http://parteieinheit.com/",
       "skript": null,
-      "category" : "klein"
+      "category" : "klein",
+      "name": null,
+      "logo": null,
+      "short": null
     },
     {
       "party": "Die Rechte",
       "page": "http://die-rechte.com/",
       "skript": null,
-      "category" : "klein"
+      "category" : "klein",
+      "name": "DIE RECHTE",
+      "logo": null,
+      "short": "DIE RECHTE"
     },
     {
       "party": "Graue",
       "page": "http://www.agp-bv.de/bund/",
       "skript": null,
-      "category" : "klein"
+      "category" : "klein",
+      "name": "Die Grauen – Für alle Generationen",
+      "logo": null,
+      "short": "Die Grauen"
     },
     {
       "party": "Mieterpartei",
       "page": "http://mieterpartei.jetzt/",
       "skript": null,
-      "category" : "klein"
+      "category" : "klein",
+      "name": "Mieterpartei",
+      "logo": null,
+      "short": "MIETERPARTEI"
     },
     {
       "party": "Neue Liberale",
       "page": "https://www.neueliberale.org/",
       "skript": "https://www.neueliberale.org/parteiprogramm/",
-      "category" : "klein"
+      "category" : "klein",
+      "name": "Neue Liberale – Die Sozialliberalen",
+      "logo": null,
+      "short": null
     },
     {
       "party": "Tierschutzallianz",
       "page": "http://tierschutzallianz.de/",
       "skript": "http://tierschutzallianz.de/images/materialien/wahlen/wahlen2017/Bundestagwahlprogramm_2017.pdf",
-      "category" : "klein"
+      "category" : "klein",
+      "name": "Allianz für Menschenrechte, Tier- und Naturschutz",
+      "logo": null,
+      "short": "Tierschutzallianz"
     },
     {
       "party": "VIP",
        "page": null,
       "skript": null,
-      "category" : "klein"
+      "category" : "klein",
+      "name": null,
+      "logo": null,
+      "short": null
     },
     {
       "party": "BÜRGER-BLOCK e.V.",
       "page": "http://www.xn--brger-block-thb.de/",
       "skript": null,
-      "category" : "klein"
+      "category" : "unknown",
+      "name": null,
+      "logo": null,
+      "short": null
     },
     {
       "party": "Unsere Zukunft",
       "page": "https://www.makerfab.de/zukunftspartei",
       "skript": null,
-      "category" : "klein"
+      "category" : "unknown",
+      "name": null,
+      "logo": null,
+      "short": null
     },
     {
       "party": "Partei der Vernunft",
       "page": "https://parteidervernunft.de/",
       "skript": "https://parteidervernunft.de/aktuelles/bundestagswahl-2017/",
-      "category" : "klein"
+      "category" : "klein",
+      "name": "Partei der Vernunft",
+      "logo": null,
+      "short": "PDV"
+    },
+    {
+      "party": "AD",
+      "page": "https://ad-demokraten.de/",
+      "skript": null,
+      "category" : "klein",
+      "name": "Allianz Deutscher Demokraten",
+      "logo": null,
+      "short": "AD"
+    },
+    {
+      "party": "Bündnis Grundeinkommen",
+      "page": "https://www.buendnis-grundeinkommen.de/",
+      "skript": null,
+      "category" : "klein",
+      "name": "Bündnis Grundeinkommen",
+      "logo": null,
+      "short": "BGE"
+    },
+    {
+      "party": "DiB",
+      "page": "https://bewegung.jetzt/",
+      "skript": "https://bewegung.jetzt/wp-content/uploads/2017/08/DiB_Wahlkampfthemen_Entwurf.pdf",
+      "category" : "klein",
+      "name": "DEMOKRATIE IN BEWEGUNG",
+      "logo": null,
+      "short": "DiB"
+    },
+    {
+      "party": "DKP",
+      "page": "http://www.dkp.de/",
+      "skript": "https://bewegung.jetzt/wp-content/uploads/2017/08/DiB_Wahlkampfthemen_Entwurf.pdf",
+      "category" : "klein",
+      "name": "Deutsche Kommunistische Partei",
+      "logo": null,
+      "short": "DKB"
+    },
+    {
+      "party": "DM",
+      "page": "https://bewegung.jetzt/",
+      "skript": null,
+      "category" : "klein",
+      "name": "Deutsche Mitte",
+      "logo": null,
+      "short": "DM"
+    },
+    {
+      "party": "du.",
+      "page": "https://www.die-urbane.de/de/",
+      "skript": "https://www.die-urbane.de/de/programm.html",
+      "category" : "klein",
+      "name": "Die Urbane. Eine HipHop Partei",
+      "logo": null,
+      "short": "du."
+    },
+    {
+      "party": "Die Humanisten",
+      "page": "https://parteiderhumanisten.de/wp2/",
+      "skript": null,
+      "category" : "klein",
+      "name": "Partei der Humanisten",
+      "logo": null,
+      "short": "Die Humanisten"
     }
   ]
 }
