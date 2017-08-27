@@ -178,7 +178,7 @@ def show_paragraph(event, payload, **kwargs):
         ),
         quick_reply(
             'Info '+ party_abbr[party],
-            {'show_party_options': party}
+            {'show_party_options': party_abbr[party]}
         )
     ]
 
