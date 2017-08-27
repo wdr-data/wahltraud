@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 def basics(event, parameters, **kwargs):
     sender_id = event['sender']['id']
     party = parameters.get('partei')
-    party_info = by_party[party]
+
 
     logger.info('Infos zur Partei {party} angefordert.'.format(party=party))
 
@@ -24,28 +24,69 @@ def basics(event, parameters, **kwargs):
                      ])
 
     else:
-        # make decission process and handle in new payload function --> show_basics
-        if not party_info['skript']:
-            send_buttons(sender_id, """
-                              Ich kann dich wie folgt über die Partei {party} ({party_short}) informieren.
-                              """.format(
-                                     party=party_info['name'], party_short = party_info['short']
-                                         ),
-                         [
-                             button_postback("Kandidaten (Listen)", ['select_state']),
-                             button_url("Homepage", party_info['page'])
-                         ])
-        else:
-            send_buttons(sender_id, """
-               Ich kann dich wie folgt über die Partei {party} ({party_short}) informieren.
-                              """.format(
-                                     party=party_info['name'], party_short = party_info['short']
-                                         ),
-                             [
-                                 button_postback("Kandidaten (Listen)", ['select_state']),
-                                 button_url("Wahlprogramm (PDF)",  party_info['skript']),
-                                 button_url("Homepage",  party_info['page'])
-                             ])
+        show_party_options(event, {'show_party_options': party})
+
+
+def show_party_options(event, payload, **kwargs):
+    sender_id = event['sender']['id']
+    party = payload['show_party_options']
+    party_info = by_party[party]
+
+
+    # make decission process and handle in new payload function --> show_basics
+    if not party_info['skript']:
+        send_buttons(sender_id, """
+                                  Ich kann dich wie folgt über die Partei {party} ({party_short}) informieren.
+                                  """.format(
+            party=party_info['name'], party_short=party_info['short']
+        ),
+                     [
+                         button_postback("Kandidaten (Listen)", ['select_state']),
+                         button_url("Homepage", party_info['page'])
+                     ])
+    else:
+        send_buttons(sender_id, """
+                   Ich kann dich wie folgt über die Partei {party} ({party_short}) informieren.
+                                  """.format(
+            party=party_info['name'], party_short=party_info['short']
+        ),
+                     [
+                         button_postback("Kandidaten (Listen)", ['select_state']),
+                         button_url("Wahlprogramm (PDF)", {'show_electorial': party}),
+                         button_url("Homepage", party_info['page'])
+                     ])
+
+
+
+
+def show_electorial(event, payload, **kwargs):
+    sender_id = event['sender']['id']
+    party = payload['show_electorial']
+    party_info = by_party[party]
+
+    skripts = ['CDU', 'SPD', 'AfD', 'DIE GRÜNEN', 'FDP', 'DIE LINKE']
+
+    if party in skripts:
+        send_buttons(sender_id, """
+                       Du kannst das Programm der Partei {party_short} nach Schlagworten durchsuchen oder dir direkt zum Programm gelangen.
+                   """.format(
+            party_short=party_info['short']
+        ),
+                     [
+                         button_postback("Schlagwortsuche", ['select_state']),
+                         button_url("Wahlprogramm (PDF)", {'show_electorial': party_info['skript']}),
+                         button_url("zurück", {'show_options': party})
+                     ])
+    else:
+        send_buttons(sender_id, """
+                         Leider habe ich das Programm der Partei {party_short} nicht gelesen. 
+                     """.format(
+            party_short=party_info['short']
+        ),
+                     [
+                         button_url("Wahlprogramm (PDF)", {'show_electorial': party_info['skript']}),
+                         button_url("zurück", {'show_options': party})
+                     ])
 
 
 
