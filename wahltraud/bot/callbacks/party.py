@@ -52,7 +52,7 @@ def show_party_options(event, payload, **kwargs):
         ),
                      [
                          button_postback("Kandidaten (Listen)", ['select_state']),
-                         button_url("Wahlprogramm (PDF)", {'show_electorial': party}),
+                         button_postback("Wahlprogramm (PDF)", {'show_electorial': party}),
                          button_url("Homepage", party_info['page'])
                      ])
 
@@ -75,7 +75,7 @@ def show_electorial(event, payload, **kwargs):
                      [
                          button_postback("Schlagwortsuche", ['select_state']),
                          button_url("Wahlprogramm (PDF)", {'show_electorial': party_info['skript']}),
-                         button_url("zurück", {'show_options': party})
+                         button_postback("zurück", {'show_options': party})
                      ])
     else:
         send_buttons(sender_id, """
@@ -85,7 +85,7 @@ def show_electorial(event, payload, **kwargs):
         ),
                      [
                          button_url("Wahlprogramm (PDF)", {'show_electorial': party_info['skript']}),
-                         button_url("zurück", {'show_options': party})
+                         button_postback("zurück", {'show_options': party})
                      ])
 
 
