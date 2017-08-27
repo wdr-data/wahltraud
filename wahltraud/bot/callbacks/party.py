@@ -74,7 +74,7 @@ def show_electorial(event, payload, **kwargs):
         ),
                      [
                          button_postback("Schlagwortsuche", ['select_state']),
-                         button_url("Wahlprogramm (PDF)", {'show_electorial': party_info['skript']}),
+                         button_url("Wahlprogramm (PDF)", party_info['skript']),
                          button_postback("zurück", {'show_options': party})
                      ])
     else:
@@ -84,7 +84,7 @@ def show_electorial(event, payload, **kwargs):
             party_short=party_info['short']
         ),
                      [
-                         button_url("Wahlprogramm (PDF)", {'show_electorial': party_info['skript']}),
+                         button_url("Wahlprogramm (PDF)", party_info['skript']),
                          button_postback("zurück", {'show_options': party})
                      ])
 
