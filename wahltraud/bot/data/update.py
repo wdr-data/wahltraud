@@ -324,7 +324,7 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
                 temp["img"] =  item["personal"]["picture"]["url"]
             # nicht jeder hat einen Listenplatz
             else:
-                item["img"] = None
+                temp["img"] = None
 
             try:
                 temp["list_name"] = item["list"]["name"]
@@ -368,9 +368,12 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
             for row in nrw["k"]:
                 if row["nn"] == temp["last_name"] and row["vn"] == temp["first_name"]:
                         temp["nrw"] = give_nrw_info(row["nn"], row["vn"], row)
+                        if temp['nrw']['img'] is not None:
+                            temp['img'] = temp['nrw']['img']
                         break
                 else:
                     temp["nrw"] = None
+
 
             data_list.append(temp)
 
@@ -392,16 +395,16 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
                 "dkp": "DKP",
                 "bge": "Bündnis Grundeinkommen",
                 "afd": "AfD",
-                "add": "AD Demokraten",
+                "add": "AD",
                 "mlpd": "MLPD",
                 "fw": "FREIE WÄHLER",
                 "v_partei": "V-Partei",
                 "none": "Parteilos",
                 "tierschutz": "Tierschutzpartei",
                 "npd": "NPD",
-                "humanisten": "Die Humaniste",
+                "humanisten": "Die Humanisten",
                 "sgp": "Sozialistische Gleichheitspartei",
-                "dm": "Deutsche Mitte",
+                "dm": "DM",
                 "va": "Ab jetzt...Demokratie durch Volksabstimmung"
                 }
 
@@ -422,7 +425,13 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
             temp["last_name"]  = row["nn"]
             temp["uuid"] = row["id"]
 
+            temp["education"] = None
+            temp["degree"] = None
+            temp["gender"] = None
+
             temp["nrw"] = give_nrw_info(row["nn"], row["vn"], row)
+            if temp['nrw']['img'] is not None:
+                temp['img'] = temp['nrw']['img']
 
             try:
                 temp["profession"] = row["b"]
