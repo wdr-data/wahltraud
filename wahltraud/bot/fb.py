@@ -218,7 +218,7 @@ def button_share(generic_element=None):
             'attachment': {
                 'type': 'template',
                 'payload': {
-                    'template_type': generic,
+                    'template_type': 'generic',
                     'elements': generic_element
                 }
             }
