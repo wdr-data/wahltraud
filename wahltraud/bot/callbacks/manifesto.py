@@ -125,10 +125,9 @@ def show_sentence(event, word, party, **kwargs):
             party = party_rev[party]
 
     logger.info('Wahlprogramm - Wort: {word} Partei: {party}'.format(word=word, party=party))
-
-    occurences = all_words[word]['segments'][party]['occurence']
-
-    if not occurences:
+    try:
+        occurences = all_words[word]['segments'][party]['occurence']
+    except:
         send_text(sender_id, """
         Das Wort "{word}" kommt nicht im Programm der {party} vor. Versuche es mit einem verwandten Schlagwort."""
                   .format(word = word, party = party))
