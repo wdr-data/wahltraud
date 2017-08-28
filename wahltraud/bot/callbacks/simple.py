@@ -39,7 +39,7 @@ def share_bot(event, **kwargs):
     title = "Wahltraud informiert die über alle Themen rund um die Bundestagswahl 2017."
     subtitle = "Befrage den Messenger Bot zu Kandidaten, Parteien oder Themen rund um die Wahl."
     image_url = "https://scontent-frt3-1.xx.fbcdn.net/v/t1.0-9/17990695_1413687971987169_7350711930902341159_n.jpg?oh=f23c5b76702f9b0819c5d589dcba7e4e&oe=5A300416"
-    content = generic_element(title, buttons = [button_web_url("Schreibe Wahltraud", ["https://m.me/wahltraud"])])
+    content = generic_element(title, buttons = [button_web_url("Schreibe Wahltraud", "https://m.me/wahltraud")])
 
     send_generic(sender_id,
                 elements = [content])
