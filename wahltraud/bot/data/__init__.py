@@ -61,7 +61,7 @@ def find_candidates(first_name, last_name):
         first_name_matches = by_first_name[first_name]
 
         if (len(last_name_matches) + len(first_name_matches)) <5:
-            out = last_name_matches | first_name_matches
+            out =  first_name_matches | last_name_matches
         else:
             if 0 < len(last_name_matches) < len(first_name_matches) or not first_name_matches:
                 out = last_name_matches
