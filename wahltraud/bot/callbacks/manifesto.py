@@ -128,16 +128,32 @@ def show_sentence(event, word, party, **kwargs):
     try:
         occurences = all_words[word]['segments'][party]['occurence']
     except:
+        quick_replies = [
+                        quick_reply(
+                            'Anderes Programm',
+                            {'show_word': word,
+                             'offset': 0}
+                        ),
+                        quick_reply(
+                            'Neues Wort',
+                            ['manifesto_start']
+                        )
+                    ]
+
+        party_manifesto = find_party(party_abbr[party])
+        get_link = dict
+        if party_manifesto['skript'] is not None:
+            quick_replies.insert(2, quick_reply('Wahlprogramm lesen',
+                                                {'show_manifesto': party_manifesto['skript'], 'party': party}))
+
         send_text(sender_id, """
-        Das Wort "{word}" kommt nicht im Programm der {party} vor. Versuche es mit einem verwandten Schlagwort."""
-                  .format(word = word, party = party))
+        Das Wort "{word}" kommt nicht im Programm der {party} vor. Versuche es nochmal mit einem ähnlichem Schlagwort."""
+                  .format(word = word, party = party_abbr[party]),quick_replies)
         return
 
     occurence = random.choice(occurences)
     paragraph = manifestos[party][occurence['paragraph_index']]
     pos = occurence['position']
-
-
 
 
     stops = paragraph.replace(':!?', '.')
