@@ -127,9 +127,19 @@ def show_sentence(event, word, party, **kwargs):
     logger.info('Wahlprogramm - Wort: {word} Partei: {party}'.format(word=word, party=party))
 
     occurences = all_words[word]['segments'][party]['occurence']
+
+    if not occurences:
+        send_text(sender_id, """
+        Das Wort "{word}" kommt nicht im Programm der {party} vor. Versuche es mit einem verwandten Schlagwort."""
+                  .format(word = word, party = party))
+        return
+
     occurence = random.choice(occurences)
     paragraph = manifestos[party][occurence['paragraph_index']]
     pos = occurence['position']
+
+
+
 
     stops = paragraph.replace(':!?', '.')
     start = stops.rfind('.', 0, pos + 1) + 1
