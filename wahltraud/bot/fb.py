@@ -206,6 +206,30 @@ def button_web_url(title, url):
         'title': title
     }
 
+def button_share(generic_element=None):
+    """
+    Creates a dict to send a web_url, can be used with generic_elements or send_buttons
+    :param title: Content to show the receiver
+    :return: dict
+    """
+    button = {
+        'type': 'elment_share',
+        'share_contents': {
+            'attachment': {
+                'type': 'template',
+                'payload': {
+                    'template_type': generic,
+                    'elements': generic_element
+                }
+            }
+        }
+    }
+
+    if not generic_element:
+        button.pop('share_contents')
+
+    return button
+
 def generic_element(title, subtitle=None, image_url=None, buttons=None):
     """
     Creates a dict to use with send_generic

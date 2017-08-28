@@ -4,7 +4,7 @@ import logging
 from fuzzywuzzy import fuzz, process
 
 from backend.models import FacebookUser, Wiki, Push
-from ..fb import send_buttons, button_postback, send_text, quick_reply, send_generic, generic_element, button_web_url
+from ..fb import send_buttons, button_postback, send_text, quick_reply, send_generic, generic_element, button_web_url, button_share
 from .shared import get_pushes, schema, send_push
 
 logger = logging.getLogger(__name__)
@@ -39,10 +39,11 @@ def share_bot(event, **kwargs):
     title = "Wahltraud informiert die über alle Themen rund um die Bundestagswahl 2017."
     subtitle = "Befrage den Messenger Bot zu Kandidaten, Parteien oder Themen rund um die Wahl."
     image_url = "https://scontent-frt3-1.xx.fbcdn.net/v/t1.0-9/17990695_1413687971987169_7350711930902341159_n.jpg?oh=f23c5b76702f9b0819c5d589dcba7e4e&oe=5A300416"
-    content = generic_element(title, buttons = [button_web_url("Schreibe Wahltraud", "https://m.me/wahltraud")])
+    shared_content = generic_element(title, subtitle, image_url, buttons = [button_web_url("Schreibe Wahltraud", "https://m.me/wahltraud")])
+    message = generic_element("Teile Wahltraud mit deinen Freunden!", buttons = [button_share(shared_content)])
 
     send_generic(sender_id,
-                elements = [content])
+                elements = [message])
     # send_text(sender_id, reply)
 
 def about(event, **kwargs):
