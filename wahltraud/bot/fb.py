@@ -206,7 +206,7 @@ def button_web_url(title, url):
         'title': title
     }
 
-def button_share(generic_element=None):
+def button_share(generic_element):
     """
     Creates a dict to send a web_url, can be used with generic_elements or send_buttons
     :param title: Content to show the receiver
