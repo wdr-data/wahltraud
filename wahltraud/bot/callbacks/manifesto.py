@@ -102,7 +102,8 @@ def show_word(event, word, offset, **kwargs):
     if not offset:
         send_text(
             sender_id,
-            'Das Wort "{word}" kommt insgesamt {n} mal in allen Wahlprogrammen vor? Hier eine Auflistung nach relativer Häufigkeit.'.format(
+            'Das Wort "{word}" kommt insgesamt {n} mal in allen Wahlprogrammen vor? '
+            'Hier eine Auflistung nach relativer Häufigkeit.'.format(
                 word=word,
                 n=stat['count']
             ))
@@ -122,43 +123,51 @@ def show_sentence(event, word, party, **kwargs):
         if party not in party_rev:
             send_text(
                 sender_id,
-                'Zu dieser Partei liegt mir leider kein Wahlprogramm vor. Versuche es doch mit einer anderen Partei.',
+                'Zu dieser Partei liegt mir leider kein Wahlprogramm vor. '
+                'Versuche es doch mit einer anderen Partei.',
             )
             return
         else:
             party = party_rev[party]
 
-    logger.info('Wahlprogramm - Wort: {word} Partei: {party}'.format(word=word, party=party))
+    logger.debug('Wahlprogramm - Wort: {word} Partei: {party}'.format(word=word, party=party))
     try:
         occurences = all_words[word]['segments'][party]['occurence']
     except:
         quick_replies = [
-                        quick_reply(
-                            "Andere Parteien?",
-                            {'show_word': word,
-                             'offset': 0}
-                        ),
-                        quick_reply(
-                            'Neues Wort',
-                            ['manifesto_start']
-                        )
-                    ]
+            quick_reply(
+                "Andere Parteien?",
+                {'show_word': word,
+                 'offset': 0}
+            ),
+            quick_reply(
+                'Neues Wort',
+                ['manifesto_start']
+            )
+        ]
 
         party_manifesto = find_party(party_abbr[party])
-        get_link = dict
         if party_manifesto['skript'] is not None:
-            quick_replies.insert(2, quick_reply('Wahlprogramm lesen',
-                                                {'show_manifesto': party_manifesto['skript'], 'party': party}))
+            quick_replies.insert(
+                2,
+                quick_reply(
+                    'Wahlprogramm lesen',
+                    {'show_manifesto': party_manifesto['skript'], 'party': party}
+                )
+            )
 
-        send_text(sender_id, """
-        Das Wort "{word}" kommt nicht im Programm der {party} vor. Versuche es nochmal mit einem ähnlichem Schlagwort."""
-                  .format(word = word, party = party_abbr[party]),quick_replies)
+        send_text(
+            sender_id,
+            "Das Wort \"{word}\" kommt nicht im Programm der {party} vor. "
+            "Versuche es nochmal mit einem ähnlichem Schlagwort.".format(
+                word=word, party=party_abbr[party]),
+            quick_replies
+        )
         return
 
     occurence = random.choice(occurences)
     paragraph = manifestos[party][occurence['paragraph_index']]
     pos = occurence['position']
-
 
     stops = paragraph.replace(':!?', '.')
     start = stops.rfind('.', 0, pos + 1) + 1
@@ -186,6 +195,7 @@ def show_sentence(event, word, party, **kwargs):
             ),
         ])
 
+
 def show_paragraph(event, payload, **kwargs):
     sender_id = event['sender']['id']
     paragraph = payload['show_paragraph']
@@ -193,10 +203,7 @@ def show_paragraph(event, payload, **kwargs):
     word = payload['word']
     paragraph = manifestos[party][paragraph]
 
-
-
-
-    quick_replies=[
+    quick_replies = [
         quick_reply(
             'Noch ein Satz',
             {'show_sentence': word, 'party': party}
@@ -206,18 +213,24 @@ def show_paragraph(event, payload, **kwargs):
             ['manifesto_start']
         ),
         quick_reply(
-            'Info '+ party_abbr[party],
+            'Info ' + party_abbr[party],
             {'show_party_options': party_abbr[party]}
         )
     ]
 
     party_manifesto = find_party(party_abbr[party])
-    get_link = dict
+
     if party_manifesto['skript'] is not None:
-        quick_replies.insert(2, quick_reply('Wahlprogramm lesen',
-                                            {'show_manifesto': party_manifesto['skript'], 'party': party}))
+        quick_replies.insert(
+            2,
+            quick_reply(
+                'Wahlprogramm lesen',
+                {'show_manifesto': party_manifesto['skript'], 'party': party}
+            )
+        )
 
     send_text(sender_id, '"%s"' % paragraph, quick_replies)
+
 
 def show_manifesto(event, payload, **kwargs):
     sender_id = event['sender']['id']
@@ -229,5 +242,5 @@ def show_manifesto(event, payload, **kwargs):
     send_text(
         sender_id,
         "Hier findest du das vollständige Wahlprogramm\n\"{party}\": {link}".format(
-            party = party_abbr[party],
-            link = link))
+            party=party_abbr[party],
+            link=link))
