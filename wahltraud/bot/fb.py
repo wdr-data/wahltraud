@@ -214,15 +214,15 @@ def button_share(generic_element=None):
     """
     button = {
         'type': 'element_share',
-        'share_contents': {
-            'attachment': {
-                'type': 'template',
-                'payload': {
-                    'template_type': 'generic',
-                    'elements': generic_element
-                }
-            }
-        }
+        # 'share_contents': {
+        #     'attachment': {
+        #         'type': 'template',
+        #         'payload': {
+        #             'template_type': 'generic',
+        #             'elements': generic_element
+        #         }
+        #     }
+        # }
     }
 
     if not generic_element:
