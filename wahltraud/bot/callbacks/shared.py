@@ -61,7 +61,7 @@ def schema(data, user_id):
         reply += ' +++ ' + info.headline
     reply += ' +++ '
 
-    button = quick_reply("Los geht's", {'info': first_id, 'next_state': 'intro'})
+    button = quick_reply("Los geht's", {'push': first_id, 'next_state': 'intro'})
     quick_replies = [button]
 
     send_text(user_id, reply, quick_replies=quick_replies)
@@ -120,7 +120,7 @@ def send_push(user_id, data, state='intro'):
             media_note = data.third_media_note
 
     more_button = quick_reply(
-        button_title, {'info': data.id, 'next_state': next_state}
+        button_title, {'push': data.id, 'next_state': next_state}
     )
 
     if str(media):

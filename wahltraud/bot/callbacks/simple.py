@@ -140,3 +140,11 @@ def apiai_fulfillment(event, **kwargs):
     fulfillment = event['message']['nlp']['result']['fulfillment']
     if fulfillment['speech']:
         send_text(sender_id, fulfillment['speech'])
+
+def push_step(event, payload, **kwargs):
+    sender_id = event['sender']['id']
+    push_id = payload['push']
+    next_state = payload['next_state']
+
+    push_ = Push.objects.get(id=push_id)
+    send_push(sender_id, push_, state=next_state)

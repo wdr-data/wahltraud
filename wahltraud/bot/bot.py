@@ -14,7 +14,8 @@ from .handlers.payloadhandler import PayloadHandler
 from .handlers.texthandler import TextHandler
 from .handlers.apiaihandler import ApiAiHandler
 from .callbacks.simple import (get_started, push, subscribe_user, unsubscribe_user, wiki, story,
-                               apiai_fulfillment, about_manifesto, menue_manifesto, subscribe_menue, share_bot, about)
+                               apiai_fulfillment, about_manifesto, menue_manifesto,
+                               subscribe_menue, share_bot, about, push_step)
 from .callbacks.shared import (get_pushes, get_breaking, send_push, schema)
 from .callbacks import candidate, district, browse_lists, manifesto, party
 
@@ -45,6 +46,7 @@ def make_event_handler():
         PayloadHandler(share_bot, ['share_bot']),
         PayloadHandler(subscribe_user, ['subscribe']),
         PayloadHandler(unsubscribe_user, ['unsubscribe']),
+        PayloadHandler(push_step, ['push', 'next_step']),
         PayloadHandler(push, ['push']),
         ApiAiHandler(wiki, 'wiki'),
         PayloadHandler(menue_manifesto, ['menue_manifesto']),
@@ -150,8 +152,13 @@ def push_notification():
     user_list = FacebookUser.objects.values_list('uid', flat=True)
 
     for user in user_list:
+
         logger.debug("Send Push to: " + user)
-        schema(data, user)
+        try:
+            schema(data, user)
+        except:
+            logger.exception("Push failed")
+
         sleep(1)
 
 
@@ -166,8 +173,12 @@ def push_breaking():
     for user in user_list:
         logger.debug("Send Push to: " + user)
         # media = '327430241009143'
-        # send_attachment(user, media, 'image')
-        send_push(user, data)
+        # send_attachment_by_id(user, media, 'image')
+        try:
+            send_push(user, data)
+        except:
+            logger.exception("Push failed")
+
         sleep(1)
 
     data.delivered = True
