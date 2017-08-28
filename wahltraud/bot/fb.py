@@ -171,6 +171,64 @@ def button_postback(title, payload):
         'payload': payload,
     }
 
+def button_share(payload):
+    """
+    Creates a dict to use with send_buttons
+    :param title: Content to show the receiver
+    :return: dict
+    """
+    return {
+        'type': 'element_share',
+        'share_contents': {
+            'attachment': {
+                'type': 'template',
+                'payload': payload
+            }
+        }
+    }
+
+def share_element(title, subtitle=None, image_url=None, reference=None):
+    """
+    Creates a dict to use with button_share
+    :param title: Content for receiver title
+    :param subtitle: Content for receiver subtitle (optional)
+    :param image_url: Content for receiver image to show by url (optional)
+    :param reference: reference to be returned when shared (optional)
+    :param button: Content for receiver button shown (optional)
+    :return: dict
+    """
+    payload = {
+        "template_type": "generic",
+        "elements": [
+            {
+                "title": title,
+                "subtitle": subtitle,
+                "image_url": image_url,
+                "default_action": {
+                    "type": "web_url",
+                    "url": "https://m.me/wahltraud"
+                },
+                "buttons": [
+                    {
+                        "type": "web_url",
+                        "url": "https://m.me/wahltraud",
+                        "title": "Try Wahltraud"
+                    }
+                ]
+            }
+        ]
+    }
+
+    if not title:
+        payload.pop('title')
+
+    if not subtitle:
+        payload.pop('subtitle')
+
+    if not image_url:
+        payload.pop('image_url')
+
+    return payload
 
 def button_url(title, url, webview_height_ratio='full'):
     """
@@ -204,10 +262,10 @@ def quick_reply(title, payload, image_url=None):
         'title': title,
         'payload': payload,
       }
-    
+
     if image_url:
         payload_['image_url'] = image_url
-        
+
     return payload_
 
 
