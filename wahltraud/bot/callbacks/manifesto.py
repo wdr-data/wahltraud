@@ -5,6 +5,7 @@ from re import findall
 
 from ..fb import send_buttons, button_postback, send_text, send_list, list_element, quick_reply
 from ..data import all_words, random_words_list, party_abbr, party_rev, manifestos, find_party
+from .party import show_electorial
 
 logger = logging.getLogger(__name__)
 locale.setlocale(locale.LC_NUMERIC, 'de_DE.UTF-8')
@@ -32,7 +33,7 @@ def show_word_apiai(event, parameters, **kwargs):
     party = parameters.get('partei')
 
     if not word and party is not None:
-        send_text(sender_id,"Alles klar.", {'show_electorial': party})
+        show_electorial(event, {'show_electorial': party})
     elif not party:
         show_word(event, word, 0, **kwargs)
     else:
