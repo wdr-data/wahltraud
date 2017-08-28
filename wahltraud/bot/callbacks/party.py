@@ -148,7 +148,10 @@ def show_parties(event, payload, **kwargs):
     category = payload['show_parties']
     offset = payload.get('offset', 0)
 
-    parties = [party['party'] for party in party_list if party['category'] == category]
+    if category == 'alle':
+        parties = [party['party'] for party in party_list]
+    else:
+        parties = [party['party'] for party in party_list if party['category'] == category]
 
     options = [
         quick_reply(p, {'show_party_options': p})
