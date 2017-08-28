@@ -43,7 +43,7 @@ def share_bot(event, **kwargs):
     # message = generic_element("Teile Wahltraud mit deinen Freunden!", buttons = [button_share(shared_content)])
 
     send_generic(sender_id,
-                elements = [generic_element("Teile Wahltraud mit deinen Freunden!", buttons = [button_share(shared_content)]])
+                elements = [generic_element("Teile Wahltraud mit deinen Freunden!", buttons = [button_share(shared_content)])])
     # send_text(sender_id, reply)
 
 def about(event, **kwargs):
