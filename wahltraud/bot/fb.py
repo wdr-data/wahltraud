@@ -231,7 +231,7 @@ def generic_element(title, subtitle=None, image_url=None, buttons=None):
     if not buttons:
         element.pop('buttons')
 
-    return payload
+    return element
 
 def button_url(title, url, webview_height_ratio='full'):
     """
