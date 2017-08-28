@@ -83,7 +83,7 @@ class Push(models.Model):
         for field_name in updated_fields:
             field = getattr(self, field_name)
             if str(field):
-                url = "https://infos.data.wdr.de/static/media/" + str(field)
+                url = "https://infos.data.wdr.de:8080/static/media/" + str(field)
                 attachment_id = upload_attachment(url)
                 attachment_field_name = field_name[:-len('media')] + 'attachment_id'
                 setattr(self, attachment_field_name, attachment_id)
