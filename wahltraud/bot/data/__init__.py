@@ -65,7 +65,7 @@ def find_candidates(first_name, last_name):
         else:
             out = first_name_matches
 
-        if out != 1 and (len(last_name_matches) + len(first_name_matches)) <= 4:
+        if len(out) != 1 and (len(last_name_matches) + len(first_name_matches)) <= 4:
             out = last_name_matches & first_name_matches
 
     return [by_uuid[uuid] for uuid in out]
