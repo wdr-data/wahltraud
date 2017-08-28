@@ -5,7 +5,7 @@ from re import findall
 
 from ..fb import send_buttons, button_postback, send_text, send_list, list_element, quick_reply
 from ..data import all_words, random_words_list, party_abbr, party_rev, manifestos, find_party
-from party import show_electorial
+from .party import show_electorial
 
 
 logger = logging.getLogger(__name__)
