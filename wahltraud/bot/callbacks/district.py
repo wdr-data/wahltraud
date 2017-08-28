@@ -72,12 +72,14 @@ deine Postleitzahl schreibst."""
 
 
 def send_district(sender_id, district_uuid):
+    show_district(sender_id, {'show_district': district_uuid})
+    """
     send_buttons(sender_id,
                  'Ok. Der Wahlkreis deiner Wahl ist {district}'.format(
                      district=by_uuid[district_uuid]['district']),
                  [button_postback("Zeige Wahlkreis-Info",
                                   {'show_district': district_uuid})])
-
+    """
 
 def show_district(event, payload, **kwargs):
     sender_id = event['sender']['id']
