@@ -214,15 +214,15 @@ def button_share(generic_element=None):
     """
     button = {
         'type': 'element_share',
-        # 'share_contents': {
-        #     'attachment': {
-        #         'type': 'template',
-        #         'payload': {
-        #             'template_type': 'generic',
-        #             'elements': generic_element
-        #         }
-        #     }
-        # }
+        'share_contents': {
+            'attachment': {
+                'type': 'template',
+                'payload': {
+                    'template_type': 'generic',
+                    'elements': generic_element
+                }
+            }
+        }
     }
 
     if not generic_element:
@@ -239,9 +239,6 @@ def generic_element(title, subtitle=None, image_url=None, buttons=None):
     :param button: Content for receiver button shown (optional)
     :return: dict
     """
-    if isinstance(buttons, (dict, list)):
-        buttons = json.dumps(buttons)
-
     element = {
         "title": title,
         "subtitle": subtitle,
