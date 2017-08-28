@@ -60,13 +60,13 @@ def find_candidates(first_name, last_name):
         last_name_matches = by_last_name[last_name]
         first_name_matches = by_first_name[first_name]
 
-        if 0 < len(last_name_matches) < len(first_name_matches) or not first_name_matches:
-            out = last_name_matches
-        else:
-            out = first_name_matches
-
-        if len(out) != 1 and (len(last_name_matches) + len(first_name_matches)) <= 4:
+        if (len(last_name_matches) + len(first_name_matches)) <= 4:
             out = last_name_matches & first_name_matches
+        else:
+            if 0 < len(last_name_matches) < len(first_name_matches) or not first_name_matches:
+                out = last_name_matches
+            else:
+                out = first_name_matches
 
     return [by_uuid[uuid] for uuid in out]
 
