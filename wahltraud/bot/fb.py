@@ -213,7 +213,7 @@ def button_share(generic_element=None):
     :return: dict
     """
     button = {
-        'type': 'elment_share',
+        'type': 'element_share',
         'share_contents': {
             'attachment': {
                 'type': 'template',
