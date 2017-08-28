@@ -4,7 +4,7 @@ import logging
 from django.utils import timezone
 
 from backend.models import Push, FacebookUser, Wiki
-from ..fb import send_text, send_attachment, guess_attachment_type, quick_reply
+from ..fb import send_text, send_attachment_by_id, guess_attachment_type, quick_reply
 
 logger = logging.getLogger(__name__)
 
@@ -124,7 +124,7 @@ def send_push(user_id, data, state='intro'):
     )
 
     if str(media):
-        send_attachment(user_id, str(media), guess_attachment_type(str(url)))
+        send_attachment_by_id(user_id, str(media), guess_attachment_type(str(url)))
         if str(media_note):
             send_text(user_id, media_note)
 
@@ -138,5 +138,5 @@ def send_push(user_id, data, state='intro'):
         '''
         if not data.breaking:
             media = '327361671016000'
-            send_attachment(user_id, media, 'image')
+            send_attachment_by_id(user_id, media, 'image')
         '''
