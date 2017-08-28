@@ -87,6 +87,29 @@ def send_buttons(recipient_id, text, buttons):
 
     send(payload)
 
+def send_generic(recipient_id, elements):
+    """
+    Sends a generic template with up to 10 elements to a recipient
+    :param recipient_id: The user ID of the recipient
+    :param elements: Up to 10 elements
+    """
+
+    payload = {
+        'recipient': {
+            'id': recipient_id
+        },
+        'message': {
+            'attachment': {
+                'type': 'template',
+                'payload': {
+                    'template_type': 'generic',
+                    'elements': elements
+                }
+            }
+        }
+    }
+
+    send(payload)
 
 def send_list(recipient_id, elements, top_element_style='compact', button=None):
     """
@@ -171,62 +194,42 @@ def button_postback(title, payload):
         'payload': payload,
     }
 
-def button_share(payload):
+def button_web_url(title, url):
     """
-    Creates a dict to use with send_buttons
+    Creates a dict to send a web_url, can be used with generic_elements or send_buttons
     :param title: Content to show the receiver
     :return: dict
     """
     return {
-        'type': 'element_share',
-        'share_contents': {
-            'attachment': {
-                'type': 'template',
-                'payload': payload
-            }
-        }
+        'type': 'web_url',
+        'url': url,
+        'title': title
     }
 
-def share_element(title, subtitle=None, image_url=None, reference=None):
+def generic_element(title, subtitle=None, image_url=None, buttons=None):
     """
-    Creates a dict to use with button_share
+    Creates a dict to use with send_generic
     :param title: Content for receiver title
     :param subtitle: Content for receiver subtitle (optional)
     :param image_url: Content for receiver image to show by url (optional)
-    :param reference: reference to be returned when shared (optional)
     :param button: Content for receiver button shown (optional)
     :return: dict
     """
-    payload = {
-        "template_type": "generic",
-        "elements": [
-            {
-                "title": title,
-                "subtitle": subtitle,
-                "image_url": image_url,
-                "default_action": {
-                    "type": "web_url",
-                    "url": "https://m.me/wahltraud"
-                },
-                "buttons": [
-                    {
-                        "type": "web_url",
-                        "url": "https://m.me/wahltraud",
-                        "title": "Try Wahltraud"
-                    }
-                ]
-            }
-        ]
+    element = {
+        "title": title,
+        "subtitle": subtitle,
+        "image_url": image_url,
+        "buttons": buttons
     }
 
-    if not title:
-        payload.pop('title')
-
     if not subtitle:
-        payload.pop('subtitle')
+        element.pop('subtitle')
 
     if not image_url:
-        payload.pop('image_url')
+        element.pop('image_url')
+
+    if not buttons:
+        element.pop('buttons')
 
     return payload
 
