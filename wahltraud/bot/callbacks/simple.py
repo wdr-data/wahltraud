@@ -126,7 +126,8 @@ def wiki(event, parameters, **kwargs):
 
     if best_match:
         reply = best_match[0].output
-
+        if reply == 'empty':
+            reply = "Moment...Ich schaue kurz im Brockhaus nach was {word} bedeutet. Antwort kommt bald.".format(word = best_match)
     else:
         reply = "Tut mir Leid, darauf habe noch ich keine Antwort. Frag mich die Tage nochmal."
 
