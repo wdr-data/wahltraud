@@ -130,7 +130,7 @@ def show_sentence(event, word, party, **kwargs):
     except:
         quick_replies = [
                         quick_reply(
-                            "Wer hat es?",
+                            "Andere Parteien?",
                             {'show_word': word,
                              'offset': 0}
                         ),
