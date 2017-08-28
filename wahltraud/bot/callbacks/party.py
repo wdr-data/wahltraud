@@ -108,13 +108,13 @@ def show_electorial(event, payload, **kwargs):
 
     if party in skripts:
         send_buttons(sender_id, """
-                       Du kannst das Programm der Partei {party_short} nach Schlagworten durchsuchen oder dir direkt zum Programm gelangen.
+                       Du kannst das Programm der Partei {party_short} nach Schlagworten durchsuchen oder über den Link das gesamte Programm ansehen.
                    """.format(
             party_short=party_info['short']
         ),
                      [
                          button_postback("Schlagwortsuche", ['manifesto_start']),
-                         button_url("Wahlprogramm (PDF)", party_info['skript']),
+                         button_url("Link zum Programm", party_info['skript']),
                          button_postback("zurück", {'show_party_options': party})
                      ])
     else:
@@ -124,7 +124,7 @@ def show_electorial(event, payload, **kwargs):
             party_short=party_info['short']
         ),
                      [
-                         button_url("Wahlprogramm (PDF)", party_info['skript']),
+                         button_url("Link zum Programm", party_info['skript']),
                          button_postback("zurück", {'show_party_options': party})
                      ])
 
