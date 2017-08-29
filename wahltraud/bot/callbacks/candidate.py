@@ -125,7 +125,7 @@ def show_basics(sender_id, candidate_uuid):
             button_postback("Weitere Kandidaten", ['intro_candidate'])
         ]
 
-        if 'img' in candidate:
+        if candidate['img'] is not None:
             send_attachment(sender_id, candidate['img'], type='image')
 
     send_buttons(sender_id, """
