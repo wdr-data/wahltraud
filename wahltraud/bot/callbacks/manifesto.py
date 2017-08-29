@@ -256,7 +256,7 @@ def show_manifesto(event, payload, **kwargs):
             sender_id,"""
             Du hast dich für ein digitales Schlagwort entschieden. Beim Wahlkompass-Digitales, kannst du alle Wahlprogramme 
             nach digitalen Themen durchsuchen und direkt vergleichen:\n
-            {link_kompass}
+            {link}
             """.format(
                 link="http://wahlkompass-digitales.de/"))
     else:
