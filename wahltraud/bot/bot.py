@@ -40,6 +40,7 @@ def make_event_handler():
     ai = ApiAI(API_AI_TOKEN)
 
     handlers = [
+        PayloadHandler(get_started, ['start']),
         PayloadHandler(story, ['push_id', 'next_state']),
         PayloadHandler(get_started, ['wahltraud_start_payload']),
         PayloadHandler(about, ['about']),

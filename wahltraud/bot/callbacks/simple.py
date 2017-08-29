@@ -12,11 +12,16 @@ logger = logging.getLogger(__name__)
 
 def get_started(event, **kwargs):
     reply = """
-Hallo, ich bin Wahltraud.
-Um dich für dein automatisches Update zu registrieren, klicke auf \"OK\"."""
+Hallo, ich bin Wahltraud 🐳
+Ich informiere dich für die anstehende Bundestagswahl über Kandidaten, Parteien und deren Themen.
+Ich erkläre dir gerne, was du mit mir tun kannst. Aber wenn du magst, kannst ud auch einfach drauf los fragen.
+Über Push Nachrichten halte ich dich auf dem Laufenden. Um dich für dein automatisches Update zu registrieren, klicke auf \"Anmelden\"."""
     sender_id = event['sender']['id']
     send_buttons(sender_id, reply,
-                 buttons=[button_postback('OK', ['subscribe'])])
+                 buttons=[
+                    button_postback('Anmelden', ['subscribe']),
+                    button_postback('Erklär mal...', ['about'])
+                ])
 
 def push(event, **kwargs):
     sender_id = event['sender']['id']
