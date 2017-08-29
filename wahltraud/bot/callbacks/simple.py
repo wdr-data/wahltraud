@@ -29,8 +29,13 @@ def push(event, **kwargs):
 
 def subscribe_menue(event, **kwargs):
     sender_id = event['sender']['id']
-    reply = " Hier kannst du dich an oder abmelden um Push-Nachrichten zu erhalten."
-    send_text(sender_id, reply)
+    reply = "Erhalte dein tägliches Update zu den Themen rund um die Wahl ganz automatisch. "
+            "Dafür musst du nur eines tun: Melde dich jetzt an!"
+    send_buttons(sender_id, reply,
+                buttons = [
+                    button_postback("Anmelden", ['subscribe_user']),
+                    button_postback("Abmelden", ['unsubscribe_user'])
+                ])
 
 def share_bot(event, **kwargs):
     sender_id = event['sender']['id']
@@ -60,8 +65,9 @@ def subscribe_user(event, **kwargs):
 
     else:
         FacebookUser.objects.create(uid=user_id)
-        logger.debug('User with ID ' + str(FacebookUser.objects.latest('add_date')) + ' subscribed.')
-        reply = "Danke für deine Anmeldung!\nDu erhältst nun ein tägliches Update."
+        logger.debug('subscribed user with ID ' + str(FacebookUser.objects.latest('add_date')))
+        reply = "Danke für deine Anmeldung! Du erhältst nun täglich um 18 Uhr dein Update.\n\n"
+                "Wenn du irgendwann genug Informationen hast, kannst du dich über das Menü natürlich jederzeit wieder abmeden."
         send_text(user_id, reply)
 
 
@@ -74,7 +80,7 @@ def unsubscribe_user(event, **kwargs):
         reply = "Schade, dass du uns verlassen möchtest. Du wurdest aus der Empfängerliste für Push Benachrichtigungen gestrichen."
         send_text(user_id, reply)
     else:
-        reply = "Du bist noch kein Nutzer der Push-Nachrichten. Wenn du dich anmelden möchtest wähle \"Anmelden\" im Menü."
+        reply = "Du bist noch kein Nutzer der Push-Nachrichten. Wenn du dich anmelden möchtest wähle \"Anmelden\" über das Menü."
         send_text(user_id, reply)
 
 def menue_manifesto(event, **kwargs):
