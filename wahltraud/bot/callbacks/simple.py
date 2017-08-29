@@ -12,8 +12,8 @@ logger = logging.getLogger(__name__)
 
 def get_started(event, **kwargs):
     reply = """
-    Hallo, ich bin Wahltraud.
-    Um dich für dein automatisches Update zu registrieren, klicke auf \"OK\"."""
+Hallo, ich bin Wahltraud.
+Um dich für dein automatisches Update zu registrieren, klicke auf \"OK\"."""
     sender_id = event['sender']['id']
     send_buttons(sender_id, reply,
                  buttons=[button_postback('OK', ['subscribe'])])
@@ -30,12 +30,12 @@ def push(event, **kwargs):
 def subscribe_menue(event, **kwargs):
     sender_id = event['sender']['id']
     reply = """
-    Erhalte dein tägliches Update zu den Themen rund um die Wahl ganz automatisch.
-    Dafür musst du nur eines tun: Melde dich jetzt an!"""
+Erhalte dein tägliches Update zu den Themen rund um die Wahl ganz automatisch.
+Dafür musst du nur eines tun: Melde dich jetzt an!"""
     send_buttons(sender_id, reply,
                 buttons = [
-                    button_postback("Anmelden", ['subscribe_user']),
-                    button_postback("Abmelden", ['unsubscribe_user'])
+                    button_postback("Anmelden", ['subscribe']),
+                    button_postback("Abmelden", ['unsubscribe'])
                 ])
 
 def share_bot(event, **kwargs):
@@ -57,7 +57,7 @@ def about(event, **kwargs):
     reply = "Erfahre alles über Wahltrauds Funktionen."
     send_text(sender_id, reply)
 
-def subscribe_user(event, **kwargs):
+def subscribe(event, **kwargs):
     user_id = event['sender']['id']
 
     if FacebookUser.objects.filter(uid=user_id).exists():
@@ -73,7 +73,7 @@ def subscribe_user(event, **kwargs):
         send_text(user_id, reply)
 
 
-def unsubscribe_user(event, **kwargs):
+def unsubscribe(event, **kwargs):
     user_id = event['sender']['id']
 
     if FacebookUser.objects.filter(uid=user_id).exists():
