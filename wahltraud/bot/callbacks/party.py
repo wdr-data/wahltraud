@@ -20,8 +20,9 @@ def basics(event, parameters, **kwargs):
             "Über welche magst du dich näher informieren?",
             [
                 button_postback("Etablierte Parteien", {'show_parties': 'etabliert'}),
-                button_postback("Kleine Parteien", {'show_parties': 'klein'}),
-                button_postback("Zeige Alle", {'show_parties': 'alle'})
+                button_postback("Kleine Parteien", {'show_parties': 'klein'})
+                #,
+                #button_postback("Zeige Alle", {'show_parties': 'alle'})
             ])
 
     else:
