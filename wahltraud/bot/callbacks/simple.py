@@ -100,8 +100,9 @@ def menue_manifesto(event, **kwargs):
     send_text(sender_id,
               'Was steht eigentlich in so einem Wahlprogramm? '
               'Kaum ein Wähler liest sich ein Wahlprogramm durch. Ich biete Dir an dieser Stelle einen Einblick '
-              'in die einzelnen Programme und zwar zu dem Thema, welches dich interessiert.',
-              [quick_reply('weiter', {'about_manifesto': 'one'})])
+              'in die einzelnen Programme und zwar zu dem Thema, welches dich interessiert.'
+              'Du kannst jederzeit ein Schlagwort eintippen und ich schaue nach in welchen Programmen es vorkommt. \nz.B. Steuern',
+              [quick_reply('Ich habs verstanden', ['manifesto_start']), quick_reply('weiter', {'about_manifesto': 'one'})])
 
 def about_manifesto(event, payload, **kwargs):
     sender_id = event['sender']['id']
@@ -109,17 +110,13 @@ def about_manifesto(event, payload, **kwargs):
 
     if state == 'one':
         send_text(sender_id,
-                  'Du kannst jederzeit ein Wahlthema eintippen und ich schaue nach in welchen Programmen es vorkommt. \nz.B. Steuern',
-                  [quick_reply('Ich habs verstanden', {'about_manifesto': 'end'}), quick_reply('weiter', {'about_manifesto': 'two'})])
+                  'Nenne mir ein Schlagort und eine Partei und ich zeige dir sofort einen Satz aus dem Programm. \nz.B. Steuern + SPD',
+                  [quick_reply('Ich habs verstanden', ['manifesto_start']), quick_reply('weiter', {'about_manifesto': 'two'})])
     elif state == 'two':
         send_text(sender_id,
-                  'Nenne mir ein Wort und eine Partei und ich zeige dir sofort einen Satz aus dem Programm. \nz.B. Steuern + SPD',
-                  [quick_reply('Ich habs verstanden', {'about_manifesto': 'end'}), quick_reply('weiter', {'about_manifesto': 'three'})])
-    elif state == 'three':
-        send_text(sender_id,
                   'Ein einzelner Satz ist oft nicht hilfreich, darum kannst du dir den Kontext anzeigen lassen. '
-                  'Falls du richtig neugierig geworden bist, gibt es den Link zum Wahlprogramm.',
-                  [quick_reply('Los geht\'s', {'about_manifesto': 'end'})])
+                  'Falls du richtig neugierig geworden bist, bekommst du auch den Link zum Wahlprogramm.',
+                  [quick_reply('Los geht`s', ['manifesto_start']))
 
 def menue_data(event, **kwargs):
     sender_id = event['sender']['id']
