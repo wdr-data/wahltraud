@@ -90,7 +90,7 @@ def unsubscribe(event, **kwargs):
         reply = "Du bist noch kein Nutzer der Push-Nachrichten. Wenn du dich anmelden möchtest wähle \"Anmelden\" über das Menü."
         send_text(user_id, reply)
 
-def menue_manifesto(event, **kwargs):
+def menue_candidates(event, **kwargs):
     sender_id = event['sender']['id']
     send_text(sender_id, 'Erfahre hier was es mit dem Kandidatencheck auf sich hat.')
 
