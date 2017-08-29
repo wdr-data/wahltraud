@@ -229,18 +229,39 @@ def show_paragraph(event, payload, **kwargs):
             )
         )
 
+    if word == 'Digitalisierung':
+        quick_replies.insert(
+            1,
+            quick_reply(
+                'Wahlkompass-Digitales',
+                {'show_manifesto': 'kompass'}
+            )
+        )
+
     send_text(sender_id, '"%s"' % paragraph, quick_replies)
 
 
 def show_manifesto(event, payload, **kwargs):
     sender_id = event['sender']['id']
     link = payload['show_manifesto']
-    party = payload['party']
+    try:
+        party = payload['party']
+    except:
+        party = None
 
     logger.info('Wahlprogramm - Link angefordert')
 
-    send_text(
-        sender_id,
-        "Hier findest du das vollständige Wahlprogramm\n\"{party}\": {link}".format(
-            party=party_abbr[party],
-            link=link))
+    if not party:
+        send_text(
+            sender_id,"""
+            Du hast dich für ein digitales Schlagwort entschieden. Beim Wahlkompass-Digitales, kannst du alle Wahlprogramme 
+            nach digitalen Themen durchsuchen und direkt vergleichen:\n
+            {link_kompass}
+            """.format(
+                link="http://wahlkompass-digitales.de/"))
+    else:
+        send_text(
+            sender_id,
+            "Hier findest du das vollständige Wahlprogramm\n\"{party}\": {link}".format(
+                party=party_abbr[party],
+                link=link))
