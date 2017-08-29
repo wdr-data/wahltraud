@@ -233,7 +233,7 @@ def show_paragraph(event, payload, **kwargs):
             1,
             quick_reply(
                 'Wahlkompass-Digitales',
-                {'show_manifesto': 'kompass'}
+                {'show_manifesto': 'kompass', 'party': party}
             )
         )
 
@@ -243,10 +243,8 @@ def show_paragraph(event, payload, **kwargs):
 def show_manifesto(event, payload, **kwargs):
     sender_id = event['sender']['id']
     link = payload['show_manifesto']
-    try:
-        party = payload['party']
-    except:
-        party = None
+    party = payload['party']
+
 
     logger.info('Wahlprogramm - Link angefordert')
 
@@ -254,6 +252,10 @@ def show_manifesto(event, payload, **kwargs):
         quick_reply(
             'Neues Wort',
             ['manifesto_start']
+        ),
+        quick_reply(
+            'Info ' + party_abbr[party],
+            {'show_party_options': party_abbr[party]}
         )
     ]
 
@@ -264,15 +266,6 @@ def show_manifesto(event, payload, **kwargs):
             """.format(
                 link="http://wahlkompass-digitales.de/")
     else:
-
-        quick_replies.insert(
-            1,
-            quick_reply(
-            'Info ' + party_abbr[party],
-            {'show_party_options': party_abbr[party]}
-            )
-        )
-
         reply = "Hier findest du das vollständige Wahlprogramm\n\"{party}\": {link}".format(
                 party=party_abbr[party],
                 link=link)
