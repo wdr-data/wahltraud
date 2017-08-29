@@ -21,8 +21,8 @@ def manifesto_start(event, **kwargs):
 
     send_text(
         sender_id,
-        "Lass mich für dich die Programme nach einem Thema durchsuchen. "
-        "Schreib mir einfach ein Thema, welches dich interessiert.",
+        "Lass mich für dich die Programme nach einem Schlagwort durchsuchen. "
+        "Schreib mir einfach ein Wort, welches dich interessiert.",
         random_words
     )
 
@@ -67,8 +67,7 @@ def show_word(event, word, offset, **kwargs):
         party, seg = next(iter(segs.items()))
         send_buttons(
             sender_id,
-            'Dieses Wort kommt nur im Wahlprogramm der Partei "{party}" vor, und zwar {n} mal '
-            '({share}% aller Wörter).'.format(
+            'Das Wort {word} kommt nur im Wahlprogramm der Partei "{party}" vor.'.format(
                 party=party_abbr[party],
                 n=seg['count'],
                 share=locale.format('%.2f', seg['share'] * 100),
@@ -251,6 +250,13 @@ def show_manifesto(event, payload, **kwargs):
 
     logger.info('Wahlprogramm - Link angefordert')
 
+    quick_replies = [
+        quick_reply(
+            'Neues Wort',
+            ['manifesto_start']
+        )
+    ]
+
     if not party:
         reply = """
             Du hast dich für ein digitales Schlagwort entschieden. Beim Wahlkompass-Digitales, kannst du alle Wahlprogramme nach digitalen Themen durchsuchen und direkt vergleichen:\n
@@ -258,9 +264,19 @@ def show_manifesto(event, payload, **kwargs):
             """.format(
                 link="http://wahlkompass-digitales.de/")
     else:
+
+        quick_replies.insert(
+            1,
+            quick_reply(
+            'Info ' + party_abbr[party],
+            {'show_party_options': party_abbr[party]}
+            )
+        )
+
         reply = "Hier findest du das vollständige Wahlprogramm\n\"{party}\": {link}".format(
                 party=party_abbr[party],
                 link=link)
 
     send_text(
-        sender_id, reply)
+        sender_id, reply, quick_replies
+    )
