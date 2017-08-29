@@ -29,8 +29,9 @@ def push(event, **kwargs):
 
 def subscribe_menue(event, **kwargs):
     sender_id = event['sender']['id']
-    reply = "Erhalte dein tägliches Update zu den Themen rund um die Wahl ganz automatisch. "
-            "Dafür musst du nur eines tun: Melde dich jetzt an!"
+    reply = """
+    Erhalte dein tägliches Update zu den Themen rund um die Wahl ganz automatisch.
+    Dafür musst du nur eines tun: Melde dich jetzt an!"""
     send_buttons(sender_id, reply,
                 buttons = [
                     button_postback("Anmelden", ['subscribe_user']),
@@ -66,8 +67,9 @@ def subscribe_user(event, **kwargs):
     else:
         FacebookUser.objects.create(uid=user_id)
         logger.debug('subscribed user with ID ' + str(FacebookUser.objects.latest('add_date')))
-        reply = "Danke für deine Anmeldung! Du erhältst nun täglich um 18 Uhr dein Update.\n\n"
-                "Wenn du irgendwann genug Informationen hast, kannst du dich über das Menü natürlich jederzeit wieder abmeden."
+        reply = """
+        Danke für deine Anmeldung! Du erhältst nun täglich um 18 Uhr dein Update.\n\n
+        Wenn du irgendwann genug Informationen hast, kannst du dich über das Menü natürlich jederzeit wieder abmeden."""
         send_text(user_id, reply)
 
 
