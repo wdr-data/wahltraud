@@ -54,8 +54,13 @@ def share_bot(event, **kwargs):
 
 def about(event, **kwargs):
     sender_id = event['sender']['id']
-    reply = "Erfahre alles über Wahltrauds Funktionen."
-    send_text(sender_id, reply)
+    reply = "Erfahre alles über Wahltrauds Funktionen. Wähle ein Thema über das du mehr erfahren möchtest."
+    send_buttons(sender_id, reply,
+                buttons = [
+                    button_postback("Kandidatencheck", ['menue_candidates']),
+                    button_postback("Wahlprogramme", ['menue_manifesto']),
+                    button_postback("Daten", ['menue_data'])
+                ])
 
 def subscribe(event, **kwargs):
     user_id = event['sender']['id']
@@ -68,8 +73,8 @@ def subscribe(event, **kwargs):
         FacebookUser.objects.create(uid=user_id)
         logger.debug('subscribed user with ID ' + str(FacebookUser.objects.latest('add_date')))
         reply = """
-        Danke für deine Anmeldung! Du erhältst nun täglich um 18 Uhr dein Update.\n\n
-        Wenn du irgendwann genug Informationen hast, kannst du dich über das Menü natürlich jederzeit wieder abmeden."""
+Danke für deine Anmeldung! Du erhältst nun täglich um 18 Uhr dein Update.\n
+Wenn du irgendwann genug Informationen hast, kannst du dich über das Menü natürlich jederzeit wieder abmeden."""
         send_text(user_id, reply)
 
 
@@ -84,6 +89,10 @@ def unsubscribe(event, **kwargs):
     else:
         reply = "Du bist noch kein Nutzer der Push-Nachrichten. Wenn du dich anmelden möchtest wähle \"Anmelden\" über das Menü."
         send_text(user_id, reply)
+
+def menue_manifesto(event, **kwargs):
+    sender_id = event['sender']['id']
+    send_text(sender_id, 'Erfahre hier was es mit dem Kandidatencheck auf sich hat.')
 
 def menue_manifesto(event, **kwargs):
     sender_id = event['sender']['id']
@@ -111,6 +120,10 @@ def about_manifesto(event, payload, **kwargs):
                   'Ein einzelner Satz ist oft nicht hilfreich, darum kannst du dir den Kontext anzeigen lassen. '
                   'Falls du richtig neugierig geworden bist, gibt es den Link zum Wahlprogramm.',
                   [quick_reply('Los geht\'s', {'about_manifesto': 'end'})])
+
+def menue_data(event, **kwargs):
+    sender_id = event['sender']['id']
+    send_text(sender_id, 'Erfahre hier welche Daten eigentlich verwendet werden.')
 
 def story(event, payload, **kwargs):
     sender_id = event['sender']['id']
