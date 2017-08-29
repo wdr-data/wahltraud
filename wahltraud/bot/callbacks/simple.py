@@ -99,9 +99,9 @@ def menue_manifesto(event, **kwargs):
 
     send_text(sender_id,
               'Was steht eigentlich in so einem Wahlprogramm? '
-              'Kaum ein Wähler liest sich ein Wahlprogramm durch. Ich biete Dir an dieser Stelle einen Einblick '
-              'in die einzelnen Programme und zwar zu dem Thema, welches dich interessiert.'
-              'Du kannst jederzeit ein Schlagwort eintippen und ich schaue nach in welchen Programmen es vorkommt. \nz.B. Steuern',
+              'Kaum ein Wähler liest sich ein Wahlprogramm durch. Ich biete Dir einen Einblick '
+              'in die einzelnen Programme und zwar zu dem Thema, welches dich interessiert.\n'
+              'Du kannst jederzeit ein Schlagwort eintippen und ich schaue nach in welchen Programmen es vorkommt, z.B. Steuern.',
               [quick_reply('Ich habs verstanden', ['manifesto_start']), quick_reply('weiter', {'about_manifesto': 'one'})])
 
 def about_manifesto(event, payload, **kwargs):
@@ -110,7 +110,7 @@ def about_manifesto(event, payload, **kwargs):
 
     if state == 'one':
         send_text(sender_id,
-                  'Nenne mir ein Schlagort und eine Partei und ich zeige dir sofort einen Satz aus dem Programm. \nz.B. Steuern + SPD',
+                  'Nenne mir ein Schlagwort und eine Partei und ich zeige dir sofort einen Satz aus dem Programm, z.B. Steuern + SPD.',
                   [quick_reply('Ich habs verstanden', ['manifesto_start']), quick_reply('weiter', {'about_manifesto': 'two'})])
     elif state == 'two':
         send_text(sender_id,
@@ -120,7 +120,19 @@ def about_manifesto(event, payload, **kwargs):
 
 def menue_data(event, **kwargs):
     sender_id = event['sender']['id']
-    send_text(sender_id, 'Erfahre hier welche Daten eigentlich verwendet werden.')
+    send_text(sender_id, """
+Um dich mit so vielen Informationen beliefern zu können, musste ich mich natürlich selbst erstmal schlau machen.
+Folgende Quellen habe ich dazu verwendet:
+- WDR-Kandidatencheck http://kandidatencheck.wdr.de/kandidatencheck/
+- abgeordnetenwatch.de https://www.abgeordnetenwatch.de/
+- Wahlkompass Digitales http://wahlkompass-digitales.de/
+- Bundeswahlleiter https://www.bundeswahlleiter.de/
+- Homepages der Parteien
+
+Zudem habe ich mich der Technologie vom WDR Projekt \"Wörter der Wahl\" bedient: https://github.com/wdr-data/woerter-der-wahl
+Die Daten auf die ich zurückgreife kannst du dir auch im GitHUb Account \"wdr-data\" anschauen https://github.com/wdr-data
+Datenschutzbestimmungen des Westdeutschen Rundfunks: http://www1.wdr.de/hilfe/datenschutz102.html"""
+    )
 
 def story(event, payload, **kwargs):
     sender_id = event['sender']['id']
