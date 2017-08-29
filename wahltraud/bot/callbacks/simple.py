@@ -116,7 +116,7 @@ def about_manifesto(event, payload, **kwargs):
         send_text(sender_id,
                   'Ein einzelner Satz ist oft nicht hilfreich, darum kannst du dir den Kontext anzeigen lassen. '
                   'Falls du richtig neugierig geworden bist, bekommst du auch den Link zum Wahlprogramm.',
-                  [quick_reply('Los geht`s', ['manifesto_start']))
+                  [quick_reply('Los geht`s', ['manifesto_start'])])
 
 def menue_data(event, **kwargs):
     sender_id = event['sender']['id']
