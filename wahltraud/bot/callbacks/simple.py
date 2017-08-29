@@ -127,11 +127,16 @@ Folgende Quellen habe ich dazu verwendet:
 - abgeordnetenwatch.de https://www.abgeordnetenwatch.de/
 - Wahlkompass Digitales http://wahlkompass-digitales.de/
 - Bundeswahlleiter https://www.bundeswahlleiter.de/
-- Homepages der Parteien
+- Homepages der Parteien""",
+    [quick_reply('Noch was?', ['more_data'])])
 
-Zudem habe ich mich der Technologie vom WDR Projekt \"Wörter der Wahl\" bedient: https://github.com/wdr-data/woerter-der-wahl
-Die Daten auf die ich zurückgreife kannst du dir auch im GitHUb Account \"wdr-data\" anschauen https://github.com/wdr-data
-Datenschutzbestimmungen des Westdeutschen Rundfunks: http://www1.wdr.de/hilfe/datenschutz102.html"""
+def more_data(event, **kwargs):
+    sender_id = event['sender']['id']
+    send_text(sender_id, """
+Ich arbeite in Kooperation mit Novi, dem Nachrichten-Bot von Funk \nhttps://www.funk.net/
+Zudem habe ich mich der Technologie vom WDR Projekt \"Wörter der Wahl\" bedient\nhttps://github.com/wdr-data/woerter-der-wahl
+Die Daten auf die ich zurückgreife kannst du dir auch im GitHub Account \"wdr-data\" anschauen\nhttps://github.com/wdr-data
+Ich halte mich an die Datenschutzbestimmungen des \"Westdeutschen Rundfunks\"\nhttp://www1.wdr.de/hilfe/datenschutz102.html"""
     )
 
 def story(event, payload, **kwargs):
