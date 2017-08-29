@@ -16,7 +16,7 @@ def basics(event, parameters, **kwargs):
     if len(candidates) > 1:
         send_text(
             sender_id,
-            "Deine Eingabe war nicht eindeutig. Welcher der Kandidaten soll es sein?"
+            "Deine Eingabe war wohl nicht eindeutig. Hier die Kandidaten, die in Frage kommen in alphabetischer Reihnefolge: "
         )
         show_search_candidate_list(
             event, candidates, first_name, last_name)
@@ -26,7 +26,7 @@ def basics(event, parameters, **kwargs):
     else:
         send_text(
             sender_id,
-            "Mhmm, leider habe ich niemanden mit diesem Namen gefunden."
+            "Mhmm, leider habe ich niemanden mit diesem Namen gefunden. Achte, ob der Name richtig geschrieben ist."
         )
 
 
@@ -235,7 +235,7 @@ Die Themen von {first_name} {last_name} in der kommenden Legislaturperiode sind 
             first_name=candidate['first_name'],
             last_name=candidate['last_name'],
             pledges='\n'.join(pledges),
-            gender='Sein' if candidate['gender']=='male' else 'Ihr',
+            gender='Ihr' if candidate['gender']=='female' else 'Sein',
             interests=candidate['nrw']['interests']
         ), buttons)
 
@@ -249,7 +249,7 @@ def show_video(event, payload, **kwargs):
 
 def intro_candidate(event, **kwargs):
     reply = """
-    Über 2800 Kandidaten sind zur Wahl zugelassen. Viel Freude beim kennenlernen.
+    Über 2800 Kandidaten stehen in 299 Wahlkreisen zur Wahl. 
     """
     sender_id = event['sender']['id']
     #send_text(sender_id, "Du kannst mir direkt dem Namen eines Kandidaten als Nachricht schreiben.")
