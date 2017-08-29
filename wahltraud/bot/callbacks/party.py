@@ -94,7 +94,7 @@ def show_party_candidates(event, payload, **kwargs):
 
     send_buttons(
         sender_id,
-        "Wie darf ich dir die Kandidaten der Partei {party} präsentieren?".format(
+        "Wie darf ich dir die Kandidaten der Partei \"{party}\" präsentieren?".format(
             party=party_info['short']),
         buttons
     )
@@ -106,7 +106,7 @@ def show_list_all(event, payload, **kwargs):
     party_info = by_party[party]
     send_text(
         sender_id,
-        "Hier sind bald alle 1000 Kandidaten der Partei {party} zu sehen. Viel Freude".format(
+        "Hier sind bald alle 1000 Kandidaten der Partei \"{party}\" zu sehen.".format(
             party=party_info['short'])
     )
 
