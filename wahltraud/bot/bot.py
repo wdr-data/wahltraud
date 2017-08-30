@@ -97,7 +97,7 @@ def make_event_handler():
 
             if referral:
                 ref = referral.get('ref')
-                logging.info('Bot wurde geteilt: ' + ref)
+                logging.info('Bot wurde mit bekantem User geteilt: ' + ref)
 
             message = event.get('message')
 
