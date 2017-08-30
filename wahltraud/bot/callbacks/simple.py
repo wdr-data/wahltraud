@@ -116,6 +116,7 @@ Folgende Quellen habe ich dazu verwendet:
 - abgeordnetenwatch.de https://www.abgeordnetenwatch.de/
 - Wahlkompass Digitales http://wahlkompass-digitales.de/
 - Bundeswahlleiter https://www.bundeswahlleiter.de/
+- infratest Dimap https://www.infratest-dimap.de/
 - Homepages der Parteien""",
     [quick_reply('Noch was?', ['more_data'])])
 
