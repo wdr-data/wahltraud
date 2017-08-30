@@ -97,12 +97,12 @@ def unsubscribe(event, **kwargs):
 
 def menue_candidates(event, **kwargs):
     sender_id = event['sender']['id']
-    send_text(sender_id, """
-Der \"WDR-Kandidatencheck\" zur Bundestagswahl 2017 möchte möglichst alle Kandidatinnen und Kandidaten,
-die in Nordrhein-Westfalen zur Bundestagswahl antreten, in einem kurzen Video vorstellen. Damit User die Aussagen untereinander
-vergleichen können, haben alle KandidatInnen dieselben, vorab bekannten Fragen gestellt bekommen. Es wurden alle Parteien angefragt –
-aber nicht alle haben mitgemacht. \nGründe dafür und weitere Informationen zu dem Projekt kannst du hier nachlesen:
-https://blog.wdr.de/ihrewahl/faq-wdr-kandidatencheck-bundestagswahl-2017/""")
+    send_text(sender_id,
+            "Der \"WDR-Kandidatencheck\" zur Bundestagswahl 2017 möchte möglichst alle Kandidatinnen und Kandidaten, "
+            "die in Nordrhein-Westfalen zur Bundestagswahl antreten, in einem kurzen Video vorstellen. Damit User die "
+            "Aussagen untereinander vergleichen können, haben alle KandidatInnen dieselben, vorab bekannten Fragen gestellt bekommen. "
+            "Es wurden alle Parteien angefragt – aber nicht alle haben mitgemacht. \nGründe dafür und weitere Informationen "
+            "zu dem Projekt kannst du hier nachlesen: https://blog.wdr.de/ihrewahl/faq-wdr-kandidatencheck-bundestagswahl-2017/")
 
 def menue_manifesto(event, **kwargs):
     sender_id = event['sender']['id']
