@@ -13,21 +13,24 @@ def basics(event, parameters, **kwargs):
     last_name = parameters.get('nachname')
     candidates = find_candidates(first_name, last_name)
 
-    if len(candidates) > 1:
-        send_text(
-            sender_id,
-            "Deine Eingabe war wohl nicht eindeutig. Hier die Kandidaten, die in Frage kommen in alphabetischer Reihnefolge: "
-        )
-        show_search_candidate_list(
-            event, candidates, first_name, last_name)
-
-    elif len(candidates) == 1:
-        show_basics(sender_id, candidates[0]['uuid'])
+    if not first_name and not last_name:
+        candidate_check_start(event, **kwargs)
     else:
-        send_text(
-            sender_id,
-            "Mhmm, leider habe ich niemanden mit diesem Namen gefunden. Achte, ob der Name richtig geschrieben ist."
-        )
+        if len(candidates) > 1:
+            send_text(
+                sender_id,
+                "Deine Eingabe war wohl nicht eindeutig. Hier die Kandidaten, die in Frage kommen in alphabetischer Reihnefolge: "
+            )
+            show_search_candidate_list(
+                event, candidates, first_name, last_name)
+
+        elif len(candidates) == 1:
+            show_basics(sender_id, candidates[0]['uuid'])
+        else:
+            send_text(
+                sender_id,
+                "Mhmm, leider habe ich niemanden mit diesem Namen gefunden. Achte, ob der Name richtig geschrieben ist."
+            )
 
 
 def search_candidate_list(event, payload, **kwargs):
@@ -248,11 +251,11 @@ def show_video(event, payload, **kwargs):
     send_attachment(sender_id, url, type='video')
 
 def intro_candidate(event, **kwargs):
-    reply = """
-    Über 2800 Kandidaten stehen in 299 Wahlkreisen zur Wahl. 
-    """
     sender_id = event['sender']['id']
-    #send_text(sender_id, "Du kannst mir direkt dem Namen eines Kandidaten als Nachricht schreiben.")
+
+    reply = """
+    Über 2800 Kandidaten stehen in 299 Wahlkreisen zur Wahl. Du kannst mich auch direkt nach einem bestimmten Kandidaten fragen!
+    """
     send_buttons(sender_id, reply,
                  buttons=[button_postback('Wahlkreis (Direktkandidat)', ['intro_district']),
                           button_postback('Partei (Landeslisten)', ['intro_lists']),
@@ -260,10 +263,17 @@ def intro_candidate(event, **kwargs):
 
 
 def candidate_check(event, **kwargs):
+    #api handler
+    candidate_check_start(event, **kwargs)
+
+
+
+def candidate_check_start(event,**kwargs):
+    sender_id = event['sender']['id']
+
     reply = """
 Du kannst dir die zur Wahl stehenden Kandidaten nach Wahlkreis oder Partei anzeigen lassen. Ich habe zu allen Kandidaten ein paar Infos. 
 Oder schick mir einfach den Namen eines bestimmten Kandidaten! """
-    sender_id = event['sender']['id']
 
     send_buttons(sender_id, reply,
                  buttons=[button_postback('Wahlkreis (Direktkandidat)', ['intro_district']),

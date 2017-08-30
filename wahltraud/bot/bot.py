@@ -63,6 +63,7 @@ def make_event_handler():
         PayloadHandler(party.show_party_candidates,['show_party_candidates']),
         PayloadHandler(party.show_list_all, ['show_list_all']),
         ApiAiHandler(candidate.candidate_check, 'kandidatencheck'),
+        PayloadHandler(candidate.candidate_check_start,['candidate_check_start']),
         PayloadHandler(district.intro_district, ['intro_district']),
         PayloadHandler(candidate.intro_candidate, ['intro_candidate']),
         PayloadHandler(district.show_13, ['show_13']),
