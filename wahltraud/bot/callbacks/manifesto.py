@@ -4,7 +4,7 @@ import logging
 from re import findall
 
 from ..fb import send_buttons, button_postback, send_text, send_list, list_element, quick_reply
-from ..data import all_words, random_words_list, party_abbr, party_rev, manifestos, find_party
+from ..data import all_words, random_words_list, party_abbr, party_rev, manifestos, find_party, get_digital_words
 from .party import show_electorial
 
 logger = logging.getLogger(__name__)
@@ -230,7 +230,7 @@ def show_paragraph(event, payload, **kwargs):
             )
         )
 
-    if word == 'Digitalisierung':
+    if word in get_digital_words():
         quick_replies.insert(
             1,
             quick_reply(
