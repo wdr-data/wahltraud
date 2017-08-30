@@ -182,7 +182,7 @@ def sunday_poll(event, **kwargs):
               )
 
     send_attachment(sender_id,
-                    Data_Dir/'sunday_poll/Sonntagsfrage_aktuell.png' ,
+                    Data_Dir/'sunday_poll/Sonntagsfrage_aktuell.jpg' ,
                     type='image'
                     )
 
