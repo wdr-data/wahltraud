@@ -177,7 +177,6 @@ def push_step(event, payload, **kwargs):
 
 def sunday_poll(event, **kwargs):
     sender_id = event['sender']['id']
-    Data_Dir = Path(__file__).absolute().parent
 
     quick_replies = [
         quick_reply(
@@ -193,11 +192,11 @@ def sunday_poll(event, **kwargs):
     send_text(sender_id,
               'Hier das Ergebniss der aktuellen Sonntagsfrage von Infratest dimap vom 25. August.'
               )
-    """
-    send_attachment(sender_id,
-                    Data_Dir/'sunday_poll/Sonntagsfrage_aktuell.jpg' ,
-                    type='image'
-                    )"""
+
+    send_attachment(
+        sender_id,
+        'https://infos.data.wdr.de:8080/static/bot/Sonntagsfrage_aktuell.jpg'
+    )
 
     send_text(sender_id,
               'Die Sonntagsfrage ist natürlich nicht das Ergebniss der Bundestagswahl.'
