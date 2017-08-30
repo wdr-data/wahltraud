@@ -47,7 +47,7 @@ def select_state(event, payload, **kwargs):
             if party in parties
         ]
 
-    if not more:
+    if not more and len(options) > 8:
         options = options[:8]
         options.append(
             quick_reply('➡️️', {
