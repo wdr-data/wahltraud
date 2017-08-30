@@ -37,16 +37,17 @@ def select_state(event, payload, **kwargs):
         ]
     else:
         options = [
-            quick_reply(sl[len('Landesliste '):],
+            quick_reply(state[len('Landesliste '):],
                         {
                             'show_list': True,
                             'party': party,
-                            'state': sl,
+                            'state': state,
                         })
-            for sl in sorted(state_lists)
+            for state, parties in sorted(state_lists.items())
+            if party in parties
         ]
 
-    if not more:
+    if not more and len(options) > 8:
         options = options[:8]
         options.append(
             quick_reply('➡️️', {
