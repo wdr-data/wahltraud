@@ -32,17 +32,6 @@ def push(event, **kwargs):
     else:
         schema(data, sender_id)
 
-def subscribe_menue(event, **kwargs):
-    sender_id = event['sender']['id']
-    reply = """
-Erhalte dein tägliches Update zu den Themen rund um die Wahl ganz automatisch.
-Dafür musst du nur eines tun: Melde dich jetzt an!"""
-    send_buttons(sender_id, reply,
-                buttons = [
-                    button_postback("Anmelden", ['subscribe']),
-                    button_postback("Abmelden", ['unsubscribe'])
-                ])
-
 def share_bot(event, **kwargs):
     sender_id = event['sender']['id']
     reply = "Teile Wahltraud mit deinen Freunden!"
@@ -55,17 +44,6 @@ def share_bot(event, **kwargs):
 
     send_generic(sender_id,
                 elements = [message])
-    # send_text(sender_id, reply)
-
-def about(event, **kwargs):
-    sender_id = event['sender']['id']
-    reply = "Erfahre alles über Wahltrauds Funktionen. Wähle ein Thema über das du mehr erfahren möchtest."
-    send_buttons(sender_id, reply,
-                buttons = [
-                    button_postback("Kandidatencheck", ['menue_candidates']),
-                    button_postback("Wahlprogramme", ['menue_manifesto']),
-                    button_postback("Daten", ['menue_data'])
-                ])
 
 def subscribe(event, **kwargs):
     user_id = event['sender']['id']
