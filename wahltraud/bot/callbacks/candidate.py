@@ -115,9 +115,9 @@ def show_basics(sender_id, candidate_uuid):
         else:
             buttons.insert(0, button_postback("Interview", {'no_video_to_show': candidate['uuid']}))
 
-        if candidate['nrw']['img'] is not None:
+        if candidate['nrw']['img']:
             send_attachment(sender_id, candidate['nrw']['img'], type='image')
-        elif candidate['img'] is not None:
+        elif candidate["img"]:
             send_attachment(sender_id, candidate['img'], type='image')
     else:
         profession = candidate['profession']
@@ -128,7 +128,7 @@ def show_basics(sender_id, candidate_uuid):
             button_postback("Weitere Kandidaten", ['intro_candidate'])
         ]
 
-        if candidate['img'] is not None:
+        if candidate['img']:
             send_attachment(sender_id, candidate['img'], type='image')
 
     send_buttons(sender_id, """
