@@ -40,7 +40,7 @@ def make_event_handler():
 
     handlers = [
         PayloadHandler(get_started, ['start']),
-        PayloadHandler(get_started, ['about']),
+        PayloadHandler(about, ['about']),
         PayloadHandler(story, ['push_id', 'next_state']),
         PayloadHandler(get_started, ['wahltraud_start_payload']),
         PayloadHandler(share_bot, ['share_bot']),
