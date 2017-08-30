@@ -4,7 +4,7 @@ import logging
 from fuzzywuzzy import fuzz, process
 
 from backend.models import FacebookUser, Wiki, Push
-from ..fb import send_buttons, button_postback, send_text, quick_reply, send_generic, generic_element, button_web_url, button_share
+from ..fb import send_buttons, button_postback, send_text, quick_reply, send_generic, generic_element, button_web_url, button_share, send_attachment
 from .shared import get_pushes, schema, send_push
 
 logger = logging.getLogger(__name__)
@@ -171,3 +171,20 @@ def push_step(event, payload, **kwargs):
 
     push_ = Push.objects.get(id=push_id)
     send_push(sender_id, push_, state=next_state)
+
+
+def sunday_poll(event, **kwargs):
+    sender_id = event['sender']['id']
+    Data_Dir = Path(__file__).absolute().parent
+    send_text(sender_id,
+              'Hier das Ergebniss der aktuellen Sonntagsfrage von Infratest dimap vom 25.08.'
+              )
+
+    send_attachment(sender_id,
+                    Data_Dir/'sunday_poll/Sonntagsfrage_aktuell.png' ,
+                    type='image'
+                    )
+
+    send_text(sender_id,
+              'Quelle: https://www.infratest-dimap.de/umfragen-analysen/bundesweit/sonntagsfrage/'
+              )
