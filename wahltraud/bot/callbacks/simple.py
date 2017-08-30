@@ -98,7 +98,7 @@ def menue_candidates(event, **kwargs):
             "Aussagen untereinander vergleichen können, haben alle KandidatInnen dieselben, vorab bekannten Fragen gestellt bekommen. "
             "Es wurden alle Parteien angefragt – aber nicht alle haben mitgemacht. \nGründe dafür und weitere Informationen "
             "zu dem Projekt kannst du hier nachlesen: https://blog.wdr.de/ihrewahl/faq-wdr-kandidatencheck-bundestagswahl-2017/",
-              [quick_reply('Zeige Kandidaten', ['candidate_check_start'])
+              [quick_reply('Zeige Kandidaten', ['candidate_check_start'])]
               )
 
 def menue_manifesto(event, **kwargs):
