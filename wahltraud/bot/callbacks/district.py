@@ -126,7 +126,7 @@ def show_13(event, payload, **kwargs):
             locale.format_string('%s: %.1f%%', (party, result * 100))
             for party, result
             in sorted(election_13.items(), key=operator.itemgetter(1), reverse=True)
-            if show_all > 0 or result > 0.05
+            if show_all > 0.01 or result > 0.05
         ]
     )
 
