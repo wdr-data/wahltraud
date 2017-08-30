@@ -34,6 +34,8 @@ def show_word_apiai(event, parameters, **kwargs):
 
     if not word and party:
         show_electorial(event, {'show_electorial': party})
+    elif not word and not party:
+        manifesto_start(event, **kwargs)
     elif not party:
         show_word(event, word, 0, **kwargs)
     else:
