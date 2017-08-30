@@ -261,7 +261,7 @@ def show_manifesto(event, payload, **kwargs):
         )
     ]
 
-    if party == 'kompass:
+    if party == 'kompass':
         reply = """
             Du hast dich für ein digitales Schlagwort entschieden. Beim Wahlkompass-Digitales, kannst du alle Wahlprogramme nach digitalen Themen durchsuchen und direkt vergleichen:\n
             {link}
