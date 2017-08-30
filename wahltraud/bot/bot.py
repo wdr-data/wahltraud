@@ -99,7 +99,7 @@ def make_event_handler():
                 text = message.get('text')
                 ref = message.get('ref')
 
-                if ref is no None:
+                if ref is not None:
                     logging.info('Bot wurde geteilt: ' + ref)
 
                 if (text is not None
