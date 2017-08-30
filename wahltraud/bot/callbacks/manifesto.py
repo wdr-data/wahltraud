@@ -235,7 +235,7 @@ def show_paragraph(event, payload, **kwargs):
             1,
             quick_reply(
                 'Wahlkompass-Digitales',
-                {'show_manifesto': 'kompass', 'party': 'kompass'}
+                {'show_manifesto': word, 'party': party}
             )
         )
 
@@ -261,7 +261,7 @@ def show_manifesto(event, payload, **kwargs):
         )
     ]
 
-    if party == 'kompass':
+    if link in get_digital_words():
         reply = """
             Du hast dich für ein digitales Schlagwort entschieden. Beim Wahlkompass-Digitales, kannst du alle Wahlprogramme nach digitalen Themen durchsuchen und direkt vergleichen:\n
             {link}
