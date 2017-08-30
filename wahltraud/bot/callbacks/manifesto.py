@@ -32,10 +32,11 @@ def show_word_apiai(event, parameters, **kwargs):
     word = parameters.get('thema')
     party = parameters.get('partei')
 
-    if not word and party:
-        show_electorial(event, {'show_electorial': party})
-    elif not word and not party:
+
+    if not word and not party:
         manifesto_start(event, **kwargs)
+    elif not word:
+         show_electorial(event, {'show_electorial': party})
     elif not party:
         show_word(event, word, 0, **kwargs)
     else:
@@ -69,7 +70,8 @@ def show_word(event, word, offset, **kwargs):
         party, seg = next(iter(segs.items()))
         send_buttons(
             sender_id,
-            'Das Wort {word} kommt nur im Wahlprogramm der Partei "{party}" vor.'.format(
+            'Das Wort "{word}" kommt nur im Wahlprogramm der Partei "{party}" vor.'.format(
+                word=word,
                 party=party_abbr[party],
                 n=seg['count'],
                 share=locale.format('%.2f', seg['share'] * 100),
