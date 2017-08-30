@@ -263,7 +263,8 @@ def show_manifesto(event, payload, **kwargs):
 
     if link in get_digital_words():
         reply = """
-            Du hast dich für ein digitales Schlagwort entschieden. Beim Wahlkompass-Digitales, kannst du alle Wahlprogramme nach digitalen Themen durchsuchen und direkt vergleichen:\n
+            Du hast dich für ein Schlagwort entschieden, welches mit der Digitalisierung in Zusammenhang steht.
+            Beim Wahlkompass-Digitales, kannst du alle Wahlprogramme nach digitalen Themen durchsuchen und direkt vergleichen:\n
             {link}
             """.format(
                 link="http://wahlkompass-digitales.de/")
