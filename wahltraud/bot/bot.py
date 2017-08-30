@@ -93,14 +93,16 @@ def make_event_handler():
         logger.debug(messaging_events)
 
         for event in messaging_events:
+            referral = event.get('referral')
+
+            if referral:
+                ref = referral.get('ref')
+                logging.info('Bot wurde geteilt: ' + ref)
+
             message = event.get('message')
 
             if message:
                 text = message.get('text')
-                ref = message.get('ref')
-
-                if ref is not None:
-                    logging.info('Bot wurde geteilt: ' + ref)
 
                 if (text is not None
                     and event.get('postback') is None
