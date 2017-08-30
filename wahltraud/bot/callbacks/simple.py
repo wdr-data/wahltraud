@@ -29,6 +29,16 @@ Ich erkläre dir gerne, was du mit mir tun kannst. Aber wenn du magst, kannst ud
                     button_postback('Erklär mal...', ['about'])
                 ])
 
+def about(event, **kwargs):
+    sender_id = event['sender']['id']
+    reply = "Erfahre alles über Wahltrauds Funktionen. Wähle ein Thema über das du mehr erfahren möchtest."
+    send_buttons(sender_id, reply,
+                buttons = [
+                    button_postback("Kandidatencheck", ['menue_candidates']),
+                    button_postback("Wahlprogramme", ['menue_manifesto']),
+                    button_postback("Daten", ['menue_data'])
+                ])
+
 def push(event, **kwargs):
     sender_id = event['sender']['id']
     data = get_pushes()
