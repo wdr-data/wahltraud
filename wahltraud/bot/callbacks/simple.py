@@ -177,6 +177,18 @@ def push_step(event, payload, **kwargs):
 def sunday_poll(event, **kwargs):
     sender_id = event['sender']['id']
     Data_Dir = Path(__file__).absolute().parent
+
+    quick_replies = [
+        quick_reply(
+            'infratest dimap',
+            ['menue_data']
+        ),
+        quick_reply(
+            'Info Parteien',
+            {'show_parties': 'etabliert'}
+        )
+    ]
+
     send_text(sender_id,
               'Hier das Ergebniss der aktuellen Sonntagsfrage von Infratest dimap vom 25.08.'
               )
@@ -187,5 +199,7 @@ def sunday_poll(event, **kwargs):
                     )
 
     send_text(sender_id,
-              'Quelle: https://www.infratest-dimap.de/umfragen-analysen/bundesweit/sonntagsfrage/'
+              'Die Sonntagsfrage ist natürlich nicht das Ergebniss der Bundestagswahl.'
+              ' Sie liefern aber einen guten Anhaltspunkt in Welche Richtung es gehen wird.',
+              quick_replies
               )
