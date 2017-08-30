@@ -54,7 +54,7 @@ def select_state(event, payload, **kwargs):
                 'select_state': party,
                 'more': True
             }))
-    else:
+    elif more:
         options = options[8:]
         options.insert(0, quick_reply('⬅️️️', {'select_state': party}))
 
