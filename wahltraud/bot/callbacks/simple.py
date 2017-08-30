@@ -192,11 +192,11 @@ def sunday_poll(event, **kwargs):
     send_text(sender_id,
               'Hier das Ergebniss der aktuellen Sonntagsfrage von Infratest dimap vom 25.08.'
               )
-
+    """
     send_attachment(sender_id,
                     Data_Dir/'sunday_poll/Sonntagsfrage_aktuell.jpg' ,
                     type='image'
-                    )
+                    )"""
 
     send_text(sender_id,
               'Die Sonntagsfrage ist natürlich nicht das Ergebniss der Bundestagswahl.'
