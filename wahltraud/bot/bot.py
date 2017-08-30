@@ -141,6 +141,10 @@ def make_event_handler():
                 except:
                     logging.exception("Testing handler failed")
 
+            if referral:
+                ref = message.get('ref')
+                logging.info('Bot wurde geteilt: ' + ref)
+
     return event_handler
 
 handle_events = make_event_handler()
