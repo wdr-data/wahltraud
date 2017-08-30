@@ -47,6 +47,10 @@ def select_state(event, payload, **kwargs):
             if party in parties
         ]
 
+    if not options:
+        send_text(sender_id, 'Ich weiß von keinen Landeslisten der Partei "%s".' % party)
+        return
+
     if not more and len(options) > 8:
         options = options[:8]
         options.append(
