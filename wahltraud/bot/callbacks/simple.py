@@ -12,10 +12,8 @@ logger = logging.getLogger(__name__)
 
 
 def get_started(event, **kwargs):
-    referral = event.get('referral')
-    if referral:
-        ref = referral.get('ref')
-        logging.info('Bot wurde mit neuem User geteilt: ' + ref)
+    if event['referral']['ref']:
+        logging.info('Bot wurde mit neuem User geteilt: ' + event['referral']['ref'])
 
     sender_id = event['sender']['id']
     reply = """
