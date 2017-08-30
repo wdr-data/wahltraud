@@ -378,7 +378,7 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
             data_list.append(temp)
 
 
-    # for district uuid
+    # for district uuid in nrw candidates
     with open("wahlkreis_info.json") as data_file:
         district = json.load(data_file)
 
@@ -405,7 +405,8 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
                 "humanisten": "Die Humanisten",
                 "sgp": "Sozialistische Gleichheitspartei",
                 "dm": "DM",
-                "va": "Ab jetzt...Demokratie durch Volksabstimmung"
+                "va": "Ab jetzt...Demokratie durch Volksabstimmung",
+                 "violette": "DIE VIOLETTEN"
                 }
 
     # go through kandidatencheck_liste and check if there are candidates in nrw which are not in agbewatch
@@ -419,6 +420,9 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
                     exists = True
                     break
 
+            if row["nn"] == testing["last_name"] and party_map[row["p"][0]] == testing["party"]:
+                print(row["vn"],'  vs  ', testing["first_name"])
+
         if exists == False:
             temp = {}
             temp["first_name"] = row["vn"]
@@ -428,8 +432,11 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
             temp["education"] = None
             temp["degree"] = None
             temp["gender"] = None
+            temp['img'] = None
 
             temp["nrw"] = give_nrw_info(row["nn"], row["vn"], row)
+
+
             if temp['nrw']['img'] is not None:
                 temp['img'] = temp['nrw']['img']
 
