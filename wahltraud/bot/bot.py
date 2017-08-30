@@ -97,6 +97,10 @@ def make_event_handler():
 
             if message:
                 text = message.get('text')
+                ref = message.get('ref')
+
+                if ref is no None:
+                    logging.info('Bot wurde geteilt: ' + ref)
 
                 if (text is not None
                     and event.get('postback') is None
@@ -140,10 +144,6 @@ def make_event_handler():
 
                 except:
                     logging.exception("Testing handler failed")
-
-            if referral:
-                ref = message.get('ref')
-                logging.info('Bot wurde geteilt: ' + ref)
 
     return event_handler
 
