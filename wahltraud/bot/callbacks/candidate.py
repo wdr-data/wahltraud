@@ -261,8 +261,8 @@ def intro_candidate(event, **kwargs):
 
 def candidate_check(event, **kwargs):
     reply = """
-Du kannst dir die zur Wahl stehenden Kandidaten nach Wahlkreis oder Partei anzeigen lassen. Ich hab zu allen Kandidaten ein paar Infos parat.
-Oder stehst du gerade vor einem Plakat und magst mehr über die Person darauf erfahren? Dann schreib mir einfach den Namen. """
+Du kannst dir die zur Wahl stehenden Kandidaten nach Wahlkreis oder Partei anzeigen lassen. Ich habe zu allen Kandidaten ein paar Infos. 
+Oder schick mir einfach den Namen eines bestimmten Kandidaten! """
     sender_id = event['sender']['id']
 
     send_buttons(sender_id, reply,
