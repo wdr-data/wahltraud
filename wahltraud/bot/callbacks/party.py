@@ -49,7 +49,7 @@ def show_party_options(event, payload, **kwargs):
 
     send_buttons(
         sender_id,
-        "Ich kann dich wie folgt über die Partei {party} ({party_short}) informieren.".format(
+        'Ich kann dich wie folgt über die Partei "{party}" ({party_short}) informieren.'.format(
             party=party_info['name'], party_short=party_info['short']),
         buttons=buttons
     )
@@ -135,6 +135,14 @@ def show_list_all(event, payload, **kwargs):
                                   'offset': offset + num_candidates})
     else:
         button = None
+
+    if not offset:
+        send_text(
+            sender_id,
+            'Hier eine alphabetische Liste aller Kandidaten der Partei "{party}". '
+            'Insgesamt kenne ich {nr_of_candidates} Kandidaten.'.format(
+                party=party, nr_of_candidates=len(candidates))
+        )
 
     send_list(sender_id, elements, button=button)
 
