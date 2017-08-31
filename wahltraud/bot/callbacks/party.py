@@ -1,6 +1,7 @@
 import logging
 from ..fb import send_buttons, button_postback, button_url,  send_text, send_list, list_element, quick_reply
-from ..data import by_party, party_list
+from ..data import by_party, party_list, party_candidates
+from .candidate import show_basics
 
 # Enable logging
 logger = logging.getLogger(__name__)
@@ -103,12 +104,39 @@ def show_party_candidates(event, payload, **kwargs):
 def show_list_all(event, payload, **kwargs):
     sender_id = event['sender']['id']
     party = payload['show_list_all']
-    party_info = by_party[party]
-    send_text(
-        sender_id,
-        "Hier sind bald alle 1000 Kandidaten der Partei \"{party}\" zu sehen.".format(
-            party=party_info['short'])
-    )
+    offset = payload.get('offset', 0)
+    candidates = party_candidates.get(party, [])
+
+    if len(candidates) == 1:
+        send_text(sender_id, 'Die Partei "%s" hat nur einen Kandidaten:' % party)
+        show_basics(sender_id, candidates[0]['uuid'])
+        return
+
+    num_candidates = 4
+
+    if len(candidates) - (offset + num_candidates) == 1:
+        num_candidates = 3
+
+    elements = [
+        list_element(
+            ' '.join(filter(bool, (candidate['degree'],
+                                   candidate['first_name'],
+                                   candidate['last_name']))),
+            subtitle="%s, Jahrgang %s" % (candidate['party'], candidate['age'] or 'unbekannt'),
+            buttons=[button_postback("Info", {'payload_basics': candidate['uuid']})],
+            image_url=candidate.get('img') or None
+        )
+        for candidate in candidates[offset:offset + num_candidates]
+    ]
+
+    if len(candidates) - offset > num_candidates:
+        button = button_postback("Mehr anzeigen",
+                                 {'show_list_all': party,
+                                  'offset': offset + num_candidates})
+    else:
+        button = None
+
+    send_list(sender_id, elements, button=button)
 
 
 def show_electorial(event, payload, **kwargs):

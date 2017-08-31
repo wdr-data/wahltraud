@@ -22,6 +22,7 @@ by_uuid = dict()
 by_party = defaultdict(set)
 
 state_lists = defaultdict(lambda: defaultdict(list))
+party_candidates = defaultdict(list)
 
 for candidate in candidate_list:
     by_first_name[candidate['first_name']].add(candidate['uuid'])
@@ -29,6 +30,8 @@ for candidate in candidate_list:
 
     if candidate.get('list_nr') is not None:
         state_lists[candidate['list_name']][candidate['party']].append(candidate)
+
+    party_candidates[candidate['party']].append(candidate)
 
     by_uuid[candidate['uuid']] = candidate
 
@@ -47,6 +50,11 @@ for party in party_list:
 for state in state_lists.values():
     for party in state.keys():
         state[party] = list(sorted(state[party], key=operator.itemgetter('list_nr')))
+
+for party in party_candidates.keys():
+    party_candidates[party] = list(sorted(
+        party_candidates[party], key=lambda c: (c['last_name'], c['first_name'], c['uuid'])))
+
 
 def random_candidate():
     return random.choice(candidate_list)
