@@ -208,7 +208,7 @@ def sunday_poll(event, **kwargs):
     ]
 
     send_text(sender_id,
-              'Hier das Ergebniss der aktuellen Sonntagsfrage von Infratest dimap vom 25. August.'
+              'Hier das Ergebnis der aktuellen Sonntagsfrage von Infratest dimap vom 25. August.'
               )
 
     send_attachment(
@@ -217,7 +217,6 @@ def sunday_poll(event, **kwargs):
     )
 
     send_text(sender_id,
-              'Die Sonntagsfrage ist natürlich nicht das Ergebniss der Bundestagswahl.'
-              ' Sie liefern aber einen guten Anhaltspunkt in welche Richtung es wahrscheinlich gehen wird.',
+              'Wenn du etwas zu einer bestimmten Partei wissen möchtest, gib einfach ihren Namen ein.',
               quick_replies
               )
