@@ -198,7 +198,7 @@ def push_breaking():
 
 
 schedule.every(30).seconds.do(push_breaking)
-schedule.every().day.at("18:00").do(push_notification)
+schedule.every().day.at("18:20").do(push_notification)
 #schedule.every().day.at("08:00").do(push_notification)
 
 
