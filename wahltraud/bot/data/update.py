@@ -10,9 +10,9 @@ import re
 
 def update():
 
-    update_abgewatch = False
+    update_abgewatch = True
     update_alle = True
-    update_wahlkreis = False
+    update_wahlkreis = True
 
 
 
@@ -37,7 +37,7 @@ def update():
     if update_alle == True:
     # create all_kandidaten
         alle_kandidaten_json = "alle_kandidaten.json"
-        nrw_kandidatencheck_json= "kandidatencheck_erweitert_2508.json"
+        nrw_kandidatencheck_json= "kandidatencheck_erweitert_0109.json"
 
         print("update alle_kandidaten")
         abgewatch_to_alle(abgewatch_data_file, nrw_kandidatencheck_json, alle_kandidaten_json)
