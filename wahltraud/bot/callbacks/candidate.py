@@ -105,7 +105,12 @@ def show_basics(sender_id, candidate_uuid):
         ]
 
         if not candidate['nrw']['pledges'] and candidate['nrw']['interests'] is None:
-            buttons.insert(0, button_postback("Info Wahlkreis " + candidate_district_id, {'show_district': district_uuid}))
+            if district_uuid:
+                buttons.insert(
+                    0,
+                    button_postback("Info Wahlkreis " + candidate_district_id,
+                                    {'show_district': district_uuid})
+                )
         else:
             buttons.insert(0, button_postback("Mehr Info", {'more_infos_nrw': candidate['uuid']}))
 
@@ -122,10 +127,17 @@ def show_basics(sender_id, candidate_uuid):
         profession = candidate['profession']
         if profession:
             profession = profession.replace('MdB', 'Mitglied des Bundestags')
+
         buttons = [
-            button_postback("Info Wahlkreis " + candidate_district_id, {'show_district': district_uuid}),
             button_postback("Weitere Kandidaten", ['intro_candidate'])
         ]
+
+        if district_uuid:
+            buttons.insert(
+                0,
+                button_postback("Info Wahlkreis " + candidate_district_id,
+                                {'show_district': district_uuid})
+            )
 
         if candidate['img']:
             send_attachment(sender_id, candidate['img'], type='image')
@@ -157,8 +169,10 @@ def no_video_to_show(event,payload,**kwargs):
     candidate_uuid = payload['no_video_to_show']
     candidate = by_uuid[candidate_uuid]
     district_uuid = candidate['district_uuid']
-    district = by_uuid[district_uuid]
-    candidate_district_id = district['district_id']
+
+    if district_uuid:
+        district = by_uuid[district_uuid]
+        candidate_district_id = district['district_id']
 
     logger.info('Kandidatencheck - keine video von {name} von Partei {party}'.format(
         name=' '.join(filter(bool, (candidate['degree'],
@@ -167,9 +181,15 @@ def no_video_to_show(event,payload,**kwargs):
         party=candidate['party']))
 
     buttons = [
-        button_postback("Info Wahlkreis " + candidate_district_id, {'show_district': candidate['district_uuid']}),
         button_postback("Weitere Kandidaten", ['intro_candidate'])
     ]
+
+    if district_uuid:
+        buttons.insert(
+            0,
+            button_postback("Info Wahlkreis " + candidate_district_id,
+                            {'show_district': district_uuid})
+        )
 
     send_buttons(sender_id, """
     Leider gibt es von {first_name} {last_name} (noch) kein Interview. 
