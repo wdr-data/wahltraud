@@ -204,7 +204,7 @@ def more_infos_nrw(event, payload, **kwargs):
         button_postback("Weitere Kandidaten", ['intro_candidate'])
     ]
 
-    if 'district_uuid' is not None:
+    if district_uuid is not None:
         district = by_uuid[district_uuid]
         candidate_district_id = district['district_id']
         buttons.insert(0,button_postback("Info Wahlkreis " + candidate_district_id, {'show_district': district_uuid}))
