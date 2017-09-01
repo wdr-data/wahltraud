@@ -187,8 +187,7 @@ def more_infos_nrw(event, payload, **kwargs):
     sender_id = event['sender']['id']
     candidate_uuid = payload['more_infos_nrw']
     candidate = by_uuid[candidate_uuid]
-
-
+    district_uuid = candidate['district_uuid']
 
     logger.info('Kandidatencheck - mehr Infos zu {name} von Partei {party}'.format(
         name=' '.join(filter(bool, (candidate['degree'],
@@ -206,7 +205,6 @@ def more_infos_nrw(event, payload, **kwargs):
     ]
 
     if 'district_uuid':
-        district_uuid = candidate['district_uuid']
         district = by_uuid[district_uuid]
         candidate_district_id = district['district_id']
         buttons.insert(0,button_postback("Info Wahlkreis " + candidate_district_id, {'show_district': district_uuid}))
