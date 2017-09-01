@@ -107,7 +107,7 @@ def questions(event,**kwargs):
     sender_id = event['sender']['id']
 
     send_text(sender_id,
-              "Das Interview stoppte nach vier Minuten. Theoretisch hätten diese 23 Fragen beantwortet werden können:\n"
+              "Die Interviews stoppen nach exakt vier Minuten. Theoretisch hätten diese 22+6 Fragen beantwortet werden können:\n"
               "https://blog.wdr.de/ihrewahl/die-fragen-stehen-fest/",
               [quick_reply('Zeige Kandidaten', ['candidate_check_start'])]
               )
