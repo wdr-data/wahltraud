@@ -279,7 +279,7 @@ def show_video(event, payload, **kwargs):
 
     send_text(
         sender_id,
-        "WDR-Kandidatencheck Interview von {first_name}{last_name} (4 Minuten).".format(
+        "WDR-Kandidatencheck Interview von {first_name} {last_name}.".format(
             first_name = candidate['first_name'],
             last_name = candidate['last_name']
         ),
