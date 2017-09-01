@@ -210,8 +210,7 @@ def more_infos_nrw(event, payload, **kwargs):
         buttons.insert(0,button_postback("Info Wahlkreis " + candidate_district_id, {'show_district': district_uuid}))
 
     if candidate['nrw']['video'] is not None:
-        video_url = candidate['nrw']['video']
-        buttons.insert(0, button_postback("Interview", {'show_video': candidate}))
+        buttons.insert(0, button_postback("Interview", {'show_video': candidate_uuid}))
 
     if candidate['nrw']['interests'] is None and pledges is not None:
         send_buttons(sender_id, """
@@ -247,7 +246,8 @@ Die Themen von {first_name} {last_name} in der kommenden Legislaturperiode sind 
 
 def show_video(event, payload, **kwargs):
     sender_id = event['sender']['id']
-    candidate = payload['show_video']
+    candidate_uuid = payload['show_video']
+    candidate = by_uuid[candidate_uuid]
     party = candidate['party']
     district_uuid = candidate['district_uuid']
 
