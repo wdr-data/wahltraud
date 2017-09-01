@@ -1,7 +1,7 @@
 import logging
 import operator
 
-from ..fb import send_buttons, button_postback, send_text, send_attachment, send_list, list_element
+from ..fb import send_buttons, button_postback, send_text, send_attachment, send_list, list_element, quick_reply
 from ..data import by_uuid, find_candidates, random_candidate
 
 logger = logging.getLogger(__name__)
@@ -211,7 +211,7 @@ def more_infos_nrw(event, payload, **kwargs):
 
     if candidate['nrw']['video'] is not None:
         video_url = candidate['nrw']['video']
-        buttons.insert(0, button_postback("Interview", {'show_video': video_url}))
+        buttons.insert(0, button_postback("Interview", {'show_video': candidate}))
 
     if candidate['nrw']['interests'] is None and pledges is not None:
         send_buttons(sender_id, """
@@ -244,14 +244,46 @@ Die Themen von {first_name} {last_name} in der kommenden Legislaturperiode sind 
             interests=candidate['nrw']['interests']
         ), buttons)
 
+
 def show_video(event, payload, **kwargs):
     sender_id = event['sender']['id']
-    url = payload['show_video']
+    candidate = payload['show_video']
+    party = candidate['party']
+    district_uuid = candidate['district_uuid']
 
-    logger.info('Kandidatencheck Video: {url}'.format(url=url))
+    video_url = candidate['nrw']['video']
 
-    send_attachment(sender_id, url, type='video')
-    send_text(sender_id,'test')
+    logger.info('Kandidatencheck Video: {url}'.format(url=video_url))
+
+    send_attachment(sender_id, video_url, type='video')
+
+    quick_replies = [
+        quick_reply(
+            'Fragen', ['fragen']
+                    ),
+        quick_reply(
+            'Info ' + party,
+            {'show_party_options': party}
+        )
+    ]
+
+    if district_uuid is not None:
+        district = by_uuid[district_uuid]
+        candidate_district_id = district['district_id']
+        quick_replies.insert(
+            2,
+            quick_reply(
+                "Info Wahlkreis " + candidate_district_id,
+                {'show_district': district_uuid}
+            )
+        )
+
+    send_text(
+        sender_id,
+        "",
+        quick_replies)
+
+
 
 def intro_candidate(event, **kwargs):
     sender_id = event['sender']['id']
