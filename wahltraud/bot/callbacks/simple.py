@@ -208,12 +208,12 @@ def sunday_poll(event, **kwargs):
     ]
 
     send_text(sender_id,
-              'Hier das Ergebnis der aktuellen Sonntagsfrage von Infratest dimap vom 25. August.'
+              'Hier das Ergebnis der aktuellen Sonntagsfrage von infratest dimap vom 25. August.'
               )
 
     send_attachment(
         sender_id,
-        'https://infos.data.wdr.de:8080/static/bot/sonntagsfrage_aktuell.jpg'
+        'https://infos.data.wdr.de:8080/static/bot/Sonntagsfrage_aktuell.jpg'
     )
 
     send_text(sender_id,
