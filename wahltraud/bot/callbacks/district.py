@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 def intro_district(event, **kwargs):
     sender_id = event['sender']['id']
-    send_text(sender_id, "Schick mir eine Postleizahl und ich sage dir, wer in dem Wahlkreis zur Wahl steht.")
+    send_text(sender_id, "Schick mir eine Postleitzahl und ich sage dir, wer in dem Wahlkreis zur Wahl steht.")
 
 
 def find_district(event, parameters, **kwargs):
