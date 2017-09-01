@@ -221,7 +221,7 @@ def sunday_poll(event, **kwargs):
     ]
 
     send_text(sender_id,
-              'Hier das Ergebnis der aktuellen Sonntagsfrage von infratest dimap vom 25. August.'
+              'Hier das Ergebnis der aktuellen Sonntagsfrage von infratest dimap vom 31. August.'
               )
 
     send_attachment(
