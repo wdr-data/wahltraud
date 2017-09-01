@@ -68,7 +68,7 @@ for party, candidates in party_candidates.items():
     frm = None
     lst = list()
 
-    chunk_size = int(len(candidates) / 11) + 1
+    chunk_size = max(int(len(candidates) / 11) + 1, 4)
     grouped = groupby(candidates, key=(lambda x: x['last_name'][0].upper()))
     num_groups = len(list(grouped))
     grouped = groupby(candidates, key=(lambda x: x['last_name'][0].upper()))  # don't remove!
