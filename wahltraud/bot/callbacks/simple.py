@@ -213,7 +213,7 @@ def sunday_poll(event, **kwargs):
 
     send_attachment(
         sender_id,
-        'https://infos.data.wdr.de:8080/static/bot/Sonntagsfrage_aktuell.jpg'
+        'https://infos.data.wdr.de:8080/static/bot/sonntagsfrage_aktuell.jpg'
     )
 
     send_text(sender_id,
