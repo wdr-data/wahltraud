@@ -1,6 +1,6 @@
 import logging
 from ..fb import send_buttons, button_postback, button_url,  send_text, send_list, list_element, quick_reply
-from ..data import by_party, party_list, party_candidates
+from ..data import by_party, party_list, party_candidates_grouped
 from .candidate import show_basics
 
 # Enable logging
@@ -105,12 +105,50 @@ def show_list_all(event, payload, **kwargs):
     sender_id = event['sender']['id']
     party = payload['show_list_all']
     offset = payload.get('offset', 0)
-    candidates = party_candidates.get(party, [])
+    group = payload.get('group')
 
-    if len(candidates) == 1:
-        send_text(sender_id, 'Die Partei "%s" hat nur einen Kandidaten:' % party)
-        show_basics(sender_id, candidates[0]['uuid'])
+    candidates_grouped = party_candidates_grouped[party]
+
+    if len(candidates_grouped) > 1 and not group:
+        options = [
+            quick_reply(group, {'show_list_all': party, 'group': group})
+            for group in candidates_grouped
+        ]
+        send_text(
+            sender_id,
+            'Die Liste ist nach Nachnamen sortiert. Bitte wählen:',
+            quick_replies=options
+        )
         return
+
+    elif len(candidates_grouped) == 1 and not group:
+        candidates = next(iter(candidates_grouped.values()))
+        group = next(iter(candidates_grouped.keys()))
+
+        if len(candidates) == 1:
+            send_text(sender_id, 'Die Partei "%s" hat nur einen Kandidaten:' % party)
+            show_basics(sender_id, candidates[0]['uuid'])
+            return
+
+    elif group:
+        candidates = candidates_grouped[group]
+
+        if len(candidates) == 1:
+            send_text(
+                sender_id,
+                'Die Partei "%s" hat nur einen Kandidaten von %s:' % (party, group)
+            )
+            show_basics(sender_id, candidates[0]['uuid'])
+            options = [
+                quick_reply(group, {'show_list_all': party, 'group': group})
+                for group in candidates_grouped
+            ]
+            send_text(
+                sender_id,
+                'Möchtest du noch mehr Kandidaten sehen?',
+                quick_replies=options
+            )
+            return
 
     num_candidates = 4
 
@@ -132,16 +170,17 @@ def show_list_all(event, payload, **kwargs):
     if len(candidates) - offset > num_candidates:
         button = button_postback("Mehr anzeigen",
                                  {'show_list_all': party,
+                                  'group': group,
                                   'offset': offset + num_candidates})
     else:
-        button = None
+        button = button_postback("Zurück", {'show_list_all': party})
 
     if not offset:
         send_text(
             sender_id,
-            'Hier eine alphabetische Liste aller Kandidaten der Partei "{party}". '
-            'Insgesamt kenne ich {nr_of_candidates} Kandidaten.'.format(
-                party=party, nr_of_candidates=len(candidates))
+            'Hier eine alphabetische Liste der Partei "{party}" von {group}, '
+            'sortiert nach Nachname.'.format(
+                party=party, group=group)
         )
 
     send_list(sender_id, elements, button=button)

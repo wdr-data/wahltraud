@@ -5,6 +5,7 @@ import logging
 from pathlib import Path
 from collections import defaultdict
 import operator
+from itertools import groupby
 
 logger = logging.getLogger(__name__)
 DATA_DIR = Path(__file__).absolute().parent
@@ -23,6 +24,7 @@ by_party = defaultdict(set)
 
 state_lists = defaultdict(lambda: defaultdict(list))
 party_candidates = defaultdict(list)
+party_candidates_grouped = defaultdict(dict)
 
 for candidate in candidate_list:
     by_first_name[candidate['first_name']].add(candidate['uuid'])
@@ -53,7 +55,35 @@ for state in state_lists.values():
 
 for party in party_candidates.keys():
     party_candidates[party] = list(sorted(
-        party_candidates[party], key=lambda c: (c['last_name'], c['first_name'], c['uuid'])))
+        party_candidates[party],
+        key=lambda c: (c['last_name'].lower(), c['first_name'].lower(), c['uuid'])))
+
+for party, candidates in party_candidates.items():
+    '''
+    party_candidates_grouped[party] = {
+        k: list(v)
+        for k, v in groupby(candidates, key=(lambda x: x['last_name'][0].upper()))
+    }
+    '''
+    frm = None
+    lst = list()
+
+    chunk_size = int(len(candidates) / 11) + 1
+    grouped = groupby(candidates, key=(lambda x: x['last_name'][0].upper()))
+    num_groups = len(list(grouped))
+    grouped = groupby(candidates, key=(lambda x: x['last_name'][0].upper()))  # don't remove!
+
+    for i, (k, v) in enumerate(grouped):
+        if not frm:
+            frm = k
+
+        lst.extend(v)
+        to = k
+
+        if len(lst) >= chunk_size or num_groups - 1 == i:
+            party_candidates_grouped[party]['%s - %s' % (frm, to)] = lst
+            frm = None
+            lst = list()
 
 
 def random_candidate():
