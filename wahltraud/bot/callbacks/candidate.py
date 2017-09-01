@@ -110,8 +110,7 @@ def show_basics(sender_id, candidate_uuid):
             buttons.insert(0, button_postback("Mehr Info", {'more_infos_nrw': candidate['uuid']}))
 
         if candidate['nrw']['video'] is not None:
-            video_url = candidate['nrw']['video']
-            buttons.insert(0, button_postback("Interview", {'show_video': video_url}))
+            buttons.insert(0, button_postback("Interview", {'show_video': candidate_uuid}))
         else:
             buttons.insert(0, button_postback("Interview", {'no_video_to_show': candidate['uuid']}))
 
@@ -258,9 +257,9 @@ def show_video(event, payload, **kwargs):
     send_attachment(sender_id, video_url, type='video')
 
     quick_replies = [
-        quick_reply(
-            'Fragen', ['fragen']
-                    ),
+        #quick_reply(
+        #    'Fragen', ['fragen']
+        #            ),
         quick_reply(
             'Info ' + party,
             {'show_party_options': party}
