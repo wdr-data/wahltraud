@@ -50,7 +50,7 @@ def get_breaking():
 
 
 def schema(data, user_id):
-    reply = "Heute haben wir folgende Themen für dich:"
+    reply = "Hier kommt dein tägliches Update zur Bundestagswahl"
     send_text(user_id, reply)
     reply = ""
     first_id = None
