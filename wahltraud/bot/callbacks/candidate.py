@@ -257,9 +257,9 @@ def show_video(event, payload, **kwargs):
     send_attachment(sender_id, video_url, type='video')
 
     quick_replies = [
-        #quick_reply(
-        #    'Fragen', ['fragen']
-        #            ),
+        quick_reply(
+            'WDR-Kandidatencheck', ['menue_candidates']
+                    ),
         quick_reply(
             'Info ' + party,
             {'show_party_options': party}
@@ -270,7 +270,7 @@ def show_video(event, payload, **kwargs):
         district = by_uuid[district_uuid]
         candidate_district_id = district['district_id']
         quick_replies.insert(
-            2,
+            1,
             quick_reply(
                 "Info Wahlkreis " + candidate_district_id,
                 {'show_district': district_uuid}
