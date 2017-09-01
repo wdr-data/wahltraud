@@ -99,8 +99,20 @@ def menue_candidates(event, **kwargs):
             "Hier gibt’s Informationen zum kompletten Projekt:\n"
             "https://blog.wdr.de/ihrewahl/faq-wdr-kandidatencheck-bundestagswahl-2017\n"
 "           Wenn du mir eine Postleitzahl aus NRW schreibst, kann ich dir alle verfügbaren Kandidatenchecks aus dem dazugehörigen Wahlkreis zeigen.",
+              [quick_reply('Zeige Kandidaten', ['candidate_check_start']),
+               quick_reply('Fragen', ['questions'])]
+              )
+
+def questions(event,**kwargs):
+    sender_id = event['sender']['id']
+
+    send_text(sender_id,
+              "Das Interview stoppte nach vier Minuten. Theoretisch hätten diese 23 Fragen beantwortet werden können:\n"
+              "https://blog.wdr.de/ihrewahl/die-fragen-stehen-fest/",
               [quick_reply('Zeige Kandidaten', ['candidate_check_start'])]
               )
+
+
 
 def menue_manifesto(event, **kwargs):
     sender_id = event['sender']['id']
@@ -221,3 +233,5 @@ def sunday_poll(event, **kwargs):
               'Wenn du etwas zu einer bestimmten Partei wissen möchtest, gib einfach ihren Namen ein.',
               quick_replies
               )
+
+
