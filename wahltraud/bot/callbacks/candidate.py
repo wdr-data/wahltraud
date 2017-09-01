@@ -187,8 +187,8 @@ def more_infos_nrw(event, payload, **kwargs):
     sender_id = event['sender']['id']
     candidate_uuid = payload['more_infos_nrw']
     candidate = by_uuid[candidate_uuid]
-    district_uuid = candidate['district_uuid']
-    district = by_uuid[district_uuid]
+
+
     candidate_district_id = district['district_id']
 
     logger.info('Kandidatencheck - mehr Infos zu {name} von Partei {party}'.format(
@@ -203,9 +203,13 @@ def more_infos_nrw(event, payload, **kwargs):
         pledges = ['- ' + line for line in candidate['nrw']['pledges']]
 
     buttons = [
-        button_postback("Info Wahlkreis " + candidate_district_id, {'show_district': district_uuid}),
         button_postback("Weitere Kandidaten", ['intro_candidate'])
     ]
+
+    if 'district_uuid':
+        district_uuid = candidate['district_uuid']
+        district = by_uuid[district_uuid]
+        buttons.insert(0,button_postback("Info Wahlkreis " + candidate_district_id, {'show_district': district_uuid}))
 
     if candidate['nrw']['video'] is not None:
         video_url = candidate['nrw']['video']
