@@ -112,7 +112,7 @@ def show_list_all(event, payload, **kwargs):
     if len(candidates_grouped) > 1 and not group:
         options = [
             quick_reply(group, {'show_list_all': party, 'group': group})
-            for group in candidates_grouped
+            for group in sorted(candidates_grouped)
         ]
         send_text(
             sender_id,
@@ -141,7 +141,7 @@ def show_list_all(event, payload, **kwargs):
             show_basics(sender_id, candidates[0]['uuid'])
             options = [
                 quick_reply(group, {'show_list_all': party, 'group': group})
-                for group in candidates_grouped
+                for group in sorted(candidates_grouped)
             ]
             send_text(
                 sender_id,
