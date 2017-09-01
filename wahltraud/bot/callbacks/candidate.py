@@ -251,6 +251,7 @@ def show_video(event, payload, **kwargs):
     logger.info('Kandidatencheck Video: {url}'.format(url=url))
 
     send_attachment(sender_id, url, type='video')
+    send_text(sender_id,'test')
 
 def intro_candidate(event, **kwargs):
     sender_id = event['sender']['id']
