@@ -1,6 +1,6 @@
 import logging
 from ..fb import send_buttons, button_postback, button_url,  send_text, send_list, list_element, quick_reply
-from ..data import by_party, party_list, party_candidates_grouped
+from ..data import by_party, party_list, party_candidates_grouped, by_uuid
 from .candidate import show_basics
 
 # Enable logging
@@ -54,14 +54,72 @@ def show_party_options(event, payload, **kwargs):
         buttons=buttons
     )
 
+def show_top_candidates(event, payload, **kwargs):
+    sender_id = event['sender']['id']
+    top_candidates = payload['show_top_candidates']
+
+    topa = by_uuid(top_candidates.pop(0))
+    topb = by_uuid(top_candidates.pop(0))
+
+    send_buttons(
+        sender_id,
+        "Die \"{party}\" hat diese Spitzenkandidaten nominiert?".format(
+            party=topa['party']),
+        [button_postback(
+            "{name}".format(
+                name=' '.join(filter(bool, (topa['degree'],
+                                    topa['first_name'],
+                                    topa['last_name'])))),
+            {'payload_basics': topa}
+        ),
+            button_postback(
+                "{name}".format(
+                    name=' '.join(filter(bool, (topb['degree'],
+                                                topb['first_name'],
+                                                topb['last_name'])))),
+                    {'payload_basics': topb}
+            )
+        ]
+    )
+
 
 def show_party_candidates(event, payload, **kwargs):
     sender_id = event['sender']['id']
     party = payload['show_party_candidates']
     party_info = by_party[party].copy()  # Make copy so we can .pop() without destroying data
 
-    select_state_button = button_postback("Nach Bundesland", {'select_state': party})
+    buttons = [button_postback(
+                                "Nach Bundesland",
+                                {'select_state': party}
+                            ),
+                            button_postback(
+                                "ALLE (alphabetisch)",
+                                {'show_list_all': party}
+                            )
+                    ]
 
+    # choose spitzenkandidat wording
+    if party_info['top_candidates'] is not None:
+        if len(party_info['top_candidates']) == 2:
+            buttons.insert(
+                0,
+                button_postback("Spitzenkandidaten",
+                                {'show_top_candidates': party_info['top_candidates']}))
+        else:
+            top_candidate = by_uuid(party_info['top_candidates'].pop(0))
+            if top_candidate['gender'] == 'female':
+                buttons.insert(
+                    0,
+                    button_postback("Spitzenkandidatin",
+                                {'payload_basics': top_candidate}))
+
+            else:
+                buttons.insert(
+                    0,
+                    button_postback("Spitzenkandidat",
+                                    {'payload_basics': top_candidate}))
+
+    '''
     if party_info['top_candidates'] is not None:
         if len(party_info['top_candidates']) == 1:
             buttons = [
@@ -92,10 +150,10 @@ def show_party_candidates(event, payload, **kwargs):
             select_state_button,
             button_postback("ALLE (alphabetisch)", {'show_list_all': party}),
         ]
-
+    '''
     send_buttons(
         sender_id,
-        "Wie darf ich dir die Kandidaten der Partei \"{party}\" präsentieren?".format(
+        "Wie magst du nach einem Kandidaten der Partei \"{party}\" suchen?".format(
             party=party_info['short']),
         buttons
     )
