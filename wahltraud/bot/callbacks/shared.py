@@ -50,8 +50,8 @@ def get_breaking():
 
 
 def schema(data, user_id):
-    # reply = "Hier kommt dein tägliches Update zur Bundestagswahl"
-    # send_text(user_id, reply)
+    reply = "Hier kommt dein tägliches Update zur Bundestagswahl"
+    send_text(user_id, reply)
     reply = ""
     first_id = None
 
@@ -132,11 +132,11 @@ def send_push(user_id, data, state='intro'):
         quick_replies = [more_button]
         send_text(user_id, reply, quick_replies=quick_replies)
 
-    else:
-        send_text(user_id, reply)
-        send_text(user_id, 'Das wars für heute!')
-        '''
-        if not data.breaking:
-            media = '327361671016000'
-            send_attachment_by_id(user_id, media, 'image')
-        '''
+    # else:
+        # send_text(user_id, reply)
+        # send_text(user_id, 'Das wars für heute!')
+        # '''
+        # if not data.breaking:
+        #     media = '327361671016000'
+        #     send_attachment_by_id(user_id, media, 'image')
+        # '''
