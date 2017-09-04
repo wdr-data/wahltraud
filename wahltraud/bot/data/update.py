@@ -421,6 +421,7 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
                     break
 
             if row["nn"] == testing["last_name"] and party_map[row["p"][0]] == testing["party"]:
+
                 print(row["vn"],'  vs  ', testing["first_name"])
 
         if exists == False:
