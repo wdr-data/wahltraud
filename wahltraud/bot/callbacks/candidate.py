@@ -316,7 +316,7 @@ def intro_candidate(event, **kwargs):
     send_buttons(sender_id, reply,
                  buttons=[button_postback('Wahlkreis (Direktkandidat)', ['intro_district']),
                           button_postback('Partei (Landeslisten)', ['intro_lists']),
-                          button_postback('Zufalls-KandidatIn', random_candidate(event,random_candidate()['uuid']))])
+                          button_postback('Zufalls-KandidatIn', ['show_random_candidate'])])
 
 
 def candidate_check(event, **kwargs):
@@ -335,11 +335,10 @@ Oder schick mir einfach den Namen eines bestimmten Kandidaten! """
     send_buttons(sender_id, reply,
                  buttons=[button_postback('Wahlkreis (Direktkandidat)', ['intro_district']),
                           button_postback('Partei (Landeslisten)', ['intro_lists']),
-                          button_postback('Zufalls-KandidatIn', random_candidate(event,random_candidate()['uuid']))])
+                          button_postback('Zufalls-KandidatIn', ['show_random_candidate'])])
 
 
-def random_candidate(event,uuid):
+def show_random_candidate(event,uuid):
     #sender_id = event['sender']['id']
-    payload = {}
-    payload['payload_basics'] = uuid
-    payload_basics(event, payload)
+
+    payload_basics(event, {'payload_basics': random_candidate()['uuid']})

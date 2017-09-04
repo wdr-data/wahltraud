@@ -74,7 +74,7 @@ def make_event_handler():
         PayloadHandler(candidate.more_infos_nrw, ['more_infos_nrw']),
         PayloadHandler(candidate.no_video_to_show, ['no_video_to_show']),
         PayloadHandler(candidate.show_video, ['show_video']),
-        PayloadHandler(candidate.random_candidate, ['random_candidate']),
+        PayloadHandler(candidate.random_candidate, ['show_random_candidate']),
         PayloadHandler(district.show_candidates, ['show_candidates']),
         ApiAiHandler(district.find_district, 'wahlkreis_finder'),
         PayloadHandler(district.show_district, ['show_district']),
