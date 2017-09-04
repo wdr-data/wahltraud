@@ -35,7 +35,10 @@ def update():
         abgeordnetenapi(parliament, kind_of_people , output_file_abgeordnetenwatch )
         print("update abgeordnetenwatch done")
 
-    if update_alle == True:
+    alle_kandidaten_json = "alle_kandidaten.json"
+    nrw_kandidatencheck_json = "kandidatencheck_erweitert_0109.json"
+
+    if update_alle == False:
     # create all_kandidaten
         alle_kandidaten_json = "alle_kandidaten.json"
         nrw_kandidatencheck_json= "kandidatencheck_erweitert_0109.json"
@@ -45,7 +48,7 @@ def update():
         print("update " + alle_kandidaten_json + " done")
 
     
-    if update_wahlkreis == False:
+    if update_wahlkreis == True:
         # create wahlkreis_info
         wahlkreis_info_json = "wahlkreis_info.json"
 
