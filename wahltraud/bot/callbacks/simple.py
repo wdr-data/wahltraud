@@ -193,10 +193,13 @@ def wiki(event, parameters, **kwargs):
         else:
             reply = match.output
 
-        if str(match.attachment_id):
+        if match.attachment_id:
             try:
                 send_attachment_by_id(
-                    user_id, str(match.attachment_id), type=guess_attachment_type(match.media))
+                    user_id,
+                    str(match.attachment_id),
+                    type=guess_attachment_type(str(match.media))
+                )
             except:
                 logging.exception('Sending attachment failed')
 
