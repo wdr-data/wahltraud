@@ -5,6 +5,7 @@ from datetime import datetime
 import numpy as np
 import pandas as pd
 import re
+from fuzzywuzzy import fuzz
 
 
 
@@ -26,7 +27,7 @@ def update():
     abgewatch_data_file = output_file_abgeordnetenwatch
 
 
-    if update_abgewatch == True:
+    if update_abgewatch == False:
         # make backup json
         date = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
         copyfile(output_file_abgeordnetenwatch, "abgeordnetenwatch_backup_"+date+".json")
@@ -44,7 +45,7 @@ def update():
         print("update " + alle_kandidaten_json + " done")
 
     
-    if update_wahlkreis == True:
+    if update_wahlkreis == False:
         # create wahlkreis_info
         wahlkreis_info_json = "wahlkreis_info.json"
 
@@ -414,7 +415,7 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
     for row in nrw["k"]:
         exists = False
 
-        for testing in data_list:
+        for index, testing in enumerate(data_list):
             if row["nn"] == testing["last_name"] and row["vn"] == testing["first_name"]:
                     # check if name already exists
                     exists = True
@@ -422,7 +423,14 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
 
             if row["nn"] == testing["last_name"] and party_map[row["p"][0]] == testing["party"]:
 
-                print(row["vn"],'  vs  ', testing["first_name"])
+                if fuzz.partial_ratio(row['vn'], testing['first_name']) > 85:
+                    print(row["vn"],'  vs  ', testing["first_name"], 'match',row["p"][0] )
+                    data_list.pop(index)
+
+                else:
+                    print(row["vn"],'  vs  ', testing["first_name"], 'no_match')
+                    exists = True
+
 
         if exists == False:
             temp = {}
