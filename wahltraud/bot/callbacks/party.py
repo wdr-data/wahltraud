@@ -18,7 +18,7 @@ def basics(event, parameters, **kwargs):
         send_buttons(
             sender_id,
             "Zur Wahl sind 42 Parteien vom Bundeswahlleiter zugelassen. "
-            "Über welche magst du dich näher informieren?",
+            "Die etablierten Parteien sind in mindestens einem Landtag und natürlich im Bundestag vertreten.",
             [
                 button_postback("Etablierte Parteien", {'show_parties': 'etabliert'}),
                 button_postback("Kleine Parteien", {'show_parties': 'klein'})
@@ -64,7 +64,7 @@ def show_top_candidates(event, payload, **kwargs):
 
     send_buttons(
         sender_id,
-        "Die \"{party}\" hat diese Spitzenkandidaten nominiert?".format(
+        "Die \"{party}\" hat folgende Spitzenkandidaten nominiert:".format(
             party=topa['party']),
         [button_postback(
             "{name}".format(
@@ -90,7 +90,7 @@ def show_party_candidates(event, payload, **kwargs):
     party_info = by_party[party].copy()  # Make copy so we can .pop() without destroying data
 
     buttons = [button_postback(
-                                "Nach Bundesland",
+                                "Landeslisten",
                                 {'select_state': party}
                             ),
                             button_postback(
@@ -121,38 +121,6 @@ def show_party_candidates(event, payload, **kwargs):
                     button_postback("Spitzenkandidat",
                                     {'payload_basics': top_candidate}))
 
-    '''
-    if party_info['top_candidates'] is not None:
-        if len(party_info['top_candidates']) == 1:
-            buttons = [
-                button_postback(
-                    "Spitzenkandidat",
-                    {'payload_basics': party_info['top_candidates'].pop(0)}
-                ),
-                select_state_button,
-                button_postback(
-                    "ALLE (alphabetisch)",
-                    {'show_list_all': party}
-                )
-            ]
-        else:
-            buttons = [
-                button_postback(
-                    "Spitzenkandidat A",
-                    {'payload_basics': party_info['top_candidates'].pop(0)}
-                ),
-                button_postback(
-                    "Spitzenkandidat B",
-                    {'payload_basics': party_info['top_candidates'].pop(0)}
-                ),
-                select_state_button,
-            ]
-    else:
-        buttons = [
-            select_state_button,
-            button_postback("ALLE (alphabetisch)", {'show_list_all': party}),
-        ]
-    '''
     send_buttons(
         sender_id,
         "Wie magst du nach einem Kandidaten der Partei \"{party}\" suchen?".format(
@@ -238,7 +206,7 @@ def show_list_all(event, payload, **kwargs):
     if not offset:
         send_text(
             sender_id,
-            'Hier eine alphabetische Liste der Partei "{party}" von {group}, '
+            'Hier die alphabetische Liste der Partei "{party}" von {group}, '
             'sortiert nach Nachname.'.format(
                 party=party, group=group)
         )
@@ -269,7 +237,7 @@ def show_electorial(event, payload, **kwargs):
     else:
         send_buttons(
             sender_id,
-            "Leider habe ich das Programm der Partei {party_short} nicht gelesen. ".format(
+            "Leider habe ich das Programm der Partei {party_short} (noch) nicht gelesen und kann keine Schlagwortsuche anbieten. ".format(
                 party_short=party_info['short']
             ),
             [
@@ -307,6 +275,6 @@ def show_parties(event, payload, **kwargs):
 
     send_text(
         sender_id,
-        'Wähle die Partei aus, die dich interessiert:',
+        'Welche Partei interessiert dich?',
         quick_replies=options
     )
