@@ -338,8 +338,8 @@ Oder schick mir einfach den Namen eines bestimmten Kandidaten! """
                           button_postback('Zufalls-KandidatIn', random_candidate(event,random_candidate()['uuid']))])
 
 
-def random_candidate(event, **kwargs):
+def random_candidate(event,uuid):
     #sender_id = event['sender']['id']
     payload = {}
-    payload['payload_basics'] = random_candidate()#['uuid']
+    payload['payload_basics'] = uuid
     payload_basics(event, payload)
