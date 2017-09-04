@@ -2,10 +2,13 @@
 import logging
 
 from fuzzywuzzy import fuzz, process
+from django.conf import settings
 
 from pathlib import Path
 from backend.models import FacebookUser, Wiki, Push
-from ..fb import send_buttons, button_postback, send_text, quick_reply, send_generic, generic_element, button_web_url, button_share, send_attachment
+from ..fb import (send_buttons, button_postback, send_text, quick_reply, send_generic,
+                  generic_element, button_web_url, button_share, send_attachment,
+                  send_attachment_by_id, guess_attachment_type)
 from .shared import get_pushes, schema, send_push
 
 logger = logging.getLogger(__name__)
@@ -180,15 +183,25 @@ def wiki(event, parameters, **kwargs):
         scorer=fuzz.token_set_ratio,
         score_cutoff=50)
 
-    reply = best_match[0].output
-    if not reply:
-        if best_match:
-            if reply == 'empty':
-                reply = "Moment...Ich schaue kurz im Brockhaus nach was {word} bedeutet. Antwort kommt bald.".format(word = text)
-    else:
+    if not best_match:
         reply = "Tut mir Leid, darauf habe noch ich keine Antwort. Frag mich die Tage nochmal."
+    else:
+        match = best_match[0]
+        if match.output == 'empty':
+            reply = "Moment...Ich schaue kurz im Brockhaus nach was {word} bedeutet. " \
+                    "Antwort kommt bald.".format(word=text)
+        else:
+            reply = match.output
 
-    send_text(user_id, reply)
+        if match.attachment_id:
+            try:
+                send_attachment_by_id(
+                    user_id, match.attachment_id, type=guess_attachment_type(match.media))
+            except:
+                pass
+
+    if reply:
+        send_text(user_id, reply)
 
 
 def apiai_fulfillment(event, **kwargs):
@@ -227,7 +240,7 @@ def sunday_poll(event, **kwargs):
 
     send_attachment(
         sender_id,
-        'https://infos.data.wdr.de:8080/static/bot/Sonntagsfrage_aktuell.jpg'
+        settings.SITE_URL + '/static/bot/Sonntagsfrage_aktuell.jpg'
     )
 
     send_text(sender_id,

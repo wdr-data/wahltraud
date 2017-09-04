@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.conf import settings
 
 from bot.fb import upload_attachment
 
@@ -83,10 +84,14 @@ class Push(models.Model):
         for field_name in updated_fields:
             field = getattr(self, field_name)
             if str(field):
-                url = "https://infos.data.wdr.de:8080/static/media/" + str(field)
-                attachment_id = upload_attachment(url)
-                attachment_field_name = field_name[:-len('media')] + 'attachment_id'
-                setattr(self, attachment_field_name, attachment_id)
+                url = settings.SITE_URL + settings.MEDIA_URL + str(field)
+                try:
+                    attachment_id = upload_attachment(url)
+                    attachment_field_name = field_name[:-len('media')] + 'attachment_id'
+                    setattr(self, attachment_field_name, attachment_id)
+
+                except:
+                    pass
 
             else:
                 attachment_field_name = field_name[:-len('media')] + 'attachment_id'
@@ -117,8 +122,42 @@ class Wiki(models.Model):
 
     input = models.CharField('Eingabe', max_length=128, null=False, unique=True,
                              help_text="Der Eingabetext des Nutzers")
-    output = models.CharField('Antwort', max_length=640, null=False, blank=False,
+    output = models.CharField('Antwort', max_length=640, null=True, blank=True,
                               help_text="Die Antwort, die der Bot auf die Eingabe geben soll")
+    media = models.FileField('Medien-Anhang', null=True, blank=True)
+    attachment_id = models.CharField(
+        'Facebook Attachment ID', max_length=64, null=True, blank=True,
+        help_text="Wird automatisch ausgefüllt")
+
+    def save(self, *args, **kwargs):
+        try:
+            orig = Wiki.objects.get(id=self.id)
+        except Wiki.DoesNotExist:
+            orig = None
+
+        field = self.media
+        orig_field = orig.media if orig else ''
+
+        if not orig and str(field) or str(field) != str(orig_field):
+            super().save(*args, **kwargs)
+            return
+
+        super().save(*args, **kwargs)
+
+        field = self.media
+        if str(field):
+            url = settings.SITE_URL + settings.MEDIA_URL + str(field)
+            try:
+                attachment_id = upload_attachment(url)
+                self.attachment_id = attachment_id
+
+            except:
+                pass
+
+        else:
+            self.attachment_id = None
+
+        self.save()
 
     def __str__(self):
         return self.input
