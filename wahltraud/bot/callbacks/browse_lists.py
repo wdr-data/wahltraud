@@ -5,6 +5,7 @@ from ..fb import send_buttons, button_postback, send_text, send_list, list_eleme
 from ..data import state_lists
 
 from .candidate import show_basics as show_candidate_basics
+from .party import show_party_candidates
 
 locale.setlocale(locale.LC_NUMERIC, 'de_DE.UTF-8')
 
@@ -106,7 +107,8 @@ def apiai(event, parameters, **kwargs):
     if not party and not state:
         intro_lists(event, **kwargs)
     elif party and not state:
-        select_state(event, {'select_state': party})
+        show_party_candidates(event, {'show_party_candidates': party})
+        #select_state(event, {'select_state': party})
     elif state and not party:
         select_party(event, {'select_party': 'Landesliste %s' % state})
     elif party and state:
