@@ -134,7 +134,8 @@ class Wiki(models.Model):
         field = self.media
         orig_field = orig.media if orig else ''
 
-        if orig and str(field) and str(field) == str(orig_field):
+        if (orig and str(field) and str(field) == str(orig_field)
+                or not str(field) and not str(orig_field)):
             super().save(*args, **kwargs)
             return
 
