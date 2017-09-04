@@ -22,7 +22,7 @@ class ApiAiHandler(Handler):
 
     """
 
-    def __init__(self, callback, intent, min_score=0.5):
+    def __init__(self, callback, intent, min_score=0.0):
         super().__init__(callback)
 
         self.intent = intent
