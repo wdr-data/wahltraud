@@ -180,10 +180,11 @@ def wiki(event, parameters, **kwargs):
         scorer=fuzz.token_set_ratio,
         score_cutoff=50)
 
-    if best_match:
-        reply = best_match[0].output
-        if reply == 'empty':
-            reply = "Moment...Ich schaue kurz im Brockhaus nach was {word} bedeutet. Antwort kommt bald.".format(word = text)
+    reply = best_match[0].output
+    if not reply:
+        if best_match:
+            if reply == 'empty':
+                reply = "Moment...Ich schaue kurz im Brockhaus nach was {word} bedeutet. Antwort kommt bald.".format(word = text)
     else:
         reply = "Tut mir Leid, darauf habe noch ich keine Antwort. Frag mich die Tage nochmal."
 
