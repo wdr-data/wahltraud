@@ -340,5 +340,5 @@ Oder schick mir einfach den Namen eines bestimmten Kandidaten! """
 
 def random_candidate(event, **kwargs):
     sender_id = event['sender']['id']
-
-    show_basics(event, random_candidate()['uuid'])
+    payload['payload_basics'] = random_candidate()['uuid']
+    payload_basics(event, payload)
