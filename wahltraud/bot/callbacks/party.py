@@ -71,14 +71,14 @@ def show_top_candidates(event, payload, **kwargs):
                 name=' '.join(filter(bool, (topa['degree'],
                                     topa['first_name'],
                                     topa['last_name'])))),
-            {'payload_basics': topa}
+            {'payload_basics': topa_uuid}
         ),
             button_postback(
                 "{name}".format(
                     name=' '.join(filter(bool, (topb['degree'],
                                                 topb['first_name'],
                                                 topb['last_name'])))),
-                    {'payload_basics': topb}
+                    {'payload_basics': topb_uuid}
             )
         ]
     )
