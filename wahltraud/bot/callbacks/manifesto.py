@@ -105,7 +105,7 @@ def show_word(event, word, offset, **kwargs):
     if not offset:
         send_text(
             sender_id,
-            'Das Wort "{word}" kommt insgesamt {n} mal in allen Wahlprogrammen vor? '
+            'Das Wort "{word}" kommt insgesamt {n} mal in allen Wahlprogrammen vor. '
             'Hier eine Auflistung nach relativer Häufigkeit.'.format(
                 word=word,
                 n=stat['count']
