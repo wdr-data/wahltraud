@@ -85,13 +85,9 @@ class Push(models.Model):
             field = getattr(self, field_name)
             if str(field):
                 url = settings.SITE_URL + settings.MEDIA_URL + str(field)
-                try:
-                    attachment_id = upload_attachment(url)
-                    attachment_field_name = field_name[:-len('media')] + 'attachment_id'
-                    setattr(self, attachment_field_name, attachment_id)
-
-                except:
-                    pass
+                attachment_id = upload_attachment(url)
+                attachment_field_name = field_name[:-len('media')] + 'attachment_id'
+                setattr(self, attachment_field_name, attachment_id)
 
             else:
                 attachment_field_name = field_name[:-len('media')] + 'attachment_id'
@@ -138,7 +134,7 @@ class Wiki(models.Model):
         field = self.media
         orig_field = orig.media if orig else ''
 
-        if not orig and str(field) or str(field) != str(orig_field):
+        if orig and str(field) and str(field) == str(orig_field):
             super().save(*args, **kwargs)
             return
 
@@ -147,12 +143,8 @@ class Wiki(models.Model):
         field = self.media
         if str(field):
             url = settings.SITE_URL + settings.MEDIA_URL + str(field)
-            try:
-                attachment_id = upload_attachment(url)
-                self.attachment_id = attachment_id
-
-            except:
-                pass
+            attachment_id = upload_attachment(url)
+            self.attachment_id = attachment_id
 
         else:
             self.attachment_id = None
