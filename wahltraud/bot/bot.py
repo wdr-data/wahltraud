@@ -46,6 +46,8 @@ def make_event_handler():
         PayloadHandler(share_bot, ['share_bot']),
         PayloadHandler(subscribe, ['subscribe']),
         PayloadHandler(unsubscribe, ['unsubscribe']),
+        ApiAiHandler(subscribe, 'anmelden'),
+        ApiAiHandler(unsubscribe, 'abmelden'),
         PayloadHandler(push_step, ['push', 'next_state']),
         PayloadHandler(push, ['push']),
         ApiAiHandler(wiki, 'wiki'),
