@@ -32,9 +32,7 @@ def get_pushes(force_latest=False):
     return infos
 
 def get_pushes_by_date(date):
-    now = timezone.localtime(timezone.now())
-    logger.debug('date by now.date: ' + str(type(now.date())))
-    logger.debug('type of date: ' + str(type(date)))
+    logger.debug('date: ' + str(date) + ' type of date: ' + str(type(date)))
     infos = Push.objects.filter(
         pub_date__date=date,
         pub_date__hour__gte=8,
