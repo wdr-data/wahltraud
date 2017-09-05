@@ -45,12 +45,20 @@ def about(event, **kwargs):
 
 def push(event, **kwargs):
     sender_id = event['sender']['id']
-    data = get_pushes()
-    if len(data) == 0:
-        reply = 'Dein News Update ist noch in Arbeit. Komme später wieder...'
-        send_text(sender_id, reply)
+    date = parameters.get('date')
+
+    if not date:
+        data = get_pushes()
+        if len(data) == 0:
+            reply = 'Dein Wahl Update ist noch in Arbeit. Versuche es nach 18 Uhr wieder...'
+            send_text(sender_id, reply)
+        else:
+            schema(data, sender_id)
+
     else:
-        schema(data, sender_id)
+        logger.debug('Datum für Push: ' + str(date))
+
+
 
 def share_bot(event, **kwargs):
     sender_id = event['sender']['id']
@@ -250,5 +258,3 @@ def sunday_poll(event, **kwargs):
               'Wenn du etwas zu einer bestimmten Partei wissen möchtest, gib einfach ihren Namen ein.',
               quick_replies
               )
-
-

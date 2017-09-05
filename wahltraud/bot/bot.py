@@ -50,6 +50,7 @@ def make_event_handler():
         ApiAiHandler(unsubscribe, 'abmelden'),
         PayloadHandler(push_step, ['push', 'next_state']),
         PayloadHandler(push, ['push']),
+        ApiAiHandler(push, 'push'),
         ApiAiHandler(wiki, 'wiki'),
         PayloadHandler(menue_candidates, ['menue_candidates']),
         PayloadHandler(questions, ['questions']),
