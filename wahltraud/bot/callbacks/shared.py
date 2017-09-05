@@ -31,6 +31,13 @@ def get_pushes(force_latest=False):
 
     return infos
 
+def get_pushes_by_date(date):
+    infos = Push.objects.filter(
+        pub_date__date=date,
+        published=True,
+        breaking=False)
+
+    return infos
 
 def get_breaking():
     now = timezone.localtime(timezone.now())
@@ -50,7 +57,7 @@ def get_breaking():
 
 
 def schema(data, user_id):
-    reply = "Hier kommt dein tägliches Update zur Bundestagswahl"
+    reply = "Hier kommt dein Update zur Bundestagswahl"
     send_text(user_id, reply)
     reply = ""
     first_id = None

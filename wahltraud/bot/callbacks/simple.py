@@ -9,7 +9,7 @@ from backend.models import FacebookUser, Wiki, Push
 from ..fb import (send_buttons, button_postback, send_text, quick_reply, send_generic,
                   generic_element, button_web_url, button_share, send_attachment,
                   send_attachment_by_id, guess_attachment_type)
-from .shared import get_pushes, schema, send_push
+from .shared import get_pushes, schema, send_push, get_pushes_by_date
 
 logger = logging.getLogger(__name__)
 
@@ -56,8 +56,14 @@ def push(event, parameters, **kwargs):
             schema(data, sender_id)
 
     else:
-        logger.debug('Datum für Push: ' + str(date))
+        if len(date) == 1:
+            data = get_pushes_by_date(date)
 
+        if len(data) == 0:
+            reply = 'Für dieses Datum liegen mir keine Nachrichten vor. Wähle ein Datum, welches zwischen dem 04.09.2017 und heute liegt.'
+            send_text(sender_id, reply)
+        else:
+            schema(data, sender_id)
 
 
 def share_bot(event, **kwargs):
