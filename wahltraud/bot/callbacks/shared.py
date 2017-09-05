@@ -38,6 +38,8 @@ def get_pushes_by_date(date):
     logger.debug('Date by now.date(): ' + str(now.date()))
     infos = Push.objects.filter(
         pub_date__date=date,
+        pub_date__hour__gte=8,
+        pub_date__hour__lt=20,
         published=True,
         breaking=False)
 
