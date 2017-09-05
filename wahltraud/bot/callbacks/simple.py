@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 def greetings(event, **kwargs):
     sender_id = event['sender']['id']
-    infos = Info.objects.all()[:1]
+    infos = Info.objects.all().order_by('-id')[:1]
 
     if infos:
         info = infos[0]
