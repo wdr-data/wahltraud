@@ -47,9 +47,10 @@ def get_started(event, **kwargs):
     sender_id = event['sender']['id']
     reply = """
 Hallo, ich bin Wahltraud 🐳
-Ich informiere dich für die anstehende Bundestagswahl über Kandidaten, Parteien und deren Themen.
-Ich erkläre dir gerne, was du mit mir tun kannst. Aber wenn du magst, kannst ud auch einfach drauf los fragen.
-Über Push Nachrichten halte ich dich auf dem Laufenden. Um dich für dein automatisches Update zu registrieren, klicke auf \"Anmelden\"."""
+Wenn Du Dich mit mir unterhälst, kann ich Dir viele Infos zur Bundestagswahl schicken: 
+Kandidaten, Parteien, Wahlprogramme - gemeinsam mit 1LIVE habe ich trainiert, um Dir viele Fragen dazu beantworten zu können. 
+Wenn Du jeden Abend eine Info zur Wahl erhalten möchtest, klicke auf \"Anmelden\".
+ Wenn Du genauer wissen möchtest, was ich kann, klicke auf \"Erklär mal\". Oder leg direkt los und sende mir eine Nachricht."""
     send_buttons(sender_id, reply,
                  buttons=[
                     button_postback('Anmelden', ['subscribe']),
@@ -226,8 +227,7 @@ def wiki(event, parameters, **kwargs):
     else:
         match = best_match[0]
         if match.output == 'empty':
-            reply = "Moment...Ich schaue kurz im Brockhaus nach was {word} bedeutet. " \
-                    "Antwort kommt bald.".format(word=text)
+            reply = "Moment, das muss ich nachschauen. Eine Antwort habe ich bald.".format(word=text)
         else:
             reply = match.output
 

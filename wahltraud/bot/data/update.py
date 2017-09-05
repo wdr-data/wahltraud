@@ -341,7 +341,7 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
             except:
                 temp['city'] = None
 
-
+            print(temp['city'])
             if item["constituency"] != []:
                 #temp["district"]  = item["constituency"]["name"]
                 #temp["district_id"] = item["constituency"]["number"]
