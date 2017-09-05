@@ -133,9 +133,9 @@ def send_push(user_id, data, state='intro'):
         button_title, {'push': data.id, 'next_state': next_state}
     )
 
-    if str(media):
+    if media:
         send_attachment_by_id(user_id, str(media), guess_attachment_type(str(url)))
-        if str(media_note):
+        if media_note:
             send_text(user_id, media_note)
 
     if next_state:
