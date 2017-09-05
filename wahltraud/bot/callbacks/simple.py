@@ -57,7 +57,7 @@ def push(event, parameters, **kwargs):
 
     else:
         if len(date) == 1:
-            data = get_pushes_by_date(date)
+            data = get_pushes_by_date(date[0])
 
         if len(data) == 0:
             reply = 'Für dieses Datum liegen mir keine Nachrichten vor. Wähle ein Datum, welches zwischen dem 04.09.2017 und heute liegt.'
