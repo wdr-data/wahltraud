@@ -144,7 +144,7 @@ def send_push(user_id, data, state='intro'):
 
     else:
         send_text(user_id, reply)
-        send_text(user_id, 'Das wars für heute!')
+        # send_text(user_id, 'Das wars für heute!')
         '''
         if not data.breaking:
             media = '327361671016000'
