@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 def intro_district(event, **kwargs):
     sender_id = event['sender']['id']
-    send_text(sender_id, "Schick mir eine Postleitzahl und ich sage dir, wer in dem Wahlkreis zur Wahl steht.")
+    send_text(sender_id, "Welches PLZ-Gebiet darfs es diesmal sein?")
 
 
 def find_district(event, parameters, **kwargs):
@@ -22,8 +22,7 @@ def find_district(event, parameters, **kwargs):
 
     if not plz and not city:
         reply = """
-Nenne mir den Ort oder das PLZ-Gebiet um zum Wahlkreis zu gelangen. Typ: Am schnellsten geht es, indem du mir
-deine Postleitzahl schreibst."""
+Wenn du mir einen Ort oder deine PLZ nennst, bekommst du von mir Infos zum Wahlkreis."""
 
         send_text(sender_id, reply)
 
@@ -35,7 +34,7 @@ deine Postleitzahl schreibst."""
 
         if not district_uuids:
             if plz:
-                send_text(sender_id, "Diese PLZ sagt mir nichts...")
+                send_text(sender_id, "Diese PLZ sagt mir leider nichts...")
             else:
                 send_text(sender_id, "Tut mir Leid, diesen Ort kenne ich nicht...")
 
@@ -55,8 +54,8 @@ deine Postleitzahl schreibst."""
 
         elif len(district_uuids) < 12:
             send_text(sender_id,
-                      'Bitte wähle einen der folgenden Wahlkreise. '
-                      'Alternativ kannst du mir auch deine PLZ senden.',
+                      'Hier alle Wahlkreise die ich finden konnte. Gib mir eine PLZ und die Liste wird kleiner!'
+                      ,
                       [quick_reply(district['district'],
                                    {'show_district': district['uuid']})
                        for district in
@@ -64,7 +63,7 @@ deine Postleitzahl schreibst."""
                       )
         else:
             send_text(sender_id,
-                      "{city} hat {n} Wahlkreise. So viele kann ich leider nicht anzeigen. "
+                      "{city} hat {n} Wahlkreise! So viele kann ich leider nicht anzeigen. "
                       "Bitte sende mir stattdessen deine PLZ.".format(
                           city=city,
                           n=len(district_uuids)))
