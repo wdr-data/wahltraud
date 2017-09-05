@@ -46,7 +46,7 @@ deine Postleitzahl schreibst."""
 
         elif len(district_uuids) < 4:
             send_buttons(sender_id,
-                         'Welchen Wahlkreis meinst du?',
+                         'In deinem PLZ-Gebiet gibt es wohl mehrere Wahlkreise!',
                          [button_postback(district['district'],
                                           {'show_district': district['uuid']})
                           for district in
