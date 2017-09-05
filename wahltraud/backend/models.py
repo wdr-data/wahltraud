@@ -154,3 +154,48 @@ class Wiki(models.Model):
 
     def __str__(self):
         return self.input
+
+
+class Info(models.Model):
+    class Meta:
+        verbose_name = 'Info'
+        verbose_name_plural = 'Infos'
+
+    title = models.CharField('Titel', max_length=128, null=False, unique=True,
+                             help_text="Hinweis: Wird nicht ausgespielt")
+    content = models.CharField('Inhalt', max_length=600, null=True, blank=True,
+                              help_text="Text der Info")
+    media = models.FileField('Medien-Anhang', null=True, blank=True)
+    attachment_id = models.CharField(
+        'Facebook Attachment ID', max_length=64, null=True, blank=True,
+        help_text="Wird automatisch ausgefüllt")
+
+    def save(self, *args, **kwargs):
+        try:
+            orig = Info.objects.get(id=self.id)
+        except Info.DoesNotExist:
+            orig = None
+
+        field = self.media
+        orig_field = orig.media if orig else ''
+
+        if (orig and str(field) and str(field) == str(orig_field)
+                or not str(field) and not str(orig_field)):
+            super().save(*args, **kwargs)
+            return
+
+        super().save(*args, **kwargs)
+
+        field = self.media
+        if str(field):
+            url = settings.SITE_URL + settings.MEDIA_URL + str(field)
+            attachment_id = upload_attachment(url)
+            self.attachment_id = attachment_id
+
+        else:
+            self.attachment_id = None
+
+        self.save()
+
+    def __str__(self):
+        return self.input

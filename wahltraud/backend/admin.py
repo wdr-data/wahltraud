@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django import forms
-from .models import Push, FacebookUser, Wiki
+from .models import Push, FacebookUser, Wiki, Info
 
 
 class PushModelForm(forms.ModelForm):
@@ -59,7 +59,22 @@ class WikiAdmin(admin.ModelAdmin):
     search_fields = ['input']
 
 
+class InfoModelForm(forms.ModelForm):
+    content = forms.CharField(
+        required=True, label="Inhalt", widget=forms.Textarea, max_length=600)
+
+    class Meta:
+        model = Info
+        fields = '__all__'
+
+
+class InfoAdmin(admin.ModelAdmin):
+    form = InfoModelForm
+    search_fields = ['title']
+
+
 # Register your models here.
 admin.site.register(Push, PushAdmin)
 admin.site.register(FacebookUser)
 admin.site.register(Wiki, WikiAdmin)
+admin.site.register(Info, InfoAdmin)

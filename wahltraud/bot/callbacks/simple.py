@@ -6,13 +6,35 @@ from fuzzywuzzy import fuzz, process
 from django.conf import settings
 
 from pathlib import Path
-from backend.models import FacebookUser, Wiki, Push
+from backend.models import FacebookUser, Wiki, Push, Info
 from ..fb import (send_buttons, button_postback, send_text, quick_reply, send_generic,
                   generic_element, button_web_url, button_share, send_attachment,
                   send_attachment_by_id, guess_attachment_type)
 from .shared import get_pushes, schema, send_push, get_pushes_by_date
 
 logger = logging.getLogger(__name__)
+
+
+def greetings(event, **kwargs):
+    sender_id = event['sender']['id']
+    infos = Info.objects.all()[:1]
+
+    if infos:
+        info = infos[0]
+        reply = ("Hallo, hier die neueste Meldung zur Bundestagswahl von den 1LIVE Infos. \n\n"
+                 + info.content)
+
+        if info.attachment_id:
+            send_attachment_by_id(
+                sender_id,
+                info.attachment_id,
+                guess_attachment_type(str(info.media))
+            )
+
+    else:
+        reply = event['message']['nlp']['result']['fulfillment']['speech']
+
+    send_text(sender_id, reply)
 
 
 def get_started(event, **kwargs):
