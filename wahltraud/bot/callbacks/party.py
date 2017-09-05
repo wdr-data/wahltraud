@@ -254,7 +254,7 @@ def show_parties(event, payload, **kwargs):
 
     if category == 'alle':
         parties = [party['party'] for party in party_list]
-    elif categroy == 'etabliert':
+    elif category == 'etabliert':
         parties = ['CDU', 'CSU', 'SPD', 'DIE LINKE', 'DIE GRÜNEN', 'FDP', 'AfD' ]
     else:
         parties = [party['party'] for party in party_list if party['category'] == category]
