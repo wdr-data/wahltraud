@@ -43,7 +43,7 @@ def about(event, **kwargs):
                     button_postback("Daten", ['menue_data'])
                 ])
 
-def push(event, **kwargs):
+def push(event, parameters, **kwargs):
     sender_id = event['sender']['id']
     date = parameters.get('date')
 
