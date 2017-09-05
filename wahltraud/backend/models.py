@@ -198,4 +198,4 @@ class Info(models.Model):
         self.save()
 
     def __str__(self):
-        return self.input
+        return self.title
