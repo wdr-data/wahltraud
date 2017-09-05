@@ -263,6 +263,11 @@ def show_parties(event, payload, **kwargs):
         quick_reply(p, {'show_party_options': p})
         for p in sorted(parties)
     ][offset:offset + 9]
+    if category == 'etabliert':
+        options = [
+                      quick_reply(p, {'show_party_options': p})
+                      for p in parties
+                  ][offset:offset + 9]
 
     if offset > 0:
         options.insert(
