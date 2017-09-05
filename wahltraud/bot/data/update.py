@@ -11,7 +11,7 @@ from fuzzywuzzy import fuzz
 
 def update():
 
-    update_abgewatch = True
+    update_abgewatch = False
     update_alle = True
     update_wahlkreis = True
 
@@ -25,9 +25,11 @@ def update():
     kind_of_people  = "candidates"
     output_file_abgeordnetenwatch = "abgeordnetenwatch.json"
     abgewatch_data_file = output_file_abgeordnetenwatch
+    alle_kandidaten_json = "alle_kandidaten.json"
+    nrw_kandidatencheck_json = "kandidatencheck_erweitert_0109.json"
+    wahlkreis_info_json = "wahlkreis_info.json"
 
-
-    if update_abgewatch == False:
+    if update_abgewatch:
         # make backup json
         date = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
         copyfile(output_file_abgeordnetenwatch, "abgeordnetenwatch_backup_"+date+".json")
@@ -35,22 +37,19 @@ def update():
         abgeordnetenapi(parliament, kind_of_people , output_file_abgeordnetenwatch )
         print("update abgeordnetenwatch done")
 
-    alle_kandidaten_json = "alle_kandidaten.json"
-    nrw_kandidatencheck_json = "kandidatencheck_erweitert_0109.json"
 
-    if update_alle == False:
+
+    if update_alle:
     # create all_kandidaten
-        alle_kandidaten_json = "alle_kandidaten.json"
-        nrw_kandidatencheck_json= "kandidatencheck_erweitert_0109.json"
+
 
         print("update alle_kandidaten")
         abgewatch_to_alle(abgewatch_data_file, nrw_kandidatencheck_json, alle_kandidaten_json)
         print("update " + alle_kandidaten_json + " done")
 
     
-    if update_wahlkreis == True:
+    if update_wahlkreis:
         # create wahlkreis_info
-        wahlkreis_info_json = "wahlkreis_info.json"
 
         # make backup
         date = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
@@ -337,6 +336,12 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
                 temp["list_name"] = None
                 temp["list_nr"] = None
 
+            try:
+                temp["city"] =  item['location']['city']
+            except:
+                temp['city'] = None
+
+
             if item["constituency"] != []:
                 #temp["district"]  = item["constituency"]["name"]
                 #temp["district_id"] = item["constituency"]["number"]
@@ -429,13 +434,17 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
                 if fuzz.partial_ratio(row['vn'], testing['first_name']) > 85:
                     print(row["vn"],'  vs  ', testing["first_name"], 'match',row["p"][0] )
                     data_list.pop(index)
-
+                    vornamen.pop(index)
+                    exists = False
+                    break
                 else:
                     print(row["vn"],'  vs  ', testing["first_name"], 'no_match')
-                    exists = True
+                    exists = False
 
 
-        if exists == False:
+
+        if not exists:
+
             temp = {}
             temp["first_name"] = row["vn"]
             temp["last_name"]  = row["nn"]
@@ -445,6 +454,7 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
             temp["degree"] = None
             temp["gender"] = None
             temp['img'] = None
+            temp["party"] = party_map[row["p"][0]]
 
             temp["nrw"] = give_nrw_info(row["nn"], row["vn"], row)
 
@@ -457,8 +467,10 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
             except:
                 temp["profession"] = None
 
-
-            temp["party"] = party_map[row["p"][0]]
+            try:
+                temp['city'] = row['wo']
+            except:
+                temp['city'] = None
 
             try:
                 temp["age"] = int(row["gd"][0:4])
@@ -480,7 +492,7 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
                 temp["district_uuid"] = None
             temp["count"] = counter
             counter +=1
-            vornamen.append({"value": temp["first_name"], "synonyms": [temp["first_name"]]})
+            vornamen.append({"value": row['vn'], "synonyms": [row['vn'], testing["first_name"]]})
             nachnamen.append({"value": temp["last_name"], "synonyms": [temp["last_name"]]})
             data_list.append(temp)
 

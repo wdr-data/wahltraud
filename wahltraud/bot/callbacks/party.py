@@ -18,10 +18,10 @@ def basics(event, parameters, **kwargs):
         send_buttons(
             sender_id,
             "Zur Wahl sind 42 Parteien vom Bundeswahlleiter zugelassen. "
-            "Die etablierten Parteien sind in mindestens einem Landtag und natürlich im Bundestag vertreten.",
+            "Die Top-7-Parteien sind in mindestens einem Landtag oder im Bundestag vertreten.",
             [
-                button_postback("Etablierte Parteien", {'show_parties': 'etabliert'}),
-                button_postback("Kleine Parteien", {'show_parties': 'klein'})
+                button_postback("Top-7-Parteien", {'show_parties': 'etabliert'}),
+                button_postback("mehr Parteien", {'show_parties': 'klein'})
                 #,
                 #button_postback("Zeige Alle", {'show_parties': 'alle'})
             ])
