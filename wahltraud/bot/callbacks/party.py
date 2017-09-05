@@ -269,6 +269,8 @@ def show_parties(event, payload, **kwargs):
                       for p in parties
                   ][offset:offset + 9]
 
+
+
     if offset > 0:
         options.insert(
             0,

@@ -337,7 +337,7 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
                 temp["list_nr"] = None
 
             try:
-                temp["city"] =  item['location']['city']
+                temp["city"] = item['personal']['location']['city']
             except:
                 temp['city'] = None
 
