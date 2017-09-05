@@ -32,10 +32,6 @@ def get_pushes(force_latest=False):
     return infos
 
 def get_pushes_by_date(date):
-    now = timezone.localtime(timezone.now())
-
-    logger.debug('Date by ApiAi: ' + str(date))
-    logger.debug('Date by now.date(): ' + str(now.date()))
     infos = Push.objects.filter(
         pub_date__date=date,
         pub_date__hour__gte=8,
