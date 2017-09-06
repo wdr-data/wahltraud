@@ -289,8 +289,7 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
     """
     data = pd.read_csv('btw17_all_candidates_buwale.csv', delimiter = ';')
     data = data.where((pd.notnull(data)), None)
-    data.replace('Die PARTEI', 'DIE PARTEI', inplace=True)
-    data.replace('GRÜNE', 'DIE GRÜNEN', inplace = True)
+
 
     # for district uuid in nrw candidates
     with open("wahlkreis_info.json") as data_file:
