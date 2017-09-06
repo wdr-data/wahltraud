@@ -399,6 +399,7 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
                     temp['district_uuid'] = item2['uuid']
                     break
 
+                temp['district_uuid'] = None
 
         else:
             temp['district_uuid'] = None
