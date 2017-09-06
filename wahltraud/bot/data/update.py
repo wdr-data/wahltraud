@@ -313,9 +313,15 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
                 "degree": item["Titel"],
                 "last_name": item["Name"],
                 "party": item["Wahlkreis_ParteiKurzBez"],
-                "first_name": item["Vorname"]
+                "pre_last_name" : item['Namenszusatz']
 
                }
+
+        temp["first_name"] =  item["Vorname"].split(' ', 1)[0]
+        try:
+            temp['middle_name'] = item['Vorname'].split(' ',1)[1]
+        except:
+            temp['middle_name'] = None
 
         if not temp['party']:
             temp['party'] = item['Liste_ParteiKurzBez']
