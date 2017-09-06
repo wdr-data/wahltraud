@@ -56,7 +56,7 @@ def show_party_options(event, payload, **kwargs):
 
 def show_top_candidates(event, payload, **kwargs):
     sender_id = event['sender']['id']
-    top_candidates = payload['show_top_candidates']
+    top_candidates = payload['show_top_candidates'].copy()
     topa_uuid = top_candidates.pop(0)
     topb_uuid = top_candidates.pop(0)
     topa = by_uuid[topa_uuid]
@@ -107,7 +107,7 @@ def show_party_candidates(event, payload, **kwargs):
                 button_postback("Spitzenkandidaten",
                                 {'show_top_candidates': party_info['top_candidates']}))
         else:
-            top_candidate = party_info['top_candidates'].pop(0)
+            top_candidate = party_info['top_candidates'].copy().pop(0)
             gender_candidate = by_uuid[top_candidate]
             if gender_candidate['gender'] == 'female':
                 buttons.insert(
