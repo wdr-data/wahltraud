@@ -544,6 +544,8 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
         json.dump(vornamen,output_fileai,  ensure_ascii=False)
     with open("apiai_entities_nachname.json", "w", encoding="utf8") as output_fileai2:
         json.dump(nachnamen, output_fileai2, ensure_ascii=False)
+    with open("apiai_entities_all_party.json" ,  "w", encoding="utf8") as output_fileai3:
+        json.dump(all_party,output_fileai3,  ensure_ascii=False)
 
     return
     
