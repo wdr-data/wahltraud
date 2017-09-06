@@ -170,15 +170,29 @@ def push_notification():
 
     user_list = FacebookUser.objects.values_list('uid', flat=True)
 
+    unavailable_user_ids = list()
+
     for user in user_list:
 
         logger.debug("Send Push to: " + user)
         try:
             schema(data, user)
-        except:
+        except Exception as e:
             logger.exception("Push failed")
+            try:
+                if e.args[0]['code'] == 551:  # User is unavailable (probs deleted chat or account)
+                    unavailable_user_ids.append(user)
+                    logging.info('Removing user %s', user)
+            except:
+                pass
 
-        sleep(1)
+        sleep(2)
+
+    for user in unavailable_user_ids:
+        try:
+            FacebookUser.objects.get(uid=user).delete()
+        except:
+            logging.exception('Removing user %s failed', user)
 
 
 def push_breaking():
