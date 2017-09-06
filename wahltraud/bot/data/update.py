@@ -351,7 +351,7 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
 
 
         try:
-            temp["list_name"] = "Landesliste" + state_map[item['Wahlkreis_Land']]
+            temp["list_name"] = "Landesliste " + state_map[item['Wahlkreis_Land']]
             temp["list_nr"] = int(item["Liste_Platz"])
         except:
             temp["list_name"] = None
