@@ -323,7 +323,7 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
         except:
             temp['middle_name'] = None
 
-        if temp['party'] == None:
+        if temp['party'] is None:
             temp['party'] = item['Liste_ParteiKurzBez']
 
         temp["uuid"] =  item['Vorname'] + item['Name'] + temp['party']+ 'cand17'
@@ -376,7 +376,10 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
 
         #NRW Data
         for item3 in data_abewatch['profiles']:
-            if item3['personal']['first_name'] == temp['first_name'] and item3['personal']['last_name'] == temp['last_name']:
+
+            if (item3['personal']['first_name'] == temp['first_name'] or
+                        item3['personal']['first_name'] == item['Vorname']
+                ) and item3['personal']['last_name'] == temp['last_name']:
 
                 # foto nur dann, wenn es kein dummy foto ist
                 if item3["personal"]["picture"][
