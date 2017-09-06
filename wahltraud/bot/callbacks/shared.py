@@ -4,7 +4,8 @@ import logging
 from django.utils import timezone
 
 from backend.models import Push, FacebookUser, Wiki
-from ..fb import send_text, send_attachment_by_id, guess_attachment_type, quick_reply
+from ..fb import (send_text, send_attachment_by_id, guess_attachment_type, quick_reply,
+                  send_buttons, button_postback)
 
 logger = logging.getLogger(__name__)
 
@@ -144,6 +145,14 @@ def send_push(user_id, data, state='intro'):
 
     else:
         send_text(user_id, reply)
+
+        try:
+            FacebookUser.objects.get(uid=user_id)
+        except FacebookUser.DoesNotExist:
+            send_buttons(user_id, 'Du bist noch nicht für die täglichen Nachrichten angemeldet. '
+                                  'Möchtest du das jetzt nachholen?',
+                         buttons=[button_postback('Ja, bitte!', ['subscribe'])])
+
         # send_text(user_id, 'Das wars für heute!')
         '''
         if not data.breaking:

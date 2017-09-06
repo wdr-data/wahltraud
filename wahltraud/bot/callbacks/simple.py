@@ -4,6 +4,7 @@ import datetime
 
 from fuzzywuzzy import fuzz, process
 from django.conf import settings
+from django.utils import timezone
 
 from pathlib import Path
 from backend.models import FacebookUser, Wiki, Push, Info
@@ -44,6 +45,17 @@ def get_started(event, **kwargs):
         ref = referral.get('ref')
         logging.info('Bot wurde mit neuem User geteilt: ' + ref)
 
+    now = timezone.localtime(timezone.now())
+    date = now.date()
+    time = now.time()
+
+    if time.hour < 18:
+        last_push = Push.objects.filter(
+            published=True).exclude(pub_date__date__gte=date).latest('pub_date')
+    else:
+        last_push = Push.objects.filter(
+            published=True).exclude(pub_date__date__gt=date).latest('pub_date')
+
     sender_id = event['sender']['id']
     reply = """
 Hallo, ich bin Wahltraud 🐳
@@ -54,8 +66,10 @@ Wenn Du jeden Abend eine Info zur Wahl erhalten möchtest, klicke auf \"Anmelden
     send_buttons(sender_id, reply,
                  buttons=[
                     button_postback('Anmelden', ['subscribe']),
-                    button_postback('Erklär mal...', ['about'])
-                ])
+                    button_postback('Tägliche Nachricht',
+                                    {'push': last_push.id, 'next_step': 'intro'}),
+                    button_postback('Erklär mal...', ['about']),
+                 ])
 
 def about(event, **kwargs):
     sender_id = event['sender']['id']
