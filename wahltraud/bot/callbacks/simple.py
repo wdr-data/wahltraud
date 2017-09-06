@@ -223,19 +223,19 @@ def wiki(event, parameters, **kwargs):
     user_id = event['sender']['id']
     text = parameters.get('wiki')
 
-    '''
     wikis = Wiki.objects.all()
     best_match = process.extractOne(
         text,
         wikis,
         scorer=fuzz.token_set_ratio,
-        score_cutoff=50)
-    '''
+        score_cutoff=90)
 
+    '''
     try:
         best_match = [Wiki.objects.get(input=text)]
     except Wiki.DoesNotExist:
         best_match = None
+    '''
 
     if not best_match:
         reply = "Tut mir Leid, darauf habe noch ich keine Antwort. Frag mich die Tage nochmal."
