@@ -219,7 +219,7 @@ def show_electorial(event, payload, **kwargs):
     party = payload['show_electorial']
     party_info = by_party[party]
 
-    skripts = ['CDU', 'SPD', 'AfD', 'DIE GRÜNEN', 'FDP', 'DIE LINKE']
+    skripts = ['CDU', 'SPD', 'AfD', 'GRÜNE', 'FDP', 'DIE LINKE']
 
     if party in skripts:
         send_buttons(
@@ -255,7 +255,7 @@ def show_parties(event, payload, **kwargs):
     if category == 'alle':
         parties = [party['party'] for party in party_list]
     elif category == 'etabliert':
-        parties = ['CDU', 'CSU', 'SPD', 'DIE LINKE', 'DIE GRÜNEN', 'FDP', 'AfD' ]
+        parties = ['CDU', 'CSU', 'SPD', 'DIE LINKE', 'GRÜNE', 'FDP', 'AfD' ]
     else:
         parties = [party['party'] for party in party_list if party['category'] == category]
 
