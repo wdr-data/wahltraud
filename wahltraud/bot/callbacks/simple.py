@@ -162,9 +162,9 @@ def menue_manifesto(event, **kwargs):
     send_text(sender_id,
               'Was steht eigentlich in so einem Wahlprogramm? '
               'Kaum ein Wähler liest sich ein Wahlprogramm durch. Ich biete Dir einen Einblick '
-              'in die einzelnen Programme und zwar zu dem Thema, welches dich interessiert.\n'
-              'Du kannst jederzeit ein Schlagwort eintippen und ich schaue nach in welchen Programmen es vorkommt, z.B. Steuern.',
-              [quick_reply('Ich habs verstanden', ['manifesto_start']), quick_reply('weiter', {'about_manifesto': 'one'})])
+              'in die Programme von CDU/CSU, SPD, DIE LINKE, DIE GRÜNEN, FDP und AfD.\n'
+              'Ich zeige dir einzelne Sätze, in denen ein Schlagwort für das du dich interessierst vorkommt.',
+              [quick_reply('zeige Sätze', ['manifesto_start']), quick_reply('Wie geht`s?', {'about_manifesto': 'one'})])
 
 def about_manifesto(event, payload, **kwargs):
     sender_id = event['sender']['id']
@@ -172,13 +172,22 @@ def about_manifesto(event, payload, **kwargs):
 
     if state == 'one':
         send_text(sender_id,
-                  'Nenne mir ein Schlagwort und eine Partei und ich zeige dir sofort einen Satz aus dem Programm, z.B. Steuern + SPD.',
-                  [quick_reply('Ich habs verstanden', ['manifesto_start']), quick_reply('weiter', {'about_manifesto': 'two'})])
+                  'Nenne mir ein Schlagwort und ich schaue nach wie oft ich das Wort in den Programmen gefunden habe.'
+                  ' Frage mich zum Beispiel nach \"Steuern\". Interessiert du dich für das Programm einer bestimmten Partei, so gib diese einfach mit an.',
+                  [quick_reply('Ok! Los geht`s', ['manifesto_start']),
+                   quick_reply('weiter', {'about_manifesto': 'two'})])
     elif state == 'two':
         send_text(sender_id,
                   'Ein einzelner Satz ist oft nicht hilfreich, darum kannst du dir den Kontext anzeigen lassen. '
                   'Falls du richtig neugierig geworden bist, bekommst du auch den Link zum Wahlprogramm.',
-                  [quick_reply('Los geht`s', ['manifesto_start'])])
+                  [quick_reply('Ok! Los geht`s', ['manifesto_start']),
+                  quick_reply('Noch was?',{'about_manifesto': 'three'})])
+    elif state == 'three':
+            send_text(sender_id,
+                      'Ich suche wirklich nur ein Schlagwort und keine Themen.'
+                      ' Findest du also etwas nicht, versuche es am bestem mit einem ähnlichen Schlagwort.',
+                      [quick_reply('Ok! Los geht`s', ['manifesto_start'])])
+
 
 def menue_data(event, **kwargs):
     sender_id = event['sender']['id']
