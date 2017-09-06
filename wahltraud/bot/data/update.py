@@ -388,15 +388,18 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
                 if item3["personal"]["picture"][
                     "url"] != "https://www.abgeordnetenwatch.de/sites/abgeordnetenwatch.de/files/default_images/profil_dummy_0.jpg":
                     temp["img"] = item3["personal"]["picture"]["url"]
+                break
                 # nicht jeder hat einen Listenplatz
             else:
                 temp["img"] = None
 
-        if item["Wahlkreis_Nr"]:
+        if item["Wahlkreis_Nr"] is not None:
             for item2 in district['districts']:
                 if int(item2['district_id']) == item["Wahlkreis_Nr"]:
                     temp['district_uuid'] = item2['uuid']
                     break
+
+
         else:
             temp['district_uuid'] = None
 
