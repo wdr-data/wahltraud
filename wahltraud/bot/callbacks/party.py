@@ -56,7 +56,7 @@ def show_party_options(event, payload, **kwargs):
 
 def show_top_candidates(event, payload, **kwargs):
     sender_id = event['sender']['id']
-    top_candidates = payload['show_top_candidates'].copy()
+    top_candidates = payload['show_top_candidates']
     topa_uuid = top_candidates.pop(0)
     topb_uuid = top_candidates.pop(0)
     topa = by_uuid[topa_uuid]
