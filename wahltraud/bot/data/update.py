@@ -287,10 +287,15 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
 
     Note. No PLZ, since this can be related by wahlkreisId
     """
+    data = pd.read_csv('btw17_all_candidates_buwale.csv', delimiter = ';')
+
+    # for district uuid in nrw candidates
+    with open("wahlkreis_info.json") as data_file:
+        district = json.load(data_file)
 
     # laden des abgeordnetenwatch kandidaten files
-    with open(kandidaten_alle) as data_file:    
-        data = json.load(data_file)  
+    with open(kandidaten_alle) as data_file:
+        data_abewatch = json.load(data_file)
     with open(nrw_kandidaten) as file:
         nrw = json.load(file)
     # erstelle liste
@@ -298,97 +303,89 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
     vornamen = []
     nachnamen = []
     # how to erstelle kandidaten_file
-    for item in data["profiles"]:
-        if item["personal"]["last_name"] != "Testuser": # there is one test_user in the data
-
-            temp = {"uuid": item["meta"]["uuid"],
-                    #personal
-                    "profession":  item["personal"]["profession"],
-                    "education": item["personal"]["education"],
-                    "degree": item["personal"]["degree"],
-                    "last_name": item["personal"]["last_name"],
-                    "party": item["party"],
-                    "first_name": item["personal"]["first_name"],
-                    "gender": item["personal"]["gender"]
-                   }
-
-            try:
-                if (item["meta"]["uuid"] == "3f466bf5-aae1-4f1e-8f6e-6679b310f2e0") and (item["personal"]["birthyear"] == "2017"):
-                    temp["age"] = 1989   # fix age if broken
-                else:
-                    temp["age"] = int(item["personal"]["birthyear"])  # derzeit nur der Jahrgang
-            except:
-                temp["age"] = None
+    for index, item in data.iterrows():
 
 
-            # foto nur dann, wenn es kein dummy foto ist
-            if item["personal"]["picture"]["url"] != "https://www.abgeordnetenwatch.de/sites/abgeordnetenwatch.de/files/default_images/profil_dummy_0.jpg":
-                temp["img"] =  item["personal"]["picture"]["url"]
-            # nicht jeder hat einen Listenplatz
+        temp = {"uuid": str(index)+'cand17',
+                #personal
+                "profession":  item['Beruf'],
+                #"education": item["personal"]["education"],
+                "degree": item["Titel"],
+                "last_name": item["Name"],
+                "party": item["Wahlkreis_ParteiKurzBez"],
+                "first_name": item["Vorname"]
+
+               }
+
+        if not temp['party']:
+            temp['party'] = item['Liste_ParteiKurzBez']
+
+        if item['Geschlecht'] == 'm':
+            temp["gender"] =  'male'
+        else:
+            temp['gender'] = 'female'
+
+        try:
+            if (item["meta"]["uuid"] == "3f466bf5-aae1-4f1e-8f6e-6679b310f2e0") and (item["personal"]["birthyear"] == "2017"):
+                temp["age"] = 1989   # fix age if broken
             else:
-                temp["img"] = None
-
-            try:
-                temp["list_name"] = item["list"]["name"]
-                temp["list_nr"] = int(item["list"]["position"])
-            except:
-                temp["list_name"] = None
-                temp["list_nr"] = None
-
-            try:
-                temp["city"] = item['personal']['location']['city']
-            except:
-                temp['city'] = None
-
-            print(temp['city'])
-            if item["constituency"] != []:
-                #temp["district"]  = item["constituency"]["name"]
-                #temp["district_id"] = item["constituency"]["number"]
-                temp["district_uuid"] =  item["constituency"]["uuid"]
-            else:
-                #temp["disctrict"]  = None
-                #temp["district_id"] = None
-                temp["district_uuid"] = None
-            #NRW Data
+                temp["age"] = int(item["Geburtsjahr"])  # derzeit nur der Jahrgang
+        except:
+            temp["age"] = None
 
 
-            # male candidates
-            male_candidates = ["618c50ab-4eba-48bb-b85d-3f6bfcfc9cae",
-                                "1016482c-da2b-46dc-9835-0cdd5e1b54ed",
-                                "644bc016-9652-4b32-bd2b-fba4f5c05b8a",
-                                 "da6e09e2-af3f-43c8-8a64-2fba978d63e3",
-                                 "c29a6e79-3e46-400d-9cb8-117a831a5ca7",
-                                 "1eacca1e-cb17-4b83-a3e1-013a1493e718",
-                                 "a797e17d-52e5-445c-9f10-a124cda7320a",
-                                 "36d0c560-0582-4a3f-8ff5-c71ef9d1373a",
-                                 "e7326871-6fdc-485c-a7b9-e6ad18d84944",
-                                 "fe71f013-e6fa-469e-b8f9-1a08cacac071",
-                                 "a4c94792-122a-4bfd-8712-bcddef8ff5e2",""
-                                 "57e06956-8616-4d85-ac4a-0eca8b8c2ee5",
-                                 "c9a683bb-24de-437a-91d4-465dbc28d09d"]
-            if temp["uuid"] in male_candidates:
-                temp["gender"] = "male"
 
-            vornamen.append({"value": temp["first_name"] , "synonyms": [temp["first_name"]]})
-            nachnamen.append({"value": temp["last_name"], "synonyms": [temp["last_name"]]})
 
-            # nrw info
-            for row in nrw["k"]:
-                if row["nn"] == temp["last_name"] and row["vn"] == temp["first_name"]:
-                        temp["nrw"] = give_nrw_info(row["nn"], row["vn"], row)
-                        if temp['nrw']['img'] is not None:
-                            temp['img'] = temp['nrw']['img']
-                        break
+        try:
+            temp["list_name"] = None
+            temp["list_nr"] = int(item["Liste_Platz"])
+        except:
+            temp["list_name"] = None
+            temp["list_nr"] = None
+
+        try:
+            temp["city"] = item['Wohnort']
+            temp['city_birth'] = item['Geburtsort']
+        except:
+            temp['city_birth'] = None
+            temp['city'] = None
+
+
+        #NRW Data
+        for item3 in data_abewatch['profiles']:
+            if item3['personal']['first_name'] == temp['first_name'] and item3['personal']['last_name'] == temp['last_name']:
+
+                # foto nur dann, wenn es kein dummy foto ist
+                if item3["personal"]["picture"][
+                    "url"] != "https://www.abgeordnetenwatch.de/sites/abgeordnetenwatch.de/files/default_images/profil_dummy_0.jpg":
+                    temp["img"] = item3["personal"]["picture"]["url"]
+                # nicht jeder hat einen Listenplatz
                 else:
-                    temp["nrw"] = None
+                    temp["img"] = None
+
+        if item["Wahlkreis_Nr"]:
+            for item2 in district['districts']:
+                if int(item2['district_id']) == item["Wahlkreis_Nr"]:
+                    temp['district_uuid'] = item2['uuid']
+                    break
+        else:
+            temp['district_uuid'] = None
 
 
-            data_list.append(temp)
+        # nrw info
+        for row in nrw["k"]:
+            if row["nn"] == temp["last_name"] and row["vn"] == temp["first_name"]:
+                    temp["nrw"] = give_nrw_info(row["nn"], row["vn"], row)
+                    if temp['nrw']['img'] is not None:
+                        temp['img'] = temp['nrw']['img']
+                    break
+            else:
+                temp["nrw"] = None
 
 
-    # for district uuid in nrw candidates
-    with open("wahlkreis_info.json") as data_file:
-        district = json.load(data_file)
+        data_list.append(temp)
+        vornamen.append({"value": temp["first_name"] , "synonyms": [temp["first_name"]]})
+        nachnamen.append({"value": temp["last_name"], "synonyms": [temp["last_name"]]})
 
     party_map = {"gesundheitsf": "Partei für Gesundheitsforschung",
                  "fdp": "FDP",
@@ -511,6 +508,16 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
     
 
 
+
+def wknr_to_uuid(wknr):
+    with open('wahlkreis_info.json') as f:
+        districts = json.load(f)
+
+    for item in districts['districts']:
+        if item['id'] == wknr:
+            uuid = item['uuid']
+            break
+    return uuid
 
 
 
