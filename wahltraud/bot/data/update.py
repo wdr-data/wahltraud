@@ -305,6 +305,8 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
     data_list = []
     vornamen = []
     nachnamen = []
+    all_party = []
+    all_party_control = []
     # how to erstelle kandidaten_file
     for index, item in data.iterrows():
 
@@ -363,12 +365,14 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
 
 
         try:
-            temp["list_name"] = "Landesliste " + state_map[item['Wahlkreis_Land']]
-            temp["list_nr"] = int(item["Liste_Platz"])
+            temp["list_name"] = "Landesliste " + state_map[item['Liste_Land']]
         except:
             temp["list_name"] = None
-            temp["list_nr"] = None
 
+        try:
+            temp["list_nr"] = int(item["Liste_Platz"])
+        except:
+            temp['list_nr'] = None
         try:
             temp["city"] = item['Wohnort']
             temp['city_birth'] = item['Geburtsort']
@@ -417,7 +421,12 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
 
 
         data_list.append(temp)
-        vornamen.append({"value": temp["first_name"] , "synonyms": [temp["first_name"]]})
+
+        if temp['party'] not in all_party_control:
+            all_party.append({"value": temp["party"] , "synonyms": [temp["party"]]})
+            all_party_control.append(temp['party'])
+
+        vornamen.append({"value": temp["first_name"] , "synonyms": [temp["first_name"], item['Vorname']]})
         nachnamen.append({"value": temp["last_name"], "synonyms": [temp["last_name"]]})
 
     party_map = {"gesundheitsf": "Partei für Gesundheitsforschung",
