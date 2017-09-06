@@ -11,7 +11,7 @@ from fuzzywuzzy import fuzz
 def update():
 
     update_abgewatch = False
-    update_alle = False
+    update_alle = True
     update_wahlkreis = True
 
 
@@ -288,7 +288,7 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
     Note. No PLZ, since this can be related by wahlkreisId
     """
     data = pd.read_csv('btw17_all_candidates_buwale.csv', delimiter = ';')
-
+    data = data.where((pd.notnull(data)), None)
     # for district uuid in nrw candidates
     with open("wahlkreis_info.json") as data_file:
         district = json.load(data_file)
@@ -326,10 +326,8 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
             temp['gender'] = 'female'
 
         try:
-            if (item["meta"]["uuid"] == "3f466bf5-aae1-4f1e-8f6e-6679b310f2e0") and (item["personal"]["birthyear"] == "2017"):
-                temp["age"] = 1989   # fix age if broken
-            else:
-                temp["age"] = int(item["Geburtsjahr"])  # derzeit nur der Jahrgang
+            
+            temp["age"] = int(item["Geburtsjahr"])  # derzeit nur der Jahrgang
         except:
             temp["age"] = None
 
