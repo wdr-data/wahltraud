@@ -1,12 +1,11 @@
-{
-  "list": [
+{"list": [
 
     {
       "party": "CDU",
       "page": "https://www.cdu.de/",
       "skript": "https://www.cdu.de/regierungsprogramm",
       "top_candidates": [
-        "2699cand17"
+        "AngelaMerkelCUcand17"
       ],
       "category" : "etabliert",
       "name": "Christlich Demokratische Union Deutschlands",
@@ -18,7 +17,7 @@
       "page": "http://www.csu.de/",
       "skript": "http://www.csu.de/programm/bayernplan",
       "top_candidates": [
-        "715ca498-0bde-46ec-b33a-bda60ad1f2f6"
+        "CemÖzdemirGRÜNEcand17"
       ],
       "category" : "etabliert",
       "name": "Christlich-Soziale Union in Bayern e.V.",
@@ -30,7 +29,7 @@
       "page": "https://www.fdp.de/",
       "skript": "https://www.fdp.de/denkenwirneu",
       "top_candidates": [
-        "444cand17"
+        "ChristianLindnerFDPcand17"
       ],
       "category" : "etabliert",
       "name": "Freie Demokratische Partei",
@@ -42,8 +41,8 @@
       "page": "https://www.afd.de/",
       "skript": "https://www.afd.de/wahlprogramm",
       "top_candidates": [
-        "1089cand17",
-        "4535cand17"
+        "AlexanderGaulandAfDcand17",
+        "AliceWeidelAfDcand17"
       ],
       "category" : "etabliert",
       "name": "Alternative für Deutschland",
@@ -55,7 +54,7 @@
       "page": "https://www.spd.de/",
       "skript": "https://www.spd.de/standpunkte/regierungsprogramm/",
       "top_candidates": [
-        "3843cand17"
+        "MartinSchulzSPDcand17"
       ],
       "category" : "etabliert",
       "name": "Sozialdemokratische Partei Deutschlands",
@@ -63,25 +62,25 @@
       "short": "SPD"
     },
     {
-      "party": "DIE GRÜNEN",
+      "party": "GRÜNE",
       "page": "https://www.gruene.de/landingpages/bundestagswahl-2017-buendnis-90die-gruenen.html#/",
       "skript": "https://www.gruene.de/ueber-uns/2017/gruenes-wahlprogramm-zur-bundestagswahl-2017-zukunft-wird-aus-mut-gemacht.html?pk_campaign=programm-hh-programm17",
       "top_candidates": [
-        "cb970cbe-d16a-4961-8377-0cbfe0d6ff6e",
-        "9d52bbca-c235-4896-8a52-5880917a3c47"
+        "CemÖzdemirGRÜNEcand17",
+        "KatrinGöring-EckardtGRÜNEcand17"
       ],
       "category" : "etabliert",
       "name": "BÜNDNIS 90/DIE GRÜNEN",
       "logo": null,
-      "short": "DIE GRÜNEN"
+      "short": "GRÜNE"
     },
     {
       "party": "DIE LINKE",
       "page": "https://www.die-linke.de/start/",
       "skript": "https://www.die-linke.de/wahlen/wahlprogramm/",
       "top_candidates": [
-        "47b3e404-b468-4b6d-b74b-e696c6378f9c",
-        "11759fa9-6386-4f16-9a53-2c54d62d2b2f"
+        "Dietmar GerhardBartschDIE LINKEcand17",
+        "SahraWagenknechtDIE LINKEcand17"
       ],
       "category" : "etabliert",
       "name": "DIE LINKE",
@@ -99,13 +98,16 @@
       "top_candidates": null
     },
     {
-      "party": "DIE PARTEI",
+      "party": "Die PARTEI",
       "page": "https://www.die-partei.de/",
       "skript": "https://www.die-partei.de/regierungsprogramm/",
       "category" : "klein" ,
+      "top_candidate": [
+        "SerdarSomuncuDie PARTEIcand17"
+      ],
       "name": "Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative",
       "logo": null,
-      "short": "DIE PARTEI",
+      "short": "Die PARTEI",
       "top_candidates": null
     },
     {
@@ -179,7 +181,7 @@
       "top_candidates": null
     },
     {
-      "party": "Sozialistische Gleichheitspartei",
+      "party": "SGP",
       "page": "http://www.gleichheit.de/",
       "skript": null,
       "category" : "klein" ,
@@ -199,7 +201,7 @@
       "top_candidates": null
     },
     {
-      "party": "Partei für Gesundheitsforschung",
+      "party": "Gesundheitsforschung",
       "page": "https://parteifuergesundheitsforschung.de/",
       "skript": "https://parteifuergesundheitsforschung.de/wahlprogramm-der-partei-fuer-gesundheitsforschung-fuer-die-bundestagswahl-2017",
       "category" : "klein" ,
@@ -209,7 +211,7 @@
       "top_candidates": null
     },
     {
-      "party": "BAYERNPARTEI",
+      "party": "BP",
       "page": "http://landesverband.bayernpartei.de/",
       "skript": null,
       "category" : "klein" ,
@@ -259,7 +261,7 @@
       "top_candidates": null
     },
     {
-      "party": "Bergpartei",
+      "party": "B*",
       "page": "http://www.bergpartei.de/",
       "skript": null,
       "category" : "klein",
@@ -269,7 +271,7 @@
       "top_candidates": null
     },
     {
-      "party": "Magdeburger Gartenpartei",
+      "party": "MG",
      "page": "http://www.magdeburger-gartenpartei.de/",
       "skript": "http://www.magdeburger-gartenpartei.de/pdf/wahlprogramm2017.pdf",
       "category" : "klein",
@@ -279,7 +281,7 @@
       "top_candidates": null
     },
     {
-      "party": "Ab jetzt...Demokratie durch Volksabstimmung",
+      "party": "Volksabstimmung",
       "page":  "http://www.demokratie-durch-volksabstimmung.de/",
       "skript": null,
       "category" : "klein",
@@ -289,13 +291,13 @@
       "top_candidates": null
     },
     {
-      "party": "V-Partei",
+      "party": "V-Partei³",
       "page": "https://v-partei.de/",
       "skript": "https://v-partei.de/vparteihoch3/parteiprogramm/",
       "category" : "klein",
       "name": "V-Partei - Partei für Veränderung, Vegetarier und Veganer",
       "logo": null,
-      "short": "V-Partei",
+      "short": "V-Partei³",
       "top_candidates": null
     },
     {
@@ -339,7 +341,7 @@
       "top_candidates": null
     },
     {
-      "party": "Mieterpartei",
+      "party": "MIETERPARTEI",
       "page": "http://mieterpartei.jetzt/",
       "skript": null,
       "category" : "klein",
@@ -399,7 +401,7 @@
       "top_candidates": null
     },
     {
-      "party": "Partei der Vernunft",
+      "party": "PDV",
       "page": "https://parteidervernunft.de/",
       "skript": "https://parteidervernunft.de/aktuelles/bundestagswahl-2017/",
       "category" : "klein",
@@ -419,7 +421,7 @@
       "top_candidates": null
     },
     {
-      "party": "Bündnis Grundeinkommen",
+      "party": "BGE",
       "page": "https://www.buendnis-grundeinkommen.de/",
       "skript": null,
       "category" : "klein",
@@ -480,4 +482,3 @@
     }
   ]
 }
-
