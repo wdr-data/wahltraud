@@ -67,7 +67,7 @@ Wenn Du jeden Abend eine Info zur Wahl erhalten möchtest, klicke auf \"Anmelden
                  buttons=[
                     button_postback('Anmelden', ['subscribe']),
                     button_postback('Tägliche Nachricht',
-                                    {'push': last_push.id, 'next_step': 'intro'}),
+                                    {'push': last_push.id, 'next_state': 'intro'}),
                     button_postback('Erklär mal...', ['about']),
                  ])
 
