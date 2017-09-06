@@ -224,12 +224,15 @@ def wiki(event, parameters, **kwargs):
     text = parameters.get('wiki')
 
     wikis = Wiki.objects.all()
-
+    '''
     best_match = process.extractOne(
         text,
         wikis,
         scorer=fuzz.token_set_ratio,
         score_cutoff=50)
+        '''
+
+    best_match = text
 
     if not best_match:
         reply = "Tut mir Leid, darauf habe noch ich keine Antwort. Frag mich die Tage nochmal."
