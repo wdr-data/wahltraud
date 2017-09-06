@@ -306,7 +306,7 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
     for index, item in data.iterrows():
 
 
-        temp = {"uuid": str(index)+'cand17',
+        temp = {
                 #personal
                 "profession":  item['Beruf'],
                 #"education": item["personal"]["education"],
@@ -325,6 +325,9 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
 
         if not temp['party']:
             temp['party'] = item['Liste_ParteiKurzBez']
+
+        temp["uuid"] =  item['Vorname'] + item['Name'] + temp['party']+ 'cand17'
+
 
         if item['Geschlecht'] == 'm':
             temp["gender"] =  'male'
