@@ -331,11 +331,27 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
         except:
             temp["age"] = None
 
-
+        state_map = {'NW': 'Nordrhein-Westfalen',
+                    'BW': 'Baden-Württemberg',
+                    'NI': 'Niedersachsen',
+                    'SH': 'Schleswig-Holstein',
+                    'BY': 'Bayern',
+                    'RP': 'Rheinlandpfalz',
+                    'MV': 'Mecklenburg-Vorpommern',
+                    'SN': 'Sachsen',
+                    'HE': 'Hessen',
+                    'BE': 'Berlin',
+                    'SL': 'Saarland',
+                    'ST': 'Sachsen-Anhalt',
+                    'HH': 'Hamburg',
+                    'BB': 'Brandenburg',
+                    'HB': 'Bremen',
+                    'TH': 'Thüringen'
+                }
 
 
         try:
-            temp["list_name"] = None
+            temp["list_name"] = "Landesliste" + state_map[item['Wahlkreis_Land']]
             temp["list_nr"] = int(item["Liste_Platz"])
         except:
             temp["list_name"] = None
@@ -358,8 +374,8 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
                     "url"] != "https://www.abgeordnetenwatch.de/sites/abgeordnetenwatch.de/files/default_images/profil_dummy_0.jpg":
                     temp["img"] = item3["personal"]["picture"]["url"]
                 # nicht jeder hat einen Listenplatz
-                else:
-                    temp["img"] = None
+            else:
+                temp["img"] = None
 
         if item["Wahlkreis_Nr"]:
             for item2 in district['districts']:
