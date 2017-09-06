@@ -129,7 +129,7 @@ party_abbr = {
     'spd': 'SPD',
     'fdp': 'FDP',
     'linke': 'DIE LINKE',
-    'gruene': 'DIE GRÜNEN',
+    'gruene': 'GRÜNE',
     'afd': 'AfD',
 }
 
