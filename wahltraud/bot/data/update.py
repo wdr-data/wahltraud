@@ -8,11 +8,10 @@ import re
 from fuzzywuzzy import fuzz
 
 
-
 def update():
 
     update_abgewatch = False
-    update_alle = True
+    update_alle = False
     update_wahlkreis = True
 
 
@@ -574,7 +573,7 @@ def plz_ort_finder(item, ort_plz_wk, take_city = False):
     plz = []
     ort = []
     for area in item["areacodes"]:
-        plz.append(area["code"])
+
 
         # add leading 0 to 4 digit plz
         if len((area["code"])) == 4:
@@ -586,7 +585,8 @@ def plz_ort_finder(item, ort_plz_wk, take_city = False):
             city_name = ort_finder(code_plz,ort_plz_wk)
         else:
             city_name = None
-        ort.append(city_name)  
+        ort.append(city_name)
+        plz.append(code_plz)
     orte = list(set(ort))
     return [plz,orte] 
 
