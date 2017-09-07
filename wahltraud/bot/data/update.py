@@ -306,6 +306,34 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
     nachnamen = []
     all_party = []
     all_party_control = []
+
+    party_map = {"gesundheitsf": "Gesundheitsforschung",
+                 "fdp": "FDP",
+                 "piraten": "PIRATEN",
+                 "partei": "Die PARTEI",
+                 "spd": "SPD",
+                 "linke": "DIE LINKE",
+                 "gruene": "GRÜNE",
+                 "cdu": "CDU",
+                 "oedp": "ÖDP",
+                 "dib": "DiB",
+                 "dkp": "DKP",
+                 "bge": "BGE",
+                 "afd": "AfD",
+                 "add": "AD",
+                 "mlpd": "MLPD",
+                 "fw": "FREIE WÄHLER",
+                 "v_partei": "V-Partei³",
+                 "none": "Parteilos",
+                 "tierschutz": "Tierschutzpartei",
+                 "npd": "NPD",
+                 "humanisten": "Die Humanisten",
+                 "sgp": "SGP",
+                 "dm": "DM",
+                 "va": "Volksabstimmung",
+                 "violette": "DIE VIOLETTEN"
+                 }
+
     # how to erstelle kandidaten_file
     for index, item in data.iterrows():
 
@@ -410,11 +438,17 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
 
         # nrw info
         for row in nrw["k"]:
-            if row["nn"] == temp["last_name"] and row["vn"] == temp["first_name"]:
-                    temp["nrw"] = give_nrw_info(row["nn"], row["vn"], row)
-                    if temp['nrw']['img'] is not None:
-                        temp['img'] = temp['nrw']['img']
-                    break
+            if fuzz.partial_ratio(row["nn"] , temp["last_name"])>90:
+                if party_map[row["p"][0]] == temp["party"] or party_map[row['p'][0]] == 'Parteilos':
+                    if fuzz.partial_ratio(row['vn'], item['Vorname']) > 85:
+                        temp["nrw"] = give_nrw_info(row["nn"], row["vn"], row)
+                        if temp['nrw']['img'] is not None:
+                            temp['img'] = temp['nrw']['img']
+                        temp['count']  = 1
+                        break
+                else:
+                    print(row['vn'], temp['first_name'], item['Vorname'], row['nn'], item['Name'], temp['party'])
+
             else:
                 temp["nrw"] = None
 
@@ -428,33 +462,7 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
         vornamen.append({"value": temp["first_name"] , "synonyms": [temp["first_name"], item['Vorname']]})
         nachnamen.append({"value": temp["last_name"], "synonyms": [temp["last_name"]]})
 
-    party_map = {"gesundheitsf": "Gesundheitsforschung",
-                 "fdp": "FDP",
-                 "piraten": "PIRATEN",
-                 "partei": "Die PARTEI",
-                 "spd" : "SPD",
-                "linke": "DIE LINKE",
-                "gruene": "GRÜNE",
-                "cdu": "CDU",
-                "oedp": "ÖDP",
-                "dib": "DiB",
-                "dkp": "DKP",
-                "bge": "Grundeinkommen",
-                "afd": "AfD",
-                "add": "AD",
-                "mlpd": "MLPD",
-                "fw": "FREIE WÄHLER",
-                "v_partei": "V-Partei³",
-                "none": "Parteilos",
-                "tierschutz": "Tierschutzpartei",
-                "npd": "NPD",
-                "humanisten": "Die Humanisten",
-                "sgp": "SGP",
-                "dm": "DM",
-                "va": "Volksabstimmung",
-                 "violette": "DIE VIOLETTEN"
-                }
-
+    '''
     # go through kandidatencheck_liste and check if there are candidates in nrw which are not in agbewatch
     counter = 0
     for row in nrw["k"]:
@@ -532,7 +540,7 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
             vornamen.append({"value": row['vn'], "synonyms": [row['vn'], testing["first_name"]]})
             nachnamen.append({"value": temp["last_name"], "synonyms": [temp["last_name"]]})
             data_list.append(temp)
-
+    '''
 
     final = {"list": data_list}
 
