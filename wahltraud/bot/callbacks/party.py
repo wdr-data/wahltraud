@@ -30,6 +30,23 @@ def basics(event, parameters, **kwargs):
         show_party_options(event, {'show_party_options': party})
 
 
+def top_candidates_apiai(event,parameters,**kwargs):
+    sender_id = event['sender']['id']
+    party = parameters.get('partei')
+
+    top_cand_parties = ['CDU', 'SPD', 'AfD', 'GRÜNE', 'FDP', 'DIE LINKE', 'Die PARTEI']
+
+    if not party:
+        send_text(sender_id, 'Spitzenkandidaten...')
+        show_party_options(event, {'show_parties': 'top'})
+
+    elif party in top_cand_parties:
+        party_info = by_party[party]
+        show_top_candidates(event, {'show_top_candidates' : party_info['top_candidates']})
+    else:
+        send_text(sender_id, 'Die Partei hat leider keinen Spitzenkandidaten aufgestellt.')
+
+
 def show_party_options(event, payload, **kwargs):
     sender_id = event['sender']['id']
     party = payload['show_party_options']
@@ -53,6 +70,9 @@ def show_party_options(event, payload, **kwargs):
             party=party_info['name'], party_short=party_info['short']),
         buttons=buttons
     )
+
+
+
 
 def show_top_candidates(event, payload, **kwargs):
     sender_id = event['sender']['id']
@@ -256,6 +276,8 @@ def show_parties(event, payload, **kwargs):
         parties = [party['party'] for party in party_list]
     elif category == 'etabliert':
         parties = ['CDU', 'CSU', 'SPD', 'DIE LINKE', 'GRÜNE', 'FDP', 'AfD' ]
+    elif category =='top':
+        parties =  ['CDU', 'CSU', 'SPD', 'DIE LINKE', 'GRÜNE', 'FDP', 'AfD', 'Die PARTEI' ]
     else:
         parties = [party['party'] for party in party_list if party['category'] == category]
 
