@@ -311,7 +311,7 @@ def intro_candidate(event, **kwargs):
     sender_id = event['sender']['id']
 
     reply = """
-    Über 2800 Kandidaten stehen in 299 Wahlkreisen zur Wahl. Du kannst mich auch direkt nach einem bestimmten Kandidaten fragen!
+    Ingesamt stehen 4828 Kandidaten zur Wahl. Du kannst mich auch direkt nach einem bestimmten Kandidaten fragen!
     """
     send_buttons(sender_id, reply,
                  buttons=[button_postback('Wahlkreis (Direktkandidat)', ['intro_district']),

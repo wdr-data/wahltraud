@@ -189,10 +189,11 @@ def show_candidates(event, payload, **kwargs):
     else:
         button = button_postback("Anderer Wahlkreis", ['intro_district'])
 
-    send_text(sender_id,
-              'Hier die Liste der Kandidaten im Wahlkreis \"{district}\" in alphabetischer Reihenfolge:'
-              .format(
-                district = district['district']
-                    )
-              )
+    if offset ==0:
+        send_text(sender_id,
+                  'Hier die Liste der Kandidaten im Wahlkreis \"{district}\" in alphabetischer Reihenfolge:'
+                  .format(
+                    district = district['district']
+                        )
+                  )
     send_list(sender_id, elements, button=button)
