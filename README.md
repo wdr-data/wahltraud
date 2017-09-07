@@ -5,8 +5,11 @@
 
 ## Team 
 Umsetzung: Lisa Achenbach, Jannes Höke.
+
 Konzept und Datenaufbereitung: Christian Joerres, Patricia Ennenbach.
+
 Redaktion: Jens Becker, Benjamin Weber.
+
 Design: Dennis Oertel 
 
 [**Impressum**](http://www1.wdr.de/impressum/index.html)
