@@ -38,7 +38,7 @@ def top_candidates_apiai(event,parameters,**kwargs):
 
     if not party:
         send_text(sender_id, 'Spitzenkandidaten...')
-        show_party_options(event, {'show_parties': 'top'})
+        show_parties(event, {'show_parties': 'top'})
 
     elif party in top_cand_parties:
         party_info = by_party[party]
