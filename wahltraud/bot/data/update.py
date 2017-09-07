@@ -289,7 +289,7 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
     """
     data = pd.read_csv('btw17_all_candidates_buwale.csv', delimiter = ';')
     data = data.where((pd.notnull(data)), None)
-
+    data.replace('-', 'AD', inplace=True)
 
     # for district uuid in nrw candidates
     with open("wahlkreis_info.json") as data_file:
@@ -428,10 +428,10 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
         vornamen.append({"value": temp["first_name"] , "synonyms": [temp["first_name"], item['Vorname']]})
         nachnamen.append({"value": temp["last_name"], "synonyms": [temp["last_name"]]})
 
-    party_map = {"gesundheitsf": "Partei für Gesundheitsforschung",
+    party_map = {"gesundheitsf": "Gesundheitsforschung",
                  "fdp": "FDP",
                  "piraten": "PIRATEN",
-                 "partei": "DIE PARTEI",
+                 "partei": "Die PARTEI",
                  "spd" : "SPD",
                 "linke": "DIE LINKE",
                 "gruene": "GRÜNE",
