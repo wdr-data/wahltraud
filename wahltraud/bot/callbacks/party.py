@@ -41,13 +41,13 @@ def top_candidates_apiai(event,parameters,**kwargs):
         show_parties(event, {'show_parties': 'top'})
 
     elif party in top_cand_parties:
-        party_info = by_party[party].copy()
-        if len(party_info['top_candidates'])==1:
-            top_candidate = party_info['top_candidates'].copy().pop(0)
-            gender_candidate = by_uuid[top_candidate]
-            show_basics(sender_id, {'payload_basics': top_candidate})
+        party_info = by_party[party]
+        if len(party_info['top_candidates']) == 1:
+            top_candidate = party_info['top_candidates'][0]
+            # gender_candidate = by_uuid[top_candidate]
+            show_basics(sender_id, top_candidate)
         else:
-            show_top_candidates(event, {'show_top_candidates' : party_info['top_candidates']})
+            show_top_candidates(event, {'show_top_candidates': party_info['top_candidates']})
     else:
         send_text(sender_id, 'Die Partei hat leider keinen Spitzenkandidaten aufgestellt.')
 
