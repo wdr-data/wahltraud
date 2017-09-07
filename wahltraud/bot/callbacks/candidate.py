@@ -25,6 +25,8 @@ def basics(event, parameters, **kwargs):
                 event, candidates, first_name, last_name)
 
         elif len(candidates) == 1:
+            if by_uuid[candidates[0]['uuid']]['first_name'] != first_name or by_uuid[candidates[0]['uuid']]['last_name'] != last_name:
+                send_text(sender_id, 'Meintest du:')
             show_basics(sender_id, candidates[0]['uuid'])
         else:
             send_text(
