@@ -41,7 +41,7 @@ def top_candidates_apiai(event,parameters,**kwargs):
         show_parties(event, {'show_parties': 'top'})
 
     elif party in top_cand_parties:
-        party_info = by_party[party]
+        party_info = by_party[party].copy()
         show_top_candidates(event, {'show_top_candidates' : party_info['top_candidates']})
     else:
         send_text(sender_id, 'Die Partei hat leider keinen Spitzenkandidaten aufgestellt.')
