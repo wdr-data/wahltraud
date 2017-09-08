@@ -358,6 +358,8 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
         if temp['party'] is None:
             temp['party'] = item['Liste_ParteiKurzBez']
 
+
+
         temp["uuid"] =  item['Vorname'] + item['Name'] + temp['party']+ 'cand17'
 
 

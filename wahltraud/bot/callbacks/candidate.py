@@ -164,7 +164,7 @@ Listenplatz Nr.: {list_nr}
         party=candidate['party'],
         age='-' if candidate['age'] is None else candidate['age'],
         dicstrict='-' if district_uuid is None else candidate_district,
-        state='-' if district_uuid is None else 'Landesliste ' + state,
+        state='-' if candidate['list_name'] is None else candidate['list_name'],
         city = '-' if candidate['city'] is None else candidate['city'],
         city_birth = '-' if candidate['city_birth'] is None else candidate['city_birth'],
         list_nr='-' if candidate['list_nr'] is None else candidate['list_nr'],
