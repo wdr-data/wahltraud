@@ -146,10 +146,11 @@ def show_basics(sender_id, candidate_uuid):
 
     send_buttons(sender_id, """
 Ein paar Fakten über {name}:
+
+Beruf: {profession}
+Wohnort: {city}
 Jahrgang: {age}
 Geburtsort: {city_birth}
-Wohnort: {city}
-Beruf: {profession}
 
 Partei: {party}
 Wahlkreis: {dicstrict}
