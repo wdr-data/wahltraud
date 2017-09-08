@@ -318,7 +318,7 @@ def sunday_poll(event, **kwargs):
 
     send_attachment(
         sender_id,
-        settings.SITE_URL + '/static/bot/sonntagsfrage_aktuell.jpg'
+        settings.SITE_URL + '/static/bot/Sonntagsfrage_aktuell.jpg'
     )
 
     send_text(sender_id,
