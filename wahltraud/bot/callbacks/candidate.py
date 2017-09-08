@@ -147,7 +147,7 @@ def show_basics(sender_id, candidate_uuid):
                 button_postback( 'Landesliste ' + candidate['party'],
                                 {'show_list': True,
                                  'party': candidate['party'],
-                                 'state': candidate['list_name'].replace('Landesliste ','')})
+                                 'state': candidate['list_name']})
             )
 
         if candidate['img']:
