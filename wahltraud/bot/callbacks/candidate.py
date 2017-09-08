@@ -146,14 +146,14 @@ def show_basics(sender_id, candidate_uuid):
 
     send_buttons(sender_id, """
 Ein paar Fakten über {name}:
-Partei: {party}
 Jahrgang: {age}
-
-Beruf: {profession}
-Wohnort: {city}
 Geburtsort: {city_birth}
+Wohnort: {city}
+Beruf: {profession}
 
+Partei: {party}
 Wahlkreis: {dicstrict}
+Listenplatz Nr.: {list_nr}
 {state}
     """.format(
         name=' '.join(filter(bool, (candidate['degree'],
@@ -164,10 +164,10 @@ Wahlkreis: {dicstrict}
         party=candidate['party'],
         age='-' if candidate['age'] is None else candidate['age'],
         dicstrict='-' if district_uuid is None else candidate_district,
-        state='-' if district_uuid is None else 'Listenplatz Nr.: ' + str(candidate['list_nr']) +'\nLandesliste ' + state,
+        state='-' if district_uuid is None else 'Landesliste ' + state,
         city = '-' if candidate['city'] is None else candidate['city'],
         city_birth = '-' if candidate['city_birth'] is None else candidate['city_birth'],
-        #list_nr='-' if candidate['list_nr'] is None else candidate['list_nr'],
+        list_nr='-' if candidate['list_nr'] is None else candidate['list_nr'],
         profession='-' if profession is None else profession
     ), buttons)
 
