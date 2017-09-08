@@ -73,9 +73,12 @@ Wenn Du jeden Abend eine Info zur Wahl erhalten möchtest, klicke auf \"Anmelden
 
 def about(event, **kwargs):
     sender_id = event['sender']['id']
-    reply = "Ich bin ein Bot. Du kannst mir ganz normal mit mir schreiben und ich versuche, so gut ich kann, Antworten zu liefern." \
-            "Mit Hilfe deiner Fragen 'lerne' ich, was dich interessiert und die Menschen, die mich programmieren, sagen mir was ich antworten soll." \
-            "Meine Hauptaufgabe ist es dich für die Bundestagswahl zu informieren. Weiter Infos findest du unter folgenden Themen. Ansonsten, sag einfach \"Hallo\" zu mir."
+    reply = '''
+    Ich bin ein Bot. Du kannst ganz normal mit mir schreiben und ich versuche, so gut ich das bis jetzt kann, zu antworten. 
+            Durch deine Fragen können die Menschen die mich programmiert habe sehen was dich interessiert. Dadurch 'lerne' ich und kann deine Frage vielleicht bald beantworten.
+            Meine Hauptaufgabe ist es dich für die Bundestagswahl zu informieren.
+            Starte einfach indem du mich mit \"Hallo\" begrüßt!.
+            '''
     send_buttons(sender_id, reply,
                 buttons = [
                     button_postback("Kandidatencheck", ['menue_candidates']),
