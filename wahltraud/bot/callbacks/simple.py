@@ -73,7 +73,9 @@ Wenn Du jeden Abend eine Info zur Wahl erhalten möchtest, klicke auf \"Anmelden
 
 def about(event, **kwargs):
     sender_id = event['sender']['id']
-    reply = "Erfahre alles über Wahltrauds Funktionen. Wähle ein Thema über das du mehr erfahren möchtest."
+    reply = "Ich bin ein Bot. Du kannst mir ganz normal mit mir schreiben und ich versuche, so gut ich kann, Antworten zu liefern." \
+            "Mit Hilfe deiner Fragen 'lerne' ich, was dich interessiert und die Menschen, die mich programmieren, sagen mir was ich antworten soll." \
+            "Meine Hauptaufgabe ist es dich für die Bundestagswahl zu informieren. Weiter Infos findest du unter folgenden Themen. Ansonsten, sag einfach \"Hallo\" zu mir."
     send_buttons(sender_id, reply,
                 buttons = [
                     button_postback("Kandidatencheck", ['menue_candidates']),
