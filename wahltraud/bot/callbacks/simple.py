@@ -363,3 +363,20 @@ Hier Ihre Vorgänger:\n
 1963-1966: Ludwig Erhard (CDU)
 1949-1963: Konrad Adenauer (CDU)     
               ''')
+
+
+
+def who_votes(event, **kwargs):
+    sender_id = event['sender']['id']
+
+    send_text(sender_id,
+              '''
+              Wer in Deutschland wählen will, muss 
+1. die 🇩🇪 Staatsbürgerschaft besitzen
+2. am Wahltag mindestens 18 sein (Du wurdest am 25.9.1999 geboren? Sorry...) &
+3. mindestens drei Monate lang den Hauptwohnsitz in der Bundesrepublik gehabt haben. 
+
+Deutsche, die im Ausland leben, müssen irgendwann in den letzten 25 Jahren mal drei Monate in Deutschland gewohnt haben - sonst erlischt das aktive Wahlrecht. 
+
+Das aktive Wahlrecht kann man auch verlieren, wenn man z.B. für eine besondere Straftat verurteilt wurde oder schuldunfähig in der Psychiatrie ist. Details: https://www.bundestag.de/service/glossar/glossar/A/akt_wahlrecht/246252
+              ''')
