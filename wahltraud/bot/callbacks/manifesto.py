@@ -20,9 +20,11 @@ def manifesto_start(event, **kwargs):
         random_words.append(quick_reply(word, {'show_word': word}))
 
     send_text(
-        sender_id,
-        "Lass mich für dich die Programme nach einem Schlagwort durchsuchen. "
-        "Schreib mir einfach ein Wort, welches dich interessiert.",
+        sender_id,'''
+        Wähle eines der folgenden Wörter aus oder schreib mir direkt ein Wort, welches dich interessiert.
+        
+        Tipp: Probiere immer auch ähnliche Schlagwörter, denn wenn ein Wort in einem Programm nicht vorkommt, bedeutet das nicht, dass die Partei das Thema nicht behandelt!
+         ''',
         random_words
     )
 
