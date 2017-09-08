@@ -141,6 +141,15 @@ def show_basics(sender_id, candidate_uuid):
                                 {'show_district': district_uuid})
             )
 
+        if candidate['list_nr'] is not None:
+            buttons.insert(
+                0,
+                button_postback( 'Landesliste ' + candidate['party'],
+                                {'show_list': True,
+                                 'party': candidate['party'],
+                                 'state': candidate['list_name'].replace('Landesliste ','')})
+            )
+
         if candidate['img']:
             send_attachment(sender_id, candidate['img'], type='image')
 
