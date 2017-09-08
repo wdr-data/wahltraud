@@ -60,7 +60,7 @@ def make_event_handler():
         PayloadHandler(more_data, ['more_data']),
         PayloadHandler(menue_manifesto, ['menue_manifesto']),
         PayloadHandler(about_manifesto, ['about_manifesto']),
-        ApiAIHandler(presidents, 'bundespräsident'),
+        ApiAiHandler(presidents, 'bundespräsident'),
         ApiAiHandler(candidate.basics, 'kandidat'),
         ApiAiHandler(party.basics, 'parteien'),
         ApiAiHandler(party.top_candidates_apiai, 'spitzenkandidat'),
