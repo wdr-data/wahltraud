@@ -185,7 +185,7 @@ def menue_manifesto(event, **kwargs):
               'Kaum ein Wähler liest sich ein Wahlprogramm durch. Ich biete Dir einen Einblick '
               'in die Programme von CDU/CSU, SPD, DIE LINKE, DIE GRÜNEN, FDP und AfD.\n'
               'Ich zeige dir einzelne Sätze, in denen ein Schlagwort für das du dich interessierst vorkommt.',
-              [quick_reply('zeige Sätze', ['manifesto_start']), quick_reply('Wie geht`s?', {'about_manifesto': 'one'})])
+              [quick_reply('Zeig mir Sätze', ['manifesto_start']), quick_reply('Wie geht`s?', {'about_manifesto': 'one'})])
 
 def about_manifesto(event, payload, **kwargs):
     sender_id = event['sender']['id']
