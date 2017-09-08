@@ -324,18 +324,35 @@ def presidents(event,**kwargs):
     sender_id = event['sender']['id']
     send_text(sender_id,
               '''
-              Die Bundespräsidenten der Bundesrepublik Deutschland seit 1949: 
+              Hier die Bundespräsidenten der Bundesrepublik Deutschland seit 1949: 
 
-seit 18. März 2017: Frank-Walter Steinmeier (SPD)\n
-2012-18. März 2017: Joachim Gauck (parteilos)\n
-2010-2012: Christian Wulff (CDU)\n
-2004-2010: Horst Köhler (CDU)\n
-1999-2004: Johannes Rau (SPD)\n
-1994-1999: Roman Herzog (CDU)\n
-1984-1994: Richard von Weizsäcker (CDU)\n
-1979-1984: Karl Carstens (CDU)\n
-1974-1979: Walter Scheel (FDP)\n
-1969-1974: Gustav Heinemann (SPD)\n
-1959-1969: Heinrich Lübke (CDU)\n
+seit 18. März 2017: Frank-Walter Steinmeier (SPD)
+2012-18. März 2017: Joachim Gauck (parteilos)
+2010-2012: Christian Wulff (CDU)
+2004-2010: Horst Köhler (CDU)
+1999-2004: Johannes Rau (SPD)
+1994-1999: Roman Herzog (CDU)
+1984-1994: Richard von Weizsäcker (CDU)
+1979-1984: Karl Carstens (CDU)
+1974-1979: Walter Scheel (FDP)
+1969-1974: Gustav Heinemann (SPD)
+1959-1969: Heinrich Lübke (CDU)
 1949-1959: Theodor Heuss (FDP)
+              ''')
+
+def chancelor(event, **kwargs):
+    sender_id = event['sender']['id']
+    send_text(sender_id,
+              '''
+Seit 2005 ist Angela Merkel (CDU) Bundeskanzlerlin der Bundesrepublik Deutschland. Wer nach ihr BundeskanzlerIn wird,
+ entscheidet die Bundestagswahl am 24.Semptember.
+
+Hier Ihre Vorgänger:\n
+1998-2005: Gerhard Schröder (SPD)
+1982-1998: Helmut Kohl (CDU)
+1974-1982: Helmut Schmidt (SPD)
+1969-1974: Willy Brandt (SPD)
+1966-1969: Kurt Georg Kiesinger (CDU)
+1963-1966: Ludwig Erhard (CDU)
+1949-1963: Konrad Adenauer (CDU)     
               ''')
