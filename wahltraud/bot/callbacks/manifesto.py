@@ -22,7 +22,7 @@ def manifesto_start(event, **kwargs):
     send_text(
         sender_id,'''
         Wähle eines der folgenden Wörter aus oder schreib mir direkt ein Wort, welches dich interessiert.
-        Tipp: Suche immer nach ähnlichen Schlagwörter zu einem Thema. Wenn ein Wort in einem Programm nicht vorkommt, so ist dies nicht gleichbedeutent damit, dass die Partei das Thema nicht behandelt!
+        Tipp: Suche immer auch nach ähnlichen Schlagwörtern zu einem Thema. Wenn ein Wort in einem Programm nicht vorkommt, so ist dies nicht gleichbedeutend damit, dass die Partei ein Thema nicht behandelt!
          ''',
         random_words
     )
