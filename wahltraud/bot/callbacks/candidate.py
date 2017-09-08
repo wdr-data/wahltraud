@@ -148,20 +148,26 @@ def show_basics(sender_id, candidate_uuid):
 Ein paar Fakten über {name}:
 Partei: {party}
 Jahrgang: {age}
+
 Beruf: {profession}
+Wohnort: {city}
+Geburtsort: {city_birth}
 
 Wahlkreis: {dicstrict}
-Listenplatz Nr.: {list_nr}
-Landesliste {state}
+{state}
     """.format(
         name=' '.join(filter(bool, (candidate['degree'],
                                     candidate['first_name'],
+                                    candidate['middle_name'],
+                                    candidate['pre_last_name'],
                                     candidate['last_name']))),
         party=candidate['party'],
         age='-' if candidate['age'] is None else candidate['age'],
         dicstrict='-' if district_uuid is None else candidate_district,
-        state='-' if district_uuid is None else state,
-        list_nr='-' if candidate['list_nr'] is None else candidate['list_nr'],
+        state='-' if district_uuid is None else 'Listenplatz Nr.: ' + candidate['list_nr'] +'\nLandesliste ' + state,
+        city = '-' if candidate['city'] is None else candidate['city'],
+        city_birth = '-' if candidate['city_birth'] is None else candidate['city_bearth'],
+        #list_nr='-' if candidate['list_nr'] is None else candidate['list_nr'],
         profession='-' if profession is None else profession
     ), buttons)
 
