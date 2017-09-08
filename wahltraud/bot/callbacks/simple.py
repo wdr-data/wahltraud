@@ -78,7 +78,7 @@ def about(event, **kwargs):
                 buttons = [
                     button_postback("Kandidatencheck", ['menue_candidates']),
                     button_postback("Wahlprogramme", ['menue_manifesto']),
-                    button_postback("Daten", ['menue_data'])
+                    button_postback("Daten-Quellen", ['menue_data'])
                 ])
 
 def push(event, parameters, **kwargs):

@@ -26,7 +26,7 @@ def basics(event, parameters, **kwargs):
 
         elif len(candidates) == 1:
             if by_uuid[candidates[0]['uuid']]['first_name'] != first_name or by_uuid[candidates[0]['uuid']]['last_name'] != last_name:
-                send_text(sender_id, 'Meintest du:')
+                send_text(sender_id, 'Meinst du:')
             show_basics(sender_id, candidates[0]['uuid'])
         else:
             send_text(
@@ -164,7 +164,7 @@ Wahlkreis: {dicstrict}
         party=candidate['party'],
         age='-' if candidate['age'] is None else candidate['age'],
         dicstrict='-' if district_uuid is None else candidate_district,
-        state='-' if district_uuid is None else 'Listenplatz Nr.: ' + candidate['list_nr'] +'\nLandesliste ' + state,
+        state='-' if district_uuid is None else 'Listenplatz Nr.: ' + str(candidate['list_nr']) +'\nLandesliste ' + state,
         city = '-' if candidate['city'] is None else candidate['city'],
         city_birth = '-' if candidate['city_birth'] is None else candidate['city_bearth'],
         #list_nr='-' if candidate['list_nr'] is None else candidate['list_nr'],
