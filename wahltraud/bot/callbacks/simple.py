@@ -74,10 +74,10 @@ Wenn Du jeden Abend eine Info zur Wahl erhalten möchtest, klicke auf \"Anmelden
 def about(event, **kwargs):
     sender_id = event['sender']['id']
     reply = '''
-    Ich bin einer dieser Bots. Mein Ziel ist es dich objektiv über Kandidaten, Parteien und die Wahlprogramme zu informieren.
-    Alle Informationen die ich dir liefer findest du an vielen Stellen (Daten-Quellen) im Netz. Ich habe sie gesammelt und du kannst mich nach diesen ausfragen. 
+    Ich bin ein freundlicher Bot mit dem Ziel dich objektiv über Kandidaten, Parteien und die Wahlprogramme zu informieren.
+    Alle Informationen die ich dir liefer findest du an vielen Stellen (siehe Daten-Quellen) im Netz. Ich trage die Infos zusammen und du kannst mich gezielt ausfragen. 
     Du kannst ganz normal mit mir schreiben und ich antworte so gut ich kann. 
-    Durch deine Fragen können die Menschen die mich programmiert habe sehen was dich interessiert. Dadurch 'lerne' ich und kann deine Frage vielleicht bald beantworten.
+    Durch deine Fragen können die Menschen die mich programmieren sehen, was dich interessiert. Dadurch 'lerne' ich und kann deine Frage vielleicht bald beantworten.
     
     Starte einfach indem du mich mit \"Hallo\" begrüßt!.
             '''
