@@ -166,7 +166,7 @@ Wahlkreis: {dicstrict}
         dicstrict='-' if district_uuid is None else candidate_district,
         state='-' if district_uuid is None else 'Listenplatz Nr.: ' + str(candidate['list_nr']) +'\nLandesliste ' + state,
         city = '-' if candidate['city'] is None else candidate['city'],
-        city_birth = '-' if candidate['city_birth'] is None else candidate['city_bearth'],
+        city_birth = '-' if candidate['city_birth'] is None else candidate['city_birth'],
         #list_nr='-' if candidate['list_nr'] is None else candidate['list_nr'],
         profession='-' if profession is None else profession
     ), buttons)
