@@ -114,12 +114,12 @@ def show_basics(sender_id, candidate_uuid):
                                     {'show_district': district_uuid})
                 )
         else:
-            buttons.insert(0, button_postback("Mehr Info", {'more_infos_nrw': candidate['uuid']}))
+            buttons.insert(0, button_postback("Statements", {'more_infos_nrw': candidate['uuid']}))
 
         if candidate['nrw']['video'] is not None:
             buttons.insert(0, button_postback("Interview", {'show_video': candidate_uuid}))
         else:
-            buttons.insert(0, button_postback("Interview", {'no_video_to_show': candidate['uuid']}))
+            buttons.insert(0, button_postback("Kein Interview weil...", {'no_video_to_show': candidate['uuid']}))
 
         if candidate['nrw']['img']:
             send_attachment(sender_id, candidate['nrw']['img'], type='image')
@@ -200,9 +200,7 @@ def no_video_to_show(event,payload,**kwargs):
                             {'show_district': district_uuid})
         )
 
-    send_buttons(sender_id, """
-    Leider gibt es von {first_name} {last_name} (noch) kein Interview. 
-    
+    send_buttons(sender_id, """  
     {zusatz_info}
             """.format(
                     first_name=candidate['first_name'],
