@@ -318,3 +318,24 @@ def sunday_poll(event, **kwargs):
               'Wenn du etwas zu einer bestimmten Partei wissen möchtest, gib einfach ihren Namen ein.',
               quick_replies
               )
+
+
+def presidents(event,**kwargs):
+    sender_id = event['sender']['id']
+    send_text(sender_id,
+              '''
+              Die Bundespräsidenten der Bundesrepublik Deutschland seit 1949: 
+
+seit 18. März 2017: Frank-Walter Steinmeier (SPD)\n
+2012-18. März 2017: Joachim Gauck (parteilos)\n
+2010-2012: Christian Wulff (CDU)\n
+2004-2010: Horst Köhler (CDU)\n
+1999-2004: Johannes Rau (SPD)\n
+1994-1999: Roman Herzog (CDU)\n
+1984-1994: Richard von Weizsäcker (CDU)\n
+1979-1984: Karl Carstens (CDU)\n
+1974-1979: Walter Scheel (FDP)\n
+1969-1974: Gustav Heinemann (SPD)\n
+1959-1969: Heinrich Lübke (CDU)\n
+1949-1959: Theodor Heuss (FDP)
+              ''')
