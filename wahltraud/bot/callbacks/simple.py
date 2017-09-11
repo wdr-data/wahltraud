@@ -46,7 +46,7 @@ def get_started(event, **kwargs):
     if referral:
         ref = referral.get('ref')
         wk = int(ref.replace("WK", ""))
-        district = by_district_id[str(wk)]
+        district = by_district_id[wk]
         logging.info('Bot wurde mit neuem User geteilt: ' + ref + ' WK uuid: ' + district['uuid'])
 
         reply = """
