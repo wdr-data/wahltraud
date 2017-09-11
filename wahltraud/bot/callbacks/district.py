@@ -220,18 +220,18 @@ def show_structural_data(event,payload,**kwargs):
     
     Gesamt Bevölkerung: {population}
     Bevölkerung pro km²: {perm2}
-    Arbeitslosenquote März 2017: {unemployed}%
-
-    Wahlberechtigte: ca. {voters}
     
-    Altersaufteilung:
-    u18: {u18}%
+    unter 18: {u18}%
     18-24: {a1824}%
     25-34: {a2534}%
     35-59: {a3559}%
     60-75: {a6075}%
     75 und mehr: {a75}%
     (Stand 31.12.2015)
+    
+    Wahlberechtigte: ca. {voters}
+    Arbeitslosenquote März 2017: {unemployed}%
+
     
     """.format(
         u18 = data['u18'],
@@ -240,10 +240,10 @@ def show_structural_data(event,payload,**kwargs):
         a3559=data['a3559'],
         a6075=data['a6075'],
         a75=data['a75'],
-        perm2=data['perm2'],
-        voters=data['voters'],
+        perm2=locale.format('%.1f',data['perm2']),
+        voters=int(data['voters']),
         unemployed=data['unemployed'],
-        population=data['population'],
+        population=locale.format('%.0f',data['population']),
         name=district['district'],
 
     ),
