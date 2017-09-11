@@ -117,15 +117,15 @@ def get_structural_data(str_nr):
     struct['a75'] = list(data['Alter von ... bis ... Jahren am 31.12.2015 - 75 und mehr (%)'])[0],
     struct['perm2'] = \
     list(data['Bevölkerung am 31.12.2015 - Insgesamt (in 1000)'] * 1000 / data['Fläche am 31.12.2015 (km²)'])[0],
-
-    struct['voters'] = list(data['Bevölkerung am 31.12.2015 - Insgesamt (in 1000)']*1000 *(1-
-                            data['Alter von ... bis ... Jahren am 31.12.2015 - unter 18 (%)']/100)  *
-                            (1 - data['Bevölkerung am 31.12.2015 - Ausländer (%)']) * 1000)[0],
+    struct['voters_tot'] = list(1000 * data['Bevölkerung am 31.12.2015 - Insgesamt (in 1000)'] * (
+    1 - (data['Alter von ... bis ... Jahren am 31.12.2015 - unter 18 (%)'] / 100)) * (
+                                1 - (data['Bevölkerung am 31.12.2015 - Ausländer (%)'] / 100)))[0],
     struct['unemployed'] = list(data['Arbeitslosenquote März 2017 - insgesamt'])[0],
     struct['population'] = list(data['Bevölkerung am 31.12.2015 - Insgesamt (in 1000)'] * 1000)[0],
     new = {}
     for key, value in struct.items():
         new[key] = list(struct[key])[0]
+    new['voters'] = new['voters_tot'] / new['population'] * 100
     return new
 
 
