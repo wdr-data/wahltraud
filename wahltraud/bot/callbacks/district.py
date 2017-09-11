@@ -102,8 +102,8 @@ Das Durchschnittsalter der Kandidaten beträgt {avg_age} Jahre.
     ),
                  [
                      button_postback("Kandidaten", {'show_candidates': district_uuid}),
-                     button_postback("Bundestagswahl 2013", {'show_13': district_uuid}),
-                     #button_postback("Info Wahlkreis "+ district['district_id'], {'show_structural_data': district_uuid}),
+                     #button_postback("Bundestagswahl 2013", {'show_13': district_uuid}),
+                     button_postback("Info Wahlkreis "+ district['district_id'], {'show_structural_data': district_uuid}),
 
                      button_postback("Anderer Wahlkreis", ['intro_district']),
                  ])
@@ -234,19 +234,16 @@ def show_structural_data(event,payload,**kwargs):
     (Stand 31.12.2015)
     
     """.format(
-        u18 = data['Alter von ... bis ... Jahren am 31.12.2015 - unter 18 (%)'],
-        a1824=data['Alter von ... bis ... Jahren am 31.12.2015 - 18-24 (%)'],
-        a2534=data['Alter von ... bis ... Jahren am 31.12.2015 - 25-34 (%)'],
-        a3559=data['Alter von ... bis ... Jahren am 31.12.2015 - 35-59 (%)'],
-        a6075=data['Alter von ... bis ... Jahren am 31.12.2015 - 60-74 (%)'],
-        a75=data['Alter von ... bis ... Jahren am 31.12.2015 - 75 und mehr (%)'],
-        perm2=data['Bevölkerung am 31.12.2015 - Insgesamt (in 1000)']*1000/data['Fläche am 31.12.2015 (km²)'],
-        voters=(data['Alter von ... bis ... Jahren am 31.12.2015 - unter 18 (%)']
-                    - data['Bevölkerung am 31.12.2015 - Insgesamt (in 1000)']
-                    *data['Alter von ... bis ... Jahren am 31.12.2015 - unter 18 (%)'])*
-                   (1-data['Bevölkerung am 31.12.2015 - Ausländer (%)'])* 1000,
-        unemployed=data['Arbeitslosenquote März 2017 - insgesamt'],
-        population=data['Bevölkerung am 31.12.2015 - Insgesamt (in 1000)'],
+        u18 = data['u18'],
+        a1824=data['a1824'],
+        a2534=data['a2534'],
+        a3559=data['a3559'],
+        a6075=data['a6075'],
+        a75=data['a75'],
+        perm2=data['perm2'],
+        voters=data['voters'],
+        unemployed=data['uneployed'],
+        population=data['population'],
         name=district['district'],
 
     ),
