@@ -242,7 +242,7 @@ def show_structural_data(event,payload,**kwargs):
         a75=data['a75'],
         perm2=data['perm2'],
         voters=data['voters'],
-        unemployed=data['uneployed'],
+        unemployed=data['unemployed'],
         population=data['population'],
         name=district['district'],
 
