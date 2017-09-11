@@ -3,7 +3,7 @@ import operator
 import logging
 
 from ..fb import send_buttons, button_postback, send_text, send_list, list_element, quick_reply
-from ..data import by_uuid, by_plz, by_city
+from ..data import by_uuid, by_plz, by_city, get_election13_dict
 
 locale.setlocale(locale.LC_NUMERIC, 'de_DE.UTF-8')
 
@@ -113,18 +113,20 @@ def show_13(event, payload, **kwargs):
 
     district = by_uuid[district_uuid]
     election_13 = district['election_13'].copy()
+    election_13_all = get_election13_dict()
 
     beteiligung = election_13.pop('wahlbeteiligung')
+
 
     logger.info('Wahl 2013 zu Wahlkreis: {district}'.format(
         district=district['district']))
 
     results = '\n'.join(
         [
-            locale.format_string('%s: %.1f%%', (party, result * 100))
+            locale.format_string('%s: %.1f%% (%.1f%%)', (party, result * 100, election_13_all(party)*100))
             for party, result
             in sorted(election_13.items(), key=operator.itemgetter(1), reverse=True)
-            if (show_all and result>0)  or result > 0.05
+            if (show_all and result>0)  or result > 0.0499
         ]
     )
 
@@ -144,8 +146,9 @@ def show_13(event, payload, **kwargs):
             sender_id,
             "Bei der Bundestagswahl 2013 haben diese Parteien im Wahlkreis \"{district}\" "
             "mehr als 5% der Zweitstimmen erhalten:"
-            "\n\n{results}\n\nDie Wahlbeteiligung betrug {beteiligung}%.".format(
+            "\n\n{results}\n\nDie Wahlbeteiligung betrug {beteiligung}% ({beteiligung_all}).".format(
                 results=results,
+                beteiligung_all = locale.format('%.1f', election_13_all['wahlbeteiligung'] ),
                 district=district['district'],
                 beteiligung=locale.format('%.1f', beteiligung * 100)),
             [
