@@ -102,8 +102,8 @@ Das Durchschnittsalter der Kandidaten beträgt {avg_age} Jahre.
     ),
                  [
                      button_postback("Kandidaten", {'show_candidates': district_uuid}),
-                     #button_postback("Bundestagswahl 2013", {'show_13': district_uuid}),
-                     button_postback("Info Wahlkreis "+ district['district_id'], {'show_structural_data': district_uuid}),
+                     button_postback("Bundestagswahl 2013", {'show_13': district_uuid}),
+                     #button_postback("Info Wahlkreis "+ district['district_id'], {'show_structural_data': district_uuid}),
 
                      button_postback("Anderer Wahlkreis", ['intro_district']),
                  ])
@@ -240,7 +240,7 @@ def show_structural_data(event,payload,**kwargs):
         a3559=data['Alter von ... bis ... Jahren am 31.12.2015 - 35-59 (%)'],
         a6075=data['Alter von ... bis ... Jahren am 31.12.2015 - 60-74 (%)'],
         a75=data['Alter von ... bis ... Jahren am 31.12.2015 - 75 und mehr (%)'],
-        perm2=float(data['Bevölkerung am 31.12.2015 - Insgesamt (in 1000)'])*1000/float(data['Fläche am 31.12.2015 (km²)']),
+        perm2=data['Bevölkerung am 31.12.2015 - Insgesamt (in 1000)']*1000/data['Fläche am 31.12.2015 (km²)'],
         voters=(data['Alter von ... bis ... Jahren am 31.12.2015 - unter 18 (%)']
                     - data['Bevölkerung am 31.12.2015 - Insgesamt (in 1000)']
                     *data['Alter von ... bis ... Jahren am 31.12.2015 - unter 18 (%)'])*
