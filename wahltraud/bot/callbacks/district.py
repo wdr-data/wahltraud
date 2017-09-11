@@ -1,9 +1,10 @@
 import locale
 import operator
 import logging
+import pandas as pd
 
 from ..fb import send_buttons, button_postback, send_text, send_list, list_element, quick_reply
-from ..data import by_uuid, by_plz, by_city, get_election13_dict
+from ..data import by_uuid, by_plz, by_city, get_election13_dict, get_structural_data
 
 locale.setlocale(locale.LC_NUMERIC, 'de_DE.UTF-8')
 
@@ -101,7 +102,9 @@ Das Durchschnittsalter der Kandidaten beträgt {avg_age} Jahre.
     ),
                  [
                      button_postback("Kandidaten", {'show_candidates': district_uuid}),
-                     button_postback("Bundestagswahl 2013", {'show_13': district_uuid}),
+                     #button_postback("Bundestagswahl 2013", {'show_13': district_uuid}),
+                     button_postback("Info Wahlkreis "+ district['district_id'], {'show_13': district_uuid}),
+
                      button_postback("Anderer Wahlkreis", ['intro_district']),
                  ])
 
@@ -200,3 +203,13 @@ def show_candidates(event, payload, **kwargs):
                         )
                   )
     send_list(sender_id, elements, button=button)
+
+
+def show_structural_data(event,payload,**kwargs):
+    sender_id = event['sender']['id']
+    district_uuid = payload['show_structural_data']
+    district = by_uuid[district_uuid]
+
+    data = get_structural_data(district['district_id'])
+
+    send_text(sender_id, data['Land'])
