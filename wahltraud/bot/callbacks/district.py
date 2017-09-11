@@ -219,7 +219,7 @@ def show_structural_data(event,payload,**kwargs):
     Die folgenden Strukturdaten des Wahlkreis "{name}" stellt der Bundeswahlleiter zur Verfügung:
     
 Gesamt Bevölkerung: {population}
-Davon Wahlberechtigte: ca. {voters}
+Wahlberechtigt: ca. {voters}
 
 Die Alterverteilung ist wie folgt:
     unter 18: {u18}%
@@ -231,7 +231,7 @@ Die Alterverteilung ist wie folgt:
     
 (Stand 31.12.2015)
     
-Arbeitslosenquote März 2017: {unemployed}%
+Arbeitslosenquote (März '17'): {unemployed}%
 Bevölkerung pro km²: {perm2}
     """.format(
         u18 = locale.format('%.1f',data['u18']),
