@@ -104,8 +104,8 @@ Das Durchschnittsalter der Kandidaten beträgt {avg_age} Jahre.
                      button_postback("Kandidaten", {'show_candidates': district_uuid}),
                      #button_postback("Bundestagswahl 2013", {'show_13': district_uuid}),
                      button_postback("Info Wahlkreis "+ district['district_id'], {'show_structural_data': district_uuid}),
-
-                     button_postback("Anderer Wahlkreis", ['intro_district']),
+                     button_postback("Bundestagswahl 2013", {'show_13': district_uuid})
+                     #button_postback("Anderer Wahlkreis", ['intro_district']),
                  ])
 
 
@@ -140,6 +140,7 @@ def show_13(event, payload, **kwargs):
             "\n\n{results}".format(
                 results=results),
             [
+                button_postback("Info Wahlkreis " + district['district_id'], {'show_structural_data': district_uuid}),
                 button_postback("Anderer Wahlkreis", ['intro_district']),
             ]
         )
@@ -156,6 +157,7 @@ def show_13(event, payload, **kwargs):
                 beteiligung=locale.format('%.1f', beteiligung * 100)),
             [
                 button_postback("Alle anzeigen", {'show_13': district_uuid, 'show_all': True}),
+                button_postback("Info Wahlkreis " + district['district_id'], {'show_structural_data': district_uuid}),
                 button_postback("Anderer Wahlkreis", ['intro_district']),
             ]
         )
