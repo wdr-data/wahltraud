@@ -23,7 +23,7 @@ by_first_name = defaultdict(set)
 by_last_name = defaultdict(set)
 by_plz = defaultdict(set)
 by_city = defaultdict(set)
-by_district_id = defaultdict(set)
+by_district_id = dict()
 by_uuid = dict()
 by_party = defaultdict(set)
 
