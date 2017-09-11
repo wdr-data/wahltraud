@@ -12,7 +12,7 @@ from ..fb import (send_buttons, button_postback, send_text, quick_reply, send_ge
                   generic_element, button_web_url, button_share, send_attachment,
                   send_attachment_by_id, guess_attachment_type)
 from .shared import get_pushes, schema, send_push, get_pushes_by_date
-from ..data import by_district_id
+from ..data import by_district_id, by_uuid
 
 logger = logging.getLogger(__name__)
 
