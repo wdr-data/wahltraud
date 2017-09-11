@@ -103,7 +103,7 @@ Das Durchschnittsalter der Kandidaten beträgt {avg_age} Jahre.
                  [
                      button_postback("Kandidaten", {'show_candidates': district_uuid}),
                      #button_postback("Bundestagswahl 2013", {'show_13': district_uuid}),
-                     button_postback("Info Wahlkreis "+ district['district_id'], {'show_13': district_uuid}),
+                     button_postback("Info Wahlkreis "+ district['district_id'], {'show_structural_data': district_uuid}),
 
                      button_postback("Anderer Wahlkreis", ['intro_district']),
                  ])
@@ -213,3 +213,47 @@ def show_structural_data(event,payload,**kwargs):
     data = get_structural_data(district['district_id'])
 
     send_text(sender_id, data['Land'])
+
+    logger.info('Wahlkreisinfo Struckturdaten: {district} - {number}'.format(
+        district=district['district'], number=district['district_id']))
+
+    send_buttons(sender_id, """
+    Die folgenden Daten des Wahlkreis "{name}" stellt der Bundeswahlleiter zur Verfügung:
+    
+    Gesamt Bevölkerung: {population}
+    Bevölkerung pro km²: {perm2}
+    Arbeitslosenquote März 2017: {unemployed}%
+
+    Wahlberechtigte: ca. {voters}
+    
+    Altersaufteilung:
+    u18: {u18}%
+    18-24: {a1824}%
+    25-34: {a2534}%
+    35-59: {a3559}%
+    60-75: {a6075}%
+    75 und mehr: {a75}%
+    (Stand 31.12.2015)
+    
+    """.format(
+        u18 = data['Alter von ... bis ... Jahren am 31.12.2015 - unter 18 (%)'],
+        a1824=data['Alter von ... bis ... Jahren am 31.12.2015 - 18-24 (%)'],
+        a2534=data['Alter von ... bis ... Jahren am 31.12.2015 - 25-34 (%)'],
+        a3559=data['Alter von ... bis ... Jahren am 31.12.2015 - 35-59 (%)'],
+        a6075=data['Alter von ... bis ... Jahren am 31.12.2015 - 60-74 (%)'],
+        a75=data['Alter von ... bis ... Jahren am 31.12.2015 - 75 und mehr (%)'],
+        perm2=data['Bevölkerung am 31.12.2015 - Insgesamt (in 1000)']*1000/data['Fläche am 31.12.2015 (km²)'],
+        voters=(data['Alter von ... bis ... Jahren am 31.12.2015 - unter 18 (%)']
+                    - data['Bevölkerung am 31.12.2015 - Insgesamt (in 1000)']
+                    *data['Alter von ... bis ... Jahren am 31.12.2015 - unter 18 (%)'])*
+                   (1-data['Bevölkerung am 31.12.2015 - Ausländer (%)'])* 1000,
+        unemployed=data['Arbeitslosenquote März 2017 - insgesamt'],
+        population=data['Bevölkerung am 31.12.2015 - Insgesamt (in 1000)'],
+        name=district['district'],
+
+    ),
+                 [
+                     button_postback("Kandidaten", {'show_candidates': district_uuid}),
+                    button_postback("Ergebnisse Wahl '13", {'show_13': district_uuid}),
+                     button_postback("Anderer Wahlkreis", ['intro_district']),
+                 ])
