@@ -59,7 +59,7 @@ def get_started(event, **kwargs):
     sender_id = event['sender']['id']
     reply = """
 Hallo, ich bin Wahltraud 🐳
-Wenn Du Dich mit mir unterhälst, kann ich Dir viele Infos zur Bundestagswahl schicken:
+Wenn Du Dich mit mir unterhältst, kann ich Dir viele Infos zur Bundestagswahl schicken:
 Kandidaten, Parteien, Wahlprogramme - gemeinsam mit 1LIVE habe ich trainiert, um Dir viele Fragen dazu beantworten zu können.
 Wenn Du jeden Abend eine Info zur Wahl erhalten möchtest, klicke auf \"Anmelden\".
  Wenn Du genauer wissen möchtest, was ich kann, klicke auf \"Erklär mal\". Oder leg direkt los und sende mir eine Nachricht."""
