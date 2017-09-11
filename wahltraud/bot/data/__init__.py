@@ -46,8 +46,7 @@ for district in district_list:
     for plz in district['plz']:
         by_plz[plz].add(district['uuid'])
 
-    for district_id in district['district_id']:
-        by_district_id[district_id].add(district['uuid'])
+    by_district_id[district['district_id']] = district
 
     for city in district['cities']:
         by_city[city].add(district['uuid'])

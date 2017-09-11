@@ -12,7 +12,7 @@ from ..fb import (send_buttons, button_postback, send_text, quick_reply, send_ge
                   generic_element, button_web_url, button_share, send_attachment,
                   send_attachment_by_id, guess_attachment_type)
 from .shared import get_pushes, schema, send_push, get_pushes_by_date
-from ..data import by_district_id, by_uuid
+from ..data import by_district_id
 
 logger = logging.getLogger(__name__)
 
@@ -46,8 +46,8 @@ def get_started(event, **kwargs):
     if referral:
         ref = referral.get('ref')
         wk = int(ref.replace("WK", ""))
-        district_uuid = by_district_id.get(wk)
-        logging.info('Bot wurde mit neuem User geteilt: ' + ref + ' WK uuid: ' + str(district_uuid))
+        district = by_district_id[wk]
+        logging.info('Bot wurde mit neuem User geteilt: ' + ref + ' WK uuid: ' + str(district['uuid']))
 
         reply = """
 Ah, ein neuer Gast! Wie schön, dass mein Freund Novi 🤖 dich zu mir geschickt hat!
@@ -60,7 +60,7 @@ Wenn Du genauer wissen möchtest, was ich kann, klicke auf \"Erklär mal\". Oder
         send_buttons(sender_id, reply,
                      buttons=[
                         button_postback("Zeige Wahlkreis-Info",
-                                         {'show_district': district_uuid}),
+                                         {'show_district': district['uuid']}),
                         button_postback('Anmelden', ['subscribe']),
                         button_postback('Erklär mal...', ['about'])
                      ])
