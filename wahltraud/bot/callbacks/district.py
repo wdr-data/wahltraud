@@ -219,6 +219,8 @@ def show_structural_data(event,payload,**kwargs):
     Die folgenden Daten des Wahlkreis "{name}" stellt der Bundeswahlleiter zur Verfügung:
     
     Gesamt Bevölkerung: {population}
+    Davon Wahlberechtigte: ca. {voters}
+
     Bevölkerung pro km²: {perm2}
     
     unter 18: {u18}%
@@ -229,7 +231,6 @@ def show_structural_data(event,payload,**kwargs):
     75 und mehr: {a75}%
     (Stand 31.12.2015)
     
-    Wahlberechtigte: ca. {voters}
     Arbeitslosenquote März 2017: {unemployed}%
 
     

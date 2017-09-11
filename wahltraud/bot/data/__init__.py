@@ -118,10 +118,9 @@ def get_structural_data(str_nr):
     struct['perm2'] = \
     list(data['Bevölkerung am 31.12.2015 - Insgesamt (in 1000)'] * 1000 / data['Fläche am 31.12.2015 (km²)'])[0],
 
-    struct['voters'] = list((data['Alter von ... bis ... Jahren am 31.12.2015 - unter 18 (%)'] - data[
-        'Bevölkerung am 31.12.2015 - Insgesamt (in 1000)'] * data[
-                                 'Alter von ... bis ... Jahren am 31.12.2015 - unter 18 (%)']) * (
-                            1 - data['Bevölkerung am 31.12.2015 - Ausländer (%)']) * 1000)[0],
+    struct['voters'] = list(data['Bevölkerung am 31.12.2015 - Insgesamt (in 1000)']*1000 *(1-
+                            data['Alter von ... bis ... Jahren am 31.12.2015 - unter 18 (%)']/100)  *
+                            (1 - data['Bevölkerung am 31.12.2015 - Ausländer (%)']) * 1000)[0],
     struct['unemployed'] = list(data['Arbeitslosenquote März 2017 - insgesamt'])[0],
     struct['population'] = list(data['Bevölkerung am 31.12.2015 - Insgesamt (in 1000)'] * 1000)[0],
     new = {}
