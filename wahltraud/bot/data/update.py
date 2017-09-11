@@ -449,7 +449,8 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
                         temp["nrw"] = give_nrw_info(row["nn"], row["vn"], row)
                         if temp['nrw']['img'] is not None:
                             temp['img'] = temp['nrw']['img']
-                        temp['count']  = 1
+                        temp['count']  = row['id']
+
                         break
                 else:
                     print(row['vn'], temp['first_name'], item['Vorname'], row['nn'], item['Name'], temp['party'])
