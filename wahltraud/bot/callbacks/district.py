@@ -231,7 +231,7 @@ Die Alterverteilung ist wie folgt:
     
 (Stand 31.12.2015)
     
-Arbeitslosenquote (März '17'): {unemployed}%
+Arbeitslosenquote (März '17): {unemployed}%
 Bevölkerung pro km²: {perm2}
     """.format(
         u18 = locale.format('%.1f',data['u18']),
