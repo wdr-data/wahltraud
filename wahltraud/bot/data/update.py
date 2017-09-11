@@ -11,7 +11,7 @@ from fuzzywuzzy import fuzz
 def update():
 
     update_abgewatch = False
-    update_alle = True
+    update_alle = False
     update_wahlkreis = True
 
 
@@ -116,7 +116,10 @@ def wahlkreis_info(alle_kandidaten_json, wahlkreis_info_json):
                                  })
     wkinfo2 = {}
     wkinfo2["districts"] = wkinfo
-    
+
+    wkinfo2["election13"] = wahl2013('999') # result deutschland gesamt
+
+
     with open(wahlkreis_info_json, "w", encoding="utf8") as outfile:  
         json.dump(wkinfo2, outfile, ensure_ascii=False)
     

@@ -13,6 +13,7 @@ DATA_DIR = Path(__file__).absolute().parent
 party_list = json.load(open(str(DATA_DIR/'parteien_info.json')))['list']
 candidate_list = json.load(open(str(DATA_DIR/'alle_kandidaten.json')))['list']
 district_list = json.load(open(str(DATA_DIR/'wahlkreis_info.json')))['districts']
+election13_dict = json.load(open(str(DATA_DIR/'wahlkreis_info.json')))['election13']
 digital_word_list = json.load(open(str(DATA_DIR/'digital_words.json')))['words']
 
 by_first_name = defaultdict(set)
@@ -91,6 +92,9 @@ def random_candidate():
 
 def get_digital_words():
     return digital_word_list
+
+def get_election13_dict():
+    return election13_dict
 
 def find_party(party_wanted):
     return by_party.get(party_wanted)
