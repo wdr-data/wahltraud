@@ -233,15 +233,15 @@ Die Alterverteilung ist wie folgt:
 Bevölkerung pro km²: {perm2}
 Arbeitslosenquote März 2017: {unemployed}%
     """.format(
-        u18 = data['u18'],
-        a1824=data['a1824'],
-        a2534=data['a2534'],
-        a3559=data['a3559'],
-        a6075=data['a6075'],
-        a75=data['a75'],
+        u18 = locale.format('%.1f',data['u18']),
+        a1824=locale.format('%.1f',data['a1824']),
+        a2534=locale.format('%.1f',data['a2534']),
+        a3559=locale.format('%.1f',data['a3559']),
+        a6075=locale.format('%.1f',data['a6075']),
+        a75=locale.format('%.1f',data['a75']),
         perm2=locale.format('%.1f',data['perm2']),
         voters=locale.format('%.0f',data['voters_tot']),
-        unemployed=data['unemployed'],
+        unemployed=locale.format('%.1f',data['unemployed']),
         population=locale.format('%.0f',data['population']),
         name=district['district'],
 
