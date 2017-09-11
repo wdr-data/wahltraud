@@ -154,14 +154,13 @@ def show_basics(sender_id, candidate_uuid):
             send_attachment(sender_id, candidate['img'], type='image')
 
     send_buttons(sender_id, """
-Ein paar Fakten über {name}:
+{name} ({party})
 
 Beruf: {profession}
 Wohnort: {city}
 Jahrgang: {age}
 Geburtsort: {city_birth}
 
-Partei: {party}
 Wahlkreis: {dicstrict}
 Listenplatz Nr.: {list_nr}
 {state}
