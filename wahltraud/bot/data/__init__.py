@@ -17,7 +17,7 @@ district_list = json.load(open(str(DATA_DIR/'wahlkreis_info.json')))['districts'
 election13_dict = json.load(open(str(DATA_DIR/'wahlkreis_info.json')))['election13']
 digital_word_list = json.load(open(str(DATA_DIR/'digital_words.json')))['words']
 
-structural_data_district = pd.read_csv(DATA_DIR/'btwstrukturdaten.csv', delimiter = ';')
+structural_data_district = pd.read_csv(DATA_DIR/'btw17_strukturdaten.csv', delimiter = ';')
 
 by_first_name = defaultdict(set)
 by_last_name = defaultdict(set)
