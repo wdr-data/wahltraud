@@ -218,11 +218,10 @@ def show_structural_data(event,payload,**kwargs):
     send_buttons(sender_id, """
     Die folgenden Daten des Wahlkreis "{name}" stellt der Bundeswahlleiter zur Verfügung:
     
-    Gesamt Bevölkerung: {population}
-    Davon Wahlberechtigte: ca. {voters}
+Gesamt Bevölkerung: {population}
+Davon Wahlberechtigte: ca. {voters}%
 
-    Bevölkerung pro km²: {perm2}
-    
+Die Altergruppen sind wie folgt verteilt:
     unter 18: {u18}%
     18-24: {a1824}%
     25-34: {a2534}%
@@ -231,9 +230,8 @@ def show_structural_data(event,payload,**kwargs):
     75 und mehr: {a75}%
     (Stand 31.12.2015)
     
-    Arbeitslosenquote März 2017: {unemployed}%
-
-    
+Bevölkerung pro km²: {perm2}
+Arbeitslosenquote März 2017: {unemployed}%
     """.format(
         u18 = data['u18'],
         a1824=data['a1824'],
@@ -242,7 +240,7 @@ def show_structural_data(event,payload,**kwargs):
         a6075=data['a6075'],
         a75=data['a75'],
         perm2=locale.format('%.1f',data['perm2']),
-        voters=int(data['voters']),
+        voters=locale.format('%.1f',data['voters']),
         unemployed=data['unemployed'],
         population=locale.format('%.0f',data['population']),
         name=district['district'],
