@@ -154,7 +154,7 @@ def show_basics(sender_id, candidate_uuid):
             send_attachment(sender_id, candidate['img'], type='image')
 
     send_buttons(sender_id, """
-{name} ({party})
+{name},{party}
 
 Beruf: {profession}
 Wohnort: {city}
