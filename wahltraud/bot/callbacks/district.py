@@ -221,7 +221,7 @@ def show_structural_data(event,payload,**kwargs):
 Gesamt Bevölkerung: {population}
 Davon Wahlberechtigte: ca. {voters}%
 
-Die Altergruppen sind wie folgt verteilt:
+Die Alterverteilung ist wie folgt:
     unter 18: {u18}%
     18-24: {a1824}%
     25-34: {a2534}%
