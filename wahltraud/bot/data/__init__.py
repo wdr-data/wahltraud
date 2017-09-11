@@ -20,6 +20,7 @@ by_first_name = defaultdict(set)
 by_last_name = defaultdict(set)
 by_plz = defaultdict(set)
 by_city = defaultdict(set)
+by_district_id = defaultdict(set)
 by_uuid = dict()
 by_party = defaultdict(set)
 
@@ -41,6 +42,9 @@ for candidate in candidate_list:
 for district in district_list:
     for plz in district['plz']:
         by_plz[plz].add(district['uuid'])
+
+    for district_id in district['district_id']:
+        by_district_id[district_id].add(district['uuid'])
 
     for city in district['cities']:
         by_city[city].add(district['uuid'])

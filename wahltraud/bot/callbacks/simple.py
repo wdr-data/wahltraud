@@ -12,6 +12,7 @@ from ..fb import (send_buttons, button_postback, send_text, quick_reply, send_ge
                   generic_element, button_web_url, button_share, send_attachment,
                   send_attachment_by_id, guess_attachment_type)
 from .shared import get_pushes, schema, send_push, get_pushes_by_date
+from ..data import by_district_id
 
 logger = logging.getLogger(__name__)
 
@@ -39,46 +40,64 @@ def greetings(event, **kwargs):
 
 
 def get_started(event, **kwargs):
+    sender_id = event['sender']['id']
     referral = event.get('postback').get('referral')
 
     if referral:
         ref = referral.get('ref')
-        logging.info('Bot wurde mit neuem User geteilt: ' + ref)
+        wk = int(ref.replace("WK", ""))
+        district_uuid = by_district_id(wk)
+        logging.info('Bot wurde mit neuem User geteilt: ' + ref + ' WK uuid: ' + district_uuid)
 
-    now = timezone.localtime(timezone.now())
-    date = now.date()
-    time = now.time()
+        reply = """
+Ah, ein neuer Gast! Wie schön, dass mein Freund Novi 🤖 dich zu mir geschickt hat!
 
-    if time.hour < 18:
-        last_push = Push.objects.filter(
-            published=True).exclude(pub_date__date__gte=date).latest('pub_date')
+Hallo, ich bin Wahltraud 🐳
+Wenn du den Button \"Zeige Wahlkreis-Info\" anklickst, werde ich dich zunächst mal über deinen angefragten Wahlkreis informieren.
+Allerdings habe ich noch viel mehr auf Lager - z.B. Informationen zu Kandidaten, Parteien oder deren Wahlprogrammen.
+Du kannst auch jeden Abend eine Info zur Wahl erhalten. Wenn du das möchtest, klicke auf \"Anmelden\".
+Wenn Du genauer wissen möchtest, was ich kann, klicke auf \"Erklär mal\". Oder leg direkt los und sende mir eine Nachricht."""
+        send_buttons(sender_id, reply,
+                     buttons=[
+                        button_postback("Zeige Wahlkreis-Info",
+                                         {'show_district': district_uuid}),
+                        button_postback('Anmelden', ['subscribe']),
+                        button_postback('Erklär mal...', ['about'])
+                     ])
     else:
-        last_push = Push.objects.filter(
-            published=True).exclude(pub_date__date__gt=date).latest('pub_date')
+        now = timezone.localtime(timezone.now())
+        date = now.date()
+        time = now.time()
 
-    sender_id = event['sender']['id']
-    reply = """
+        if time.hour < 18:
+            last_push = Push.objects.filter(
+                published=True).exclude(pub_date__date__gte=date).latest('pub_date')
+        else:
+            last_push = Push.objects.filter(
+                published=True).exclude(pub_date__date__gt=date).latest('pub_date')
+
+        reply = """
 Hallo, ich bin Wahltraud 🐳
 Wenn Du Dich mit mir unterhältst, kann ich Dir viele Infos zur Bundestagswahl schicken:
 Kandidaten, Parteien, Wahlprogramme - gemeinsam mit 1LIVE habe ich trainiert, um Dir viele Fragen dazu beantworten zu können.
 Wenn Du jeden Abend eine Info zur Wahl erhalten möchtest, klicke auf \"Anmelden\".
- Wenn Du genauer wissen möchtest, was ich kann, klicke auf \"Erklär mal\". Oder leg direkt los und sende mir eine Nachricht."""
-    send_buttons(sender_id, reply,
-                 buttons=[
-                    button_postback('Anmelden', ['subscribe']),
-                    button_postback('Tägliche Nachricht',
-                                    {'push': last_push.id, 'next_state': 'intro'}),
-                    button_postback('Erklär mal...', ['about']),
-                 ])
+Wenn Du genauer wissen möchtest, was ich kann, klicke auf \"Erklär mal\". Oder leg direkt los und sende mir eine Nachricht."""
+        send_buttons(sender_id, reply,
+                     buttons=[
+                        button_postback('Anmelden', ['subscribe']),
+                        button_postback('Tägliche Nachricht',
+                                        {'push': last_push.id, 'next_state': 'intro'}),
+                        button_postback('Erklär mal...', ['about']),
+                     ])
 
 def about(event, **kwargs):
     sender_id = event['sender']['id']
     reply = '''
     Ich bin ein freundlicher Bot mit dem Ziel dich objektiv über Kandidaten, Parteien und die Wahlprogramme zu informieren.
-    Alle Informationen die ich dir liefer findest du an vielen Stellen (siehe Daten-Quellen) im Netz. Ich trage die Infos zusammen und du kannst mich gezielt ausfragen. 
-    Du kannst ganz normal mit mir schreiben und ich antworte so gut ich kann. 
+    Alle Informationen die ich dir liefer findest du an vielen Stellen (siehe Daten-Quellen) im Netz. Ich trage die Infos zusammen und du kannst mich gezielt ausfragen.
+    Du kannst ganz normal mit mir schreiben und ich antworte so gut ich kann.
     Durch deine Fragen können die Menschen die mich programmieren sehen, was dich interessiert. Dadurch 'lerne' ich und kann deine Frage vielleicht bald beantworten.
-    
+
     Starte einfach indem du mich mit \"Hallo\" begrüßt!.
             '''
     send_buttons(sender_id, reply,
@@ -331,7 +350,7 @@ def presidents(event,**kwargs):
     sender_id = event['sender']['id']
     send_text(sender_id,
               '''
-              Hier die Bundespräsidenten der Bundesrepublik Deutschland seit 1949: 
+              Hier die Bundespräsidenten der Bundesrepublik Deutschland seit 1949:
 
 seit 18. März 2017: Frank-Walter Steinmeier (SPD)
 2012-18. März 2017: Joachim Gauck (parteilos)
@@ -351,7 +370,7 @@ def chancelor(event, **kwargs):
     sender_id = event['sender']['id']
     send_text(sender_id,
               '''
-Seit 2005 ist Angela Merkel (CDU) Bundeskanzlerin der Bundesrepublik Deutschland. 
+Seit 2005 ist Angela Merkel (CDU) Bundeskanzlerin der Bundesrepublik Deutschland.
 Wer nach ihr BundeskanzlerIn wird, entscheidet die Bundestagswahl am 24.Semptember.
 
 Hier Ihre Vorgänger:\n
@@ -361,7 +380,7 @@ Hier Ihre Vorgänger:\n
 1969-1974: Willy Brandt (SPD)
 1966-1969: Kurt Georg Kiesinger (CDU)
 1963-1966: Ludwig Erhard (CDU)
-1949-1963: Konrad Adenauer (CDU)     
+1949-1963: Konrad Adenauer (CDU)
               ''')
 
 
@@ -371,12 +390,12 @@ def who_votes(event, **kwargs):
 
     send_text(sender_id,
               '''
-              Wer in Deutschland wählen will, muss 
+              Wer in Deutschland wählen will, muss
 1. die 🇩🇪 Staatsbürgerschaft besitzen
 2. am Wahltag mindestens 18 sein (Du wurdest am 25.9.1999 geboren? Sorry...) &
-3. mindestens drei Monate lang den Hauptwohnsitz in der Bundesrepublik gehabt haben. 
+3. mindestens drei Monate lang den Hauptwohnsitz in der Bundesrepublik gehabt haben.
 
-Deutsche, die im Ausland leben, müssen irgendwann in den letzten 25 Jahren mal drei Monate in Deutschland gewohnt haben - sonst erlischt das aktive Wahlrecht. 
+Deutsche, die im Ausland leben, müssen irgendwann in den letzten 25 Jahren mal drei Monate in Deutschland gewohnt haben - sonst erlischt das aktive Wahlrecht.
 
 Das aktive Wahlrecht kann man auch verlieren, wenn man z.B. für eine besondere Straftat verurteilt wurde oder schuldunfähig in der Psychiatrie ist. Details: https://www.bundestag.de/service/glossar/glossar/A/akt_wahlrecht/246252
               ''')
