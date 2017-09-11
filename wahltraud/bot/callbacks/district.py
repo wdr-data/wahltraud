@@ -212,8 +212,6 @@ def show_structural_data(event,payload,**kwargs):
 
     data = get_structural_data(district['district_id'])
 
-    send_text(sender_id, data['Land'])
-
     logger.info('Wahlkreisinfo Struckturdaten: {district} - {number}'.format(
         district=district['district'], number=district['district_id']))
 
