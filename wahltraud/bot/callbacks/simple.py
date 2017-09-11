@@ -351,7 +351,7 @@ def chancelor(event, **kwargs):
     sender_id = event['sender']['id']
     send_text(sender_id,
               '''
-Seit 2005 ist Angela Merkel (CDU) Bundeskanzlerlin der Bundesrepublik Deutschland. 
+Seit 2005 ist Angela Merkel (CDU) Bundeskanzlerin der Bundesrepublik Deutschland. 
 Wer nach ihr BundeskanzlerIn wird, entscheidet die Bundestagswahl am 24.Semptember.
 
 Hier Ihre Vorgänger:\n

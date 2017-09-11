@@ -89,7 +89,7 @@ def show_district(event, payload, **kwargs):
         district=district['district'], number=district['district_id']))
 
     send_buttons(sender_id, """
-Der Wahlkreis {number},  "{name}", liegt in {state}. Hier stehen {nr_of_candidates} Kandidaten zur Wahl, davon sind {total_female} Frauen.
+Wahlkreis {number},  "{name}", liegt in {state}. Hier stehen {nr_of_candidates} Direktkandidaten zur Wahl, davon sind {total_female} Frauen.
 Das Durchschnittsalter der Kandidaten beträgt {avg_age} Jahre.
 """.format(
         number=district['district_id'],
@@ -123,7 +123,7 @@ def show_13(event, payload, **kwargs):
 
     results = '\n'.join(
         [
-            locale.format_string('%s: %.1f%% (%.1f%%)', (party, result * 100, election_13_all[party]*100))
+            locale.format_string('%s: %.1f%%  (%.1f%%)', (party, result * 100, election_13_all[party]*100))
             for party, result
             in sorted(election_13.items(), key=operator.itemgetter(1), reverse=True)
             if (show_all and result>0)  or result > 0.0499
@@ -146,7 +146,7 @@ def show_13(event, payload, **kwargs):
             sender_id,
             "Bei der Bundestagswahl 2013 haben diese Parteien im Wahlkreis \"{district}\" "
             "mehr als 5% der Zweitstimmen erhalten:"
-            "\n\n{results}\n\nDie Wahlbeteiligung betrug {beteiligung}% ({beteiligung_all}).".format(
+            "\n\n{results}\n\nDie Wahlbeteiligung betrug {beteiligung}%  ({beteiligung_all}%). ".format(
                 results=results,
                 beteiligung_all = locale.format('%.1f', election_13_all['wahlbeteiligung'] ),
                 district=district['district'],
@@ -194,7 +194,7 @@ def show_candidates(event, payload, **kwargs):
 
     if offset ==0:
         send_text(sender_id,
-                  'Hier die Liste der Kandidaten im Wahlkreis \"{district}\" in alphabetischer Reihenfolge:'
+                  'Hier die Liste der Direktkandidaten im Wahlkreis \"{district}\" in alphabetischer Reihenfolge:'
                   .format(
                     district = district['district']
                         )
