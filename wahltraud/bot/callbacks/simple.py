@@ -47,8 +47,7 @@ def get_started(event, **kwargs):
         ref = referral.get('ref')
         wk = int(ref.replace("WK", ""))
         district_uuid = by_district_id[wk]
-        district = by_uuid[district_uuid]
-        logging.info('Bot wurde mit neuem User geteilt: ' + ref + ' WK uuid: ' + str(district['uuid']))
+        logging.info('Bot wurde mit neuem User geteilt: ' + ref + ' WK uuid: ' + str(district_uuid))
 
         reply = """
 Ah, ein neuer Gast! Wie schön, dass mein Freund Novi 🤖 dich zu mir geschickt hat!
@@ -61,7 +60,7 @@ Wenn Du genauer wissen möchtest, was ich kann, klicke auf \"Erklär mal\". Oder
         send_buttons(sender_id, reply,
                      buttons=[
                         button_postback("Zeige Wahlkreis-Info",
-                                         {'show_district': district['uuid']}),
+                                         {'show_district': next(iter(district_uuid))}),
                         button_postback('Anmelden', ['subscribe']),
                         button_postback('Erklär mal...', ['about'])
                      ])
