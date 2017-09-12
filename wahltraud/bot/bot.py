@@ -34,6 +34,7 @@ API_AI_TOKEN = os.environ.get('WAHLTRAUD_API_AI_TOKEN', 'na')
 ADMINS = [
     1781215881903416,  # Christian
     1450422691688898,  # Jannes
+    1400823466644114,  # Lisa
 ]
 
 
@@ -118,6 +119,12 @@ def make_event_handler():
                     logging.info('Bot wurde mit bekantem User geteilt: ' + ref)
                     wk = int(ref.replace("WK", ""))
                     dis = by_district_id[str(wk)]
+                    send_text(
+                        event['sender']['id'],
+                        'Hi, schön dich wieder zu sehen! \nNovi sagt du möchtest etwas über deinen Wahlkreis "{wk}" wissen? Sehr gerne...'.format(
+                            wk=dis['district']
+                        )
+                    )
                     district.send_district(event['sender']['id'], dis['uuid'])
 
             message = event.get('message')
