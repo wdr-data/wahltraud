@@ -153,12 +153,27 @@ def subscribe(event, **kwargs):
         send_text(user_id, reply)
 
     else:
+        now = timezone.localtime(timezone.now())
+        date = now.date()
+        time = now.time()
+
+        if time.hour < 18:
+            last_push = Push.objects.filter(
+                published=True).exclude(pub_date__date__gte=date).latest('pub_date')
+        else:
+            last_push = Push.objects.filter(
+                published=True).exclude(pub_date__date__gt=date).latest('pub_date')
+
         FacebookUser.objects.create(uid=user_id)
         logger.debug('subscribed user with ID ' + str(FacebookUser.objects.latest('add_date')))
         reply = """
-Danke für deine Anmeldung! Du erhältst nun täglich um 18 Uhr dein Update.\n
-Wenn du irgendwann genug Informationen hast, kannst du dich über das Menü natürlich jederzeit wieder abmeden."""
-        send_text(user_id, reply)
+Danke für deine Anmeldung! Du erhältst nun täglich um 18 Uhr dein Update.
+Möchtest du jetzt das aktuellste Update aufrufen, klicke auf \'Aktuelle Nachricht\'. Wenn du irgendwann genug Informationen hast, kannst du dich über das Menü natürlich jederzeit wieder abmeden."""
+        send_buttons(user_id, reply,
+                     buttons=[
+                        button_postback('Aktuelle Nachricht',
+                                        {'push': last_push.id, 'next_state': 'intro'}),
+                     ])
 
 
 def unsubscribe(event, **kwargs):
@@ -167,8 +182,11 @@ def unsubscribe(event, **kwargs):
     if FacebookUser.objects.filter(uid=user_id).exists():
         logger.debug('deleted user with ID: ' + str(FacebookUser.objects.get(uid=user_id)))
         FacebookUser.objects.get(uid=user_id).delete()
-        reply = "Schade, dass du uns verlassen möchtest. Du wurdest aus der Empfängerliste für Push Benachrichtigungen gestrichen."
-        send_text(user_id, reply)
+        send_text(user_id,
+                "Schade, dass du uns verlassen möchtest. Du wurdest aus der Empfängerliste für Push Benachrichtigungen gestrichen. "
+                "Wenn du doch nochmal Interesse hast, kannst du mich auch einfach fragen: \n
+                "z.B. \"Wie war der Push von gestern/ vorgestern/ letztem Sonntag?\""
+        )
     else:
         reply = "Du bist noch kein Nutzer der Push-Nachrichten. Wenn du dich anmelden möchtest wähle \"Anmelden\" über das Menü."
         send_text(user_id, reply)
@@ -181,7 +199,7 @@ def menue_candidates(event, **kwargs):
             " Damit die Aussagen vergleichbar sind, haben wir allen Teilnehmer dieselben Fragen gestellt. "
             "Hier gibt’s Informationen zum kompletten Projekt:\n"
             "https://blog.wdr.de/ihrewahl/faq-wdr-kandidatencheck-bundestagswahl-2017\n"
-"           Wenn du mir eine Postleitzahl aus NRW schreibst, kann ich dir alle verfügbaren Kandidatenchecks aus dem dazugehörigen Wahlkreis zeigen.",
+            "Wenn du mir eine Postleitzahl aus NRW schreibst, kann ich dir alle verfügbaren Kandidatenchecks aus dem dazugehörigen Wahlkreis zeigen.",
               [quick_reply('Zeige Kandidaten', ['candidate_check_start']),
                quick_reply('Fragen', ['questions'])]
               )
