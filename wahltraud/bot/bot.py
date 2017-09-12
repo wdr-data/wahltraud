@@ -19,6 +19,7 @@ from .callbacks.simple import (get_started, push, subscribe, unsubscribe, wiki, 
                                more_data, sunday_poll, greetings, presidents, chancelor, who_votes)
 from .callbacks.shared import (get_pushes, get_breaking, send_push, schema)
 from .callbacks import candidate, district, browse_lists, manifesto, party
+from .data import by_district_id
 
 # TODO: The idea is simple. When you send "subscribe" to the bot, the bot server would add a record according to the sender_id to their
 # database or memory , then the bot server could set a timer to distribute the news messages to those sender_id who have subscribed for the news.
