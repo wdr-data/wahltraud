@@ -184,7 +184,7 @@ def unsubscribe(event, **kwargs):
         FacebookUser.objects.get(uid=user_id).delete()
         send_text(user_id,
                 "Schade, dass du uns verlassen möchtest. Du wurdest aus der Empfängerliste für Push Benachrichtigungen gestrichen. "
-                "Wenn du doch nochmal Interesse hast, kannst du mich auch einfach fragen: \n
+                "Wenn du doch nochmal Interesse hast, kannst du mich auch einfach fragen: \n"
                 "z.B. \"Wie war der Push von gestern/ vorgestern/ letztem Sonntag?\""
         )
     else:
