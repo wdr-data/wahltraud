@@ -42,12 +42,12 @@ def greetings(event, **kwargs):
 def get_started(event, **kwargs):
     sender_id = event['sender']['id']
     referral = event.get('postback').get('referral')
+    ref = referral.get('ref')
 
-    if referral:
-        ref = referral.get('ref')
+    if ref.startswith("WK"):
         wk = int(ref.replace("WK", ""))
         district = by_district_id[str(wk)]
-        logging.info('Bot wurde mit neuem User geteilt: ' + ref + ' WK uuid: ' + district['uuid'])
+        logging.info('Bot wurde mit neuem User geteilt: ' + ref)
 
         reply = """
 Ah, ein neuer Gast! Wie schön, dass mein Freund Novi 🤖 dich zu mir geschickt hat!
