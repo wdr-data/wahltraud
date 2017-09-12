@@ -130,7 +130,6 @@ def make_event_handler():
                     send_text(
                         event['sender']['id'],
                         'Willkommen zurück. Was kann ich für dich tun?
-                        )
                     )
 
             message = event.get('message')
