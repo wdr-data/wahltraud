@@ -42,30 +42,32 @@ def greetings(event, **kwargs):
 def get_started(event, **kwargs):
     sender_id = event['sender']['id']
     referral = event.get('postback').get('referral')
-    ref = referral.get('ref')
 
-    if ref.startswith("WK"):
-        wk = int(ref.replace("WK", ""))
-        district = by_district_id[str(wk)]
-        logging.info('Bot wurde mit neuem User geteilt: ' + ref)
+    if referral:
+        ref = referral.get('ref')
+        if ref.startswith("WK"):
+            wk = int(ref.replace("WK", ""))
+            district = by_district_id[str(wk)]
+            logging.info('Bot wurde mit neuem User geteilt: ' + ref)
 
-        reply = """
-Ah, ein neuer Gast! Wie schön, dass mein Freund Novi 🤖 dich zu mir geschickt hat!
+            reply = """
+    Ah, ein neuer Gast! Wie schön, dass mein Freund Novi 🤖 dich zu mir geschickt hat!
 
-Hallo, ich bin Wahltraud 🐳
-Wenn du den Button \"Zeige Wahlkreis-Info\" anklickst, werde ich dich zunächst mal über deinen angefragten Wahlkreis informieren.
-Allerdings habe ich noch viel mehr auf Lager - z.B. Informationen zu Kandidaten, Parteien oder deren Wahlprogrammen.
-Du kannst auch jeden Abend eine Info zur Wahl erhalten. Wenn du das möchtest, klicke auf \"Anmelden\".
-Wenn Du genauer wissen möchtest, was ich kann, klicke auf \"Erklär mal\". Oder leg direkt los und sende mir eine Nachricht."""
-        send_buttons(sender_id, reply,
-                     buttons=[
-                        button_postback("Zeige Wahlkreis-Info",
-                                         {'show_district': district['uuid']}),
-                        button_postback('Anmelden', ['subscribe']),
-                        button_postback('Erklär mal...', ['about'])
-                     ])
+    Hallo, ich bin Wahltraud 🐳
+    Wenn du den Button \"Zeige Wahlkreis-Info\" anklickst, werde ich dich zunächst mal über deinen angefragten Wahlkreis informieren.
+    Allerdings habe ich noch viel mehr auf Lager - z.B. Informationen zu Kandidaten, Parteien oder deren Wahlprogrammen.
+    Du kannst auch jeden Abend eine Info zur Wahl erhalten. Wenn du das möchtest, klicke auf \"Anmelden\".
+    Wenn Du genauer wissen möchtest, was ich kann, klicke auf \"Erklär mal\". Oder leg direkt los und sende mir eine Nachricht."""
+            send_buttons(sender_id, reply,
+                         buttons=[
+                            button_postback("Zeige Wahlkreis-Info",
+                                             {'show_district': district['uuid']}),
+                            button_postback('Anmelden', ['subscribe']),
+                            button_postback('Erklär mal...', ['about'])
+                         ])
     else:
-        if ref:
+        if referral:
+            ref = referral.get('ref')
             logging.info('Bot wurde mit neuem User geteilt: ' + ref)
         now = timezone.localtime(timezone.now())
         date = now.date()
