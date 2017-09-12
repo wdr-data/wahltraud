@@ -121,7 +121,7 @@ def make_event_handler():
                     dis = by_district_id[str(wk)]
                     send_text(
                         event['sender']['id'],
-                        'Hi, schön dich wieder zu sehen! \nNovi sagt du möchtest etwas über deinen Wahlkreis "{wk}" wissen? Sehr gerne...'.format(
+                        'Hi, schön dich wieder zu sehen! \nNovi sagt, du möchtest etwas über deinen Wahlkreis "{wk}" wissen? Sehr gerne...'.format(
                             wk=dis['district']
                         )
                     )
