@@ -109,9 +109,14 @@ def make_event_handler():
 
         for event in messaging_events:
             referral = event.get('referral')
+            ref = referral.get('ref')
 
-            if referral:
-                ref = referral.get('ref')
+            if ref.startswith('WK'):
+                logging.info('Bot wurde mit bekantem User geteilt: ' + ref)
+                wk = int(ref.replace("WK", ""))
+                district = by_district_id[str(wk)]
+                send_district(event['sender']['id'], district['uuid'])
+            elif ref:
                 logging.info('Bot wurde mit bekantem User geteilt: ' + ref)
 
             message = event.get('message')
