@@ -95,7 +95,7 @@ def show_district(event, payload, **kwargs):
 
     send_attachment(
         sender_id,
-        settings.SITE_URL + '/static/bot/wkmap/wk'+str(disctrict['district_id'])+'.png'
+        settings.SITE_URL + '/static/bot/wkmaps/wk'+str(disctrict['district_id'])+'.png'
     )
 
     send_buttons(sender_id, """
