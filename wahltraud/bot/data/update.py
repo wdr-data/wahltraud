@@ -11,8 +11,8 @@ from fuzzywuzzy import fuzz
 def update():
 
     update_abgewatch = False
-    update_alle = False
-    update_wahlkreis = True
+    update_alle = True
+    update_wahlkreis = False
 
 
 
@@ -452,8 +452,8 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
                         temp['count']  = row['id']
 
                         break
-                else:
-                    print(row['vn'], temp['first_name'], item['Vorname'], row['nn'], item['Name'], temp['party'])
+                #else:
+                #    print(row['vn'], temp['first_name'], item['Vorname'], row['nn'], item['Name'], temp['party'])
 
             else:
                 temp["nrw"] = None
@@ -468,85 +468,22 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
         vornamen.append({"value": temp["first_name"] , "synonyms": [temp["first_name"], item['Vorname']]})
         nachnamen.append({"value": temp["last_name"], "synonyms": [temp["last_name"]]})
 
-    '''
+
     # go through kandidatencheck_liste and check if there are candidates in nrw which are not in agbewatch
     counter = 0
-    for row in nrw["k"]:
-        exists = False
-
-        for index, testing in enumerate(data_list):
-            if row["nn"] == testing["last_name"] and row["vn"] == testing["first_name"]:
-                    # check if name already exists
-                    exists = True
+    for otherrow in data_list:
+        if otherrow['nrw'] is not None:
+            exist = False
+            for row in nrw["k"]:
+                if otherrow['count'] == row['id']:
+                    exist = True
                     break
-
-            if row["nn"] == testing["last_name"] and party_map[row["p"][0]] == testing["party"]:
-
-                if fuzz.partial_ratio(row['vn'], testing['first_name']) > 85:
-                    print(row["vn"],'  vs  ', testing["first_name"], 'match',row["p"][0] )
-                    data_list.pop(index)
-                    vornamen.pop(index)
-                    exists = False
-                    break
-                else:
-                    print(row["vn"],'  vs  ', testing["first_name"], 'no_match')
-                    exists = False
+            if exist == False:
+                print(otherrow['first_name'], ortherrow['last_name'], otherrow['party'])
 
 
 
-        if not exists:
 
-            temp = {}
-            temp["first_name"] = row["vn"]
-            temp["last_name"]  = row["nn"]
-            temp["uuid"] = row["id"]
-
-            temp["education"] = None
-            temp["degree"] = None
-            temp["gender"] = None
-            temp['img'] = None
-            temp["party"] = party_map[row["p"][0]]
-
-            temp["nrw"] = give_nrw_info(row["nn"], row["vn"], row)
-
-
-            if temp['nrw']['img'] is not None:
-                temp['img'] = temp['nrw']['img']
-
-            try:
-                temp["profession"] = row["b"]
-            except:
-                temp["profession"] = None
-
-            try:
-                temp['city'] = row['wo']
-            except:
-                temp['city'] = None
-
-            try:
-                temp["age"] = int(row["gd"][0:4])
-            except:
-                temp["age"] = None
-
-            try:
-                temp["list_name"] = "Landesliste Nordrhein-Westfalen"
-                temp["list_nr"] = row["lp"]
-            except:
-                temp["list_name"] = None
-                temp["list_nr"] = None
-            try:
-                for item in district["districts"]:
-                    if int(item["district_id"]) == row["wk"]:
-                        temp["district_uuid"] = item["uuid"]
-                        break
-            except:
-                temp["district_uuid"] = None
-            temp["count"] = counter
-            counter +=1
-            vornamen.append({"value": row['vn'], "synonyms": [row['vn'], testing["first_name"]]})
-            nachnamen.append({"value": temp["last_name"], "synonyms": [temp["last_name"]]})
-            data_list.append(temp)
-    '''
 
     final = {"list": data_list}
 
@@ -562,7 +499,7 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
         json.dump(all_party,output_fileai3,  ensure_ascii=False)
 
     return
-    
+
 
 
 
@@ -582,16 +519,16 @@ def wahl2013(wk_nummer):
     """
     Args: wk_nummer (str):   wahlkreisId
                             999 steht für Bundesgebiet
-                            
+
     Yields: wahlergebnisse_2013 im wahlkreis wk_nummer (dict)
     """
-    
+
     wk_nummer_int = int(wk_nummer)
-    
-    
+
+
     # Take data from the election 2013
     wahl = pd.read_csv("wahlergebnisse_2013.csv", delimiter = ";")
-    
+
     # Parteien, die 2013 angetreten sind
     parteien = ["CDU", "SPD", "FDP", "DIE LINKE", "GRÜNE", "CSU", "PIRATEN",
            "NPD", "Tierschutzpartei", "REP", "ÖDP", "FAMILIE", "Bündnis 21/RRP",
@@ -618,13 +555,13 @@ def wahl2013(wk_nummer):
 
     temp_wahl_2013["wahlbeteiligung"]  = (wk_wahl_2013["Wähler"]/wk_wahl_2013["Wahlberechtigte"])[wk_wahl_2013.index[0]]
     bundesgebiet_wahl_2013 = temp_wahl_2013
-    
+
     return temp_wahl_2013
-    
-    
-    
-    
-    
+
+
+
+
+
 
 def plz_ort_finder(item, ort_plz_wk, take_city = False):
     """
@@ -652,7 +589,7 @@ def plz_ort_finder(item, ort_plz_wk, take_city = False):
         ort.append(city_name)
         plz.append(code_plz)
     orte = list(set(ort))
-    return [plz,orte] 
+    return [plz,orte]
 
 
 
@@ -667,7 +604,7 @@ def ort_finder(plz, ort_plz_wk,api = 0):
     Yields:
         the towns name, given by plz api, here already stored in plz_ort_wk.json
     """
-    
+
     if api == 1:
         try:
             the_ort = json.loads(requests.get("http://api.zippopotam.us/de/"+code_plz).text)["places"][0]["place name"]
@@ -677,9 +614,9 @@ def ort_finder(plz, ort_plz_wk,api = 0):
         for key, ort in ort_plz_wk.items():
             if plz in ort["plz"]:
                 the_ort = key
-        
-            
-            
+
+
+
     return  the_ort
 
 
@@ -696,23 +633,23 @@ def bundesland_finder(wahlkreisId_str, wk_bundesland):
     for bundesland, wkID in wk_bundesland.items():
         if wahlkreisId in wkID["wahlkreisId"]:
             land = bundesland
-    
+
     return land
 
 
 def kandidaten_und_meta(wahlkreis_uuid,alle):
     """
     Args:
-        wahlkreisId (str): 
-        
-    yields: 
+        wahlkreisId (str):
+
+    yields:
         kandidaten_liste (dict):   "uuid":
-                                   "vorname": 
+                                   "vorname":
                                    "nachname":
                                    "parteien":
                                    "listenplatz":
                                    "jahrgang":
-        
+
         meta (dict):   avg_alter
                         anzahl_kandidaten
 
@@ -744,7 +681,7 @@ def kandidaten_und_meta(wahlkreis_uuid,alle):
     quote = sex.count("female") / len(sex)
     females_total = sex.count("female")
     meta = {"avg_age": np.mean(alter), "total_candidates": counter, "quota_female": quote, "females_total" : females_total}
-    
+
     return [kand_liste, meta]
 
 
