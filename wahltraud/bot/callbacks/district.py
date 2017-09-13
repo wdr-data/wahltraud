@@ -3,7 +3,10 @@ import operator
 import logging
 import pandas as pd
 
-from ..fb import send_buttons, button_postback, send_text, send_list, list_element, quick_reply
+from django.conf import settings
+
+
+from ..fb import send_buttons, button_postback, send_text, send_list, list_element, quick_reply, send_attachment
 from ..data import by_uuid, by_plz, by_city, get_election13_dict, get_structural_data
 
 locale.setlocale(locale.LC_NUMERIC, 'de_DE.UTF-8')
@@ -88,6 +91,12 @@ def show_district(event, payload, **kwargs):
 
     logger.info('Wahlkreisinfo: {district} - {number}'.format(
         district=district['district'], number=district['district_id']))
+
+
+    send_attachment(
+        sender_id,
+        settings.SITE_URL + '/static/bot/wkmap/wk'+str(disctrict['district_id'])+'.png'
+    )
 
     send_buttons(sender_id, """
 Wahlkreis {number},  "{name}", liegt in {state}. Hier stehen {nr_of_candidates} Direktkandidaten zur Wahl, davon sind {total_female} Frauen.
