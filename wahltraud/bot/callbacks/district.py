@@ -92,11 +92,12 @@ def show_district(event, payload, **kwargs):
     logger.info('Wahlkreisinfo: {district} - {number}'.format(
         district=district['district'], number=district['district_id']))
 
-
+    '''
     send_attachment(
         sender_id,
-        settings.SITE_URL + '/static/bot/wkmaps/wk'+str(disctrict['district_id'])+'.png'
+        settings.SITE_URL + '/static/bot/wkmaps/wk'+str(district['district_id'])+'.png'
     )
+    '''
 
     send_buttons(sender_id, """
 Wahlkreis {number},  "{name}", liegt in {state}. Hier stehen {nr_of_candidates} Direktkandidaten zur Wahl, davon sind {total_female} Frauen.
