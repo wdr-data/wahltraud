@@ -117,7 +117,7 @@ def show_basics(sender_id, candidate_uuid):
             buttons.insert(0, button_postback("Statements", {'more_infos_nrw': candidate['uuid']}))
 
         if candidate['nrw']['video'] is not None:
-            buttons.insert(0, button_postback("Interview", {'show_video': candidate_uuid}))
+            buttons.insert(0, button_postback("Interview (video)", {'show_video': candidate_uuid}))
         else:
             buttons.insert(0, button_postback("Kein Interview weil...", {'no_video_to_show': candidate['uuid']}))
 
@@ -209,7 +209,7 @@ def no_video_to_show(event,payload,**kwargs):
                             {'show_district': district_uuid})
         )
 
-    send_buttons(sender_id, """  
+    send_buttons(sender_id, """
     {zusatz_info}
             """.format(
                     first_name=candidate['first_name'],
@@ -245,7 +245,7 @@ def more_infos_nrw(event, payload, **kwargs):
         buttons.insert(0,button_postback("Info Wahlkreis " + candidate_district_id, {'show_district': district_uuid}))
 
     if candidate['nrw']['video'] is not None:
-        buttons.insert(0, button_postback("Interview", {'show_video': candidate_uuid}))
+        buttons.insert(0, button_postback("Interview (Video)", {'show_video': candidate_uuid}))
 
     if candidate['nrw']['interests'] is None and pledges is not None:
         send_buttons(sender_id, """
@@ -345,7 +345,7 @@ def candidate_check_start(event,**kwargs):
     sender_id = event['sender']['id']
 
     reply = """
-Du kannst dir die zur Wahl stehenden Kandidaten nach Wahlkreis oder Partei anzeigen lassen. Ich habe zu allen Kandidaten ein paar Infos. 
+Du kannst dir die zur Wahl stehenden Kandidaten nach Wahlkreis oder Partei anzeigen lassen. Ich habe zu allen Kandidaten ein paar Infos.
 Oder schick mir einfach den Namen eines bestimmten Kandidaten! """
 
     send_buttons(sender_id, reply,
