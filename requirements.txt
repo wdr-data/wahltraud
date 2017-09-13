@@ -10,3 +10,4 @@ schedule
 fuzzywuzzy[speedup]
 redis
 apiai
+pandas
