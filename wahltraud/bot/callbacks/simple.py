@@ -62,7 +62,7 @@ Wenn Du genauer wissen möchtest, was ich kann, klicke auf \"Erklär mal\". Oder
                          buttons=[
                             button_postback("Zeige Wahlkreis-Info",
                                              {'show_district': district['uuid']}),
-                            button_postback('Anmelden', ['subscribe']),
+                            button_postback('Mein Wahlkreis', ['intro_district']),
                             button_postback('Erklär mal...', ['about'])
                          ])
     else:
