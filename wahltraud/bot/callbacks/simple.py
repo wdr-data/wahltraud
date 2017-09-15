@@ -88,7 +88,7 @@ Wenn Du genauer wissen möchtest, was ich kann, klicke auf \"Erklär mal\". Oder
                         button_postback('Anmelden', ['subscribe']),
                         #button_postback('Tägliche Nachricht',
                         #                {'push': last_push.id, 'next_state': 'intro'}),
-                        button_postback( 'Mein Wahlkreis', ['introdistrict']),
+                        button_postback( 'Mein Wahlkreis', ['intro_district']),
                         button_postback('Erklär mal...', ['about']),
                      ])
 
