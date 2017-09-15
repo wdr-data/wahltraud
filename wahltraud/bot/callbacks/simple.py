@@ -62,7 +62,7 @@ Wenn Du genauer wissen möchtest, was ich kann, klicke auf \"Erklär mal\". Oder
                          buttons=[
                             button_postback("Zeige Wahlkreis-Info",
                                              {'show_district': district['uuid']}),
-                            button_postback('Mein Wahlkreis', ['intro_district']),
+                            button_postback('Anmelden', ['subscribe']),
                             button_postback('Erklär mal...', ['about'])
                          ])
     else:
@@ -86,8 +86,9 @@ Wenn Du genauer wissen möchtest, was ich kann, klicke auf \"Erklär mal\". Oder
         send_buttons(sender_id, reply,
                      buttons=[
                         button_postback('Anmelden', ['subscribe']),
-                        button_postback('Tägliche Nachricht',
-                                        {'push': last_push.id, 'next_state': 'intro'}),
+                        #button_postback('Tägliche Nachricht',
+                        #                {'push': last_push.id, 'next_state': 'intro'}),
+                        button_postback( 'Mein Wahlkreis', ['introdistrict']),
                         button_postback('Erklär mal...', ['about']),
                      ])
 
