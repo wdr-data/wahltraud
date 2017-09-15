@@ -179,8 +179,11 @@ def show_sentence(event, word, party, **kwargs):
     if not end:
         end = None
     sentence = paragraph[start:end].strip()
-    send_text(sender_id, "Hier ein Satz aus dem Wahlprogramm der "
-                         "Partei \"%s\"" % party_abbr[party])
+    send_text(sender_id, "Hier ein Satz mit dem Wort \"{word}\" aus dem Wahlprogramm der "
+                         "Partei \"{party}\"".format(
+            party=party_abbr[party],
+            word = word)
+              )
     send_text(
         sender_id,
         '"%s"' % sentence,
