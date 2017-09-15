@@ -340,10 +340,10 @@ def sunday_poll(event, **kwargs):
     sender_id = event['sender']['id']
 
     quick_replies = [
-        quick_reply(
-            'infratest dimap',
-            ['menue_data']
-        ),
+        #quick_reply(
+        #    'infratest dimap',
+        #    ['menue_data']
+        #),
         quick_reply(
             'Info Parteien',
             {'show_parties': 'etabliert'}
