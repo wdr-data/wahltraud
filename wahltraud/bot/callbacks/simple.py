@@ -351,12 +351,12 @@ def sunday_poll(event, **kwargs):
     ]
 
     send_text(sender_id,
-              'Hier das Ergebnis der aktuellen Sonntagsfrage von infratest dimap vom 07.September.'
+              'Hier das Ergebnis der aktuellen Sonntagsfrage von infratest dimap vom 14.September.'
               )
 
     send_attachment(
         sender_id,
-        settings.SITE_URL + '/static/bot/Sonntagsfrage_aktuell.jpg'
+        settings.SITE_URL + '/static/bot/sonntagsfrage.jpg'
     )
 
     send_text(sender_id,
