@@ -114,7 +114,7 @@ Das Durchschnittsalter der Kandidaten beträgt {avg_age} Jahre.
                      #button_postback("Bundestagswahl 2013", {'show_13': district_uuid}),
                      button_postback("Wahlkreis in Zahlen", {'show_structural_data': district_uuid}),
                     #  button_postback("Ergebnis Wahl '13", {'show_13': district_uuid})
-                     button_postback("Bei Novi anmelden", {'novi': district_uuid})
+                     button_postback("Ergebnis per Push", {'novi': district_uuid})
                      #button_postback("Anderer Wahlkreis", ['intro_district']),
                  ])
 
@@ -125,7 +125,7 @@ def novi(event, payload, **kwargs):
 
     send_buttons(sender_id, """
 Am Sonntag ist es soweit - du kannst bis 18 Uhr in deinem Wahllokal deine Stimme abgeben. Und dann? Dann heißt es warten...
-Wenn du informiert werden möchtest, sobald dein Wahlkreis {number},  "{name}", ausgezählt ist, dann wende dich an meinen Bot-Kollegen "novi".
+Wenn du informiert werden möchtest, sobald dein Wahlkreis {number},  "{name}", ausgezählt ist, dann wende dich an meinen Bot-Kollegen "novi". Er schickt dir eine Nachricht mit dem entsprechenden Ergebnis.
 Ich leite deinen Wahlkreis gerne an "novi" weiter. Klicke dazu einfach auf "Zu Novi".
 """.format(
         number=district['district_id'],
