@@ -96,7 +96,7 @@ def show_district(event, payload, **kwargs):
         sender_id,
         settings.SITE_URL + '/static/bot/wkmaps/wk'+str(district['district_id'])+'.png'
     )
-    
+
 
     send_buttons(sender_id, """
 Wahlkreis {number},  "{name}", liegt in {state}. Hier stehen {nr_of_candidates} Direktkandidaten zur Wahl, davon sind {total_female} Frauen.
@@ -113,10 +113,26 @@ Das Durchschnittsalter der Kandidaten beträgt {avg_age} Jahre.
                      button_postback("Kandidaten", {'show_candidates': district_uuid}),
                      #button_postback("Bundestagswahl 2013", {'show_13': district_uuid}),
                      button_postback("Wahlkreis in Zahlen", {'show_structural_data': district_uuid}),
-                     button_postback("Ergebnis Wahl '13", {'show_13': district_uuid})
+                    #  button_postback("Ergebnis Wahl '13", {'show_13': district_uuid})
+                     button_postback("Bei Novi anmelden", {'novi': district_uuid})
                      #button_postback("Anderer Wahlkreis", ['intro_district']),
                  ])
 
+def novi(event, payload, **kwargs):
+    sender_id = event['sender']['id']
+    district_uuid = payload['novi']
+    district = by_uuid[district_uuid]
+
+    send_buttons(sender_id, """
+Am Sonntag ist es soweit - du kannst bis 18 Uhr in deinem Wahllokal deine Stimme abgeben. Und dann? Dann heißt es warten...
+Wenn du informiert werden möchtest, sobald dein Wahlkreis {number},  "{name}", ausgezählt ist, dann wende dich an meinen Bot-Kollegen "novi".
+Ich leite deinen Wahlkreis gerne an "novi" weiter. Klicke dazu einfach auf "Zu Novi".
+""".format(
+        number=district['district_id'],
+        name=district['district']),
+        [
+            button_web_url("Zu novi", "https://m.me/getnovibot?ref=WK" + district['district_id'])
+        ])
 
 def show_13(event, payload, **kwargs):
     sender_id = event['sender']['id']
@@ -228,7 +244,7 @@ def show_structural_data(event,payload,**kwargs):
 
     send_buttons(sender_id, """
     Die folgenden Strukturdaten des Wahlkreis "{name}" stellt der Bundeswahlleiter zur Verfügung:
-    
+
 Gesamt Bevölkerung: {population}
 Wahlberechtigt: ca. {voters}
 
@@ -239,9 +255,9 @@ Die Alterverteilung ist wie folgt:
     35-59: {a3559}%
     60-75: {a6075}%
     75 und mehr: {a75}%
-    
+
 (Stand 31.12.2015)
-    
+
 Arbeitslosenquote (März '17): {unemployed}%
 Bevölkerung pro km²: {perm2}
     """.format(
