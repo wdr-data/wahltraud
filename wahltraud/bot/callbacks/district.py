@@ -278,5 +278,6 @@ Bevölkerung pro km²: {perm2}
                  [
                      button_postback("Kandidaten", {'show_candidates': district_uuid}),
                      button_postback("Ergebnis per Push", {'novi': district_uuid}),
-                     button_postback("Anderer Wahlkreis", ['intro_district']),
+                     button_postback("Ergebnis Wahl '13", {'show_13': district_uuid})
+                    #  button_postback("Anderer Wahlkreis", ['intro_district']),
                  ])
