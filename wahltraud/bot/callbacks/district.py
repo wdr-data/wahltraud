@@ -113,8 +113,8 @@ Das Durchschnittsalter der Kandidaten beträgt {avg_age} Jahre.
                      button_postback("Kandidaten", {'show_candidates': district_uuid}),
                      #button_postback("Bundestagswahl 2013", {'show_13': district_uuid}),
                      button_postback("Wahlkreis in Zahlen", {'show_structural_data': district_uuid}),
-                    #  button_postback("Ergebnis Wahl '13", {'show_13': district_uuid})
-                     button_postback("Ergebnis per Push", {'novi': district_uuid})
+                     button_postback("Ergebnis Wahl '13", {'show_13': district_uuid})
+                    #  button_postback("Ergebnis per Push", {'novi': district_uuid})
                      #button_postback("Anderer Wahlkreis", ['intro_district']),
                  ])
 
