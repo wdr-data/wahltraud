@@ -117,7 +117,6 @@ def make_event_handler():
                 ref = referral.get('ref')
                 logging.info('Bot wurde mit bekantem User geteilt: ' + ref)
                 if ref.startswith('WK'):
-                    logging.info('Bot wurde mit bekantem User geteilt: ' + ref)
                     wk = int(ref.replace("WK", ""))
                     dis = by_district_id[str(wk)]
                     send_text(
