@@ -122,6 +122,8 @@ def novi(event, payload, **kwargs):
     district_uuid = payload['novi']
     district = by_uuid[district_uuid]
 
+    novi_wk = str(district['district_id']).zfill(3)
+
     send_buttons(sender_id, """
 Am Sonntag ist es soweit - du kannst bis 18 Uhr in deinem Wahllokal deine Stimme abgeben. Und dann? Dann heißt es warten...
 Wenn du informiert werden möchtest, sobald dein Wahlkreis {number},  "{name}", ausgezählt ist, dann wende dich an meinen Bot-Kollegen "novi". Er schickt dir eine Nachricht mit dem entsprechenden Ergebnis.
@@ -130,7 +132,7 @@ Ich leite deinen Wahlkreis gerne an "novi" weiter. Klicke dazu einfach auf "Zu N
         number=district['district_id'],
         name=district['district']),
         [
-            button_web_url("Zu novi", "https://m.me/getnovibot?ref=WK" + district['district_id'])
+            button_web_url("Zu novi", "https://m.me/getnovibot?ref=WK" + novi_wk)
         ])
 
 def show_13(event, payload, **kwargs):
