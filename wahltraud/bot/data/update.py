@@ -11,8 +11,8 @@ from fuzzywuzzy import fuzz
 def update():
 
     update_abgewatch = False
-    update_alle = True
-    update_wahlkreis = False
+    update_alle = False
+    update_wahlkreis = True
 
 
 

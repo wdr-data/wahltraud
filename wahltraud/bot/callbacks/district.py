@@ -177,7 +177,7 @@ def show_13(event, payload, **kwargs):
             "mehr als 5% der Zweitstimmen erhalten:"
             "\n\n{results}\n\nDie Wahlbeteiligung betrug {beteiligung}%  ({beteiligung_all}%). ".format(
                 results=results,
-                beteiligung_all = locale.format('%.1f', election_13_all['wahlbeteiligung'] ),
+                beteiligung_all = locale.format('%.1f', election_13_all['wahlbeteiligung']*100 ),
                 district=district['district'],
                 beteiligung=locale.format('%.1f', beteiligung * 100)),
             [
