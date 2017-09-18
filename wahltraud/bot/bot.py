@@ -80,6 +80,7 @@ def make_event_handler():
         PayloadHandler(district.intro_district, ['intro_district']),
         PayloadHandler(candidate.intro_candidate, ['intro_candidate']),
         PayloadHandler(district.show_13, ['show_13']),
+        PayloadHandler(district.novi, ['novi']),
         PayloadHandler(district.show_structural_data, ['show_structural_data']),
         PayloadHandler(candidate.search_candidate_list, ['search_candidate_list']),
         PayloadHandler(candidate.payload_basics, ['payload_basics']),

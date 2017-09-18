@@ -6,7 +6,7 @@ import pandas as pd
 from django.conf import settings
 
 
-from ..fb import send_buttons, button_postback, send_text, send_list, list_element, quick_reply, send_attachment
+from ..fb import send_buttons, button_postback, send_text, send_list, list_element, quick_reply, send_attachment, button_web_url
 from ..data import by_uuid, by_plz, by_city, get_election13_dict, get_structural_data
 
 locale.setlocale(locale.LC_NUMERIC, 'de_DE.UTF-8')
@@ -111,10 +111,9 @@ Das Durchschnittsalter der Kandidaten beträgt {avg_age} Jahre.
     ),
                  [
                      button_postback("Kandidaten", {'show_candidates': district_uuid}),
-                     #button_postback("Bundestagswahl 2013", {'show_13': district_uuid}),
                      button_postback("Wahlkreis in Zahlen", {'show_structural_data': district_uuid}),
-                     button_postback("Ergebnis Wahl '13", {'show_13': district_uuid})
-                    #  button_postback("Ergebnis per Push", {'novi': district_uuid})
+                    #  button_postback("Ergebnis Wahl '13", {'show_13': district_uuid})
+                     button_postback("Ergebnis per Push", {'novi': district_uuid})
                      #button_postback("Anderer Wahlkreis", ['intro_district']),
                  ])
 
@@ -276,6 +275,6 @@ Bevölkerung pro km²: {perm2}
     ),
                  [
                      button_postback("Kandidaten", {'show_candidates': district_uuid}),
-                    button_postback("Ergebnis Wahl '13", {'show_13': district_uuid}),
+                     button_postback("Ergebnis per Push", {'novi': district_uuid}),
                      button_postback("Anderer Wahlkreis", ['intro_district']),
                  ])
