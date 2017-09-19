@@ -242,7 +242,7 @@ def plot_vote(wk_nummer,extention):
         t.set_bbox(dict(facecolor='red', alpha=0.5, edgecolor='red'))
 
 
-    plt.savefig(str(DATA_DIR/'../../static/bot/result_grafics/second_distric'+str(wk_nummer)+'.jpg'), bbox_inches='tight')
+    plt.savefig('../../static/bot/result_grafics/second_distric'+str(wk_nummer)+'.jpg', bbox_inches='tight')
     plt.clf()
     plt.close(fig)
 
