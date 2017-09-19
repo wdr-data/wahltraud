@@ -1,6 +1,7 @@
 import locale
 import operator
 import logging
+import random
 import pandas as pd
 
 from django.conf import settings
