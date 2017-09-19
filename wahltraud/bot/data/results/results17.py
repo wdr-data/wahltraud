@@ -23,7 +23,7 @@ def make_kerg_to_df(kerg):
     party_abbrv = pd.read_csv(str(DATA_DIR/'btw17_parteien.csv'), delimiter=';')
     long_names = list(party_abbrv['BEZEICHNUNG'].unique())
 
-    with open(kerg, 'r') as inp, open(str(DATA_DIR/'kerg_edit.csv'), 'w') as out:
+    with open(str(DATA_DIR/kerg), 'r') as inp, open(str(DATA_DIR/'kerg_edit.csv'), 'w') as out:
         writer = csv.writer(out)
         for index, row in enumerate(csv.reader(inp)):
             # take out first 2 rows
