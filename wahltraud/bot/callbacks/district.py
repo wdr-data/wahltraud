@@ -194,7 +194,7 @@ def result_17(event, payload, **kwargs):
     district = by_uuid[district_uuid]
 
     url = 'https://media.data.wdr.de:8080/static/bot/result_grafics/second_distric' + district['district_id'] + '.jpg'
-    send_attachment(sender_id, url, type=image)
+    send_attachment(sender_id, url, type='image')
 
     candidates = list(sorted((by_uuid[uuid] for uuid in district['candidates']),
                              key=operator.itemgetter('last_name')))
