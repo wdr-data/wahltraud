@@ -95,12 +95,12 @@ Wenn Du genauer wissen möchtest, was ich kann, klicke auf \"Erklär mal\". Oder
 def about(event, **kwargs):
     sender_id = event['sender']['id']
     reply = '''
-    Ich bin ein freundlicher Bot mit dem Ziel dich objektiv über Kandidaten, Parteien und die Wahlprogramme zu informieren.
-    Alle Informationen die ich dir liefer findest du an vielen Stellen (siehe Daten-Quellen) im Netz. Ich trage die Infos zusammen und du kannst mich gezielt ausfragen.
-    Du kannst ganz normal mit mir schreiben und ich antworte so gut ich kann.
-    Durch deine Fragen können die Menschen die mich programmieren sehen, was dich interessiert. Dadurch 'lerne' ich und kann deine Frage vielleicht bald beantworten.
+Ich bin ein freundlicher Bot mit dem Ziel dich objektiv über Kandidaten, Parteien und die Wahlprogramme zu informieren.
+Alle Informationen die ich dir liefer findest du an vielen Stellen (siehe Daten-Quellen) im Netz. Ich trage die Infos zusammen und du kannst mich gezielt ausfragen.
+Du kannst ganz normal mit mir schreiben und ich antworte so gut ich kann.
+Durch deine Fragen können die Menschen die mich programmieren sehen, was dich interessiert. Dadurch 'lerne' ich und kann deine Frage vielleicht bald beantworten.
 
-    Starte einfach indem du mich mit \"Hallo\" begrüßt!.
+Starte einfach indem du mich mit \"Hallo\" begrüßt!.
             '''
     send_buttons(sender_id, reply,
                 buttons = [
@@ -267,7 +267,7 @@ def more_data(event, **kwargs):
     send_text(sender_id, """
 Ich arbeite in Kooperation mit Novi, dem Nachrichten-Bot von Funk \nhttps://www.funk.net/
 Zudem habe ich mich der Technologie vom WDR Projekt \"Wörter der Wahl\" bedient\nhttps://github.com/wdr-data/woerter-der-wahl
-Damit ich verstehen kann was du von mir willst, schicke ich die von dir verschickte Textnachricht an api.ai (Google Assistant)
+Damit ich verstehen kann was du von mir willst, schicke ich die von dir verschickte Textnachricht an api.ai einen Google Assistant.
 Die Daten auf die ich zurückgreife kannst du dir auch im GitHub Account \"wdr-data\" anschauen\nhttps://github.com/wdr-data
 Ich halte mich an die Datenschutzbestimmungen des \"Westdeutschen Rundfunks\"\nhttp://www1.wdr.de/hilfe/datenschutz102.html"""
     )
