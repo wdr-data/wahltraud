@@ -213,6 +213,22 @@ def result_17(event, payload, **kwargs):
             ]
         )
 
+def result_first_vote(event, payload, **kwargs):
+    sender_id = event['sender']['id']
+    
+    send_text(
+        sender_id,
+        "Es folgt eine Auflistung aller Ergebnisse der Erststimme."
+    )
+
+def result_second_vote(event, payload, **kwargs):
+    sender_id = event['sender']['id']
+
+    send_text(
+        sender_id,
+        "Es folgt eine Auflistung aller Ergebnisse der Zweitstimme."
+    )
+
 def show_candidates(event, payload, **kwargs):
     sender_id = event['sender']['id']
     district_uuid = payload['show_candidates']
