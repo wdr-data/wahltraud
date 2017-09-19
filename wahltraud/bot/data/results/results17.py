@@ -5,6 +5,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import datetime
 from pathlib import Path
+import json
 
 DATA_DIR = Path(__file__).absolute().parent
 
@@ -113,11 +114,14 @@ def result(wk_nummer, extention):
     for element in extention:
         temp[keys[element]] = {}
         for party in parteien['KURZBEZEICHNUNG']:
-            temp[keys[element]][party] = (data_wk[party + element].iloc[0] / data_wk['Gültige' + element].iloc[0])
+            x = (data_wk[party + element].iloc[0] / data_wk['Gültige' + element].iloc[0])
+            temp[keys[element]][party] = np.where(np.isnan(x), None, x).item()
         temp[keys[element]]["voters"] = (
-        data_wk["Wähler" + element].iloc[0] / data_wk["Wahlberechtigte" + element].iloc[0])
+                    data_wk["Wähler" + element].iloc[0] / data_wk["Wahlberechtigte" + element].iloc[0]
+        )
         temp[keys[element]]["voters_invalid"] = (
-        data_wk["Ungültige" + element].iloc[0] / data_wk["Wahlberechtigte" + element].iloc[0])
+                data_wk["Ungültige" + element].iloc[0] / data_wk["Wahlberechtigte" + element].iloc[0]
+        )
 
     temp['name'] = data_wk['Gebiet'].iloc[0]
 
@@ -248,20 +252,33 @@ def plot_vote(wk_nummer,extention):
 
     return
 
+def create_results(result_file, extention):
 
+    temp = []
+    for district in range(1,300):
+        # run result
+        temp.append({district: result(district, extention)})
+    temp.append({999: result(999,extention)})
+
+    final = {'election_17': temp}
+    with open(result_file ,  "w", encoding="utf8") as output_file:
+        json.dump(final,output_file,  ensure_ascii=False)
 
 ###  start function
 
 
 #bundeswahlleiter data
 kerg = 'kerg.csv'
+result_file = 'results_17.json'
 
 # make nice function from kerg  : extention is for the given header names
 extention = make_kerg_to_df(kerg)
 
 # create plot for all 999 votes
-for district in range(1,300):
-    plot_vote(district,extention)
+#for district in range(1,300):
+#    plot_vote(district,extention)
 
 # create plot for Bundesgebiet
 plot_vote(999,extention)
+
+create_results(result_file, extention)
