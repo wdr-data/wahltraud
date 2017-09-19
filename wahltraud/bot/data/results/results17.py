@@ -4,7 +4,8 @@ from fuzzywuzzy import fuzz
 import pandas as pd
 import matplotlib.pyplot as plt
 import datetime
-
+DATA_DIR = Path(__file__).absolute().parent
+from pathlib import Path
 
 
 
@@ -18,7 +19,7 @@ import datetime
 def make_kerg_to_df(kerg):
 
     #  parteien Kurzbezeichnung und Bezeichnung
-    party_abbrv = pd.read_csv('btw17_parteien.csv', delimiter=';')
+    party_abbrv = pd.read_csv(str(DATA_DIR/'btw17_parteien.csv'), delimiter=';')
     long_names = list(party_abbrv['BEZEICHNUNG'].unique())
 
     with open(kerg, 'r') as inp, open('kerg_edit.csv', 'w') as out:
@@ -85,7 +86,7 @@ def result(wk_nummer, extention):
     Yields: dictionary with results of keys
     """
 
-    party_abbrv = pd.read_csv('btw17_parteien.csv', delimiter=';')
+    party_abbrv = pd.read_csv('./btw17_parteien.csv', delimiter=';')
 
 
 
