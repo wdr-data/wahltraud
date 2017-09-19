@@ -1,0 +1,159 @@
+SCHLUESSEL;TYP;KURZBEZEICHNUNG;BEZEICHNUNG
+100;Allgemein;Wahlberechtigte;Wahlberechtigte
+200;Allgemein;Wähler;Wähler
+300;Allgemein;Ungültige;Ungültige
+400;Allgemein;Gültige;Gültige
+2;Partei;CDU;Christlich Demokratische Union Deutschlands
+1;Partei;SPD;Sozialdemokratische Partei Deutschlands
+34;Partei;DIE LINKE;DIE LINKE
+5;Partei;GRÜNE;BÜNDNIS 90/DIE GRÜNEN
+3;Partei;CSU;Christlich-Soziale Union in Bayern e.V.
+4;Partei;FDP;Freie Demokratische Partei
+35;Partei;AfD;Alternative für Deutschland
+8;Partei;PIRATEN;Piratenpartei Deutschland
+21;Partei;NPD;Nationaldemokratische Partei Deutschlands
+45;Partei;FREIE WÄHLER;FREIE WÄHLER
+9;Partei;Tierschutzpartei;PARTEI MENSCH UMWELT TIERSCHUTZ
+22;Partei;ÖDP;Ökologisch-Demokratische Partei
+37;Partei;Die PARTEI;Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative
+18;Partei;BP;Bayernpartei
+40;Partei;Volksabstimmung;Ab jetzt...Demokratie durch Volksabstimmung
+36;Partei;PDV;Partei der Vernunft
+17;Partei;MLPD;Marxistisch-Leninistische Partei Deutschlands
+12;Partei;BüSo;Bürgerrechtsbewegung Solidarität
+15;Partei;SGP;Sozialistische Gleichheitspartei, Vierte Internationale
+14;Partei;DIE RECHTE;DIE RECHTE
+41;Partei;AD-DEMOKRATEN;Allianz Deutscher Demokraten
+10;Partei;Tierschutzallianz;Allianz für Menschenrechte, Tier- und Naturschutz
+26;Partei;B*;bergpartei, die überpartei
+29;Partei;BGE;Bündnis Grundeinkommen
+24;Partei;DiB;DEMOKRATIE IN BEWEGUNG
+11;Partei;DKP;Deutsche Kommunistische Partei
+38;Partei;DM;Deutsche Mitte
+43;Partei;Die Grauen;Die Grauen – Für alle Generationen
+42;Partei;du.;Die Urbane. Eine HipHop Partei
+19;Partei;MG;Madgeburger Gartenpartei
+27;Partei;MENSCHLICHE WELT;Menschliche Welt
+44;Partei;Die Humanisten;Partei der Humanisten
+33;Partei;Gesundheitsforschung;Partei für Gesundheitsforschung
+20;Partei;V-Partei³;V-Partei³ - Partei für Veränderung, Vegetarier und Veganer
+32;Partei;Bündnis C;Bündnis C - Christen für Deutschland
+48;Partei;DIE EINHEIT;DIE EINHEIT
+30;Partei;DIE VIOLETTEN;Die Violetten
+31;Partei;FAMILIE;Familien-Partei Deutschlands
+53;Partei;DIE FRAUEN;Feministische Partei DIE FRAUEN
+47;Partei;MIETERPARTEI;Mieterpartei
+39;Partei;Neue Liberale;Neue Liberale – Die Sozialliberalen
+16;Partei;UNABHÄNGIGE;UNABHÄNGIGE für bürgernahe Demokratie
+538;Einzelkandidat;EB: Niesen;Albert Niesen
+608;Einzelkandidat;EB: Jagau;Andere Perspektiven
+585;Einzelkandidat;EB: Meißner;Anti-Korruption
+523;Einzelkandidat;EB: Babnik;Babnik
+576;Einzelkandidat;EB: Scheffler;Bedingungsloses Grundeinkommen – Mensch macht Politik
+536;Einzelkandidat;EB: Rosenbaum;BIBS
+584;Einzelkandidat;EB: Vollmer;Brigitte Vollmer - mit der Russischen Föderation und der BRD zum dt. Friedensvertrag und für den Ausstieg aus der NATO
+518;Einzelkandidat;EB: Mertel;BÜRGER-BLOCK e.V. -BB-EB: Mertel
+606;Einzelkandidat;EB: Salveter;Bürgerinitiativen BIBS
+564;Einzelkandidat;EB: Mayer;Bürgerkandidat
+590;Einzelkandidat;EB: Richter;Bürgerkandidat - für ein Deutschland - neutral+souverän+sozial
+550;Einzelkandidat;EB: Hüfken;Bürgerkandidat DEM LEBEN DIENEN
+594;Einzelkandidat;EB: Bucher;BÜRGERKANDIDAT – FÜR GEMEINWOHL UND TRANSPARENTE, DIREKTE DEMOKRATIE
+527;Einzelkandidat;EB: Mollik;Bürgerkandidat – für Gemeinwohl und Volksentscheid
+646;Einzelkandidat;EB: Elkins;Bürgerkandidaten
+599;Einzelkandidat;EB: Schneider;Bürgerkandidaten
+637;Einzelkandidat;EB: Holbein;Bürgerkandidaten für Gemeinwohl und Volksentscheid
+565;Einzelkandidat;EB: Maier;Bürgerkandidaten für Gemeinwohl und Volksentscheid
+607;Einzelkandidat;EB: Renne;BÜRGERKANDIDATEN für Gemeinwohl und Volksentscheid
+640;Einzelkandidat;EB: Tropp;BÜRGERKANDIDATEN Für Gemeinwohl und Volksentscheid
+551;Einzelkandidat;EB: Barski;BÜRGERKANDIDATEN – für Gemeinwohl und Volksentscheid
+524;Einzelkandidat;EB: Heck;BÜRGERKANDIDATEN – für Gemeinwohl und Volksentscheid
+530;Einzelkandidat;EB: Weidelt;BÜRGERKANDIDATEN – für Gemeinwohl und Volksentscheid
+537;Einzelkandidat;EB: Martin;BÜRGERKANDIDATEN.DE Für Volksabstimmungen und Gemeinwohl
+540;Einzelkandidat;EB: Gent;BÜRGERKANDIDATIN CHARTA für BASISDEMOKRATIE
+634;Einzelkandidat;EB: Staratschek;Christlich ökologische Politik für Familie, Arbeit und Umwelt (FAMILIE & UMWELT)
+583;Einzelkandidat;EB: Datli;Datli
+529;Einzelkandidat;EB: Roeder;Der Auserwählte
+620;Einzelkandidat;EB: Abaga Ayingono;DIE STIMME DER STIMMENLOSEN
+605;Einzelkandidat;EB: Ulbrich;Einzelbewerber (Ulbrich)
+514;Einzelkandidat;EB: Hofer;Frank Hofer (frei – klar – bürgernah)
+626;Einzelkandidat;EB: Çelikkan;Freier Parteiloser Direktkandidat
+644;Einzelkandidat;EB: Miller;FRiDi - unabhängig - unbestechlich - ehrlich - bürgernah
+647;Einzelkandidat;EB: Miehlke;Friedrich der 21.
+622;Einzelkandidat;EB: Ehrl;Für das Vaterland - Ewald Ehrl
+513;Einzelkandidat;EB: Schirm;Für Dich im Bundestag
+609;Einzelkandidat;EB: Borchert;Für praktische Vernunft in der Politik!
+596;Einzelkandidat;EB: Schmid;Für sozial solidarische Gesundheitspolitik Art. 20 GG - Sozialstaatsgebot
+533;Einzelkandidat;EB: Rosenacker;garantiert ohne Gruppenzwang
+510;Einzelkandidat;EB: Geidel;Geidel
+558;Einzelkandidat;EB: Metzler;Gerecht
+541;Einzelkandidat;EB: Müller;Gerechtigkeit für Trennungsväter und Justizreformen
+581;Einzelkandidat;EB: Felde-Bajerowitz;GROG
+624;Einzelkandidat;EB: Fielsch;Grundeinkommen-für-alle.org
+633;Einzelkandidat;EB: Wendt;Grundeinkommen-für-alle.org
+539;Einzelkandidat;EB: Scharnweber;Grundgesetz contra Islam
+559;Einzelkandidat;EB: Gruner;Gruner
+625;Einzelkandidat;EB: Frenzel;Harald Frenzel
+507;Einzelkandidat;EB: Richter;Heimat Region Zwickau
+611;Einzelkandidat;EB: Ringger;HELMUT
+615;Einzelkandidat;EB: Hoyer;Hoyer
+545;Einzelkandidat;EB: Blume;Ideengeber Mensch Natur Technik
+511;Einzelkandidat;EB: Bovenkerk;Inter. Liste
+574;Einzelkandidat;EB: Müller-Horn;INTERNATIONALISTISCH
+588;Einzelkandidat;EB: Ates;"""Internationalistische Liste"""
+591;Einzelkandidat;EB: Dachner;Internationalistische Liste
+562;Einzelkandidat;EB: Glück;Internationalistische Liste
+614;Einzelkandidat;EB: Meier;Internationalistische Liste
+593;Einzelkandidat;EB: von Pentz;Internationalistische Liste
+603;Einzelkandidat;EB: Puppel;Internationalistische Liste
+598;Einzelkandidat;EB: Rapps;Internationalistische Liste
+573;Einzelkandidat;EB: Schuler;Internationalistische Liste
+587;Einzelkandidat;EB: Willing;INTERNATIONALISTISCHE LISTE
+592;Einzelkandidat;EB: Luong;Internationalistische Liste, Luong, Quo-Chir
+600;Einzelkandidat;EB: May;Internationalistisches Bündnis
+604;Einzelkandidat;EB: Mauson;Internationalistisches Bündnis
+612;Einzelkandidat;EB: Zagermann;Internationalistisches Bündnis
+648;Einzelkandidat;EB: Barton;JA zu Volksabstimmungen
+630;Einzelkandidat;EB: Held;Jörg Held
+526;Einzelkandidat;EB: Knoop;KNOOP
+522;Einzelkandidat;EB: Werner;LEV muss leben
+515;Einzelkandidat;EB: Pape;LIBERAL NACHHALTIG SOZIAL WELTOFFEN
+597;Einzelkandidat;EB: Giebel;liberal – ökologisch – sozial
+508;Einzelkandidat;EB: Schmidtke;Marburger Pogo-Anarchisten
+553;Einzelkandidat;EB: Beckmann;Markus Beckmann – Den Menschen verpflichtet, keiner Partei!
+613;Einzelkandidat;EB: Tschan;Mit Wählen – Mit Reden – Mit Bestimmen
+639;Einzelkandidat;EB: Menga Nsibu;Mut für ein besseres Miteinander
+632;Einzelkandidat;EB: Hönig;OpaBraveheart
+506;Einzelkandidat;EB: Ritter;Otto Ritter
+555;Einzelkandidat;EB: Polivka;P wie Polivka parteilos entlastend
+595;Einzelkandidat;EB: Tschammer-Osten;"Papa Schorschi: ""Follow me"""
+627;Einzelkandidat;EB: Snelinski;parteifrei und bürgerbestimmt
+557;Einzelkandidat;EB: Hasel;Parteifrei. Für die Menschen.
+623;Einzelkandidat;EB: Matheis;parteilos
+505;Einzelkandidat;EB: Fleischhauer;Parteilos und Unabhängig für die Region
+631;Einzelkandidat;EB: Rohrbach;"""Parteilose!"""
+509;Einzelkandidat;EB: Eichbaum;Parteiloser Direktkandidat - Plattform für Zukunftspolitik (plattform 4D)
+582;Einzelkandidat;EB: Welte;Parteiunabhängiger Bürgerkandidat
+619;Einzelkandidat;EB: Overdiek;Proeuropäische Bewegung
+589;Einzelkandidat;EB: Marquardt;Querdenker in den Bundestag
+546;Einzelkandidat;EB: Lembach;Ralf LEMBACH
+528;Einzelkandidat;EB: Rascopp;Rascopp, Severin - RASCOPP
+586;Einzelkandidat;EB: Rieth;Rieth Eckehart - RIETH
+645;Einzelkandidat;EB: Rink;RINK
+535;Einzelkandidat;EB: Bultheel;SCHLUSS MIT SOZIALER UNGERECHTIGKEIT! MEHR FREIHEIT, DEMOKRATIE & WOHLSTAND FÜR ALLE! BULTHEEL SLDP WÄHLEN
+521;Einzelkandidat;EB: Verdonk;SIGGI
+642;Einzelkandidat;EB: Meier;sozial gerecht
+516;Einzelkandidat;EB: Weinert;"Stefan Weinert - ""Politics to go"""
+616;Einzelkandidat;EB: Hirsch-Sternberg;Susanne Hirsch-Sternberg
+563;Einzelkandidat;EB: Leder;Tim Leder
+575;Einzelkandidat;EB: Dippel;Unabhängig, bürgernah, transparent - für humane Marktwirtschaft, Frieden und Menschenwürde global. Vielen Dank für Ihre Stimme und Ihr Vertrauen!
+579;Einzelkandidat;EB: Sattler;Unabhängigen Liste
+610;Einzelkandidat;EB: Krüger-Winands;Unabhängiger Bürgerkandidat für Gemeinwohl und Volksentscheid
+532;Einzelkandidat;EB: Schuldis;Unsere Zukunft
+580;Einzelkandidat;EB: Kreiß;VEREINIGTEN DIREKTKANDIDATEN
+542;Einzelkandidat;EB: Ressdorf;VIP - Volkstribun ins Parlament
+560;Einzelkandidat;EB: Kohl;Wir sind LEIPZIGER
+601;Einzelkandidat;EB: Ruthner;wir-direkt
+577;Einzelkandidat;EB: Stoof;Wählergemeinschaft Unabhängige Bürger (UB)
+635;Einzelkandidat;EB: Schmidt;Zurück zu mehr Gesundheit
+556;Einzelkandidat;EB: Klis;Überparteilich! Mit gutem Beispiel voran: www.eidesstattliches-wahlversprechen.de
+28;Uebrige;Übrige;Übrige
