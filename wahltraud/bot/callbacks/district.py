@@ -113,7 +113,7 @@ Das Durchschnittsalter der Kandidaten beträgt {avg_age} Jahre.
                      button_postback("Kandidaten", {'show_candidates': district_uuid}),
                      button_postback("Wahlkreis in Zahlen", {'show_structural_data': district_uuid}),
                     #  button_postback("Ergebnis Wahl '13", {'show_13': district_uuid})
-                     button_postback("Ergebnis per Push", {'novi': district_uuid})
+                     button_postback("Ergebnis 2017", {'result_17': district_uuid})
                      #button_postback("Anderer Wahlkreis", ['intro_district']),
                  ])
 
@@ -188,6 +188,29 @@ def show_13(event, payload, **kwargs):
             ]
         )
 
+def result_17(event, payload, **kwargs):
+    sender_id = event['sender']['id']
+    district_uuid = payload['result_17']
+    district = by_uuid[district_uuid]
+
+    url = 'https://media.data.wdr.de:8080/static/bot/result_grafics/second_distric' + district['district_id'] + '.jpg'
+    send_attachment(sender_id, url, type=image)
+
+    candidates = list(sorted((by_uuid[uuid] for uuid in district['candidates']),
+                             key=operator.itemgetter('last_name')))
+    random_candidate = random.choice(candidates)
+    send_buttons(
+            sender_id,
+            "Bei der Bundestagswahl 2017 wurden diese Kandidaten im Wahlkreis \"{district}\" "
+            "durch die Erststimme der Wähler auf die ersten drei Plätze gewählt:"
+            "\n\nPerson A: 33,33%\nPerson B: 33,33%\nPerson C: 33,33% ".format(
+                district=district['district']),
+            [
+                button_postback("Info Direktkandidat", {'show_basics': sender_id, random.choice(random_candidate['uuid'])}),
+                button_postback("Ergebnis Erststimme", {'result_first_vote': district_uuid}),
+                button_postback("Ergebnis Zweitstimme", {'result_second_vote': district_uuid}),
+            ]
+        )
 
 def show_candidates(event, payload, **kwargs):
     sender_id = event['sender']['id']
