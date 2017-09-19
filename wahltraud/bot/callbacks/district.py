@@ -206,7 +206,7 @@ def result_17(event, payload, **kwargs):
             "\n\nPerson A: 33,33%\nPerson B: 33,33%\nPerson C: 33,33% ".format(
                 district=district['district']),
             [
-                button_postback("Info Direktkandidat", {'show_basics': sender_id, random_candidate['uuid']}),
+                button_postback("Info Direktkandidat", {'payload_basics': random_candidate['uuid']}),
                 button_postback("Ergebnis Erststimme", {'result_first_vote': district_uuid}),
                 button_postback("Ergebnis Zweitstimme", {'result_second_vote': district_uuid}),
             ]
