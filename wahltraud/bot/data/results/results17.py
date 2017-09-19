@@ -23,7 +23,7 @@ def make_kerg_to_df(kerg):
     party_abbrv = pd.read_csv(str(DATA_DIR/'btw17_parteien.csv'), delimiter=';')
     long_names = list(party_abbrv['BEZEICHNUNG'].unique())
 
-    with open(kerg, 'r') as inp, open('kerg_edit.csv', 'w') as out:
+    with open(kerg, 'r') as inp, open(str(DATA_DIR/'kerg_edit.csv'), 'w') as out:
         writer = csv.writer(out)
         for index, row in enumerate(csv.reader(inp)):
             # take out first 2 rows
@@ -87,7 +87,7 @@ def result(wk_nummer, extention):
     Yields: dictionary with results of keys
     """
 
-    party_abbrv = pd.read_csv('./btw17_parteien.csv', delimiter=';')
+    party_abbrv = pd.read_csv(str(DATA_DIR/'btw17_parteien.csv'), delimiter=';')
 
 
 
@@ -96,7 +96,7 @@ def result(wk_nummer, extention):
             extention[2]: 'second17',
             extention[3]: 'second13'}
     # Take data from the election 2013
-    data = pd.read_csv("kerg_edit.csv", delimiter=";")
+    data = pd.read_csv(str(DATA_DIR/"kerg_edit.csv"), delimiter=";")
     data.loc[data['Gebiet'] == 'Bundesgebiet', 'Nr'] = 999
 
     # Parteien, die 2013 angetreten sind
@@ -242,7 +242,7 @@ def plot_vote(wk_nummer,extention):
         t.set_bbox(dict(facecolor='red', alpha=0.5, edgecolor='red'))
 
 
-    plt.savefig('../../static/bot/result_grafics/second_distric'+str(wk_nummer)+'.jpg', bbox_inches='tight')
+    plt.savefig(str(DATA_DIR/'../../static/bot/result_grafics/second_distric'+str(wk_nummer)+'.jpg'), bbox_inches='tight')
     plt.clf()
     plt.close(fig)
 
