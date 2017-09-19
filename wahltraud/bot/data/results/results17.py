@@ -4,8 +4,9 @@ from fuzzywuzzy import fuzz
 import pandas as pd
 import matplotlib.pyplot as plt
 import datetime
-DATA_DIR = Path(__file__).absolute().parent
 from pathlib import Path
+
+DATA_DIR = Path(__file__).absolute().parent
 
 
 
