@@ -107,6 +107,8 @@ def result(wk_nummer, extention):
 
     # wahl 2013 Bundesgebiet komplett
     temp = {}
+    temp['voters'] = {}
+    temp['voters_invalid'] = {}
     # set the index to the Nr Column in wahl (wahlergebnisse 2013) in order to query wahlkreis
     #  nr corresponds to wk_nummer
     data.set_index = ["Nr"]
@@ -117,11 +119,14 @@ def result(wk_nummer, extention):
         temp[keys[element]] = {}
         for party in parteien['KURZBEZEICHNUNG']:
             x = (data_wk[party + element].iloc[0] / data_wk['Gültige' + element].iloc[0])
-            temp[keys[element]][party] = np.where(np.isnan(x), None, x).item()
-        temp[keys[element]]["voters"] = (
+            value = np.where(np.isnan(x), None, x).item()
+            if value is not None:
+                temp[keys[element]][party] = value
+
+        temp["voters"][keys[element]] = (
                     data_wk["Wähler" + element].iloc[0] / data_wk["Wahlberechtigte" + element].iloc[0]
         )
-        temp[keys[element]]["voters_invalid"] = (
+        temp["voters_invalid"][keys[element]] = (
                 data_wk["Ungültige" + element].iloc[0] / data_wk["Wahlberechtigte" + element].iloc[0]
         )
 
@@ -259,8 +264,8 @@ def plot_vote(wk_nummer,extention):
                    '\" ', fontsize=40, ha='center')
 
     plt.gcf().text(0.5, 0.89, 'Wahlbeteiligung: ' +
-                   str(round(data[election17]['voters'] * 100, 1))
-                   + '%,  davon ungültig: ' + str(round(data[election17]['voters_invalid'] * 100, 1)) + '%',
+                   str(round(data['voters'][election17] * 100, 1))
+                   + '%,  davon ungültig: ' + str(round(data['voters_invalid'][election17] * 100, 1)) + '%',
                    ha='center', fontsize=20)
 
     plt.gcf().text(0.765, 0.07, 'Quelle: Bundeswahlleiter ', fontsize=15, ha='left')
@@ -297,8 +302,8 @@ extention = make_kerg_to_df(kerg)
 create_results(result_file, extention)
 
 # create plot for all 999 votes
-for district in range(1,300):
-    plot_vote(district,extention)
+#for district in range(1,300):
+#    plot_vote(district,extention)
 
 # create plot for Bundesgebiet
 plot_vote(999,extention)
