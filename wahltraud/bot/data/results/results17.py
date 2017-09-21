@@ -1,3 +1,19 @@
+### required for windows - added by LizzAy ###
+#!/usr/bin/env python
+# coding: utf8
+
+
+import sys
+
+reload(sys)
+sys.setdefaultencoding('utf8')
+
+import matplotlib
+# Force matplotlib to not use any Xwindows backend.
+matplotlib.use('Agg')
+
+### required for windows - added by LizzAy ###
+
 import numpy as np
 import csv
 from fuzzywuzzy import fuzz
