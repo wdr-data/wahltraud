@@ -209,7 +209,6 @@ def result_17(event, payload, **kwargs):
             locale.format_string('%s: %.1f%%', (party, result * 100))
             for party, result
             in sorted(first_vote.items(), key=operator.itemgetter(1), reverse=True)[:3]
-            if result > 0.0499
         ]
     )
     second_vote_results = '\n'.join(
@@ -217,7 +216,7 @@ def result_17(event, payload, **kwargs):
             locale.format_string('%s: %.1f%%', (party, result * 100))
             for party, result
             in sorted(second_vote.items(), key=operator.itemgetter(1), reverse=True)
-            # if result > 0.0499
+            if result > 0.0499
         ]
     )
 
