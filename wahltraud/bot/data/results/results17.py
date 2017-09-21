@@ -125,7 +125,8 @@ def result(wk_nummer, extention):
                 data_wk["Ungültige" + element].iloc[0] / data_wk["Wahlberechtigte" + element].iloc[0]
         )
 
-    temp['name'] = data_wk['Gebiet'].iloc[0]
+    temp['district'] = data_wk['Gebiet'].iloc[0]
+    temp['district_id'] = str(wk_nummer)
 
     # if np.isnan(res) == True:
     #    res = float(0)
@@ -254,7 +255,7 @@ def plot_vote(wk_nummer,extention):
 
     # Add title
     plt.gcf().text(0.5, 0.93, '#BTW17 - Vorläufiges Ergebnis - Zweitstimmen \n \"'
-                   + data['name'] +
+                   + data['district'] +
                    '\" ', fontsize=40, ha='center')
 
     plt.gcf().text(0.5, 0.89, 'Wahlbeteiligung: ' +
@@ -276,8 +277,8 @@ def create_results(result_file, extention):
     temp = []
     for district in range(1,300):
         # run result
-        temp.append({district: result(district, extention)})
-    temp.append({999: result(999,extention)})
+        temp.append( result(district, extention))
+    temp.append(result(999,extention))
 
     final = {'election_17': temp}
     with open(result_file ,  "w", encoding="utf8") as output_file:
@@ -292,6 +293,8 @@ result_file = 'results_17.json'
 
 # make nice function from kerg  : extention is for the given header names
 extention = make_kerg_to_df(kerg)
+
+create_results(result_file, extention)
 
 # create plot for all 999 votes
 for district in range(1,300):
