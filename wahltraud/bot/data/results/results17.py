@@ -126,6 +126,7 @@ def result(wk_nummer, extention):
         )
 
     temp['name'] = data_wk['Gebiet'].iloc[0]
+    temp['district_id'] = str(wk_nummer)
 
     # if np.isnan(res) == True:
     #    res = float(0)
@@ -276,8 +277,8 @@ def create_results(result_file, extention):
     temp = []
     for district in range(1,300):
         # run result
-        temp.append({district: result(district, extention)})
-    temp.append({999: result(999,extention)})
+        temp.append( result(district, extention))
+    temp.append(result(999,extention))
 
     final = {'election_17': temp}
     with open(result_file ,  "w", encoding="utf8") as output_file:
