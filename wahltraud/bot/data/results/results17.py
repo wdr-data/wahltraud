@@ -21,6 +21,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import datetime
 from pathlib import Path
+import json
+from matplotlib.offsetbox import AnnotationBbox, OffsetImage
+from matplotlib._png import read_png
 
 DATA_DIR = Path(__file__).absolute().parent
 
@@ -129,13 +132,17 @@ def result(wk_nummer, extention):
     for element in extention:
         temp[keys[element]] = {}
         for party in parteien['KURZBEZEICHNUNG']:
-            temp[keys[element]][party] = (data_wk[party + element].iloc[0] / data_wk['Gültige' + element].iloc[0])
+            x = (data_wk[party + element].iloc[0] / data_wk['Gültige' + element].iloc[0])
+            temp[keys[element]][party] = np.where(np.isnan(x), None, x).item()
         temp[keys[element]]["voters"] = (
-        data_wk["Wähler" + element].iloc[0] / data_wk["Wahlberechtigte" + element].iloc[0])
+                    data_wk["Wähler" + element].iloc[0] / data_wk["Wahlberechtigte" + element].iloc[0]
+        )
         temp[keys[element]]["voters_invalid"] = (
-        data_wk["Ungültige" + element].iloc[0] / data_wk["Wahlberechtigte" + element].iloc[0])
+                data_wk["Ungültige" + element].iloc[0] / data_wk["Wahlberechtigte" + element].iloc[0]
+        )
 
-    temp['name'] = data_wk['Gebiet'].iloc[0]
+    temp['district'] = data_wk['Gebiet'].iloc[0]
+    temp['district_id'] = str(wk_nummer)
 
     # if np.isnan(res) == True:
     #    res = float(0)
@@ -147,11 +154,9 @@ def result(wk_nummer, extention):
 
 
 def plot_vote(wk_nummer,extention):
-
-    # run result
     data = result(wk_nummer,extention)
 
-    # color scheme for the different parties
+    # colors for different parties
     color_dict = {"Sonstige": "grey",
                   "DIE LINKE": "#96276E",
                   "FDP": "#F6BB00",
@@ -161,24 +166,21 @@ def plot_vote(wk_nummer,extention):
                   "CDU": "#373737",
                   "CDU/CSU": '#373737',
                   "GRÜNE": "#4BA345",
-                  "PIRATE": "#FF8800"
-                  }
-
-
+                  "PIRATE": "#FF8800"}
 
     values = []
     values13 = []
     label = []
     colors = []
-    diff = []
     election17 = 'second17'
     election13 = 'second13'
 
+    # which parties are to be presented
     top7 = ['CDU', 'CSU', 'SPD', 'DIE LINKE', 'GRÜNE', 'FDP', 'AfD']
 
     # create base table
     for party in top7:
-        if round(data[election17][party] * 100, 1) > 0:
+        if data[election17][party] is not None:
             values.append(round(data[election17][party] * 100, 1))
             values13.append(round(data[election13][party] * 100, 1))
             key = party
@@ -188,40 +190,47 @@ def plot_vote(wk_nummer,extention):
             except:
                 colors.append('grey')
 
+            # consider the fact that you have CDU/CSU/UNION
             if label == ['CDU', 'CSU']:
                 values = [sum(values)]
                 values13 = [sum(values13)]
                 label = ['CDU/CSU']
                 colors = [color_dict[label[0]]]
-    # label = ['CDU/CSU', 'SPD', 'Linke', 'Grüne', 'FDP', 'AfD', 'Sonstige']
 
+    # create 'Sonstige
     diff = list(np.array(values) - np.array(values13))
     colors.append(color_dict['Sonstige'])
     label.append('Sonstige')
-    values.append(100 - sum(values))
-    diff.append(values[-1] - (100 - sum(values13)))
+    values.append(round(100 - sum(values), 1))
+    diff.append(round(values[-1] - (100 - sum(values13)), 1))
 
-    fig = plt.figure(figsize=(10, 6))
+    #figure
+    fig = plt.figure(figsize=(20, 12))
     ax = plt.gca()
+
+    #settings bar plot
     index = np.arange(len(values))
-    bar_width = 0.6
+    bar_width = 0.65
     ax.set_axisbelow(True)
-    backgroundcolor = 'deeppink'
-    ax.yaxis.grid(color='grey', linestyle='-')
+    ax.yaxis.grid(color='0.7', linestyle='-', linewidth=2)
     ax.bar(index, values, bar_width,
            color=colors
            )
     ax.set_facecolor('0.95')  # 0.95
+    ax.set_ylim(0, max(values) + 5)
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.spines['left'].set_visible(False)
 
-    plt.xticks(index + bar_width / 2 - 0.3, label, fontsize=14)
+    # ticks
+    plt.xticks(index + bar_width / 2 - 0.3, label, fontsize=28)
     ax.tick_params(axis=u'both', which=u'both', length=0)
-
-    plt.yticks([5, 10, 20, 30, 40, 50, 60], fontsize=16)
-    plt.ylabel('Stimmenanteil in %', fontsize=16)
-    xy = (index[0], values[0])
+    plt.yticks([5, 10, 20, 30, 40, 50, 60], fontsize=32)
+    plt.ylabel('Stimmenanteil in %', fontsize=32)
+    # bar plots + annotation
     for go in index:
         text = str(values[go]) + '%'
-        ax.annotate(text, xy=(index[go] - 0.25, max(values[go] + 2, 5.5)), fontsize=16)
+        ax.annotate(text, xy=(index[go], max(values[go] + 1.3, 5.5)), fontsize=32, ha='center')
         # for go in index:
         di = diff[go]
         text = str(diff[go]) + '%'
@@ -233,29 +242,44 @@ def plot_vote(wk_nummer,extention):
         else:
             col = 'white'
             ylevel = 1
-        ax.annotate(text, xy=(index[go] - 0.27, ylevel), color=col, fontsize=13)
-    ax.set_ylim(0, max(values) + 5)
-    ax.spines['top'].set_visible(False)
-    ax.spines['right'].set_visible(False)
-    # ax.spines['bottom'].set_visible(False)
-    ax.spines['left'].set_visible(False)
+        ax.annotate(text, xy=(index[go], ylevel), color=col, fontsize=26, ha='center')
+
     # 5% line
     plt.axhline(y=5, linewidth=2, color='k')
-    plt.title('Vorläufiges Ergebnis  - Zweitstimmen \n \"'
-              + data['name'] +
-              '\" ', fontsize=20)
-    # ax.annotate('5%', xy=(-1, 5), color = 'k', fontsize=13)
-    ax.annotate('Wahlbeteiligung:    ' +
-                str(round(data[election17]['voters'] * 100, 1))
-                + '%\ndavon ungültig:        ' + str(round(data[election17]['voters_invalid'] * 100, 1)) + '%'
-                ,
-                xy=(4, 33), color='k', fontsize=13)
+    ax.set_ylim(0, max(values) + 5)
 
-    #### THIS PUTS IN A DATE STAMP TO GET RID OF TEST PICTURES
+
+    #### THIS PUTS IN A DATE STAMP TO GET RID OF "TEST PICTURES
     now = datetime.datetime.now()
-    if now < datetime.datetime(2017, 9, 25, 3, 0, 0):    # from monday morning 3:00 no test anymore
-        t = plt.text(0.1, 0.50, 'TEST', transform=ax.transAxes, fontsize=180)
+    if now < datetime.datetime(2017, 9, 25, 3, 0, 0):
+        t = plt.text(0.5, 0.50, 'TEST', transform=ax.transAxes, fontsize=180,ha='center')
         t.set_bbox(dict(facecolor='red', alpha=0.5, edgecolor='red'))
+
+    # add Wahl-Logo
+    arr_hand = read_png('derwahl.png')
+    imagebox = OffsetImage(arr_hand, zoom=.13)
+    xy = [6.15, max(values) ]  # coordinates to position this image
+
+    ab = AnnotationBbox(imagebox, xy,
+                        xybox=(1, -1.),
+                        frameon=False,
+                        xycoords='data',
+                        boxcoords="offset points")
+    ax.add_artist(ab)
+
+
+
+    # Add title
+    plt.gcf().text(0.5, 0.93, '#BTW17 - Vorläufiges Ergebnis - Zweitstimmen \n \"'
+                   + data['district'] +
+                   '\" ', fontsize=40, ha='center')
+
+    plt.gcf().text(0.5, 0.89, 'Wahlbeteiligung: ' +
+                   str(round(data[election17]['voters'] * 100, 1))
+                   + '%,  davon ungültig: ' + str(round(data[election17]['voters_invalid'] * 100, 1)) + '%',
+                   ha='center', fontsize=20)
+
+    plt.gcf().text(0.765, 0.07, 'Quelle: Bundeswahlleiter ', fontsize=15, ha='left')
 
 
     plt.savefig('../../static/bot/result_grafics/second_distric'+str(wk_nummer)+'.jpg', bbox_inches='tight')
@@ -264,16 +288,29 @@ def plot_vote(wk_nummer,extention):
 
     return
 
+def create_results(result_file, extention):
 
+    temp = []
+    for district in range(1,300):
+        # run result
+        temp.append( result(district, extention))
+    temp.append(result(999,extention))
+
+    final = {'election_17': temp}
+    with open(result_file ,  "w", encoding="utf8") as output_file:
+        json.dump(final,output_file,  ensure_ascii=False)
 
 ###  start function
 
 
 #bundeswahlleiter data
 kerg = 'kerg.csv'
+result_file = 'results_17.json'
 
 # make nice function from kerg  : extention is for the given header names
 extention = make_kerg_to_df(kerg)
+
+create_results(result_file, extention)
 
 # create plot for all 999 votes
 for district in range(1,300):
@@ -281,3 +318,5 @@ for district in range(1,300):
 
 # create plot for Bundesgebiet
 plot_vote(999,extention)
+
+create_results(result_file, extention)

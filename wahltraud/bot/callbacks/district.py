@@ -8,7 +8,7 @@ from django.conf import settings
 
 
 from ..fb import send_buttons, button_postback, send_text, send_list, list_element, quick_reply, send_attachment, button_web_url
-from ..data import by_uuid, by_plz, by_city, get_election13_dict, get_structural_data
+from ..data import by_uuid, by_plz, by_city, get_election13_dict, get_structural_data, by_district_id
 
 locale.setlocale(locale.LC_NUMERIC, 'de_DE.UTF-8')
 
@@ -122,6 +122,27 @@ def novi(event, payload, **kwargs):
     sender_id = event['sender']['id']
     district_uuid = payload['novi']
     district = by_uuid[district_uuid]
+
+    election_17 = by_district_id[district['district_id']]
+    first_vote = election_17['first17']
+    second_vote = election_17['second17']
+
+    first_vote_results = '\n'.join(
+        [
+            locale.format_string('%s: %.1f%%', (party, result * 100))
+            for party, result
+            in sorted(election_17.items(), key=operator.itemgetter(1), reverse=True)
+            if result > 0.0499
+        ]
+    )
+    results = '\n'.join(
+        [
+            locale.format_string('%s: %.1f%%  (%.1f%%)', (party, result * 100, election_13_all[party]*100))
+            for party, result
+            in sorted(election_13.items(), key=operator.itemgetter(1), reverse=True)
+            if (show_all and result>0)  or result > 0.0499
+        ]
+    )
 
     novi_wk = str(district['district_id']).zfill(3)
 
