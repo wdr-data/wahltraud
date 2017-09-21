@@ -123,27 +123,6 @@ def novi(event, payload, **kwargs):
     district_uuid = payload['novi']
     district = by_uuid[district_uuid]
 
-    election_17 = by_district_id[district['district_id']]
-    first_vote = election_17['first17']
-    second_vote = election_17['second17']
-
-    first_vote_results = '\n'.join(
-        [
-            locale.format_string('%s: %.1f%%', (party, result * 100))
-            for party, result
-            in sorted(election_17.items(), key=operator.itemgetter(1), reverse=True)
-            if result > 0.0499
-        ]
-    )
-    results = '\n'.join(
-        [
-            locale.format_string('%s: %.1f%%  (%.1f%%)', (party, result * 100, election_13_all[party]*100))
-            for party, result
-            in sorted(election_13.items(), key=operator.itemgetter(1), reverse=True)
-            if (show_all and result>0)  or result > 0.0499
-        ]
-    )
-
     novi_wk = str(district['district_id']).zfill(3)
 
     send_buttons(sender_id, """
@@ -215,18 +194,41 @@ def result_17(event, payload, **kwargs):
     district_uuid = payload['result_17']
     district = by_uuid[district_uuid]
 
+    election_17 = by_district_id[district['district_id']]
+    first_vote = election_17['first17']
+    second_vote = election_17['second17']
+
+    first_vote_results = '\n'.join(
+        [
+            locale.format_string('%s: %.1f%%', (party, result * 100))
+            for party, result
+            in sorted(first_vote.items(), key=operator.itemgetter(1), reverse=True)
+            if result > 0.0499
+        ]
+    )
+    second_vote_results = '\n'.join(
+        [
+            locale.format_string('%s: %.1f%%', (party, result * 100))
+            for party, result
+            in sorted(second_vote.items(), key=operator.itemgetter(1), reverse=True)[:3]
+            # if result > 0.0499
+        ]
+    )
+
     url = 'https://media.data.wdr.de:8080/static/bot/result_grafics/second_distric' + district['district_id'] + '.jpg'
     send_attachment(sender_id, url, type='image')
 
     candidates = list(sorted((by_uuid[uuid] for uuid in district['candidates']),
                              key=operator.itemgetter('last_name')))
     random_candidate = random.choice(candidates)
+
     send_buttons(
             sender_id,
             "Bei der Bundestagswahl 2017 wurden diese Kandidaten im Wahlkreis \"{district}\" "
             "durch die Erststimme der Wähler auf die ersten drei Plätze gewählt:"
-            "\n\nPerson A: 33,33%\nPerson B: 33,33%\nPerson C: 33,33% ".format(
+            "\n\n{results} ".format(
                 district=district['district']),
+                results = first_vote_results
             [
                 button_postback("Info Direktkandidat", {'payload_basics': random_candidate['uuid']}),
                 button_postback("Ergebnis Erststimme", {'result_first_vote': district_uuid}),
@@ -236,7 +238,7 @@ def result_17(event, payload, **kwargs):
 
 def result_first_vote(event, payload, **kwargs):
     sender_id = event['sender']['id']
-    
+
     send_text(
         sender_id,
         "Es folgt eine Auflistung aller Ergebnisse der Erststimme."

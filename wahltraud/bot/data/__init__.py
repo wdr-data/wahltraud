@@ -15,7 +15,7 @@ party_list = json.load(open(str(DATA_DIR/'parteien_info.json')))['list']
 candidate_list = json.load(open(str(DATA_DIR/'alle_kandidaten.json')))['list']
 district_list = json.load(open(str(DATA_DIR/'wahlkreis_info.json')))['districts']
 election13_dict = json.load(open(str(DATA_DIR/'wahlkreis_info.json')))['election13']
-election17_dict = json.load(open(str(DATA_DIR/results/'results_17.json')))['election_17']
+election17_dict = json.load(open(str(DATA_DIR/'results/results_17.json')))['election_17']
 digital_word_list = json.load(open(str(DATA_DIR/'digital_words.json')))['words']
 
 structural_data_district = pd.read_csv(DATA_DIR/'btw17_strukturdaten.csv', delimiter = ';')
