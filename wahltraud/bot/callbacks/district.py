@@ -195,6 +195,9 @@ def result_17(event, payload, **kwargs):
     district = by_uuid[district_uuid]
 
     election_17 = by_district_id[district['district_id']]
+    logger.debug('Ergebnis 2013 {district} ist: {result}'.format(
+        district=district['district'],
+        result = election_17))
     first_vote = election_17['first17']
     second_vote = election_17['second17']
 
