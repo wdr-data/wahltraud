@@ -201,11 +201,14 @@ def result_17(event, payload, **kwargs):
     logger.debug('Erststimme 2013 {district} ist: {result}'.format(
         district=district['district'],
         result = first_vote))
+    logger.debug('Zweitstimme 2013 {district} ist: {result}'.format(
+        district=district['district'],
+        result = second_vote))
     first_vote_results = '\n'.join(
         [
             locale.format_string('%s: %.1f%%', (party, result * 100))
             for party, result
-            in sorted(first_vote.items(), key=operator.itemgetter(1), reverse=True)
+            in sorted(first_vote.items(), key=operator.itemgetter(1), reverse=True)[:3]
             if result > 0.0499
         ]
     )
@@ -213,7 +216,7 @@ def result_17(event, payload, **kwargs):
         [
             locale.format_string('%s: %.1f%%', (party, result * 100))
             for party, result
-            in sorted(second_vote.items(), key=operator.itemgetter(1), reverse=True)[:3]
+            in sorted(second_vote.items(), key=operator.itemgetter(1), reverse=True)
             # if result > 0.0499
         ]
     )
@@ -227,8 +230,8 @@ def result_17(event, payload, **kwargs):
 
     send_buttons(
             sender_id,
-            "Bei der Bundestagswahl 2017 wurden diese Kandidaten im Wahlkreis \"{district}\" "
-            "durch die Erststimme der Wähler auf die ersten drei Plätze gewählt:"
+            "Bei der Bundestagswahl 2017 haben diese Parteien im Wahlkreis \"{district}\" "
+            "durch die Zweitstimme der Wähler mehr als 5% erzielt:"
             "\n\n{results} ".format(
                 district=district['district'],
                 results = first_vote_results),
