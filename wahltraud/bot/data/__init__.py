@@ -24,6 +24,7 @@ by_first_name = defaultdict(set)
 by_last_name = defaultdict(set)
 by_plz = defaultdict(set)
 by_city = defaultdict(set)
+result_by_district_id = dict()
 by_district_id = dict()
 by_uuid = dict()
 by_party = defaultdict(set)
@@ -32,9 +33,8 @@ state_lists = defaultdict(lambda: defaultdict(list))
 party_candidates = defaultdict(list)
 party_candidates_grouped = defaultdict(dict)
 
-def get_election17(district_id):
-    for result in election17_dict:
-        by_district_id[district_id] = result
+for result in election17_dict:
+    result_by_district_id[result['district_id']] = result
 
 for candidate in candidate_list:
     by_first_name[candidate['first_name']].add(candidate['uuid'])

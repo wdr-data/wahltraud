@@ -8,7 +8,7 @@ from django.conf import settings
 
 
 from ..fb import send_buttons, button_postback, send_text, send_list, list_element, quick_reply, send_attachment, button_web_url
-from ..data import by_uuid, by_plz, by_city, get_election13_dict, get_structural_data, get_election17
+from ..data import by_uuid, by_plz, by_city, get_election13_dict, get_structural_data, result_by_district_id
 
 locale.setlocale(locale.LC_NUMERIC, 'de_DE.UTF-8')
 
@@ -194,7 +194,7 @@ def result_17(event, payload, **kwargs):
     district_uuid = payload['result_17']
     district = by_uuid[district_uuid]
 
-    election_17 = get_election17(district['district_id'])
+    election_17 = result_by_district_id(district['district_id'])
     logger.debug('Ergebnis 2013 {district} ist: {result}'.format(
         district=district['district'],
         result = election_17))
