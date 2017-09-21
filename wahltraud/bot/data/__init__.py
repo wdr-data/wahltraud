@@ -32,8 +32,9 @@ state_lists = defaultdict(lambda: defaultdict(list))
 party_candidates = defaultdict(list)
 party_candidates_grouped = defaultdict(dict)
 
-for result in election17_dict:
-    by_district_id[result['district_id']] = result
+def get_election17(district_id):
+    for result in election17_dict:
+        by_district_id[district_id] = result
 
 for candidate in candidate_list:
     by_first_name[candidate['first_name']].add(candidate['uuid'])
