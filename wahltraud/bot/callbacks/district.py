@@ -230,8 +230,8 @@ def result_17(event, payload, **kwargs):
             "Bei der Bundestagswahl 2017 wurden diese Kandidaten im Wahlkreis \"{district}\" "
             "durch die Erststimme der Wähler auf die ersten drei Plätze gewählt:"
             "\n\n{results} ".format(
-                district=district['district']),
-                results = first_vote_results
+                district=district['district'],
+                results = first_vote_results),
             [
                 button_postback("Info Direktkandidat", {'payload_basics': random_candidate['uuid']}),
                 button_postback("Ergebnis Erststimme", {'result_first_vote': district_uuid}),
