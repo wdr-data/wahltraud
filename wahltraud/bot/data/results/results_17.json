@@ -186,7 +186,7 @@
         "voters_invalid": 0.009310666948674563
       },
       "district": "Flensburg – Schleswig",
-      "": "1"
+      "district_id": "1"
     },
     {
       "first17": {
@@ -374,7 +374,7 @@
         "voters_invalid": 0.007965538170665549
       },
       "district": "Nordfriesland – Dithmarschen Nord",
-      "": "2"
+      "district_id": "2"
     },
     {
       "first17": {
@@ -562,7 +562,7 @@
         "voters_invalid": 0.008210217788616598
       },
       "district": "Steinburg – Dithmarschen Süd",
-      "": "3"
+      "district_id": "3"
     },
     {
       "first17": {
@@ -750,7 +750,7 @@
         "voters_invalid": 0.00812456322931278
       },
       "district": "Rendsburg-Eckernförde",
-      "": "4"
+      "district_id": "4"
     },
     {
       "first17": {
@@ -938,7 +938,7 @@
         "voters_invalid": 0.007225581384017969
       },
       "district": "Kiel",
-      "": "5"
+      "district_id": "5"
     },
     {
       "first17": {
@@ -1126,7 +1126,7 @@
         "voters_invalid": 0.008698339303903952
       },
       "district": "Plön – Neumünster",
-      "": "6"
+      "district_id": "6"
     },
     {
       "first17": {
@@ -1314,7 +1314,7 @@
         "voters_invalid": 0.0071389160052629345
       },
       "district": "Pinneberg",
-      "": "7"
+      "district_id": "7"
     },
     {
       "first17": {
@@ -1502,7 +1502,7 @@
         "voters_invalid": 0.006796593514575827
       },
       "district": "Segeberg – Stormarn-Mitte",
-      "": "8"
+      "district_id": "8"
     },
     {
       "first17": {
@@ -1690,7 +1690,7 @@
         "voters_invalid": 0.008065680861228072
       },
       "district": "Ostholstein – Stormarn-Nord",
-      "": "9"
+      "district_id": "9"
     },
     {
       "first17": {
@@ -1878,7 +1878,7 @@
         "voters_invalid": 0.006466133625138338
       },
       "district": "Herzogtum Lauenburg – Stormarn-Süd",
-      "": "10"
+      "district_id": "10"
     },
     {
       "first17": {
@@ -2066,7 +2066,7 @@
         "voters_invalid": 0.007915436750713213
       },
       "district": "Lübeck",
-      "": "11"
+      "district_id": "11"
     },
     {
       "first17": {
@@ -2254,7 +2254,7 @@
         "voters_invalid": 0.009699731245139903
       },
       "district": "Schwerin – Ludwigslust-Parchim I – Nordwestmecklenburg I",
-      "": "12"
+      "district_id": "12"
     },
     {
       "first17": {
@@ -2442,7 +2442,7 @@
         "voters_invalid": 0.00950109683185257
       },
       "district": "Ludwigslust-Parchim II – Nordwestmecklenburg II – Landkreis Rostock I",
-      "": "13"
+      "district_id": "13"
     },
     {
       "first17": {
@@ -2630,7 +2630,7 @@
         "voters_invalid": 0.009138620273801282
       },
       "district": "Rostock – Landkreis Rostock II",
-      "": "14"
+      "district_id": "14"
     },
     {
       "first17": {
@@ -2818,7 +2818,7 @@
         "voters_invalid": 0.009906893172165959
       },
       "district": "Vorpommern-Rügen – Vorpommern-Greifswald I",
-      "": "15"
+      "district_id": "15"
     },
     {
       "first17": {
@@ -3006,7 +3006,7 @@
         "voters_invalid": 0.01073854171116142
       },
       "district": "Mecklenburgische Seenplatte I – Vorpommern-Greifswald II",
-      "": "16"
+      "district_id": "16"
     },
     {
       "first17": {
@@ -3194,7 +3194,7 @@
         "voters_invalid": 0.01311457418788411
       },
       "district": "Mecklenburgische Seenplatte II – Landkreis Rostock III",
-      "": "17"
+      "district_id": "17"
     },
     {
       "first17": {
@@ -3382,7 +3382,7 @@
         "voters_invalid": 0.00878804759014608
       },
       "district": "Hamburg-Mitte",
-      "": "18"
+      "district_id": "18"
     },
     {
       "first17": {
@@ -3570,7 +3570,7 @@
         "voters_invalid": 0.007621350724383945
       },
       "district": "Hamburg-Altona",
-      "": "19"
+      "district_id": "19"
     },
     {
       "first17": {
@@ -3758,7 +3758,7 @@
         "voters_invalid": 0.007609130957148579
       },
       "district": "Hamburg-Eimsbüttel",
-      "": "20"
+      "district_id": "20"
     },
     {
       "first17": {
@@ -3946,7 +3946,7 @@
         "voters_invalid": 0.007138001359619306
       },
       "district": "Hamburg-Nord",
-      "": "21"
+      "district_id": "21"
     },
     {
       "first17": {
@@ -4134,7 +4134,7 @@
         "voters_invalid": 0.008221858318623593
       },
       "district": "Hamburg-Wandsbek",
-      "": "22"
+      "district_id": "22"
     },
     {
       "first17": {
@@ -4322,7 +4322,7 @@
         "voters_invalid": 0.008959515429024683
       },
       "district": "Hamburg-Bergedorf – Harburg",
-      "": "23"
+      "district_id": "23"
     },
     {
       "first17": {
@@ -4510,7 +4510,7 @@
         "voters_invalid": 0.009026792399482687
       },
       "district": "Aurich – Emden",
-      "": "24"
+      "district_id": "24"
     },
     {
       "first17": {
@@ -4698,7 +4698,7 @@
         "voters_invalid": 0.007066636882259949
       },
       "district": "Unterems",
-      "": "25"
+      "district_id": "25"
     },
     {
       "first17": {
@@ -4886,7 +4886,7 @@
         "voters_invalid": 0.00926150057358157
       },
       "district": "Friesland – Wilhelmshaven – Wittmund",
-      "": "26"
+      "district_id": "26"
     },
     {
       "first17": {
@@ -5074,7 +5074,7 @@
         "voters_invalid": 0.0063609017780580646
       },
       "district": "Oldenburg – Ammerland",
-      "": "27"
+      "district_id": "27"
     },
     {
       "first17": {
@@ -5262,7 +5262,7 @@
         "voters_invalid": 0.008391921622701663
       },
       "district": "Delmenhorst – Wesermarsch – Oldenburg-Land",
-      "": "28"
+      "district_id": "28"
     },
     {
       "first17": {
@@ -5450,7 +5450,7 @@
         "voters_invalid": 0.006309955233425709
       },
       "district": "Cuxhaven – Stade II",
-      "": "29"
+      "district_id": "29"
     },
     {
       "first17": {
@@ -5638,7 +5638,7 @@
         "voters_invalid": 0.004857456477805476
       },
       "district": "Stade I – Rotenburg II",
-      "": "30"
+      "district_id": "30"
     },
     {
       "first17": {
@@ -5826,7 +5826,7 @@
         "voters_invalid": 0.005288290777063025
       },
       "district": "Mittelems",
-      "": "31"
+      "district_id": "31"
     },
     {
       "first17": {
@@ -6014,7 +6014,7 @@
         "voters_invalid": 0.005570966250577901
       },
       "district": "Cloppenburg – Vechta",
-      "": "32"
+      "district_id": "32"
     },
     {
       "first17": {
@@ -6202,7 +6202,7 @@
         "voters_invalid": 0.006292174399395123
       },
       "district": "Diepholz – Nienburg I",
-      "": "33"
+      "district_id": "33"
     },
     {
       "first17": {
@@ -6390,7 +6390,7 @@
         "voters_invalid": 0.008820354983139076
       },
       "district": "Osterholz – Verden",
-      "": "34"
+      "district_id": "34"
     },
     {
       "first17": {
@@ -6578,7 +6578,7 @@
         "voters_invalid": 0.005921354405571077
       },
       "district": "Rotenburg I – Heidekreis",
-      "": "35"
+      "district_id": "35"
     },
     {
       "first17": {
@@ -6766,7 +6766,7 @@
         "voters_invalid": 0.00625590179414542
       },
       "district": "Harburg",
-      "": "36"
+      "district_id": "36"
     },
     {
       "first17": {
@@ -6954,7 +6954,7 @@
         "voters_invalid": 0.006466780961528796
       },
       "district": "Lüchow-Dannenberg – Lüneburg",
-      "": "37"
+      "district_id": "37"
     },
     {
       "first17": {
@@ -7142,7 +7142,7 @@
         "voters_invalid": 0.005669967397687463
       },
       "district": "Osnabrück-Land",
-      "": "38"
+      "district_id": "38"
     },
     {
       "first17": {
@@ -7330,7 +7330,7 @@
         "voters_invalid": 0.008448702833224356
       },
       "district": "Stadt Osnabrück",
-      "": "39"
+      "district_id": "39"
     },
     {
       "first17": {
@@ -7518,7 +7518,7 @@
         "voters_invalid": 0.005899524363606671
       },
       "district": "Nienburg II – Schaumburg",
-      "": "40"
+      "district_id": "40"
     },
     {
       "first17": {
@@ -7706,7 +7706,7 @@
         "voters_invalid": 0.010313490354567639
       },
       "district": "Stadt Hannover I",
-      "": "41"
+      "district_id": "41"
     },
     {
       "first17": {
@@ -7894,7 +7894,7 @@
         "voters_invalid": 0.009965986218464772
       },
       "district": "Stadt Hannover II",
-      "": "42"
+      "district_id": "42"
     },
     {
       "first17": {
@@ -8082,7 +8082,7 @@
         "voters_invalid": 0.0065681867940809045
       },
       "district": "Hannover-Land I",
-      "": "43"
+      "district_id": "43"
     },
     {
       "first17": {
@@ -8270,7 +8270,7 @@
         "voters_invalid": 0.006321852428176603
       },
       "district": "Celle – Uelzen",
-      "": "44"
+      "district_id": "44"
     },
     {
       "first17": {
@@ -8458,7 +8458,7 @@
         "voters_invalid": 0.006780019884376036
       },
       "district": "Gifhorn – Peine",
-      "": "45"
+      "district_id": "45"
     },
     {
       "first17": {
@@ -8646,7 +8646,7 @@
         "voters_invalid": 0.01012084592145015
       },
       "district": "Hameln-Pyrmont – Holzminden",
-      "": "46"
+      "district_id": "46"
     },
     {
       "first17": {
@@ -8834,7 +8834,7 @@
         "voters_invalid": 0.0069548145036167535
       },
       "district": "Hannover-Land II",
-      "": "47"
+      "district_id": "47"
     },
     {
       "first17": {
@@ -9022,7 +9022,7 @@
         "voters_invalid": 0.008193249563922375
       },
       "district": "Hildesheim",
-      "": "48"
+      "district_id": "48"
     },
     {
       "first17": {
@@ -9210,7 +9210,7 @@
         "voters_invalid": 0.012526915163404947
       },
       "district": "Salzgitter – Wolfenbüttel",
-      "": "49"
+      "district_id": "49"
     },
     {
       "first17": {
@@ -9398,7 +9398,7 @@
         "voters_invalid": 0.007569698502056254
       },
       "district": "Braunschweig",
-      "": "50"
+      "district_id": "50"
     },
     {
       "first17": {
@@ -9586,7 +9586,7 @@
         "voters_invalid": 0.007971188475390157
       },
       "district": "Helmstedt – Wolfsburg",
-      "": "51"
+      "district_id": "51"
     },
     {
       "first17": {
@@ -9774,7 +9774,7 @@
         "voters_invalid": 0.010393114141836005
       },
       "district": "Goslar – Northeim – Osterode",
-      "": "52"
+      "district_id": "52"
     },
     {
       "first17": {
@@ -9962,7 +9962,7 @@
         "voters_invalid": 0.006803180520661678
       },
       "district": "Göttingen",
-      "": "53"
+      "district_id": "53"
     },
     {
       "first17": {
@@ -10150,7 +10150,7 @@
         "voters_invalid": 0.00707862496930387
       },
       "district": "Bremen I",
-      "": "54"
+      "district_id": "54"
     },
     {
       "first17": {
@@ -10338,7 +10338,7 @@
         "voters_invalid": 0.007893486333796794
       },
       "district": "Bremen II – Bremerhaven",
-      "": "55"
+      "district_id": "55"
     },
     {
       "first17": {
@@ -10526,7 +10526,7 @@
         "voters_invalid": 0.010499806276636962
       },
       "district": "Prignitz – Ostprignitz-Ruppin – Havelland I",
-      "": "56"
+      "district_id": "56"
     },
     {
       "first17": {
@@ -10714,7 +10714,7 @@
         "voters_invalid": 0.010915393735744326
       },
       "district": "Uckermark – Barnim I",
-      "": "57"
+      "district_id": "57"
     },
     {
       "first17": {
@@ -10902,7 +10902,7 @@
         "voters_invalid": 0.011342450696484813
       },
       "district": "Oberhavel – Havelland II",
-      "": "58"
+      "district_id": "58"
     },
     {
       "first17": {
@@ -11090,7 +11090,7 @@
         "voters_invalid": 0.015339644399152565
       },
       "district": "Märkisch-Oderland – Barnim II",
-      "": "59"
+      "district_id": "59"
     },
     {
       "first17": {
@@ -11278,7 +11278,7 @@
         "voters_invalid": 0.011564215060199114
       },
       "district": "Brandenburg an der Havel – Potsdam-Mittelmark I – Havelland III – Teltow-Fläming I",
-      "": "60"
+      "district_id": "60"
     },
     {
       "first17": {
@@ -11466,7 +11466,7 @@
         "voters_invalid": 0.009458315523036049
       },
       "district": "Potsdam – Potsdam-Mittelmark II – Teltow-Fläming II",
-      "": "61"
+      "district_id": "61"
     },
     {
       "first17": {
@@ -11654,7 +11654,7 @@
         "voters_invalid": 0.012560229987447867
       },
       "district": "Dahme-Spreewald – Teltow-Fläming III – Oberspreewald-Lausitz I",
-      "": "62"
+      "district_id": "62"
     },
     {
       "first17": {
@@ -11842,7 +11842,7 @@
         "voters_invalid": 0.01235571207127485
       },
       "district": "Frankfurt (Oder) – Oder-Spree",
-      "": "63"
+      "district_id": "63"
     },
     {
       "first17": {
@@ -12030,7 +12030,7 @@
         "voters_invalid": 0.011792238601815589
       },
       "district": "Cottbus – Spree-Neiße",
-      "": "64"
+      "district_id": "64"
     },
     {
       "first17": {
@@ -12218,7 +12218,7 @@
         "voters_invalid": 0.012184209489613875
       },
       "district": "Elbe-Elster – Oberspreewald-Lausitz II",
-      "": "65"
+      "district_id": "65"
     },
     {
       "first17": {
@@ -12406,7 +12406,7 @@
         "voters_invalid": 0.009734420865771734
       },
       "district": "Altmark",
-      "": "66"
+      "district_id": "66"
     },
     {
       "first17": {
@@ -12594,7 +12594,7 @@
         "voters_invalid": 0.010905632092715407
       },
       "district": "Börde – Jerichower Land",
-      "": "67"
+      "district_id": "67"
     },
     {
       "first17": {
@@ -12782,7 +12782,7 @@
         "voters_invalid": 0.010403837860188425
       },
       "district": "Harz",
-      "": "68"
+      "district_id": "68"
     },
     {
       "first17": {
@@ -12970,7 +12970,7 @@
         "voters_invalid": 0.009735248723732636
       },
       "district": "Magdeburg",
-      "": "69"
+      "district_id": "69"
     },
     {
       "first17": {
@@ -13158,7 +13158,7 @@
         "voters_invalid": 0.009453950977123374
       },
       "district": "Dessau – Wittenberg",
-      "": "70"
+      "district_id": "70"
     },
     {
       "first17": {
@@ -13346,7 +13346,7 @@
         "voters_invalid": 0.010552016626396094
       },
       "district": "Anhalt",
-      "": "71"
+      "district_id": "71"
     },
     {
       "first17": {
@@ -13534,7 +13534,7 @@
         "voters_invalid": 0.009295888777103524
       },
       "district": "Halle",
-      "": "72"
+      "district_id": "72"
     },
     {
       "first17": {
@@ -13722,7 +13722,7 @@
         "voters_invalid": 0.009759106260849668
       },
       "district": "Burgenland – Saalekreis",
-      "": "73"
+      "district_id": "73"
     },
     {
       "first17": {
@@ -13910,7 +13910,7 @@
         "voters_invalid": 0.010510462249119536
       },
       "district": "Mansfeld",
-      "": "74"
+      "district_id": "74"
     },
     {
       "first17": {
@@ -14098,7 +14098,7 @@
         "voters_invalid": 0.010652424235000122
       },
       "district": "Berlin-Mitte",
-      "": "75"
+      "district_id": "75"
     },
     {
       "first17": {
@@ -14286,7 +14286,7 @@
         "voters_invalid": 0.009505234890203277
       },
       "district": "Berlin-Pankow",
-      "": "76"
+      "district_id": "76"
     },
     {
       "first17": {
@@ -14474,7 +14474,7 @@
         "voters_invalid": 0.01327254638284846
       },
       "district": "Berlin-Reinickendorf",
-      "": "77"
+      "district_id": "77"
     },
     {
       "first17": {
@@ -14662,7 +14662,7 @@
         "voters_invalid": 0.014084958076034222
       },
       "district": "Berlin-Spandau – Charlottenburg Nord",
-      "": "78"
+      "district_id": "78"
     },
     {
       "first17": {
@@ -14850,7 +14850,7 @@
         "voters_invalid": 0.009554241455953674
       },
       "district": "Berlin-Steglitz-Zehlendorf",
-      "": "79"
+      "district_id": "79"
     },
     {
       "first17": {
@@ -15038,7 +15038,7 @@
         "voters_invalid": 0.008872733155710147
       },
       "district": "Berlin-Charlottenburg-Wilmersdorf",
-      "": "80"
+      "district_id": "80"
     },
     {
       "first17": {
@@ -15226,7 +15226,7 @@
         "voters_invalid": 0.011787009211124761
       },
       "district": "Berlin-Tempelhof-Schöneberg",
-      "": "81"
+      "district_id": "81"
     },
     {
       "first17": {
@@ -15414,7 +15414,7 @@
         "voters_invalid": 0.013947042089138523
       },
       "district": "Berlin-Neukölln",
-      "": "82"
+      "district_id": "82"
     },
     {
       "first17": {
@@ -15602,7 +15602,7 @@
         "voters_invalid": 0.010422560113154173
       },
       "district": "Berlin-Friedrichshain-Kreuzberg – Prenzlauer Berg Ost",
-      "": "83"
+      "district_id": "83"
     },
     {
       "first17": {
@@ -15790,7 +15790,7 @@
         "voters_invalid": 0.010539158553581082
       },
       "district": "Berlin-Treptow-Köpenick",
-      "": "84"
+      "district_id": "84"
     },
     {
       "first17": {
@@ -15978,7 +15978,7 @@
         "voters_invalid": 0.010222191716347662
       },
       "district": "Berlin-Marzahn-Hellersdorf",
-      "": "85"
+      "district_id": "85"
     },
     {
       "first17": {
@@ -16166,7 +16166,7 @@
         "voters_invalid": 0.010464476751826416
       },
       "district": "Berlin-Lichtenberg",
-      "": "86"
+      "district_id": "86"
     },
     {
       "first17": {
@@ -16354,7 +16354,7 @@
         "voters_invalid": 0.006741398187102977
       },
       "district": "Aachen I",
-      "": "87"
+      "district_id": "87"
     },
     {
       "first17": {
@@ -16542,7 +16542,7 @@
         "voters_invalid": 0.010106185002736728
       },
       "district": "Aachen II",
-      "": "88"
+      "district_id": "88"
     },
     {
       "first17": {
@@ -16730,7 +16730,7 @@
         "voters_invalid": 0.009996494321863746
       },
       "district": "Heinsberg",
-      "": "89"
+      "district_id": "89"
     },
     {
       "first17": {
@@ -16918,7 +16918,7 @@
         "voters_invalid": 0.010373340015033827
       },
       "district": "Düren",
-      "": "90"
+      "district_id": "90"
     },
     {
       "first17": {
@@ -17106,7 +17106,7 @@
         "voters_invalid": 0.017095845729671686
       },
       "district": "Rhein-Erft-Kreis I",
-      "": "91"
+      "district_id": "91"
     },
     {
       "first17": {
@@ -17294,7 +17294,7 @@
         "voters_invalid": 0.01119999347652364
       },
       "district": "Euskirchen – Rhein-Erft-Kreis II",
-      "": "92"
+      "district_id": "92"
     },
     {
       "first17": {
@@ -17482,7 +17482,7 @@
         "voters_invalid": 0.006456604819188925
       },
       "district": "Köln I",
-      "": "93"
+      "district_id": "93"
     },
     {
       "first17": {
@@ -17670,7 +17670,7 @@
         "voters_invalid": 0.004903096286001081
       },
       "district": "Köln II",
-      "": "94"
+      "district_id": "94"
     },
     {
       "first17": {
@@ -17858,7 +17858,7 @@
         "voters_invalid": 0.00677489327562128
       },
       "district": "Köln III",
-      "": "95"
+      "district_id": "95"
     },
     {
       "first17": {
@@ -18046,7 +18046,7 @@
         "voters_invalid": 0.007837094402769253
       },
       "district": "Bonn",
-      "": "96"
+      "district_id": "96"
     },
     {
       "first17": {
@@ -18234,7 +18234,7 @@
         "voters_invalid": 0.008132197271916613
       },
       "district": "Rhein-Sieg-Kreis I",
-      "": "97"
+      "district_id": "97"
     },
     {
       "first17": {
@@ -18422,7 +18422,7 @@
         "voters_invalid": 0.008068627771982919
       },
       "district": "Rhein-Sieg-Kreis II",
-      "": "98"
+      "district_id": "98"
     },
     {
       "first17": {
@@ -18610,7 +18610,7 @@
         "voters_invalid": 0.009326024048057914
       },
       "district": "Oberbergischer Kreis",
-      "": "99"
+      "district_id": "99"
     },
     {
       "first17": {
@@ -18798,7 +18798,7 @@
         "voters_invalid": 0.0065199109114937115
       },
       "district": "Rheinisch-Bergischer Kreis",
-      "": "100"
+      "district_id": "100"
     },
     {
       "first17": {
@@ -18986,7 +18986,7 @@
         "voters_invalid": 0.007426505618922176
       },
       "district": "Leverkusen – Köln IV",
-      "": "101"
+      "district_id": "101"
     },
     {
       "first17": {
@@ -19174,7 +19174,7 @@
         "voters_invalid": 0.009322860950021583
       },
       "district": "Wuppertal I",
-      "": "102"
+      "district_id": "102"
     },
     {
       "first17": {
@@ -19362,7 +19362,7 @@
         "voters_invalid": 0.008438109474298704
       },
       "district": "Solingen – Remscheid – Wuppertal II",
-      "": "103"
+      "district_id": "103"
     },
     {
       "first17": {
@@ -19550,7 +19550,7 @@
         "voters_invalid": 0.007734817380475181
       },
       "district": "Mettmann I",
-      "": "104"
+      "district_id": "104"
     },
     {
       "first17": {
@@ -19738,7 +19738,7 @@
         "voters_invalid": 0.00835080637851752
       },
       "district": "Mettmann II",
-      "": "105"
+      "district_id": "105"
     },
     {
       "first17": {
@@ -19926,7 +19926,7 @@
         "voters_invalid": 0.006181215136439017
       },
       "district": "Düsseldorf I",
-      "": "106"
+      "district_id": "106"
     },
     {
       "first17": {
@@ -20114,7 +20114,7 @@
         "voters_invalid": 0.006868789808917197
       },
       "district": "Düsseldorf II",
-      "": "107"
+      "district_id": "107"
     },
     {
       "first17": {
@@ -20302,7 +20302,7 @@
         "voters_invalid": 0.007618328720400347
       },
       "district": "Neuss I",
-      "": "108"
+      "district_id": "108"
     },
     {
       "first17": {
@@ -20490,7 +20490,7 @@
         "voters_invalid": 0.008392327015300297
       },
       "district": "Mönchengladbach",
-      "": "109"
+      "district_id": "109"
     },
     {
       "first17": {
@@ -20678,7 +20678,7 @@
         "voters_invalid": 0.00780894542145556
       },
       "district": "Krefeld I – Neuss II",
-      "": "110"
+      "district_id": "110"
     },
     {
       "first17": {
@@ -20866,7 +20866,7 @@
         "voters_invalid": 0.007437475563521664
       },
       "district": "Viersen",
-      "": "111"
+      "district_id": "111"
     },
     {
       "first17": {
@@ -21054,7 +21054,7 @@
         "voters_invalid": 0.007585586941985537
       },
       "district": "Kleve",
-      "": "112"
+      "district_id": "112"
     },
     {
       "first17": {
@@ -21242,7 +21242,7 @@
         "voters_invalid": 0.007287273778827385
       },
       "district": "Wesel I",
-      "": "113"
+      "district_id": "113"
     },
     {
       "first17": {
@@ -21430,7 +21430,7 @@
         "voters_invalid": 0.008154748539100623
       },
       "district": "Krefeld II – Wesel II",
-      "": "114"
+      "district_id": "114"
     },
     {
       "first17": {
@@ -21618,7 +21618,7 @@
         "voters_invalid": 0.008760505305946046
       },
       "district": "Duisburg I",
-      "": "115"
+      "district_id": "115"
     },
     {
       "first17": {
@@ -21806,7 +21806,7 @@
         "voters_invalid": 0.00933155933366646
       },
       "district": "Duisburg II",
-      "": "116"
+      "district_id": "116"
     },
     {
       "first17": {
@@ -21994,7 +21994,7 @@
         "voters_invalid": 0.009148719322841654
       },
       "district": "Oberhausen – Wesel III",
-      "": "117"
+      "district_id": "117"
     },
     {
       "first17": {
@@ -22182,7 +22182,7 @@
         "voters_invalid": 0.0077451364407886145
       },
       "district": "Mülheim – Essen I",
-      "": "118"
+      "district_id": "118"
     },
     {
       "first17": {
@@ -22370,7 +22370,7 @@
         "voters_invalid": 0.007852966742477464
       },
       "district": "Essen II",
-      "": "119"
+      "district_id": "119"
     },
     {
       "first17": {
@@ -22558,7 +22558,7 @@
         "voters_invalid": 0.006479569936430718
       },
       "district": "Essen III",
-      "": "120"
+      "district_id": "120"
     },
     {
       "first17": {
@@ -22746,7 +22746,7 @@
         "voters_invalid": 0.008241997595357995
       },
       "district": "Recklinghausen I",
-      "": "121"
+      "district_id": "121"
     },
     {
       "first17": {
@@ -22934,7 +22934,7 @@
         "voters_invalid": 0.008887542818948952
       },
       "district": "Recklinghausen II",
-      "": "122"
+      "district_id": "122"
     },
     {
       "first17": {
@@ -23122,7 +23122,7 @@
         "voters_invalid": 0.00828759725803963
       },
       "district": "Gelsenkirchen",
-      "": "123"
+      "district_id": "123"
     },
     {
       "first17": {
@@ -23310,7 +23310,7 @@
         "voters_invalid": 0.0061812811115365685
       },
       "district": "Steinfurt I – Borken I",
-      "": "124"
+      "district_id": "124"
     },
     {
       "first17": {
@@ -23498,7 +23498,7 @@
         "voters_invalid": 0.008216013704679682
       },
       "district": "Bottrop – Recklinghausen III",
-      "": "125"
+      "district_id": "125"
     },
     {
       "first17": {
@@ -23686,7 +23686,7 @@
         "voters_invalid": 0.00562804558817607
       },
       "district": "Borken II",
-      "": "126"
+      "district_id": "126"
     },
     {
       "first17": {
@@ -23874,7 +23874,7 @@
         "voters_invalid": 0.006258820319918578
       },
       "district": "Coesfeld – Steinfurt II",
-      "": "127"
+      "district_id": "127"
     },
     {
       "first17": {
@@ -24062,7 +24062,7 @@
         "voters_invalid": 0.006683547437199924
       },
       "district": "Steinfurt III",
-      "": "128"
+      "district_id": "128"
     },
     {
       "first17": {
@@ -24250,7 +24250,7 @@
         "voters_invalid": 0.005668197504412501
       },
       "district": "Münster",
-      "": "129"
+      "district_id": "129"
     },
     {
       "first17": {
@@ -24438,7 +24438,7 @@
         "voters_invalid": 0.007378003850633453
       },
       "district": "Warendorf",
-      "": "130"
+      "district_id": "130"
     },
     {
       "first17": {
@@ -24626,7 +24626,7 @@
         "voters_invalid": 0.00787684720628778
       },
       "district": "Gütersloh I",
-      "": "131"
+      "district_id": "131"
     },
     {
       "first17": {
@@ -24814,7 +24814,7 @@
         "voters_invalid": 0.008402817391445066
       },
       "district": "Bielefeld – Gütersloh II",
-      "": "132"
+      "district_id": "132"
     },
     {
       "first17": {
@@ -25002,7 +25002,7 @@
         "voters_invalid": 0.008031172204784068
       },
       "district": "Herford – Minden-Lübbecke II",
-      "": "133"
+      "district_id": "133"
     },
     {
       "first17": {
@@ -25190,7 +25190,7 @@
         "voters_invalid": 0.00780126389191545
       },
       "district": "Minden-Lübbecke I",
-      "": "134"
+      "district_id": "134"
     },
     {
       "first17": {
@@ -25378,7 +25378,7 @@
         "voters_invalid": 0.00878546973829281
       },
       "district": "Lippe I",
-      "": "135"
+      "district_id": "135"
     },
     {
       "first17": {
@@ -25566,7 +25566,7 @@
         "voters_invalid": 0.009349471633066027
       },
       "district": "Höxter – Lippe II",
-      "": "136"
+      "district_id": "136"
     },
     {
       "first17": {
@@ -25754,7 +25754,7 @@
         "voters_invalid": 0.008096690917624971
       },
       "district": "Paderborn – Gütersloh III",
-      "": "137"
+      "district_id": "137"
     },
     {
       "first17": {
@@ -25942,7 +25942,7 @@
         "voters_invalid": 0.008158645016744714
       },
       "district": "Hagen – Ennepe-Ruhr-Kreis I",
-      "": "138"
+      "district_id": "138"
     },
     {
       "first17": {
@@ -26130,7 +26130,7 @@
         "voters_invalid": 0.00883128925784053
       },
       "district": "Ennepe-Ruhr-Kreis II",
-      "": "139"
+      "district_id": "139"
     },
     {
       "first17": {
@@ -26318,7 +26318,7 @@
         "voters_invalid": 0.008762280468838902
       },
       "district": "Bochum I",
-      "": "140"
+      "district_id": "140"
     },
     {
       "first17": {
@@ -26506,7 +26506,7 @@
         "voters_invalid": 0.009749523121151682
       },
       "district": "Herne – Bochum II",
-      "": "141"
+      "district_id": "141"
     },
     {
       "first17": {
@@ -26694,7 +26694,7 @@
         "voters_invalid": 0.007226122479504174
       },
       "district": "Dortmund I",
-      "": "142"
+      "district_id": "142"
     },
     {
       "first17": {
@@ -26882,7 +26882,7 @@
         "voters_invalid": 0.007261696847136685
       },
       "district": "Dortmund II",
-      "": "143"
+      "district_id": "143"
     },
     {
       "first17": {
@@ -27070,7 +27070,7 @@
         "voters_invalid": 0.0075174440690165345
       },
       "district": "Unna I",
-      "": "144"
+      "district_id": "144"
     },
     {
       "first17": {
@@ -27258,7 +27258,7 @@
         "voters_invalid": 0.008173345485549642
       },
       "district": "Hamm – Unna II",
-      "": "145"
+      "district_id": "145"
     },
     {
       "first17": {
@@ -27446,7 +27446,7 @@
         "voters_invalid": 0.007597573941827981
       },
       "district": "Soest",
-      "": "146"
+      "district_id": "146"
     },
     {
       "first17": {
@@ -27634,7 +27634,7 @@
         "voters_invalid": 0.008162254549692155
       },
       "district": "Hochsauerlandkreis",
-      "": "147"
+      "district_id": "147"
     },
     {
       "first17": {
@@ -27822,7 +27822,7 @@
         "voters_invalid": 0.007754309365889381
       },
       "district": "Siegen-Wittgenstein",
-      "": "148"
+      "district_id": "148"
     },
     {
       "first17": {
@@ -28010,7 +28010,7 @@
         "voters_invalid": 0.0073706577624314635
       },
       "district": "Olpe – Märkischer Kreis I",
-      "": "149"
+      "district_id": "149"
     },
     {
       "first17": {
@@ -28198,7 +28198,7 @@
         "voters_invalid": 0.007939317810358457
       },
       "district": "Märkischer Kreis II",
-      "": "150"
+      "district_id": "150"
     },
     {
       "first17": {
@@ -28386,7 +28386,7 @@
         "voters_invalid": 0.011310353003942026
       },
       "district": "Nordsachsen",
-      "": "151"
+      "district_id": "151"
     },
     {
       "first17": {
@@ -28574,7 +28574,7 @@
         "voters_invalid": 0.007759341620101114
       },
       "district": "Leipzig I",
-      "": "152"
+      "district_id": "152"
     },
     {
       "first17": {
@@ -28762,7 +28762,7 @@
         "voters_invalid": 0.007950333158983922
       },
       "district": "Leipzig II",
-      "": "153"
+      "district_id": "153"
     },
     {
       "first17": {
@@ -28950,7 +28950,7 @@
         "voters_invalid": 0.01058076225045372
       },
       "district": "Leipzig-Land",
-      "": "154"
+      "district_id": "154"
     },
     {
       "first17": {
@@ -29138,7 +29138,7 @@
         "voters_invalid": 0.01201383762502352
       },
       "district": "Meißen",
-      "": "155"
+      "district_id": "155"
     },
     {
       "first17": {
@@ -29326,7 +29326,7 @@
         "voters_invalid": 0.014490939810303674
       },
       "district": "Bautzen I",
-      "": "156"
+      "district_id": "156"
     },
     {
       "first17": {
@@ -29514,7 +29514,7 @@
         "voters_invalid": 0.013339951881366998
       },
       "district": "Görlitz",
-      "": "157"
+      "district_id": "157"
     },
     {
       "first17": {
@@ -29702,7 +29702,7 @@
         "voters_invalid": 0.01180253379028842
       },
       "district": "Sächsische Schweiz-Osterzgebirge",
-      "": "158"
+      "district_id": "158"
     },
     {
       "first17": {
@@ -29890,7 +29890,7 @@
         "voters_invalid": 0.008702470627554824
       },
       "district": "Dresden I",
-      "": "159"
+      "district_id": "159"
     },
     {
       "first17": {
@@ -30078,7 +30078,7 @@
         "voters_invalid": 0.0097415684094853
       },
       "district": "Dresden II – Bautzen II",
-      "": "160"
+      "district_id": "160"
     },
     {
       "first17": {
@@ -30266,7 +30266,7 @@
         "voters_invalid": 0.010461512172662417
       },
       "district": "Mittelsachsen",
-      "": "161"
+      "district_id": "161"
     },
     {
       "first17": {
@@ -30454,7 +30454,7 @@
         "voters_invalid": 0.006698169928794677
       },
       "district": "Chemnitz",
-      "": "162"
+      "district_id": "162"
     },
     {
       "first17": {
@@ -30642,7 +30642,7 @@
         "voters_invalid": 0.01109370921430436
       },
       "district": "Chemnitzer Umland – Erzgebirgskreis II",
-      "": "163"
+      "district_id": "163"
     },
     {
       "first17": {
@@ -30830,7 +30830,7 @@
         "voters_invalid": 0.01276564630385507
       },
       "district": "Erzgebirgskreis I",
-      "": "164"
+      "district_id": "164"
     },
     {
       "first17": {
@@ -31018,7 +31018,7 @@
         "voters_invalid": 0.010340914833309598
       },
       "district": "Zwickau",
-      "": "165"
+      "district_id": "165"
     },
     {
       "first17": {
@@ -31206,7 +31206,7 @@
         "voters_invalid": 0.010374676874622402
       },
       "district": "Vogtlandkreis",
-      "": "166"
+      "district_id": "166"
     },
     {
       "first17": {
@@ -31394,7 +31394,7 @@
         "voters_invalid": 0.022221285208298195
       },
       "district": "Waldeck",
-      "": "167"
+      "district_id": "167"
     },
     {
       "first17": {
@@ -31582,7 +31582,7 @@
         "voters_invalid": 0.018774910378303755
       },
       "district": "Kassel",
-      "": "168"
+      "district_id": "168"
     },
     {
       "first17": {
@@ -31770,7 +31770,7 @@
         "voters_invalid": 0.023268203082079653
       },
       "district": "Werra-Meißner – Hersfeld-Rotenburg",
-      "": "169"
+      "district_id": "169"
     },
     {
       "first17": {
@@ -31958,7 +31958,7 @@
         "voters_invalid": 0.024478192251011215
       },
       "district": "Schwalm-Eder",
-      "": "170"
+      "district_id": "170"
     },
     {
       "first17": {
@@ -32146,7 +32146,7 @@
         "voters_invalid": 0.016438712192586337
       },
       "district": "Marburg",
-      "": "171"
+      "district_id": "171"
     },
     {
       "first17": {
@@ -32334,7 +32334,7 @@
         "voters_invalid": 0.018210530808519115
       },
       "district": "Lahn-Dill",
-      "": "172"
+      "district_id": "172"
     },
     {
       "first17": {
@@ -32522,7 +32522,7 @@
         "voters_invalid": 0.018253533166702286
       },
       "district": "Gießen",
-      "": "173"
+      "district_id": "173"
     },
     {
       "first17": {
@@ -32710,7 +32710,7 @@
         "voters_invalid": 0.018074871404076966
       },
       "district": "Fulda",
-      "": "174"
+      "district_id": "174"
     },
     {
       "first17": {
@@ -32898,7 +32898,7 @@
         "voters_invalid": 0.022139608069100397
       },
       "district": "Main-Kinzig – Wetterau II – Schotten",
-      "": "175"
+      "district_id": "175"
     },
     {
       "first17": {
@@ -33086,7 +33086,7 @@
         "voters_invalid": 0.016497643193829452
       },
       "district": "Hochtaunus",
-      "": "176"
+      "district_id": "176"
     },
     {
       "first17": {
@@ -33274,7 +33274,7 @@
         "voters_invalid": 0.01902504497815347
       },
       "district": "Wetterau I",
-      "": "177"
+      "district_id": "177"
     },
     {
       "first17": {
@@ -33462,7 +33462,7 @@
         "voters_invalid": 0.017510468214693566
       },
       "district": "Rheingau-Taunus – Limburg",
-      "": "178"
+      "district_id": "178"
     },
     {
       "first17": {
@@ -33650,7 +33650,7 @@
         "voters_invalid": 0.01398011576294953
       },
       "district": "Wiesbaden",
-      "": "179"
+      "district_id": "179"
     },
     {
       "first17": {
@@ -33838,7 +33838,7 @@
         "voters_invalid": 0.021340037088601174
       },
       "district": "Hanau",
-      "": "180"
+      "district_id": "180"
     },
     {
       "first17": {
@@ -34026,7 +34026,7 @@
         "voters_invalid": 0.016408534879580886
       },
       "district": "Main-Taunus",
-      "": "181"
+      "district_id": "181"
     },
     {
       "first17": {
@@ -34214,7 +34214,7 @@
         "voters_invalid": 0.013736165426986684
       },
       "district": "Frankfurt am Main I",
-      "": "182"
+      "district_id": "182"
     },
     {
       "first17": {
@@ -34402,7 +34402,7 @@
         "voters_invalid": 0.0132250167535114
       },
       "district": "Frankfurt am Main II",
-      "": "183"
+      "district_id": "183"
     },
     {
       "first17": {
@@ -34590,7 +34590,7 @@
         "voters_invalid": 0.021229641038608752
       },
       "district": "Groß-Gerau",
-      "": "184"
+      "district_id": "184"
     },
     {
       "first17": {
@@ -34778,7 +34778,7 @@
         "voters_invalid": 0.018001353485224452
       },
       "district": "Offenbach",
-      "": "185"
+      "district_id": "185"
     },
     {
       "first17": {
@@ -34966,7 +34966,7 @@
         "voters_invalid": 0.017040459634109252
       },
       "district": "Darmstadt",
-      "": "186"
+      "district_id": "186"
     },
     {
       "first17": {
@@ -35154,7 +35154,7 @@
         "voters_invalid": 0.02321641918416112
       },
       "district": "Odenwald",
-      "": "187"
+      "district_id": "187"
     },
     {
       "first17": {
@@ -35342,7 +35342,7 @@
         "voters_invalid": 0.019140145729524
       },
       "district": "Bergstraße",
-      "": "188"
+      "district_id": "188"
     },
     {
       "first17": {
@@ -35530,7 +35530,7 @@
         "voters_invalid": 0.010021935472411925
       },
       "district": "Eichsfeld – Nordhausen – Kyffhäuserkreis",
-      "": "189"
+      "district_id": "189"
     },
     {
       "first17": {
@@ -35718,7 +35718,7 @@
         "voters_invalid": 0.010263410251315323
       },
       "district": "Eisenach – Wartburgkreis – Unstrut-Hainich-Kreis",
-      "": "190"
+      "district_id": "190"
     },
     {
       "first17": {
@@ -35906,7 +35906,7 @@
         "voters_invalid": 0.010869773686229382
       },
       "district": "Jena – Sömmerda – Weimarer Land I",
-      "": "191"
+      "district_id": "191"
     },
     {
       "first17": {
@@ -36094,7 +36094,7 @@
         "voters_invalid": 0.011507876750591424
       },
       "district": "Gotha – Ilm-Kreis",
-      "": "192"
+      "district_id": "192"
     },
     {
       "first17": {
@@ -36282,7 +36282,7 @@
         "voters_invalid": 0.010088300516238996
       },
       "district": "Erfurt – Weimar – Weimarer Land II",
-      "": "193"
+      "district_id": "193"
     },
     {
       "first17": {
@@ -36470,7 +36470,7 @@
         "voters_invalid": 0.011826206525948112
       },
       "district": "Gera – Greiz – Altenburger Land",
-      "": "194"
+      "district_id": "194"
     },
     {
       "first17": {
@@ -36658,7 +36658,7 @@
         "voters_invalid": 0.01159249803941199
       },
       "district": "Saalfeld-Rudolstadt – Saale-Holzland-Kreis – Saale-Orla-Kreis",
-      "": "195"
+      "district_id": "195"
     },
     {
       "first17": {
@@ -36846,7 +36846,7 @@
         "voters_invalid": 0.009780467496598362
       },
       "district": "Suhl – Schmalkalden-Meiningen – Hildburghausen – Sonneberg",
-      "": "196"
+      "district_id": "196"
     },
     {
       "first17": {
@@ -37034,7 +37034,7 @@
         "voters_invalid": 0.009902926356347234
       },
       "district": "Neuwied",
-      "": "197"
+      "district_id": "197"
     },
     {
       "first17": {
@@ -37222,7 +37222,7 @@
         "voters_invalid": 0.009914033945570212
       },
       "district": "Ahrweiler",
-      "": "198"
+      "district_id": "198"
     },
     {
       "first17": {
@@ -37410,7 +37410,7 @@
         "voters_invalid": 0.010221439279603055
       },
       "district": "Koblenz",
-      "": "199"
+      "district_id": "199"
     },
     {
       "first17": {
@@ -37598,7 +37598,7 @@
         "voters_invalid": 0.01316681961457128
       },
       "district": "Mosel/Rhein-Hunsrück",
-      "": "200"
+      "district_id": "200"
     },
     {
       "first17": {
@@ -37786,7 +37786,7 @@
         "voters_invalid": 0.013308583102633446
       },
       "district": "Kreuznach",
-      "": "201"
+      "district_id": "201"
     },
     {
       "first17": {
@@ -37974,7 +37974,7 @@
         "voters_invalid": 0.012211913680830723
       },
       "district": "Bitburg",
-      "": "202"
+      "district_id": "202"
     },
     {
       "first17": {
@@ -38162,7 +38162,7 @@
         "voters_invalid": 0.013467283788176654
       },
       "district": "Trier",
-      "": "203"
+      "district_id": "203"
     },
     {
       "first17": {
@@ -38350,7 +38350,7 @@
         "voters_invalid": 0.010753044879389603
       },
       "district": "Montabaur",
-      "": "204"
+      "district_id": "204"
     },
     {
       "first17": {
@@ -38538,7 +38538,7 @@
         "voters_invalid": 0.009824438545347947
       },
       "district": "Mainz",
-      "": "205"
+      "district_id": "205"
     },
     {
       "first17": {
@@ -38726,7 +38726,7 @@
         "voters_invalid": 0.012603698338945427
       },
       "district": "Worms",
-      "": "206"
+      "district_id": "206"
     },
     {
       "first17": {
@@ -38914,7 +38914,7 @@
         "voters_invalid": 0.0119053650134252
       },
       "district": "Ludwigshafen/Frankenthal",
-      "": "207"
+      "district_id": "207"
     },
     {
       "first17": {
@@ -39102,7 +39102,7 @@
         "voters_invalid": 0.01192877181691692
       },
       "district": "Neustadt – Speyer",
-      "": "208"
+      "district_id": "208"
     },
     {
       "first17": {
@@ -39290,7 +39290,7 @@
         "voters_invalid": 0.013533536637893903
       },
       "district": "Kaiserslautern",
-      "": "209"
+      "district_id": "209"
     },
     {
       "first17": {
@@ -39478,7 +39478,7 @@
         "voters_invalid": 0.017497507477567297
       },
       "district": "Pirmasens",
-      "": "210"
+      "district_id": "210"
     },
     {
       "first17": {
@@ -39666,7 +39666,7 @@
         "voters_invalid": 0.013033400111966022
       },
       "district": "Südpfalz",
-      "": "211"
+      "district_id": "211"
     },
     {
       "first17": {
@@ -39854,7 +39854,7 @@
         "voters_invalid": 0.00589255802823642
       },
       "district": "Altötting",
-      "": "212"
+      "district_id": "212"
     },
     {
       "first17": {
@@ -40042,7 +40042,7 @@
         "voters_invalid": 0.004828858798762897
       },
       "district": "Erding – Ebersberg",
-      "": "213"
+      "district_id": "213"
     },
     {
       "first17": {
@@ -40230,7 +40230,7 @@
         "voters_invalid": 0.00532284893391804
       },
       "district": "Freising",
-      "": "214"
+      "district_id": "214"
     },
     {
       "first17": {
@@ -40418,7 +40418,7 @@
         "voters_invalid": 0.004772673486023824
       },
       "district": "Fürstenfeldbruck",
-      "": "215"
+      "district_id": "215"
     },
     {
       "first17": {
@@ -40606,7 +40606,7 @@
         "voters_invalid": 0.0057802485506876795
       },
       "district": "Ingolstadt",
-      "": "216"
+      "district_id": "216"
     },
     {
       "first17": {
@@ -40794,7 +40794,7 @@
         "voters_invalid": 0.0030945614633994954
       },
       "district": "München-Nord",
-      "": "217"
+      "district_id": "217"
     },
     {
       "first17": {
@@ -40982,7 +40982,7 @@
         "voters_invalid": 0.0031836227343641
       },
       "district": "München-Ost",
-      "": "218"
+      "district_id": "218"
     },
     {
       "first17": {
@@ -41170,7 +41170,7 @@
         "voters_invalid": 0.003477768284981984
       },
       "district": "München-Süd",
-      "": "219"
+      "district_id": "219"
     },
     {
       "first17": {
@@ -41358,7 +41358,7 @@
         "voters_invalid": 0.0032916145181476845
       },
       "district": "München-West/Mitte",
-      "": "220"
+      "district_id": "220"
     },
     {
       "first17": {
@@ -41546,7 +41546,7 @@
         "voters_invalid": 0.00475582481426576
       },
       "district": "München-Land",
-      "": "221"
+      "district_id": "221"
     },
     {
       "first17": {
@@ -41734,7 +41734,7 @@
         "voters_invalid": 0.004963885246398262
       },
       "district": "Rosenheim",
-      "": "222"
+      "district_id": "222"
     },
     {
       "first17": {
@@ -41922,7 +41922,7 @@
         "voters_invalid": 0.0053800170794193
       },
       "district": "Bad Tölz-Wolfratshausen – Miesbach",
-      "": "223"
+      "district_id": "223"
     },
     {
       "first17": {
@@ -42110,7 +42110,7 @@
         "voters_invalid": 0.0042894831742175486
       },
       "district": "Starnberg – Landsberg am Lech",
-      "": "224"
+      "district_id": "224"
     },
     {
       "first17": {
@@ -42298,7 +42298,7 @@
         "voters_invalid": 0.005443084478991434
       },
       "district": "Traunstein",
-      "": "225"
+      "district_id": "225"
     },
     {
       "first17": {
@@ -42486,7 +42486,7 @@
         "voters_invalid": 0.005857993531420971
       },
       "district": "Weilheim",
-      "": "226"
+      "district_id": "226"
     },
     {
       "first17": {
@@ -42674,7 +42674,7 @@
         "voters_invalid": 0.004693986996631657
       },
       "district": "Deggendorf",
-      "": "227"
+      "district_id": "227"
     },
     {
       "first17": {
@@ -42862,7 +42862,7 @@
         "voters_invalid": 0.00483943714623552
       },
       "district": "Landshut",
-      "": "228"
+      "district_id": "228"
     },
     {
       "first17": {
@@ -43050,7 +43050,7 @@
         "voters_invalid": 0.005178985511374966
       },
       "district": "Passau",
-      "": "229"
+      "district_id": "229"
     },
     {
       "first17": {
@@ -43238,7 +43238,7 @@
         "voters_invalid": 0.0054428471373116965
       },
       "district": "Rottal-Inn",
-      "": "230"
+      "district_id": "230"
     },
     {
       "first17": {
@@ -43426,7 +43426,7 @@
         "voters_invalid": 0.005685578311935687
       },
       "district": "Straubing",
-      "": "231"
+      "district_id": "231"
     },
     {
       "first17": {
@@ -43614,7 +43614,7 @@
         "voters_invalid": 0.005972688313982133
       },
       "district": "Amberg",
-      "": "232"
+      "district_id": "232"
     },
     {
       "first17": {
@@ -43802,7 +43802,7 @@
         "voters_invalid": 0.0052849449401173535
       },
       "district": "Regensburg",
-      "": "233"
+      "district_id": "233"
     },
     {
       "first17": {
@@ -43990,7 +43990,7 @@
         "voters_invalid": 0.007227724144942673
       },
       "district": "Schwandorf",
-      "": "234"
+      "district_id": "234"
     },
     {
       "first17": {
@@ -44178,7 +44178,7 @@
         "voters_invalid": 0.007001050450989713
       },
       "district": "Weiden",
-      "": "235"
+      "district_id": "235"
     },
     {
       "first17": {
@@ -44366,7 +44366,7 @@
         "voters_invalid": 0.005113298466566253
       },
       "district": "Bamberg",
-      "": "236"
+      "district_id": "236"
     },
     {
       "first17": {
@@ -44554,7 +44554,7 @@
         "voters_invalid": 0.00518722547140049
       },
       "district": "Bayreuth",
-      "": "237"
+      "district_id": "237"
     },
     {
       "first17": {
@@ -44742,7 +44742,7 @@
         "voters_invalid": 0.006279714860351689
       },
       "district": "Coburg",
-      "": "238"
+      "district_id": "238"
     },
     {
       "first17": {
@@ -44930,7 +44930,7 @@
         "voters_invalid": 0.006903565098643112
       },
       "district": "Hof",
-      "": "239"
+      "district_id": "239"
     },
     {
       "first17": {
@@ -45118,7 +45118,7 @@
         "voters_invalid": 0.006999170769328903
       },
       "district": "Kulmbach",
-      "": "240"
+      "district_id": "240"
     },
     {
       "first17": {
@@ -45306,7 +45306,7 @@
         "voters_invalid": 0.005984165356689911
       },
       "district": "Ansbach",
-      "": "241"
+      "district_id": "241"
     },
     {
       "first17": {
@@ -45494,7 +45494,7 @@
         "voters_invalid": 0.0052198812295967826
       },
       "district": "Erlangen",
-      "": "242"
+      "district_id": "242"
     },
     {
       "first17": {
@@ -45682,7 +45682,7 @@
         "voters_invalid": 0.005930529212982497
       },
       "district": "Fürth",
-      "": "243"
+      "district_id": "243"
     },
     {
       "first17": {
@@ -45870,7 +45870,7 @@
         "voters_invalid": 0.005320388953069714
       },
       "district": "Nürnberg-Nord",
-      "": "244"
+      "district_id": "244"
     },
     {
       "first17": {
@@ -46058,7 +46058,7 @@
         "voters_invalid": 0.006668496601165776
       },
       "district": "Nürnberg-Süd",
-      "": "245"
+      "district_id": "245"
     },
     {
       "first17": {
@@ -46246,7 +46246,7 @@
         "voters_invalid": 0.005802690820956914
       },
       "district": "Roth",
-      "": "246"
+      "district_id": "246"
     },
     {
       "first17": {
@@ -46434,7 +46434,7 @@
         "voters_invalid": 0.010664002475959842
       },
       "district": "Aschaffenburg",
-      "": "247"
+      "district_id": "247"
     },
     {
       "first17": {
@@ -46622,7 +46622,7 @@
         "voters_invalid": 0.007949760085139958
       },
       "district": "Bad Kissingen",
-      "": "248"
+      "district_id": "248"
     },
     {
       "first17": {
@@ -46810,7 +46810,7 @@
         "voters_invalid": 0.008631587463719016
       },
       "district": "Main-Spessart",
-      "": "249"
+      "district_id": "249"
     },
     {
       "first17": {
@@ -46998,7 +46998,7 @@
         "voters_invalid": 0.007074693979515364
       },
       "district": "Schweinfurt",
-      "": "250"
+      "district_id": "250"
     },
     {
       "first17": {
@@ -47186,7 +47186,7 @@
         "voters_invalid": 0.005834146083134375
       },
       "district": "Würzburg",
-      "": "251"
+      "district_id": "251"
     },
     {
       "first17": {
@@ -47374,7 +47374,7 @@
         "voters_invalid": 0.005340223117595363
       },
       "district": "Augsburg-Stadt",
-      "": "252"
+      "district_id": "252"
     },
     {
       "first17": {
@@ -47562,7 +47562,7 @@
         "voters_invalid": 0.0050326982060007455
       },
       "district": "Augsburg-Land",
-      "": "253"
+      "district_id": "253"
     },
     {
       "first17": {
@@ -47750,7 +47750,7 @@
         "voters_invalid": 0.0068272500447429645
       },
       "district": "Donau-Ries",
-      "": "254"
+      "district_id": "254"
     },
     {
       "first17": {
@@ -47938,7 +47938,7 @@
         "voters_invalid": 0.0052513980584975445
       },
       "district": "Neu-Ulm",
-      "": "255"
+      "district_id": "255"
     },
     {
       "first17": {
@@ -48126,7 +48126,7 @@
         "voters_invalid": 0.004833287259561793
       },
       "district": "Oberallgäu",
-      "": "256"
+      "district_id": "256"
     },
     {
       "first17": {
@@ -48314,7 +48314,7 @@
         "voters_invalid": 0.005430582192761132
       },
       "district": "Ostallgäu",
-      "": "257"
+      "district_id": "257"
     },
     {
       "first17": {
@@ -48502,7 +48502,7 @@
         "voters_invalid": 0.005470968821754162
       },
       "district": "Stuttgart I",
-      "": "258"
+      "district_id": "258"
     },
     {
       "first17": {
@@ -48690,7 +48690,7 @@
         "voters_invalid": 0.007177817593846961
       },
       "district": "Stuttgart II",
-      "": "259"
+      "district_id": "259"
     },
     {
       "first17": {
@@ -48878,7 +48878,7 @@
         "voters_invalid": 0.007640854981042732
       },
       "district": "Böblingen",
-      "": "260"
+      "district_id": "260"
     },
     {
       "first17": {
@@ -49066,7 +49066,7 @@
         "voters_invalid": 0.0069711034586015875
       },
       "district": "Esslingen",
-      "": "261"
+      "district_id": "261"
     },
     {
       "first17": {
@@ -49254,7 +49254,7 @@
         "voters_invalid": 0.007907424327844631
       },
       "district": "Nürtingen",
-      "": "262"
+      "district_id": "262"
     },
     {
       "first17": {
@@ -49442,7 +49442,7 @@
         "voters_invalid": 0.008535700329369731
       },
       "district": "Göppingen",
-      "": "263"
+      "district_id": "263"
     },
     {
       "first17": {
@@ -49630,7 +49630,7 @@
         "voters_invalid": 0.00744118084775344
       },
       "district": "Waiblingen",
-      "": "264"
+      "district_id": "264"
     },
     {
       "first17": {
@@ -49818,7 +49818,7 @@
         "voters_invalid": 0.00728538283062645
       },
       "district": "Ludwigsburg",
-      "": "265"
+      "district_id": "265"
     },
     {
       "first17": {
@@ -50006,7 +50006,7 @@
         "voters_invalid": 0.008273392399592504
       },
       "district": "Neckar-Zaber",
-      "": "266"
+      "district_id": "266"
     },
     {
       "first17": {
@@ -50194,7 +50194,7 @@
         "voters_invalid": 0.00902936405468931
       },
       "district": "Heilbronn",
-      "": "267"
+      "district_id": "267"
     },
     {
       "first17": {
@@ -50382,7 +50382,7 @@
         "voters_invalid": 0.009608528237307472
       },
       "district": "Schwäbisch Hall – Hohenlohe",
-      "": "268"
+      "district_id": "268"
     },
     {
       "first17": {
@@ -50570,7 +50570,7 @@
         "voters_invalid": 0.009388145969424399
       },
       "district": "Backnang – Schwäbisch Gmünd",
-      "": "269"
+      "district_id": "269"
     },
     {
       "first17": {
@@ -50758,7 +50758,7 @@
         "voters_invalid": 0.009131723769841091
       },
       "district": "Aalen – Heidenheim",
-      "": "270"
+      "district_id": "270"
     },
     {
       "first17": {
@@ -50946,7 +50946,7 @@
         "voters_invalid": 0.007018737696551389
       },
       "district": "Karlsruhe-Stadt",
-      "": "271"
+      "district_id": "271"
     },
     {
       "first17": {
@@ -51134,7 +51134,7 @@
         "voters_invalid": 0.00899715352376593
       },
       "district": "Karlsruhe-Land",
-      "": "272"
+      "district_id": "272"
     },
     {
       "first17": {
@@ -51322,7 +51322,7 @@
         "voters_invalid": 0.010609236106092362
       },
       "district": "Rastatt",
-      "": "273"
+      "district_id": "273"
     },
     {
       "first17": {
@@ -51510,7 +51510,7 @@
         "voters_invalid": 0.008201238289733865
       },
       "district": "Heidelberg",
-      "": "274"
+      "district_id": "274"
     },
     {
       "first17": {
@@ -51698,7 +51698,7 @@
         "voters_invalid": 0.0103362296939932
       },
       "district": "Mannheim",
-      "": "275"
+      "district_id": "275"
     },
     {
       "first17": {
@@ -51886,7 +51886,7 @@
         "voters_invalid": 0.010959404752979983
       },
       "district": "Odenwald – Tauber",
-      "": "276"
+      "district_id": "276"
     },
     {
       "first17": {
@@ -52074,7 +52074,7 @@
         "voters_invalid": 0.010307764000324175
       },
       "district": "Rhein-Neckar",
-      "": "277"
+      "district_id": "277"
     },
     {
       "first17": {
@@ -52262,7 +52262,7 @@
         "voters_invalid": 0.01057396416487627
       },
       "district": "Bruchsal – Schwetzingen",
-      "": "278"
+      "district_id": "278"
     },
     {
       "first17": {
@@ -52450,7 +52450,7 @@
         "voters_invalid": 0.009523766229043168
       },
       "district": "Pforzheim",
-      "": "279"
+      "district_id": "279"
     },
     {
       "first17": {
@@ -52638,7 +52638,7 @@
         "voters_invalid": 0.009515426524820542
       },
       "district": "Calw",
-      "": "280"
+      "district_id": "280"
     },
     {
       "first17": {
@@ -52826,7 +52826,7 @@
         "voters_invalid": 0.007659291390245681
       },
       "district": "Freiburg",
-      "": "281"
+      "district_id": "281"
     },
     {
       "first17": {
@@ -53014,7 +53014,7 @@
         "voters_invalid": 0.009327739887317065
       },
       "district": "Lörrach – Müllheim",
-      "": "282"
+      "district_id": "282"
     },
     {
       "first17": {
@@ -53202,7 +53202,7 @@
         "voters_invalid": 0.012058082857580128
       },
       "district": "Emmendingen – Lahr",
-      "": "283"
+      "district_id": "283"
     },
     {
       "first17": {
@@ -53390,7 +53390,7 @@
         "voters_invalid": 0.011880908155753489
       },
       "district": "Offenburg",
-      "": "284"
+      "district_id": "284"
     },
     {
       "first17": {
@@ -53578,7 +53578,7 @@
         "voters_invalid": 0.011448446855817829
       },
       "district": "Rottweil – Tuttlingen",
-      "": "285"
+      "district_id": "285"
     },
     {
       "first17": {
@@ -53766,7 +53766,7 @@
         "voters_invalid": 0.011047529649620016
       },
       "district": "Schwarzwald-Baar",
-      "": "286"
+      "district_id": "286"
     },
     {
       "first17": {
@@ -53954,7 +53954,7 @@
         "voters_invalid": 0.008602076158760432
       },
       "district": "Konstanz",
-      "": "287"
+      "district_id": "287"
     },
     {
       "first17": {
@@ -54142,7 +54142,7 @@
         "voters_invalid": 0.009993627088820334
       },
       "district": "Waldshut",
-      "": "288"
+      "district_id": "288"
     },
     {
       "first17": {
@@ -54330,7 +54330,7 @@
         "voters_invalid": 0.010005474883344802
       },
       "district": "Reutlingen",
-      "": "289"
+      "district_id": "289"
     },
     {
       "first17": {
@@ -54518,7 +54518,7 @@
         "voters_invalid": 0.007697165455411309
       },
       "district": "Tübingen",
-      "": "290"
+      "district_id": "290"
     },
     {
       "first17": {
@@ -54706,7 +54706,7 @@
         "voters_invalid": 0.007843155023515873
       },
       "district": "Ulm",
-      "": "291"
+      "district_id": "291"
     },
     {
       "first17": {
@@ -54894,7 +54894,7 @@
         "voters_invalid": 0.009952861294971057
       },
       "district": "Biberach",
-      "": "292"
+      "district_id": "292"
     },
     {
       "first17": {
@@ -55082,7 +55082,7 @@
         "voters_invalid": 0.00869509285680872
       },
       "district": "Bodensee",
-      "": "293"
+      "district_id": "293"
     },
     {
       "first17": {
@@ -55270,7 +55270,7 @@
         "voters_invalid": 0.007410570467984822
       },
       "district": "Ravensburg",
-      "": "294"
+      "district_id": "294"
     },
     {
       "first17": {
@@ -55458,7 +55458,7 @@
         "voters_invalid": 0.010001627162770517
       },
       "district": "Zollernalb – Sigmaringen",
-      "": "295"
+      "district_id": "295"
     },
     {
       "first17": {
@@ -55646,7 +55646,7 @@
         "voters_invalid": 0.014958151338425124
       },
       "district": "Saarbrücken",
-      "": "296"
+      "district_id": "296"
     },
     {
       "first17": {
@@ -55834,7 +55834,7 @@
         "voters_invalid": 0.020597648549371482
       },
       "district": "Saarlouis",
-      "": "297"
+      "district_id": "297"
     },
     {
       "first17": {
@@ -56022,7 +56022,7 @@
         "voters_invalid": 0.021507153442301443
       },
       "district": "St. Wendel",
-      "": "298"
+      "district_id": "298"
     },
     {
       "first17": {
@@ -56210,7 +56210,7 @@
         "voters_invalid": 0.017878324424456256
       },
       "district": "Homburg",
-      "": "299"
+      "district_id": "299"
     },
     {
       "first17": {
@@ -56398,7 +56398,7 @@
         "voters_invalid": 0.009412399974817142
       },
       "district": "Bundesgebiet",
-      "": "999"
+      "district_id": "999"
     }
   ]
 }
