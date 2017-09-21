@@ -68,7 +68,7 @@ def make_event_handler():
         ApiAiHandler(candidate.basics, 'kandidat'),
         ApiAiHandler(party.basics, 'parteien'),
         ApiAiHandler(party.top_candidates_apiai, 'spitzenkandidat'),
-        ApiAiHandler(sunday_poll, 'umfrage'),
+        #ApiAiHandler(sunday_poll, 'umfrage'),
         PayloadHandler(party.show_parties, ['show_parties']),
         PayloadHandler(party.show_electorial, ['show_electorial']),
         PayloadHandler(party.show_party_options, ['show_party_options']),
