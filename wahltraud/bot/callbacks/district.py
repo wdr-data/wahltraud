@@ -219,6 +219,7 @@ def result_17(event, payload, **kwargs):
 
     winner_candidate = dict()
     for candidate in candidates:
+        logger.info('Kandidat: ' + candidate)
         candidate_dict = by_uuid[candidate]
         if candidate_dict['party'] == first_vote_results[0].split(":")[0]:
             winner_candidate = candidate_dict
