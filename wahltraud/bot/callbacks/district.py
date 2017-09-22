@@ -230,9 +230,10 @@ def result_17(event, payload, **kwargs):
 
     send_buttons(
             sender_id,
-            "Bei der Bundestagswahl 2017 haben die Wähler durch die Erststimme einen Direktkandidaten im Wahlkreis \"{district}\" gewählt."
-            "\nDie Stimmauszählung ergibt folgende ersten drei Plätze:"
-            "\n{first}\n{second}\n{third}\n\nDamit geht das Direktmandat an {candidate}.".format(
+            "Hier die Ergebnisse der #BTW17 aus dem Wahlkreis \"{district}\"."
+            "\nOben siehst du das vorläufige Ergebnis der Zweitstimmen-Auszählung. Die meisten Erststimmen haben folgende Kandidaten erhalten:"
+            "\n{first}\n{second}\n{third}\n\n"
+            "Damit bekommt {candidate} das Direktmandat in seinem Wahlkreis und wird Mitglied des 19. Bundestages.".format(
                 candidate=' '.join(filter(bool, (winner_candidate['degree'],
                                             winner_candidate['first_name'],
                                             winner_candidate['middle_name'],
@@ -274,7 +275,7 @@ def result_first_vote(event, payload, **kwargs):
 
     send_buttons(
             sender_id,
-            "Es folgen alle Ergebnisse der Parteien die im Wahlkreis {district} mit einem Direktkandidaten angetreten sind: "
+            "Hier das vorläufige Ergebnis der Erststimmen-Auszählung im Wahlkreis {district}:"
             "\n\n{result}".format(
                 district = district['district'],
                 result = first_vote_results
@@ -306,7 +307,7 @@ def result_second_vote(event, payload, **kwargs):
 
     send_buttons(
             sender_id,
-            "Es folgen alle Ergebnisse der Parteien die im Wahlkreis {district} angetreten sind: "
+            "Hier das vorläufige Ergebnis der Zweitstimmen-Auszählung im Wahlkreis {district}:"
             "\n\n{result}".format(
                 district = district['district'],
                 result = second_vote_results
