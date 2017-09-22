@@ -225,7 +225,7 @@ def result_17(event, payload, **kwargs):
     logger.info('Kandidat der Partei {party} mit Direktmandat im Wahlkreis {district} ist: {candidate}'.format(
         party = first_vote_results[0].split(":")[0],
         district=district['district'],
-        candidate = winner_candidate['last_name']))
+        candidate = winner_candidate))
 
     # winner_candidate = ' '.join(
     #     [
