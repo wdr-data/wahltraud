@@ -196,7 +196,7 @@ def result_17(event, payload, **kwargs):
 
     election_17 = result_by_district_id[district['district_id']]
     first_vote = election_17['first17']
-    second_vote = election_17['second17']
+    # second_vote = election_17['second17']
 
     first_vote_results = '\n'.join(
         [
@@ -205,28 +205,32 @@ def result_17(event, payload, **kwargs):
             in sorted(first_vote.items(), key=operator.itemgetter(1), reverse=True)[:3]
         ]
     )
-    second_vote_results = '\n'.join(
-        [
-            locale.format_string('%s: %.1f%%', (party, result * 100))
-            for party, result
-            in sorted(second_vote.items(), key=operator.itemgetter(1), reverse=True)
-            if result > 0.0499
-        ]
-    )
-
-    candidates = list(sorted((by_uuid[uuid] for uuid in district['candidates']),
-                             key=operator.itemgetter('last_name')))
-
+    # second_vote_results = '\n'.join(
+    #     [
+    #         locale.format_string('%s: %.1f%%', (party, result * 100))
+    #         for party, result
+    #         in sorted(second_vote.items(), key=operator.itemgetter(1), reverse=True)
+    #         if result > 0.0499
+    #     ]
+    # )
 
     winner_candidate = dict()
-    for candidate in candidates:
-        logger.debug('Sieger: ' + str(first_vote_results.split(':')[0]))
-        logger.debug('Partei: ' + candidate['party'])
-        if candidate['party'] in first_vote_results.split(':')[0]:
-            winner_candidate = candidate
+    candidates = list(sorted((by_uuid[uuid] for uuid in district['candidates']),
+                             key=operator.itemgetter('last_name')))
+    winner_candidate = dict(
+        candidate
+        for candidate in candidates
+        if candidate['party'] in first_vote_results.split(':')[0]
+    )
+    # for candidate in candidates:
+    #     if candidate['party'] in first_vote_results.split(':')[0]:
+    #         winner_candidate = candidate
 
+    first_vote_results = ' '.join(
+
+    )
     logger.info('Kandidat der Partei {party} mit Direktmandat im Wahlkreis {district} ist: {candidate}'.format(
-        party = first_vote_results[0],
+        party = first_vote_results.split(':')[0],
         district=district['district'],
         candidate = winner_candidate))
 
