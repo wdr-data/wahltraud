@@ -218,9 +218,10 @@ def result_17(event, payload, **kwargs):
                              key=operator.itemgetter('last_name')))
 
     winner_candidate = dict()
-    for candidate in by_uuid(candidates):
-        if candidate['party'] == first_vote_results[0].split(":")[0]:
-            winner_candidate = candidate
+    for candidate in candidates:
+        candidate_dict = by_uuid(candidate)
+        if candidate_dict['party'] == first_vote_results[0].split(":")[0]:
+            winner_candidate = candidate_dict
 
     logger.info('Kandidat der Partei {party} mit Direktmandat im Wahlkreis {district} ist: {candidate}'.format(
         party = first_vote_results[0].split(":")[0],
