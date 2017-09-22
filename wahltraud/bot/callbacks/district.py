@@ -313,7 +313,7 @@ def result_second_vote(event, payload, **kwargs):
             [
                 button_postback("Info Wahlkreis " + district['district_id'], {'show_district': district_uuid}),
                 button_postback("Info Direktkandidat", {'payload_basics': winner_candidate}),
-                button_postback("Ergebnis Erststimme", {'result_first_vote': district_uuid, 'winner_candidate': winner_candidate['uuid']}),
+                button_postback("Ergebnis Erststimme", {'result_first_vote': district_uuid, 'winner_candidate': winner_candidate}),
             ]
         )
 
