@@ -261,6 +261,7 @@ def result_17(event, payload, **kwargs):
                 button_postback("Ergebnis Zweitstimme", {'result_second_vote': district_uuid}),
             ]
         )
+    )
 
 def result_first_vote(event, payload, **kwargs):
     sender_id = event['sender']['id']
