@@ -198,16 +198,6 @@ def result_17(event, payload, **kwargs):
     first_vote = election_17['first17']
     second_vote = election_17['second17']
 
-    logger.debug('Gesamte Info 2017 {district} ist: {result}'.format(
-        district=district['district'],
-        result = election_17))
-    logger.debug('Erststimme 2017 {district} ist: {result}'.format(
-        district=district['district'],
-        result = first_vote))
-    logger.debug('Zweitstimme 2017 {district} ist: {result}'.format(
-        district=district['district'],
-        result = second_vote))
-
     first_vote_results = '\n'.join(
         [
             locale.format_string('%s: %.1f%%', (party, result * 100))
@@ -224,18 +214,32 @@ def result_17(event, payload, **kwargs):
         ]
     )
 
+    candidates = list(sorted((by_uuid[uuid] for uuid in district['candidates']),
+                             key=operator.itemgetter('last_name')))
+    logger.info('Kandidat mit Direktmandat im Wahlkreis {district} ist: {candidate}'.format(
+        district=district['district'],
+        candidate = candidates[0]))
+    winner_candidate = ' '.join(
+        [
+            locale.format_string('%s (%s)', (' '.join(candidate['degree'],
+                                            candidate['first_name'],
+                                            candidate['middle_name'],
+                                            candidate['pre_last_name'],
+                                            candidate['last_name']),
+                                            party))
+            for candidate, party in by_uuid(candidates[0])
+        ]
+    )
+
     url = 'https://media.data.wdr.de:8080/static/bot/result_grafics/second_distric' + district['district_id'] + '.jpg'
     send_attachment(sender_id, url, type='image')
 
-    candidates = list(sorted((by_uuid[uuid] for uuid in district['candidates']),
-                             key=operator.itemgetter('last_name')))
-    random_candidate = random.choice(candidates)
-
     send_buttons(
             sender_id,
-            "Bei der Bundestagswahl 2017 haben diese Parteien im Wahlkreis \"{district}\" "
-            "durch die Zweitstimme der Wähler mehr als 5% erzielt:"
+            "Bei der Bundestagswahl 2017 hat durch die Erststimme der Wähler {candidate} das Direktmandat im Wahlkreis \"{district}\" gewonnen."
+            "\nFolgende Parteien haben sich auf die ersten drei Plätze gekämpft:"
             "\n\n{results} ".format(
+                candidate = winner_candidte,
                 district=district['district'],
                 results = first_vote_results),
             [
