@@ -220,11 +220,11 @@ def result_17(event, payload, **kwargs):
     second_candidate = dict()
     third_candidate = dict()
     for candidate in candidates:
-        if candidate['party'] in first_vote_results.split(':')[0]:
+        if candidate['party'] in first_vote_results.split('\n')[0].split(':')[0]:
             winner_candidate = candidate
-        if candidate['party'] in first_vote_results.split(':')[2]:
+        if candidate['party'] in first_vote_results.split('\n')[1].split(':')[0]:
             second_candidate = candidate
-        if candidate['party'] in first_vote_results.split(':')[4]:
+        if candidate['party'] in first_vote_results.split('\n')[2].split(':')[0]:
             third_candidate = candidate
 
     logger.info('Kandidat der Partei {party} mit Direktmandat im Wahlkreis {district} ist: {candidate}'.format(
