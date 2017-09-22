@@ -205,14 +205,6 @@ def result_17(event, payload, **kwargs):
             in sorted(first_vote.items(), key=operator.itemgetter(1), reverse=True)[:3]
         ]
     )
-    # second_vote_results = '\n'.join(
-    #     [
-    #         locale.format_string('%s: %.1f%%', (party, result * 100))
-    #         for party, result
-    #         in sorted(second_vote.items(), key=operator.itemgetter(1), reverse=True)
-    #         if result > 0.0499
-    #     ]
-    # )
     candidates = list(sorted((by_uuid[uuid] for uuid in district['candidates']),
                              key=operator.itemgetter('last_name')))
 
@@ -287,7 +279,7 @@ def result_first_vote(event, payload, **kwargs):
                 result = first_vote_results
             ),
             [
-                button_postback("Info Wahlkreis " + district['district_id'], {'show_structural_data': district_uuid}),
+                button_postback("Info Wahlkreis " + district['district_id'], {'show_district': district_uuid}),
                 button_postback("Info Direktkandidat", {'payload_basics': winner_candidate}),
                 button_postback("Ergebnis Zweitstimme", {'result_second_vote': district_uuid, 'winner_candidate': winner_candidate}),
             ]
@@ -319,9 +311,9 @@ def result_second_vote(event, payload, **kwargs):
                 result = second_vote_results
             ),
             [
-                button_postback("Info Wahlkreis " + district['district_id'], {'show_structural_data': district_uuid}),
+                button_postback("Info Wahlkreis " + district['district_id'], {'show_district': district_uuid}),
                 button_postback("Info Direktkandidat", {'payload_basics': winner_candidate}),
-                button_postback("Ergebnis Erststimme", {'result_second_vote': district_uuid, 'winner_candidate': winner_candidate}),
+                button_postback("Ergebnis Erststimme", {'result_first_vote': district_uuid, 'winner_candidate': winner_candidate['uuid']}),
             ]
         )
 
