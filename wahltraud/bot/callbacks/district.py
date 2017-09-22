@@ -216,7 +216,8 @@ def result_17(event, payload, **kwargs):
 
     candidates = list(sorted((by_uuid[uuid] for uuid in district['candidates']),
                              key=operator.itemgetter('last_name')))
-    logger.info('Kandidat mit Direktmandat im Wahlkreis {district} ist: {candidate}'.format(
+    logger.info('Kandidat der Partei {party} mit Direktmandat im Wahlkreis {district} ist: {candidate}'.format(
+        party = first_vote_results,
         district=district['district'],
         candidate = candidates[0]))
     winner_candidate = ' '.join(
@@ -227,7 +228,8 @@ def result_17(event, payload, **kwargs):
                                             candidate['pre_last_name'],
                                             candidate['last_name']),
                                             party))
-            for candidate, party in by_uuid(candidates[0])
+            for party in by_uuid(candidates)
+            if party = first_vote_results
         ]
     )
 
