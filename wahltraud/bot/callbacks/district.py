@@ -198,12 +198,16 @@ def result_17(event, payload, **kwargs):
     first_vote = election_17['first17']
     second_vote = election_17['second17']
 
-    logger.debug('Erststimme 2013 {district} ist: {result}'.format(
+    logger.debug('Gesamte Info 2017 {district} ist: {result}'.format(
+        district=district['district'],
+        result = election_17))
+    logger.debug('Erststimme 2017 {district} ist: {result}'.format(
         district=district['district'],
         result = first_vote))
-    logger.debug('Zweitstimme 2013 {district} ist: {result}'.format(
+    logger.debug('Zweitstimme 2017 {district} ist: {result}'.format(
         district=district['district'],
         result = second_vote))
+
     first_vote_results = '\n'.join(
         [
             locale.format_string('%s: %.1f%%', (party, result * 100))
