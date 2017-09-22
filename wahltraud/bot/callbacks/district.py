@@ -295,7 +295,7 @@ def result_first_vote(event, payload, **kwargs):
 
 def result_second_vote(event, payload, **kwargs):
     sender_id = event['sender']['id']
-    district_uuid = payload['result_17']
+    district_uuid = payload['result_second_vote']
     district = by_uuid[district_uuid]
 
     winner_candidate = payload['winner_candidate']
