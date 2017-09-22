@@ -124,6 +124,8 @@ def novi(event, payload, **kwargs):
     district_uuid = payload['novi']
     district = by_uuid[district_uuid]
 
+    novi_wk = str(district['district_id']).zfill(3)
+
     send_buttons(sender_id, """
 Am Sonntag ist es soweit - du kannst bis 18 Uhr in deinem Wahllokal deine Stimme abgeben. Und dann? Dann heißt es warten...
 Wenn du informiert werden möchtest, sobald dein Wahlkreis {number},  "{name}", ausgezählt ist, dann wende dich an meinen Bot-Kollegen "Novi". Er schickt dir eine Nachricht mit dem entsprechenden Ergebnis.
