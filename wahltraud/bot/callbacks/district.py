@@ -216,22 +216,28 @@ def result_17(event, payload, **kwargs):
 
     candidates = list(sorted((by_uuid[uuid] for uuid in district['candidates']),
                              key=operator.itemgetter('last_name')))
+
+    winner_candidate = dict()
+    for candidate in by_uuid(candidates):
+        if candidate['party'] = first_vote_results[0].split(":")[0]:
+            winner_candidate = candidate
+
     logger.info('Kandidat der Partei {party} mit Direktmandat im Wahlkreis {district} ist: {candidate}'.format(
         party = first_vote_results[0].split(":")[0],
         district=district['district'],
-        candidate = candidates[0]))
-    winner_candidate = ' '.join(
-        [
-            locale.format_string('%s (%s)', (' '.join(candidate['degree'],
-                                            candidate['first_name'],
-                                            candidate['middle_name'],
-                                            candidate['pre_last_name'],
-                                            candidate['last_name']),
-                                            party))
-            for party in by_uuid(candidates)
-            if party = first_vote_results[0].split(":")[0]
-        ]
-    )
+        candidate = winner_candidate['last_name']))
+
+    # winner_candidate = ' '.join(
+    #     [
+    #         locale.format_string('%s (%s)', (' '.join(candidate['degree'],
+    #                                         candidate['first_name'],
+    #                                         candidate['middle_name'],
+    #                                         candidate['pre_last_name'],
+    #                                         candidate['last_name']),
+    #                                         party))
+    #         for party in by_uuid(candidates)
+    #     ]
+    # )
 
     url = 'https://media.data.wdr.de:8080/static/bot/result_grafics/second_distric' + district['district_id'] + '.jpg'
     send_attachment(sender_id, url, type='image')
