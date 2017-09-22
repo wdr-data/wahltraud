@@ -254,14 +254,13 @@ def result_17(event, payload, **kwargs):
                                 first_vote_results.split('\n')[1]))),
                 third = ' '.join(filter(bool, (third_candidate['first_name'],
                                 third_candidate['last_name'],
-                                first_vote_results.split('\n')[2]))),
+                                first_vote_results.split('\n')[2])))),
             [
                 button_postback("Info Direktkandidat", {'payload_basics': winner_candidate['uuid']}),
                 button_postback("Ergebnis Erststimme", {'result_first_vote': district_uuid}),
                 button_postback("Ergebnis Zweitstimme", {'result_second_vote': district_uuid}),
             ]
         )
-    )
 
 def result_first_vote(event, payload, **kwargs):
     sender_id = event['sender']['id']
