@@ -19,16 +19,16 @@ def get_pushes(force_latest=False):
         infos = Push.objects.filter(
             pub_date__date=date,
             pub_date__hour__lt=8,
-            published=True,
-            breaking=False)
+            published=True)
+            # breaking=False)
 
     else:
         infos = Push.objects.filter(
             pub_date__date=date,
             pub_date__hour__gte=8,
             pub_date__hour__lt=20,
-            published=True,
-            breaking=False)
+            published=True)
+            # breaking=False)
 
     return infos
 
@@ -38,8 +38,8 @@ def get_pushes_by_date(date):
         pub_date__date=date,
         pub_date__hour__gte=8,
         pub_date__hour__lt=20,
-        published=True,
-        breaking=False)
+        published=True)
+        # breaking=False)
 
     return infos
 
