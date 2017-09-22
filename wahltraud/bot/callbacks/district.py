@@ -229,7 +229,7 @@ def result_17(event, payload, **kwargs):
                                             candidate['last_name']),
                                             party))
             for party in by_uuid(candidates)
-            if party = first_vote_results
+            #if party = first_vote_results
         ]
     )
 
