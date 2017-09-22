@@ -76,7 +76,8 @@ Wenn du mir einen Ort oder deine PLZ nennst, bekommst du von mir Infos zum Wahlk
 
 def send_district(sender_id, district_uuid):
     event = {'sender': {'id': sender_id}}
-    show_district(event, {'show_district': district_uuid})
+    # show_district(event, {'show_district': district_uuid})
+    result_17(event, {'result_17': district_uuid})
     """
     send_buttons(sender_id,
                  'Ok. Der Wahlkreis deiner Wahl ist {district}'.format(
