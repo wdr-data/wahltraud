@@ -217,8 +217,11 @@ def result_17(event, payload, **kwargs):
     candidates = list(sorted((by_uuid[uuid] for uuid in district['candidates']),
                              key=operator.itemgetter('last_name')))
 
+
     winner_candidate = dict()
     for candidate in candidates:
+        logger.debug('Sieger: ' + str(first_vote_results[0]))
+        logger.debug('Partei: ' + candidate['party'])
         if candidate['party'] in first_vote_results[0]:
             winner_candidate = candidate
 
