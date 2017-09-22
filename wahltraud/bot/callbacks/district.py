@@ -213,22 +213,20 @@ def result_17(event, payload, **kwargs):
     #         if result > 0.0499
     #     ]
     # )
-
-    winner_candidate = dict()
     candidates = list(sorted((by_uuid[uuid] for uuid in district['candidates']),
                              key=operator.itemgetter('last_name')))
-    winner_candidate = dict(
-        candidate
-        for candidate in candidates
-        if candidate['party'] in first_vote_results.split(':')[0]
-    )
-    # for candidate in candidates:
-    #     if candidate['party'] in first_vote_results.split(':')[0]:
-    #         winner_candidate = candidate
 
-    first_vote_results = ' '.join(
+    winner_candidate = dict()
+    second_candidate = dict()
+    third_candidate = dict()
+    for candidate in candidates:
+        if candidate['party'] in first_vote_results.split(':')[0]:
+            winner_candidate = candidate
+        if candidate['party'] in first_vote_results.split(':')[2]:
+            second_candidate = candidate
+        if candidate['party'] in first_vote_results.split(':')[4]:
+            third_candidate = candidate
 
-    )
     logger.info('Kandidat der Partei {party} mit Direktmandat im Wahlkreis {district} ist: {candidate}'.format(
         party = first_vote_results.split(':')[0],
         district=district['district'],
@@ -241,14 +239,22 @@ def result_17(event, payload, **kwargs):
             sender_id,
             "Bei der Bundestagswahl 2017 hat durch die Erststimme der Wähler {candidate} das Direktmandat im Wahlkreis \"{district}\" gewonnen."
             "\nFolgende Parteien haben sich auf die ersten drei Plätze gekämpft:"
-            "\n\n{results} ".format(
+            "\n\n{first}\n{second}\n{third} ".format(
                 candidate=' '.join(filter(bool, (winner_candidate['degree'],
                                             winner_candidate['first_name'],
                                             winner_candidate['middle_name'],
                                             winner_candidate['pre_last_name'],
                                             winner_candidate['last_name']))),
                 district=district['district'],
-                results = first_vote_results),
+                first = ' '.join(filter(bool, (winner_candidate['first_name'],
+                                winner_candidate['last_name'],
+                                first_vote_results.split('\n')[0]))),
+                second = ' '.join(filter(bool, (second_candidate['first_name'],
+                                second_candidate['last_name'],
+                                first_vote_results.split('\n')[1]))),
+                third = ' '.join(filter(bool, (third_candidate['first_name'],
+                                third_candidate['last_name'],
+                                first_vote_results.split('\n')[2])))
             [
                 button_postback("Info Direktkandidat", {'payload_basics': winner_candidate['uuid']}),
                 button_postback("Ergebnis Erststimme", {'result_first_vote': district_uuid}),
