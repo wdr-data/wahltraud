@@ -251,7 +251,7 @@ def result_17(event, payload, **kwargs):
                 district=district['district'],
                 results = first_vote_results),
             [
-                button_postback("Info Direktkandidat", {'payload_basics': random_candidate['uuid']}),
+                # button_postback("Info Direktkandidat", {'payload_basics': winner_candidate['uuid']}),
                 button_postback("Ergebnis Erststimme", {'result_first_vote': district_uuid}),
                 button_postback("Ergebnis Zweitstimme", {'result_second_vote': district_uuid}),
             ]
