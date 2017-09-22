@@ -52,7 +52,7 @@ Wenn du mir einen Ort oder deine PLZ nennst, bekommst du von mir Infos zum Wahlk
             send_buttons(sender_id,
                          'In deinem PLZ-Gebiet gibt es wohl mehrere Wahlkreise!',
                          [button_postback(district['district'],
-                                          {'show_district': district['uuid']})
+                                          {'result_17': district['uuid']})
                           for district in
                           [by_uuid[uuid] for uuid in district_uuids]]
                          )
