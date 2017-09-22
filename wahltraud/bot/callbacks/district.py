@@ -113,7 +113,8 @@ Das Durchschnittsalter der Kandidaten beträgt {avg_age} Jahre.
                  [
                      button_postback("Kandidaten", {'show_candidates': district_uuid}),
                      button_postback("Wahlkreis in Zahlen", {'show_structural_data': district_uuid}),
-                     button_postback("Ergebnis Wahl '13", {'show_13': district_uuid})
+                     button_postback("Ergebnis per Push", {'novi': district_uuid}),
+                    #  button_postback("Ergebnis Wahl '13", {'show_13': district_uuid})
                     #  button_postback("Ergebnis 2017", {'result_17': district_uuid})
                      #button_postback("Anderer Wahlkreis", ['intro_district']),
                  ])
@@ -122,29 +123,6 @@ def novi(event, payload, **kwargs):
     sender_id = event['sender']['id']
     district_uuid = payload['novi']
     district = by_uuid[district_uuid]
-
-    election_17 = by_district_id[district['district_id']]
-    first_vote = election_17['first17']
-    second_vote = election_17['second17']
-
-    first_vote_results = '\n'.join(
-        [
-            locale.format_string('%s: %.1f%%', (party, result * 100))
-            for party, result
-            in sorted(election_17.items(), key=operator.itemgetter(1), reverse=True)
-            if result > 0.0499
-        ]
-    )
-    results = '\n'.join(
-        [
-            locale.format_string('%s: %.1f%%  (%.1f%%)', (party, result * 100, election_13_all[party]*100))
-            for party, result
-            in sorted(election_13.items(), key=operator.itemgetter(1), reverse=True)
-            if (show_all and result>0)  or result > 0.0499
-        ]
-    )
-
-    novi_wk = str(district['district_id']).zfill(3)
 
     send_buttons(sender_id, """
 Am Sonntag ist es soweit - du kannst bis 18 Uhr in deinem Wahllokal deine Stimme abgeben. Und dann? Dann heißt es warten...
