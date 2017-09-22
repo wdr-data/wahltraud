@@ -34,7 +34,7 @@ API_AI_TOKEN = os.environ.get('WAHLTRAUD_API_AI_TOKEN', 'na')
 ADMINS = [
     1781215881903416,  # Christian
     1450422691688898,  # Jannes
-    1400823466644114,  # Lisa
+    1543183652404650,  # Lisa
 ]
 
 
@@ -93,7 +93,7 @@ def make_event_handler():
         PayloadHandler(candidate.show_random_candidate, ['show_random_candidate']),
         PayloadHandler(district.show_candidates, ['show_candidates']),
         ApiAiHandler(district.find_district, 'wahlkreis_finder'),
-        PayloadHandler(district.show_district, ['show_district']),
+        PayloadHandler(district.result_17, ['show_district']),
         ApiAiHandler(browse_lists.apiai, 'liste'),
         PayloadHandler(browse_lists.intro_lists, ['intro_lists']),
         PayloadHandler(browse_lists.select_state, ['select_state']),
