@@ -309,6 +309,7 @@ def result_second_vote(event, payload, **kwargs):
             in sorted(second_vote.items(), key=operator.itemgetter(1), reverse=True)
             # if result > 0.0499
         ]
+    )
 
     send_buttons(
             sender_id,
