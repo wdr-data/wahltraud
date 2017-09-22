@@ -247,7 +247,7 @@ def result_17(event, payload, **kwargs):
             "Bei der Bundestagswahl 2017 hat durch die Erststimme der Wähler {candidate} das Direktmandat im Wahlkreis \"{district}\" gewonnen."
             "\nFolgende Parteien haben sich auf die ersten drei Plätze gekämpft:"
             "\n\n{results} ".format(
-                candidate = winner_candidte,
+                candidate = winner_candidate,
                 district=district['district'],
                 results = first_vote_results),
             [
