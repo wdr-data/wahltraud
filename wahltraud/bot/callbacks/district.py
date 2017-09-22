@@ -230,18 +230,6 @@ def result_17(event, payload, **kwargs):
         district=district['district'],
         candidate = winner_candidate))
 
-    # winner_candidate = ' '.join(
-    #     [
-    #         locale.format_string('%s (%s)', (' '.join(candidate['degree'],
-    #                                         candidate['first_name'],
-    #                                         candidate['middle_name'],
-    #                                         candidate['pre_last_name'],
-    #                                         candidate['last_name']),
-    #                                         party))
-    #         for party in by_uuid(candidates)
-    #     ]
-    # )
-
     url = 'https://media.data.wdr.de:8080/static/bot/result_grafics/second_distric' + district['district_id'] + '.jpg'
     send_attachment(sender_id, url, type='image')
 
@@ -250,11 +238,15 @@ def result_17(event, payload, **kwargs):
             "Bei der Bundestagswahl 2017 hat durch die Erststimme der Wähler {candidate} das Direktmandat im Wahlkreis \"{district}\" gewonnen."
             "\nFolgende Parteien haben sich auf die ersten drei Plätze gekämpft:"
             "\n\n{results} ".format(
-                candidate = winner_candidate,
+                candidate=' '.join(filter(bool, (winner_candidate['degree'],
+                                            winner_candidate['first_name'],
+                                            winner_candidate['middle_name'],
+                                            winner_candidate['pre_last_name'],
+                                            winner_candidate['last_name']))),
                 district=district['district'],
                 results = first_vote_results),
             [
-                # button_postback("Info Direktkandidat", {'payload_basics': winner_candidate['uuid']}),
+                button_postback("Info Direktkandidat", {'payload_basics': winner_candidate['uuid']}),
                 button_postback("Ergebnis Erststimme", {'result_first_vote': district_uuid}),
                 button_postback("Ergebnis Zweitstimme", {'result_second_vote': district_uuid}),
             ]
