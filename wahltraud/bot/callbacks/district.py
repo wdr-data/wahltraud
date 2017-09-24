@@ -190,7 +190,7 @@ def show_13(event, payload, **kwargs):
             ]
         )
 
-def result_nation_17(event, payload, **kwargs):
+def result_nation_17(event, parameters, **kwargs):
     sender_id = event['sender']['id']
 
     url = 'https://media.data.wdr.de:8080/static/bot/result_grafics/second_distric999.jpg'
