@@ -204,6 +204,7 @@ def result_nation_17(event, parameters, **kwargs):
             "dann schicke mir einfach deine Postleitzahl oder den Namen deiner Stadt.",
         [
             button_postback("Ergebnis Zweitstimme", {'result_second_vote': '999', 'nation': True}),
+            button_postback("Aktuelle Info", ['gruss']),
         ]
     )
 

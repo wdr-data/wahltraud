@@ -43,6 +43,7 @@ def make_event_handler():
 
     handlers = [
         ApiAiHandler(greetings, 'gruss'),
+        PayloadHandler(greetings, ['gruss']),
         PayloadHandler(get_started, ['start']),
         PayloadHandler(about, ['about']),
         PayloadHandler(story, ['push_id', 'next_state']),
