@@ -113,6 +113,8 @@ def push(event, parameters, **kwargs):
     sender_id = event['sender']['id']
     date = parameters.get('date')
 
+    date = "2017-09-25"
+
     if not date:
         data = get_pushes()
         if len(data) == 0:
