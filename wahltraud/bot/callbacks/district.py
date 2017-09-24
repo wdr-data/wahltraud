@@ -100,7 +100,7 @@ def show_district(event, payload, **kwargs):
 
 
     send_buttons(sender_id, """
-    +++ Die Ergebnisse deines Wahlkreises gibt es morgen an dieser Stelle +++
+    +++ Die Ergebnisse deines Wahlkreises gibt es morgen an dieser Stelle. Für die aktuelle Hochrechnung, frag einfach nach dem Ergebnis. +++
     
 Wahlkreis {number},  "{name}", liegt in {state}. Hier stehen {nr_of_candidates} Direktkandidaten zur Wahl, davon sind {total_female} Frauen.
 Das Durchschnittsalter der Kandidaten beträgt {avg_age} Jahre.
