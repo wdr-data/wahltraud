@@ -130,6 +130,7 @@ def novi(event, payload, **kwargs):
 
     send_buttons(sender_id, """
 Die Wahllokale sind geschlossen und die ersten Prognosen sind raus. Frag mich einfach nach dem Ergebnis.
+
 Wenn du informiert werden möchtest, sobald dein Wahlkreis {number},  "{name}", ausgezählt ist, dann wende dich an meinen Bot-Kollegen "Novi". Er schickt dir eine Nachricht mit dem entsprechenden Ergebnis.
 Ich leite deinen Wahlkreis gerne an "Novi" weiter. Klicke dazu einfach auf "Zu Novi".
 """.format(
