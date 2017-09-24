@@ -8,7 +8,7 @@ from django.conf import settings
 
 
 from ..fb import send_buttons, button_postback, send_text, send_list, list_element, quick_reply, send_attachment, button_web_url
-from ..data import by_uuid, by_plz, by_city, get_election13_dict, get_structural_data, result_by_district_id
+from ..data import by_uuid, by_plz, by_city, election13_dict, get_structural_data, result_by_district_id
 
 locale.setlocale(locale.LC_NUMERIC, 'de_DE.UTF-8')
 
@@ -144,7 +144,6 @@ def show_13(event, payload, **kwargs):
 
     district = by_uuid[district_uuid]
     election_13 = district['election_13'].copy()
-    election_13_all = get_election13_dict()
 
     beteiligung = election_13.pop('wahlbeteiligung')
 
@@ -154,10 +153,10 @@ def show_13(event, payload, **kwargs):
 
     results = '\n'.join(
         [
-            locale.format_string('%s: %.1f%%  (%.1f%%)', (party, result * 100, election_13_all[party]*100))
+            locale.format_string('%s: %.1f%%  (%.1f%%)', (party, result * 100, election13_dict[party] * 100))
             for party, result
             in sorted(election_13.items(), key=operator.itemgetter(1), reverse=True)
-            if (show_all and result>0)  or result > 0.0499
+            if (show_all and result > 0) or result > 0.0499
         ]
     )
 
@@ -180,7 +179,7 @@ def show_13(event, payload, **kwargs):
             "mehr als 5% der Zweitstimmen erhalten:"
             "\n\n{results}\n\nDie Wahlbeteiligung betrug {beteiligung}%  ({beteiligung_all}%). ".format(
                 results=results,
-                beteiligung_all = locale.format('%.1f', election_13_all['wahlbeteiligung']*100 ),
+                beteiligung_all=locale.format('%.1f', election13_dict['wahlbeteiligung'] * 100),
                 district=district['district'],
                 beteiligung=locale.format('%.1f', beteiligung * 100)),
             [
@@ -326,7 +325,7 @@ def result_second_vote(event, payload, **kwargs):
 
         second_vote_results = '\n'.join(
             [
-                locale.format_string('%s: %.1f%%', (party, result * 100))
+                locale.format_string('%s: %.1f%% (%.1f%%)', (party, result * 100, election13_dict.get(party, 0) * 100))
                 for party, result
                 in sorted(second_vote.items(), key=operator.itemgetter(1), reverse=True)
             ]
