@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 def intro_district(event, **kwargs):
     sender_id = event['sender']['id']
-    send_text(sender_id, "Schick mir eine Postleitzahl und ich sage dir, wer in dem Wahlkreis kandidiert!")
+    send_text(sender_id, "Schick mir eine Postleitzahl und ich sage dir, wer in dem Wahlkreis gewonnen hat!")
 
 
 def find_district(event, parameters, **kwargs):
@@ -190,6 +190,23 @@ def show_13(event, payload, **kwargs):
             ]
         )
 
+def result_nation_17(event, payload, **kwargs):
+    sender_id = event['sender']['id']
+
+    url = 'https://media.data.wdr.de:8080/static/bot/result_grafics/second_distric999.jpg'
+    send_attachment(sender_id, url, type='image')
+
+    send_buttons(
+            sender_id,
+            "Hier die Ergebnisse der #BTW17 aus dem gesamten Bundesgebiet."
+            "\nDie Grafik zeigt dir das vorläufige Ergebnis der Zweitstimmen-Auszählung. Alle Zahlen erhältst du bei \"Ergebnis Zweitstimme\"."
+            "\n\nWenn du wissen möchtest, wie die Wahl in deinem Wahlkreis ausgegangen ist, "
+            "dann schicke mir einfach deine Postleitzahl oder den Namen deiner Stadt.",
+        [
+            button_postback("Ergebnis Zweitstimme", {'result_second_vote': district_uuid, 'winner_candidate': winner_candidate['uuid'], 'nation': True}),
+        ]
+    )
+
 def result_17(event, payload, **kwargs):
     sender_id = event['sender']['id']
     district_uuid = payload['result_17']
@@ -233,7 +250,7 @@ def result_17(event, payload, **kwargs):
             "Hier die Ergebnisse der #BTW17 aus dem Wahlkreis \"{district}\"."
             "\nOben siehst du das vorläufige Ergebnis der Zweitstimmen-Auszählung. Die meisten Erststimmen haben folgende Kandidaten erhalten:"
             "\n{first}\n{second}\n{third}\n\n"
-            "Damit bekommt {candidate} das Direktmandat in seinem Wahlkreis und wird Mitglied des 19. Bundestages.".format(
+            "Damit bekommt {candidate} das Direktmandat diesem Wahlkreis und wird Mitglied des 19. Bundestages.".format(
                 candidate=' '.join(filter(bool, (winner_candidate['degree'],
                                             winner_candidate['first_name'],
                                             winner_candidate['middle_name'],
@@ -289,23 +306,47 @@ def result_first_vote(event, payload, **kwargs):
 
 def result_second_vote(event, payload, **kwargs):
     sender_id = event['sender']['id']
+    winner_candidate = payload['winner_candidate']
     district_uuid = payload['result_second_vote']
     district = by_uuid[district_uuid]
+    nation = payload.get('nation', False)
 
-    winner_candidate = payload['winner_candidate']
-    election_17 = result_by_district_id[district['district_id']]
-    second_vote = election_17['second17']
+    if nation:
+        election_17 = result_by_district_id['999']
+        second_vote = election_17['second17']
 
-    second_vote_results = '\n'.join(
-        [
-            locale.format_string('%s: %.1f%%', (party, result * 100))
-            for party, result
-            in sorted(second_vote.items(), key=operator.itemgetter(1), reverse=True)
-            # if result > 0.0499
-        ]
-    )
+        second_vote_results = '\n'.join(
+            [
+                locale.format_string('%s: %.1f%%', (party, result * 100))
+                for party, result
+                in sorted(second_vote.items(), key=operator.itemgetter(1), reverse=True)
+            ]
+        )
 
-    send_buttons(
+        send_buttons(
+            sender_id,
+            "Hier das vorläufige Ergebnis der Zweitstimmen-Auszählung im gesamten Bundesgebiet:"
+            "\n\n{result}".format(
+                result = second_vote_results
+            ),
+            [
+                button_postback("Anderer Wahlkreis", ['intro_district']),
+            ]
+        )
+    else:
+        election_17 = result_by_district_id[district['district_id']]
+        second_vote = election_17['second17']
+
+        second_vote_results = '\n'.join(
+            [
+                locale.format_string('%s: %.1f%%', (party, result * 100))
+                for party, result
+                in sorted(second_vote.items(), key=operator.itemgetter(1), reverse=True)
+                # if result > 0.0499
+            ]
+        )
+
+        send_buttons(
             sender_id,
             "Hier das vorläufige Ergebnis der Zweitstimmen-Auszählung im Wahlkreis {district}:"
             "\n\n{result}".format(
@@ -318,6 +359,7 @@ def result_second_vote(event, payload, **kwargs):
                 button_postback("Ergebnis Erststimme", {'result_first_vote': district_uuid, 'winner_candidate': winner_candidate}),
             ]
         )
+
 
 def show_candidates(event, payload, **kwargs):
     sender_id = event['sender']['id']
