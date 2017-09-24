@@ -203,7 +203,7 @@ def result_nation_17(event, parameters, **kwargs):
             "\n\nWenn du wissen möchtest, wie die Wahl in deinem Wahlkreis ausgegangen ist, "
             "dann schicke mir einfach deine Postleitzahl oder den Namen deiner Stadt.",
         [
-            button_postback("Ergebnis Zweitstimme", {'result_second_vote': district_uuid, 'winner_candidate': winner_candidate['uuid'], 'nation': True}),
+            button_postback("Ergebnis Zweitstimme", {'result_second_vote': '999', 'nation': True}),
         ]
     )
 
@@ -306,9 +306,8 @@ def result_first_vote(event, payload, **kwargs):
 
 def result_second_vote(event, payload, **kwargs):
     sender_id = event['sender']['id']
-    winner_candidate = payload['winner_candidate']
-    district_uuid = payload['result_second_vote']
-    district = by_uuid[district_uuid]
+    winner_candidate = payload.get('winner_candidate')
+    district_uuid = payload.get('result_second_vote')
     nation = payload.get('nation', False)
 
     if nation:
@@ -334,6 +333,8 @@ def result_second_vote(event, payload, **kwargs):
             ]
         )
     else:
+        district = by_uuid[district_uuid]
+
         election_17 = result_by_district_id[district['district_id']]
         second_vote = election_17['second17']
 
