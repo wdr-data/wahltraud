@@ -108,6 +108,24 @@ def result(wk_nummer, extention):
 
     party_abbrv = pd.read_csv(str(DATA_DIR/'btw17_parteien.csv'), delimiter=';')
 
+    state_mapping = {"Schleswig-Holstein": 901,
+                    "Mecklenburg-Vorpommern": 913,
+                    "Hamburg": 902,
+                    "Niedersachsen": 903,
+                    "Bremen" :904,
+                    "Brandenburg": 912,
+                    "Sachsen-Anhalt":915,
+                    "Berlin": 911,
+                    "Nordrhein-Westfalen": 905,
+                    "Sachsen": 914,
+                    "Hessen":906,
+                    "Thüringen": 916,
+                    "Rheinland-Pfalz": 907,
+                    "Bayern":909,
+                    "Baden-Württemberg": 908,
+                    "Saarland": 910
+                }
+
 
 
     keys = {extention[0]: 'first17',
@@ -117,6 +135,8 @@ def result(wk_nummer, extention):
     # Take data from the election 2013
     data = pd.read_csv(str(DATA_DIR/"kerg_edit.csv"), delimiter=";")
     data.loc[data['Gebiet'] == 'Bundesgebiet', 'Nr'] = 999
+    for key in state_mapping:
+        data.loc[data['Gebiet'] == key, 'Nr'] = state_mapping[key]
 
     # Parteien, die 2013 angetreten sind
     parteien = party_abbrv[party_abbrv['TYP'] == 'Partei']
@@ -130,7 +150,10 @@ def result(wk_nummer, extention):
     data.set_index = ["Nr"]
     # Nr 999 ist der Index Bundesgebiet
     data1 = data.loc[data['Nr'] == wk_nummer]
-    data_wk = data1.loc[data1['gehört zu'] != 99]
+    if wk_nummer < 900:
+        data_wk = data1.loc[data1['gehört zu'] != 99]
+    else:
+        data_wk =data1
     for element in extention:
         temp[keys[element]] = {}
         for party in parteien['KURZBEZEICHNUNG']:
@@ -296,10 +319,17 @@ def plot_vote(wk_nummer,extention):
 def create_results(result_file, extention):
 
     temp = []
+
+    for state in range(901, 917):
+        temp.append(result(state, extention))
+
     for district in range(1,300):
         # run result
         temp.append( result(district, extention))
     temp.append(result(999,extention))
+
+
+
 
     final = {'election_17': temp}
     with open(result_file ,  "w", encoding="utf8") as output_file:
@@ -318,8 +348,8 @@ extention = make_kerg_to_df(kerg)
 create_results(result_file, extention)
 
 # create plot for all 999 votes
-#for district in range(1,300):
-#    plot_vote(district,extention)
+for district in range(1,300):
+    plot_vote(district,extention)
 
 # create plot for Bundesgebiet
 plot_vote(999,extention)
