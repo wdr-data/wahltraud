@@ -282,9 +282,16 @@ def result_first_vote(event, payload, **kwargs):
     election_17 = result_by_district_id[district['district_id']]
     first_vote = election_17['first17']
 
+    party_candidate = {
+        c['party']: c
+        for c in
+        (by_uuid[uuid] for uuid in district['candidates'])
+    }
+
     first_vote_results = '\n'.join(
         [
-            locale.format_string('%s: %.1f%%', (party, result * 100))
+            locale.format_string('%s (%s): %.1f%%',
+                                 (party_candidate.get(party, '-'), party, result * 100))
             for party, result
             in sorted(first_vote.items(), key=operator.itemgetter(1), reverse=True)
         ]
