@@ -113,13 +113,14 @@ def push(event, parameters, **kwargs):
     sender_id = event['sender']['id']
     date = parameters.get('date')
 
-    print(date)
 
     if not date:
         data = get_pushes()
         if len(data) == 0:
-            reply = 'Dein Wahl-Update ist noch in Arbeit. Versuche es nach 18 Uhr wieder...'
-            send_text(sender_id, reply)
+            schema(data, sender_id)
+
+            #reply = 'Dein Wahl-Update ist noch in Arbeit. Versuche es nach 18 Uhr wieder...'
+            #send_text(sender_id, reply)
         else:
             schema(data, sender_id)
 
