@@ -283,7 +283,9 @@ def result_first_vote(event, payload, **kwargs):
     first_vote = election_17['first17']
 
     party_candidate = {
-        c['party']: c
+        c['party']: ' '.join(
+            filter(bool,
+                   (c['first_name'], c['middle_name'], c['pre_last_name'], c['last_name'])))
         for c in
         (by_uuid[uuid] for uuid in district['candidates'])
     }
