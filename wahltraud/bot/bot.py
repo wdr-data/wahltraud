@@ -55,7 +55,7 @@ def make_event_handler():
         PayloadHandler(push_step, ['push', 'next_state']),
         PayloadHandler(push, ['push']),
         ApiAiHandler(push, 'push'),
-        ApiAiHandler(result_nation_17,'Ergebnisse'),
+        ApiAiHandler(district.result_nation_17,'Ergebnisse'),
         ApiAiHandler(wiki, 'wiki'),
         ApiAiHandler(who_votes, 'wer_darf_wählen'),
         PayloadHandler(menue_candidates, ['menue_candidates']),
