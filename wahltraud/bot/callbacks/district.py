@@ -100,7 +100,9 @@ def show_district(event, payload, **kwargs):
 
 
     send_buttons(sender_id, """
-    +++ Die Ergebnisse deines Wahlkreises gibt es morgen an dieser Stelle. Für die aktuelle Hochrechnung, frag einfach nach dem Ergebnis. +++
+    +++ Die Ergebnisse deines Wahlkreises gibt es morgen ab 7 Uhr an dieser Stelle. 
+    
+    Aktuelle Hochrechnung? Frag mich einfach nach dem Ergebnis! +++
     
 Wahlkreis {number},  "{name}", liegt in {state}. Hier stehen {nr_of_candidates} Direktkandidaten zur Wahl, davon sind {total_female} Frauen.
 Das Durchschnittsalter der Kandidaten beträgt {avg_age} Jahre.
@@ -131,8 +133,10 @@ def novi(event, payload, **kwargs):
     send_buttons(sender_id, """
 Die Wahllokale sind geschlossen und die ersten Prognosen sind raus. Frag mich einfach nach dem Ergebnis.
 
-Wenn du informiert werden möchtest, sobald dein Wahlkreis {number},  "{name}", ausgezählt ist, dann wende dich an meinen Bot-Kollegen "Novi". Er schickt dir eine Nachricht mit dem entsprechenden Ergebnis.
-Ich leite deinen Wahlkreis gerne an "Novi" weiter. Klicke dazu einfach auf "Zu Novi".
+Wenn du informiert werden möchtest, sobald dein Wahlkreis {number},  "{name}", ausgezählt ist, dann wende dich an meinen Bot-Kollegen "Novi".
+Ich leite deinen Wahlkreis gerne an "Novi" weiter. 
+
+Morgen früh ab 7 Uhr hab ich dann auch dein Wahlkreis-Ergebnis".
 """.format(
         number=district['district_id'],
         name=district['district']),
