@@ -111,7 +111,7 @@ Starte einfach indem du mich mit \"Hallo\" begrüßt!.
 
 def push(event, parameters, **kwargs):
     sender_id = event['sender']['id']
-    date = parameters.get('date')
+    #date = parameters.get('date')
 
     date = "2017-09-25"
 
