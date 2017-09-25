@@ -367,7 +367,7 @@ def result_second_vote(event, payload, **kwargs):
     nation = payload.get('nation', False)
 
     if nation:
-        election_17 = result_by_district_id['district_uuid']
+        election_17 = result_by_district_id[district_uuid]
         second_vote = election_17['second17']
         second_vote_13 = election_17['second13']
 
