@@ -214,7 +214,7 @@ def result_nation_17(event, parameters, **kwargs):
 
 def result_state_17(event, payload, **kwargs):
     sender_id = event['sender']['id']
-    state = payload['state_result_17']
+    state = payload['result_state_17']
 
     state_mapping = {"Schleswig-Holstein": 901,
                     "Mecklenburg-Vorpommern": 913,
