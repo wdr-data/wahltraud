@@ -366,7 +366,7 @@ def result_second_vote(event, payload, **kwargs):
 
         send_buttons(
             sender_id,
-            "Hier das vorläufige Ergebnis der Zweitstimmen-Auszählung im Wahlkreis {district}"
+            "Hier das vorläufige Ergebnis der Zweitstimmen-Auszählung im Wahlkreis {district} "
             "(in Klammern dahinter das Ergebnis der Partei bei der BTW 2013):"
             "\n\n{result}".format(
                 district = district['district'],
