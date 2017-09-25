@@ -209,8 +209,8 @@ def plot_vote(wk_nummer,extention):
     # create base table
     for party in top7:
         if data[election17][party] is not None:
-            values.append(round(data[election17][party] * 100, 1))
-            values13.append(round(data[election13][party] * 100, 1))
+            values.append(round(data[election17][party] * 100, 3))
+            values13.append(round(data[election13][party] * 100, 3))
             key = party
             label.append(key)
             try:
@@ -257,7 +257,7 @@ def plot_vote(wk_nummer,extention):
     plt.ylabel('Stimmenanteil in %', fontsize=32)
     # bar plots + annotation
     for go in index:
-        text = str(values[go]) + '%'
+        text = str(round(values[go],1)) + '%'
         ax.annotate(text, xy=(index[go], max(values[go] + 1.3, 5.5)), fontsize=32, ha='center')
         # for go in index:
         di = diff[go]
@@ -340,18 +340,18 @@ def create_results(result_file, extention):
 
 #bundeswahlleiter data
 kerg = 'kerg.csv'
-result_file = 'results_17.json'
+result_file = 'results_17v2.json'
 
 # make nice function from kerg  : extention is for the given header names
 extention = make_kerg_to_df(kerg)
 
-create_results(result_file, extention)
+#create_results(result_file, extention)
 
 # create plot for all 999 votes
 #for district in range(1,300):
 #    plot_vote(district,extention)
 
 # create plot for Bundesgebiet
-#plot_vote(999,extention)
+plot_vote(999,extention)
 
 #create_results(result_file, extention)
