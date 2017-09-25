@@ -308,13 +308,6 @@ def select_state_result(event, payload, **kwargs):
     send_text(sender_id, 'Wähle dein Bundesland', quick_replies=options)
 
 
-
-
-
-
-
-
-
 def result_17(event, payload, **kwargs):
     sender_id = event['sender']['id']
     district_uuid = payload['result_17']
@@ -448,7 +441,7 @@ def result_second_vote(event, payload, **kwargs):
             ),
             [
                 button_postback("Ergebnis Bundesländer", ['select_state_result']),
-                button_postback("Anderer Wahlkreis", ['intro_district']),
+                button_postback("Wahlkreis-Ergebnis", ['intro_district']),
             ]
         )
     else:
