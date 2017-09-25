@@ -326,10 +326,11 @@ def result_second_vote(event, payload, **kwargs):
     if nation:
         election_17 = result_by_district_id['999']
         second_vote = election_17['second17']
+        second_vote_13 = election_17['second13']
 
         second_vote_results = '\n'.join(
             [
-                locale.format_string('%s: %.1f%% (%.1f%%)', (party, result * 100, election13_dict.get(party, 0) * 100))
+                locale.format_string('%s: %.1f%% (%.1f%%)', (party, result * 100, second_vote_13.get(party, 0) * 100))
                 for party, result
                 in sorted(second_vote.items(), key=operator.itemgetter(1), reverse=True)
             ]
@@ -351,10 +352,12 @@ def result_second_vote(event, payload, **kwargs):
 
         election_17 = result_by_district_id[district['district_id']]
         second_vote = election_17['second17']
+        second_vote_13 = election_17['second13']
 
         second_vote_results = '\n'.join(
             [
-                locale.format_string('%s: %.1f%%', (party, result * 100))
+                locale.format_string('%s: %.1f%% (%.1f%%)',
+                                     (party, result * 100, second_vote_13.get(party, 0) * 100))
                 for party, result
                 in sorted(second_vote.items(), key=operator.itemgetter(1), reverse=True)
                 # if result > 0.0499
@@ -363,7 +366,8 @@ def result_second_vote(event, payload, **kwargs):
 
         send_buttons(
             sender_id,
-            "Hier das vorläufige Ergebnis der Zweitstimmen-Auszählung im Wahlkreis {district}:"
+            "Hier das vorläufige Ergebnis der Zweitstimmen-Auszählung im Wahlkreis {district}"
+            "(in Klammern dahinter das Ergebnis der Partei bei der BTW 2013):"
             "\n\n{result}".format(
                 district = district['district'],
                 result = second_vote_results
