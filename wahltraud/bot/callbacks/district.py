@@ -254,7 +254,7 @@ def result_17(event, payload, **kwargs):
             "Hier die Ergebnisse der #BTW17 aus dem Wahlkreis \"{district}\"."
             "\nOben siehst du das vorläufige Ergebnis der Zweitstimmen-Auszählung. Die meisten Erststimmen haben folgende Kandidaten erhalten:"
             "\n{first}\n{second}\n{third}\n\n"
-            "Damit bekommt {candidate} das Direktmandat diesem Wahlkreis und wird Mitglied des 19. Bundestages.".format(
+            "Damit bekommt {candidate} das Direktmandat in diesem Wahlkreis und wird Mitglied des 19. Bundestages.".format(
                 candidate=' '.join(filter(bool, (winner_candidate['degree'],
                                             winner_candidate['first_name'],
                                             winner_candidate['middle_name'],
