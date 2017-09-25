@@ -234,7 +234,7 @@ def result_state_17(event, payload, **kwargs):
                     "Saarland": 910
                 }
 
-    url = 'https://media.data.wdr.de:8080/static/bot/result_grafics/second_distric'+state_mapping[state]+'.jpg'
+    url = 'https://media.data.wdr.de:8080/static/bot/result_grafics/second_distric'+str(state_mapping[state])+'.jpg'
     send_attachment(sender_id, url, type='image')
 
     send_buttons(
