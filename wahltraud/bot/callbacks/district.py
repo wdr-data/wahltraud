@@ -207,7 +207,8 @@ def result_nation_17(event, parameters, **kwargs):
             "dann schicke mir einfach deine Postleitzahl oder den Namen deiner Stadt.",
         [
             button_postback("Ergebnis Zweitstimme", {'result_second_vote': '999', 'nation': True}),
-            button_postback("Ergebnis NRW", {'result_state_17': 'Nordrhein-Westfalen'}),
+            #button_postback("Ergebnis NRW", {'result_state_17': 'Nordrhein-Westfalen'}),
+            button_postback("Ergebnis Bundesländer", ['select_state_result']),
             button_postback("Aktuelle Info", ['gruss']),
         ]
     )
@@ -250,6 +251,65 @@ def result_state_17(event, payload, **kwargs):
             button_postback("Aktuelle Info", ['gruss']),
         ]
     )
+
+
+def select_state_result(event, payload, **kwargs):
+    sender_id = event['sender']['id']
+    more = 'more' in payload
+
+    party = 'schnaps'
+    
+    if not isinstance(payload, dict):
+        payload = {pl: None for pl in payload}
+
+    states = [
+        "Schleswig-Holstein",
+        "Mecklenburg-Vorpommern",
+        "Hamburg",
+        "Niedersachsen",
+        "Bremen",
+        "Brandenburg",
+        "Sachsen-Anhalt",
+        "Berlin",
+        "Nordrhein-Westfalen",
+        "Sachsen",
+        "Hessen",
+        "Thüringen",
+        "Rheinland-Pfalz",
+        "Bayern",
+        "Baden-Württemberg",
+        "Saarland"
+    ]
+
+
+
+    options = [
+        quick_reply(state,
+                    {
+                        'result_state_17':state
+                    })
+        for state in sorted(states)
+    ]
+
+
+
+    if not more and len(options) > 8:
+        options = options[:8]
+        options.append(
+            quick_reply('➡️️', {
+                'select_state_result': party,
+                'more': True
+            }))
+    elif more:
+        options = options[8:]
+        options.insert(0, quick_reply('⬅️️️', {'select_state_result': party}))
+
+    send_text(sender_id, 'Wähle dein Bundesland', quick_replies=options)
+
+
+
+
+
 
 
 
