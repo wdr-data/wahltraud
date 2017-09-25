@@ -248,6 +248,7 @@ def result_state_17(event, payload, **kwargs):
             ),
         [
             button_postback("Ergebnis Zweitstimme", {'result_second_vote': str(state_mapping[state]), 'nation': True, 'state_id': state_mapping[state]}),
+            button_postback("Ergebnis Bundesländer", ['select_state_result']),
             button_postback("Aktuelle Info", ['gruss']),
         ]
     )
@@ -258,7 +259,7 @@ def select_state_result(event, payload, **kwargs):
     more = 'more' in payload
 
     party = 'schnaps'
-    
+
     if not isinstance(payload, dict):
         payload = {pl: None for pl in payload}
 
@@ -446,6 +447,7 @@ def result_second_vote(event, payload, **kwargs):
                 result = second_vote_results
             ),
             [
+                button_postback("Ergebnis Bundesländer", ['select_state_result']),
                 button_postback("Anderer Wahlkreis", ['intro_district']),
             ]
         )
