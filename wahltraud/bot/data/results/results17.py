@@ -5,8 +5,8 @@
 
 import sys
 
-reload(sys)
-sys.setdefaultencoding('utf8')
+#reload(sys)
+#sys.setdefaultencoding('utf8')
 
 import matplotlib
 # Force matplotlib to not use any Xwindows backend.
@@ -348,10 +348,10 @@ extention = make_kerg_to_df(kerg)
 create_results(result_file, extention)
 
 # create plot for all 999 votes
-for district in range(1,300):
-    plot_vote(district,extention)
+#for district in range(1,300):
+#    plot_vote(district,extention)
 
 # create plot for Bundesgebiet
-plot_vote(999,extention)
+#plot_vote(999,extention)
 
-create_results(result_file, extention)
+#create_results(result_file, extention)
