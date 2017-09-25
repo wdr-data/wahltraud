@@ -34,7 +34,7 @@ API_AI_TOKEN = os.environ.get('WAHLTRAUD_API_AI_TOKEN', 'na')
 ADMINS = [
     1781215881903416,  # Christian
     1450422691688898,  # Jannes
-    1400823466644114,  # Lisa
+    1543183652404650,  # Lisa
 ]
 
 
@@ -43,6 +43,7 @@ def make_event_handler():
 
     handlers = [
         ApiAiHandler(greetings, 'gruss'),
+        PayloadHandler(greetings, ['gruss']),
         PayloadHandler(get_started, ['start']),
         PayloadHandler(about, ['about']),
         PayloadHandler(story, ['push_id', 'next_state']),
@@ -55,7 +56,7 @@ def make_event_handler():
         PayloadHandler(push_step, ['push', 'next_state']),
         PayloadHandler(push, ['push']),
         ApiAiHandler(push, 'push'),
-        ApiAiHandler(push,'Ergebnisse'),
+        ApiAiHandler(district.result_nation_17,'Ergebnisse'),
         ApiAiHandler(wiki, 'wiki'),
         ApiAiHandler(who_votes, 'wer_darf_wählen'),
         PayloadHandler(menue_candidates, ['menue_candidates']),

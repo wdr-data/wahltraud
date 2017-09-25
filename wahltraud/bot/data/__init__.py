@@ -15,7 +15,7 @@ party_list = json.load(open(str(DATA_DIR/'parteien_info.json')))['list']
 candidate_list = json.load(open(str(DATA_DIR/'alle_kandidaten.json')))['list']
 district_list = json.load(open(str(DATA_DIR/'wahlkreis_info.json')))['districts']
 election13_dict = json.load(open(str(DATA_DIR/'wahlkreis_info.json')))['election13']
-# election17_dict = json.load(open(str(DATA_DIR/results/'results_17.json')))['election_17']
+election17_dict = json.load(open(str(DATA_DIR/'results/results_17.json')))['election_17']
 digital_word_list = json.load(open(str(DATA_DIR/'digital_words.json')))['words']
 
 structural_data_district = pd.read_csv(DATA_DIR/'btw17_strukturdaten.csv', delimiter = ';')
@@ -24,6 +24,7 @@ by_first_name = defaultdict(set)
 by_last_name = defaultdict(set)
 by_plz = defaultdict(set)
 by_city = defaultdict(set)
+result_by_district_id = dict()
 by_district_id = dict()
 by_uuid = dict()
 by_party = defaultdict(set)
@@ -32,8 +33,8 @@ state_lists = defaultdict(lambda: defaultdict(list))
 party_candidates = defaultdict(list)
 party_candidates_grouped = defaultdict(dict)
 
-# for result in election17_dict:
-    # by_district_id[result['district_id']] = result
+for result in election17_dict:
+    result_by_district_id[result['district_id']] = result
 
 for candidate in candidate_list:
     by_first_name[candidate['first_name']].add(candidate['uuid'])
