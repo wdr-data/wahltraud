@@ -367,7 +367,7 @@ def result_second_vote(event, payload, **kwargs):
     nation = payload.get('nation', False)
 
     if nation:
-        election_17 = result_by_district_id['999']
+        election_17 = result_by_district_id['district_uuid']
         second_vote = election_17['second17']
         second_vote_13 = election_17['second13']
 
@@ -381,8 +381,7 @@ def result_second_vote(event, payload, **kwargs):
 
         send_buttons(
             sender_id,
-            "Hier das vorläufige Ergebnis der Zweitstimmen-Auszählung im gesamten Bundesgebiet "
-            "(in Klammern dahinter das Ergebnis der Partei bei der BTW 2013):"
+            "Hier das vorläufige Ergebnis der Zweitstimmen-Auszählung (in Klammern dahinter das Ergebnis der Partei bei der BTW 2013):"
             "\n\n{result}".format(
                 result = second_vote_results
             ),
