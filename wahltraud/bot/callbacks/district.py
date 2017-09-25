@@ -207,9 +207,52 @@ def result_nation_17(event, parameters, **kwargs):
             "dann schicke mir einfach deine Postleitzahl oder den Namen deiner Stadt.",
         [
             button_postback("Ergebnis Zweitstimme", {'result_second_vote': '999', 'nation': True}),
+            button_postback("Ergebnis NRW", {'result_state_17': 'Nordrhein-Westfalen'}),
             button_postback("Aktuelle Info", ['gruss']),
         ]
     )
+
+def result_state_17(event, payload, **kwargs):
+    sender_id = event['sender']['id']
+    state = payload['state_result_17']
+
+    state_mapping = {"Schleswig-Holstein": 901,
+                    "Mecklenburg-Vorpommern": 913,
+                    "Hamburg": 902,
+                    "Niedersachsen": 903,
+                    "Bremen" :904,
+                    "Brandenburg": 912,
+                    "Sachsen-Anhalt":915,
+                    "Berlin": 911,
+                    "Nordrhein-Westfalen": 905,
+                    "Sachsen": 914,
+                    "Hessen":906,
+                    "Thüringen": 916,
+                    "Rheinland-Pfalz": 907,
+                    "Bayern":909,
+                    "Baden-Württemberg": 908,
+                    "Saarland": 910
+                }
+
+    url = 'https://media.data.wdr.de:8080/static/bot/result_grafics/second_distric'+state_mapping[state]+'.jpg'
+    send_attachment(sender_id, url, type='image')
+
+    send_buttons(
+            sender_id,
+            "Hier die Ergebnisse der #BTW17 aus {state}."
+            "\nDie Grafik zeigt dir das vorläufige Ergebnis der Zweitstimmen-Auszählung. Alle Zahlen erhältst du bei \"Ergebnis Zweitstimme\"."
+            "\n\nWenn du wissen möchtest, wie die Wahl in deinem Wahlkreis ausgegangen ist, "
+            "dann schicke mir einfach deine Postleitzahl oder den Namen deiner Stadt.".format(
+                state = state
+            ),
+        [
+            button_postback("Ergebnis Zweitstimme", {'result_second_vote': str(state_mapping[state]), 'nation': True, 'state_id': state_mapping[state]}),
+            button_postback("Aktuelle Info", ['gruss']),
+        ]
+    )
+
+
+
 
 def result_17(event, payload, **kwargs):
     sender_id = event['sender']['id']
