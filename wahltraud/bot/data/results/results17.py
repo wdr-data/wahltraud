@@ -298,7 +298,7 @@ def plot_vote(wk_nummer,extention):
 
 
     # Add title
-    plt.gcf().text(0.5, 0.93, '#BTW17 - Vorläufiges Ergebnis - Zweitstimmen \n \"'
+    plt.gcf().text(0.5, 0.93, '#BTW17 - Vorläufiges Ergebnis - Zweitstimmen\n \"'
                    + data['district'] +
                    '\" ', fontsize=40, ha='center')
 
