@@ -261,7 +261,7 @@ def plot_vote(wk_nummer,extention):
         ax.annotate(text, xy=(index[go], max(values[go] + 1.3, 5.5)), fontsize=32, ha='center')
         # for go in index:
         di = diff[go]
-        text = str(diff[go]) + '%'
+        text = str(round(diff[go],1)) + '%'
         if di >= 0:
             text = '+' + text
         if values[go] < 1.8:
