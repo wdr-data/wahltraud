@@ -157,6 +157,8 @@ def show_basics(sender_id, candidate_uuid):
 {name}
 {party}
 
+{member}
+
 Beruf: {profession}
 Wohnort: {city}
 Jahrgang: {age}
@@ -171,6 +173,7 @@ Listenplatz Nr.: {list_nr}
                                     candidate['middle_name'],
                                     candidate['pre_last_name'],
                                     candidate['last_name']))),
+        member = '+++ Mitglied des 19. Bundestags +++' if candidate['member']==1 else '',
         party=candidate['party'],
         age='-' if candidate['age'] is None else candidate['age'],
         dicstrict='-' if district_uuid is None else candidate_district,

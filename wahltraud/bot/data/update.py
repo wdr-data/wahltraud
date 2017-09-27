@@ -6,13 +6,14 @@ import numpy as np
 import pandas as pd
 import re
 from fuzzywuzzy import fuzz
+from bs4 import BeautifulSoup
 
 
 def update():
 
     update_abgewatch = False
-    update_alle = False
-    update_wahlkreis = True
+    update_alle = True
+    update_wahlkreis = False
 
 
 
@@ -298,6 +299,11 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
     with open("wahlkreis_info.json") as data_file:
         district = json.load(data_file)
 
+    # List of candidates in parliament
+    with open('./results/gewaehlte.xml') as f:
+        ywinner = BeautifulSoup(f, "lxml-xml")
+
+
     # laden des abgeordnetenwatch kandidaten files
     with open(kandidaten_alle) as data_file:
         data_abewatch = json.load(data_file)
@@ -457,6 +463,19 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
 
             else:
                 temp["nrw"] = None
+
+
+        # check if kand is in parliament
+
+        for kand in ywinner.find_all('Personendaten'):
+            if kand['Vorname'] == temp['first_name'] and  kand['Geburtsdatum'] == str(temp['age']) and kand['Name'] == temp['last_name']:
+                temp['member'] = 1
+                break
+            else:
+                temp['member'] = 0
+
+
+
 
 
         data_list.append(temp)
