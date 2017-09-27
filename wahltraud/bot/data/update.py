@@ -344,6 +344,7 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
                  }
 
     # how to erstelle kandidaten_file
+    countwin = 0
     for index, item in data.iterrows():
 
 
@@ -468,15 +469,13 @@ def abgewatch_to_alle(kandidaten_alle, nrw_kandidaten, output_file):
         # check if kand is in parliament
 
         for kand in ywinner.find_all('Personendaten'):
-            if kand['Vorname'] == temp['first_name'] and  kand['Geburtsdatum'] == str(temp['age']) and kand['Name'] == temp['last_name']:
+            if kand['Vorname']== item['Vorname'] and kand['Geburtsdatum'] == str(temp['age']) and kand['Name'] == temp['last_name']:
                 temp['member'] = 1
+                countwin +=1
+                print(countwin)
                 break
             else:
                 temp['member'] = 0
-
-
-
-
 
         data_list.append(temp)
 

@@ -145,7 +145,7 @@ def show_list(event, payload, **kwargs):
                                    candidate['degree'],
                                    candidate['first_name'],
                                    candidate['last_name']))),
-            subtitle="%s, Jahrgang %s" % (candidate['party'], candidate['age'] or 'unbekannt'),
+            subtitle="%s, Jahrgang %s, %s" % (candidate['party'], candidate['age'] or 'unbekannt', 'gewählt' if candidate['member']== 1 else ''),
             buttons=[button_postback("Info", {'payload_basics': candidate['uuid']})],
             image_url=candidate.get('img') or None
         )
