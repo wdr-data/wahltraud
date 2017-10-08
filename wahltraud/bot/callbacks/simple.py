@@ -23,7 +23,7 @@ def greetings(event, **kwargs):
 
     if infos:
         info = infos[0]
-        reply = ("Hallo, hier die neueste Meldung zur Bundestagswahl von den 1LIVE Infos. \n\n"
+        reply = ("Hi, hier die neueste Funktion. \n\n"
                  + info.content)
 
         if info.attachment_id:
@@ -60,10 +60,10 @@ Du kannst auch jeden Abend eine Info zur Wahl erhalten. Wenn du das möchtest, k
 Wenn Du genauer wissen möchtest, was ich kann, klicke auf \"Erklär mal\". Oder leg direkt los und sende mir eine Nachricht."""
             send_buttons(sender_id, reply,
                          buttons=[
-                            button_postback("Zeige Wahlkreis-Info",
-                                             {'show_district': district['uuid']}),
+                           # button_postback("Zeige Wahlkreis-Info",
+                        #                 {'show_district': district['uuid']}),
                             button_postback('Anmelden', ['subscribe']),
-                            button_postback('Erklär mal...', ['about'])
+                           # button_postback('Erklär mal...', ['about'])
                          ])
     else:
         now = timezone.localtime(timezone.now())
