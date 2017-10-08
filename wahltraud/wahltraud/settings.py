@@ -14,18 +14,18 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SITE_URL = 'https://cc8b346a.ngrok.io'
+SITE_URL = 'https://infos.data.wdr.de:8080'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 't=bb0&l%r&wd3!c_6=as*(q1^k=di)e^4_cky$sdq5*y+*tt&@'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','cc8b346a.ngrok.io' ]
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
