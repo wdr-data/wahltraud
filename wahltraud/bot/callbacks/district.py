@@ -209,7 +209,7 @@ def result_nation_17(event, parameters, **kwargs):
             button_postback("Ergebnis Zweitstimme", {'result_second_vote': '999', 'nation': True}),
             #button_postback("Ergebnis NRW", {'result_state_17': 'Nordrhein-Westfalen'}),
             button_postback("Ergebnis Bundesländer", ['select_state_result']),
-            button_postback("Aktuelle Info", ['gruss']),
+         #   button_postback("Aktuelle Info", ['gruss']),
         ]
     )
 
