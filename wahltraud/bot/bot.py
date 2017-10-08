@@ -40,7 +40,7 @@ def make_event_handler():
     ai = ApiAI(API_AI_TOKEN)
 
     handlers = [
-        ApiAiHandler(greetings, 'hi'),
+        ApiAiHandler(greetings, 'gruss'),
         PayloadHandler(greetings, ['gruss']),
         PayloadHandler(get_started, ['start']),
         PayloadHandler(about, ['about']),
